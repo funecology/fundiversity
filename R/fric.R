@@ -1,0 +1,3 @@
+fric = function(data, dist) {
+
+}
