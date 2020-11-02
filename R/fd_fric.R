@@ -13,6 +13,10 @@ fd_fric <- function(data) {
     data <- as.matrix(data)
   }
 
-  geometry::convhulln(data, "FA")$vol
+  if (is.vector(data) || ncol(data) == 1) {
+    return(diff(range(data)))
+  } else {
+    return(geometry::convhulln(data, "FA")$vol)
+  }
 
 }

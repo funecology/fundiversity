@@ -7,4 +7,7 @@ test_that("fd_fric", {
   expect_type(fric, numeric)
   expect_length(fric, 1)
 
+  # Make sure it works also in 1D
+  fric <- expect_silent(fd_fric(traits_birds[, 1]))
+
 })
