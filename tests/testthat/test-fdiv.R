@@ -14,6 +14,9 @@ test_that("Functional Diversity output format", {
 
 test_that("Functional Diversity works in 1D", {
 
-  expect_silent(fd_fdiv(traits_birds[, 1]))
+  expect_identical(
+    fd_fdiv(traits_birds[, 1]),
+    fd_fdiv(traits_birds[, 1, drop = FALSE])
+  )
 
 })

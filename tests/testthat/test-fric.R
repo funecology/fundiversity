@@ -14,7 +14,10 @@ test_that("Functional Richness output format", {
 
 test_that("Functional Richness works in 1D", {
 
-  expect_silent(fd_fric(traits_birds[, 1]))
+  expect_identical(
+    fd_fric(traits_birds[, 1]),
+    fd_fric(traits_birds[, 1, drop = FALSE])
+  )
 
 })
 

@@ -15,6 +15,10 @@ fd_fdiv <- function(data) {
     data <- as.matrix(data)
   }
 
+  if (is.vector(data)) {
+    data <- as.matrix(data)
+  }
+
   G <- colMeans(data, na.rm = TRUE)
 
   dG <- sqrt(colSums((t(data) - G)^2, na.rm = TRUE))
