@@ -9,6 +9,9 @@ fd_fric(data)
 \arguments{
 \item{data}{The matrix dataset for which you want to compute the index}
 }
+\value{
+The value of FRic (numeric of length 1)
+}
 \description{
 Compute Functional Richness FRic
 }
@@ -16,4 +19,9 @@ Compute Functional Richness FRic
 data(traits_birds)
 fd_fric(traits_birds)
 
+}
+\references{
+Cornwell W. K., Schwilk D. W., Ackerly D. D. (2006), A trait-based test for
+habitat filtering; convex hull volume, Ecology 84(6),
+\url{doi:0012-9658(2006)87[1465:ATTFHF]2.0.CO;2}
 }
