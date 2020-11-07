@@ -2,7 +2,7 @@
 % Please edit documentation in R/fd_fdiv.R
 \name{fd_fdiv}
 \alias{fd_fdiv}
-\title{Compute Functional Diversity FDiv}
+\title{Compute Functional Divergence FDiv}
 \usage{
 fd_fdiv(data)
 }
@@ -13,7 +13,7 @@ fd_fdiv(data)
 The value of FDiv (numeric of length 1)
 }
 \description{
-Compute Functional Diversity FDiv
+Compute Functional Divergence FDiv
 }
 \examples{
 data(traits_birds)

@@ -3,7 +3,7 @@ data("traits_birds")
 traits_birds_sc <- scale(traits_birds)
 
 # Actual tests
-test_that("Functional Diversity output format", {
+test_that("Functional Divergence output format", {
 
   fdiv <- expect_silent(fd_fdiv(traits_birds))
 
@@ -12,7 +12,7 @@ test_that("Functional Diversity output format", {
 
 })
 
-test_that("Functional Diversity works in 1D", {
+test_that("Functional Divergence works in 1D", {
 
   expect_identical(
     fd_fdiv(traits_birds[, 1]),

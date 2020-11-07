@@ -1,4 +1,4 @@
-#' Compute Functional Diversity FDiv
+#' Compute Functional Divergence (FDiv)
 #'
 #' @param data The matrix dataset for which you want to compute the index
 #'

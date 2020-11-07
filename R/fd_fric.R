@@ -1,4 +1,7 @@
-#' Compute Functional Richness FRic
+#' Compute Functional Richness (FRic)
+#'
+#' Functional Richness is computed as the volume of the convex hull from all
+#' included traits.
 #'
 #' @param data The matrix dataset for which you want to compute the index
 #'
