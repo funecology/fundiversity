@@ -2,7 +2,7 @@
 % Please edit documentation in R/fd_fric.R
 \name{fd_fric}
 \alias{fd_fric}
-\title{Compute Functional Richness FRikc}
+\title{Compute Functional Richness FRic}
 \usage{
 fd_fric(data)
 }
@@ -10,7 +10,7 @@ fd_fric(data)
 \item{data}{The matrix dataset for which you want to compute the index}
 }
 \description{
-Compute Functional Richness FRikc
+Compute Functional Richness FRic
 }
 \examples{
 data(traits_birds)

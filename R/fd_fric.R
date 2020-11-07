@@ -1,4 +1,4 @@
-#' Compute Functional Richness FRikc
+#' Compute Functional Richness FRic
 #'
 #' @param data The matrix dataset for which you want to compute the index
 #'
