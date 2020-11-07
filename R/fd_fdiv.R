@@ -8,6 +8,11 @@
 #'
 #' @return The value of FDiv (numeric of length 1)
 #'
+#' @references
+#' Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional
+#' functional diversity indices for a multifaceted framework in functional
+#' ecology, Ecology 89(8), \doi{10.1890/07-1206.1}
+#'
 #' @export
 fd_fdiv <- function(data) {
 

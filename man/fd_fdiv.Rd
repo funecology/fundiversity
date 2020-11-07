@@ -20,3 +20,8 @@ data(traits_birds)
 fd_fdiv(traits_birds)
 
 }
+\references{
+Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional
+functional diversity indices for a multifaceted framework in functional
+ecology, Ecology 89(8), \doi{10.1890/07-1206.1}
+}
