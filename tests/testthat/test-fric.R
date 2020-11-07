@@ -7,7 +7,7 @@ test_that("Functional Richness output format", {
 
   fric <- expect_silent(fd_fric(traits_birds))
 
-  expect_type(fric, "numeric")
+  expect_type(fric, "double")
   expect_length(fric, 1)
 
 })

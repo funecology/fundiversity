@@ -7,7 +7,7 @@ test_that("Functional Diversity output format", {
 
   fdiv <- expect_silent(fd_fdiv(traits_birds))
 
-  expect_type(fdiv, "numeric")
+  expect_type(fdiv, "double")
   expect_length(fdiv, 1)
 
 })
