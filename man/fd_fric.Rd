@@ -4,10 +4,10 @@
 \alias{fd_fric}
 \title{Compute Functional Richness FRic}
 \usage{
-fd_fric(data)
+fd_fric(traits)
 }
 \arguments{
-\item{data}{The matrix dataset for which you want to compute the index}
+\item{traits}{The matrix dataset for which you want to compute the index}
 }
 \value{
 The value of FRic (numeric of length 1)

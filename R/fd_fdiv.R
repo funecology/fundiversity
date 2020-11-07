@@ -1,6 +1,6 @@
 #' Compute Functional Divergence (FDiv)
 #'
-#' @param data The matrix dataset for which you want to compute the index
+#' @param traits The matrix dataset for which you want to compute the index
 #'
 #' @examples
 #' data(traits_birds)
@@ -14,7 +14,7 @@
 #' ecology, Ecology 89(8), \doi{10.1890/07-1206.1}
 #'
 #' @export
-fd_fdiv <- function(data) {
+fd_fdiv <- function(traits) {
 
   if (is.data.frame(data)) {
     data <- as.matrix(data)

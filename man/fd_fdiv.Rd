@@ -4,10 +4,10 @@
 \alias{fd_fdiv}
 \title{Compute Functional Divergence FDiv}
 \usage{
-fd_fdiv(data)
+fd_fdiv(traits)
 }
 \arguments{
-\item{data}{The matrix dataset for which you want to compute the index}
+\item{traits}{The matrix dataset for which you want to compute the index}
 }
 \value{
 The value of FDiv (numeric of length 1)

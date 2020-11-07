@@ -3,7 +3,7 @@
 #' Functional Richness is computed as the volume of the convex hull from all
 #' included traits.
 #'
-#' @param data The matrix dataset for which you want to compute the index
+#' @param traits The matrix dataset for which you want to compute the index
 #'
 #' @examples
 #' data(traits_birds)
@@ -17,7 +17,7 @@
 #' \doi{10.1890/0012-9658(2006)87[1465:ATTFHF]2.0.CO;2}
 #'
 #' @export
-fd_fric <- function(data) {
+fd_fric <- function(traits) {
 
   if (is.data.frame(data)) {
     data <- as.matrix(data)
