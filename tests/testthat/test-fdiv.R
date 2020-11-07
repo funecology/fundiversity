@@ -1,0 +1,19 @@
+# Preamble code
+data("traits_birds")
+traits_birds_sc <- scale(traits_birds)
+
+# Actual tests
+test_that("Functional Diversity output format", {
+
+  fdiv <- expect_silent(fd_fdiv(traits_birds))
+
+  expect_type(fdiv, "numeric")
+  expect_length(fdiv, 1)
+
+})
+
+test_that("Functional Diversity works in 1D", {
+
+  expect_silent(fd_fdiv(traits_birds[, 1]))
+
+})
