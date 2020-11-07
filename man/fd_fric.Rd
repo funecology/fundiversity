@@ -23,5 +23,5 @@ fd_fric(traits_birds)
 \references{
 Cornwell W. K., Schwilk D. W., Ackerly D. D. (2006), A trait-based test for
 habitat filtering; convex hull volume, Ecology 84(6),
-\url{doi:0012-9658(2006)87[1465:ATTFHF]2.0.CO;2}
+\doi{0012-9658(2006)87[1465:ATTFHF]2.0.CO;2}
 }
