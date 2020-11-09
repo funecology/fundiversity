@@ -22,3 +22,9 @@ data(traits_birds)
 fd_raoq(traits_birds)
 
 }
+\references{
+Pavoine S., Dolédec S. (2005). The apportionment of quadratic entropy: a
+useful alternative for partitioning diversity in ecological data.
+Environmental and Ecological Statistics, 12(2), 125–138.
+\doi{10.1007/s10651-005-1037-2}
+}

@@ -9,6 +9,12 @@
 #'
 #' @return The value of Rao's Q (numeric of length 1)
 #'
+#' @references
+#' Pavoine S., Dolédec S. (2005). The apportionment of quadratic entropy: a
+#' useful alternative for partitioning diversity in ecological data.
+#' Environmental and Ecological Statistics, 12(2), 125–138.
+#' \doi{10.1007/s10651-005-1037-2}
+#'
 #' @export
 fd_raoq<- function(traits, sp_com) {
 
