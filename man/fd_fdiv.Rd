@@ -2,18 +2,20 @@
 % Please edit documentation in R/fd_fdiv.R
 \name{fd_fdiv}
 \alias{fd_fdiv}
-\title{Compute Functional Divergence FDiv}
+\title{Compute Functional Divergence (FDiv)}
 \usage{
-fd_fdiv(traits)
+fd_fdiv(traits, sp_com)
 }
 \arguments{
 \item{traits}{The matrix dataset for which you want to compute the index}
+
+\item{sp_com}{Abundance matrix}
 }
 \value{
 The value of FDiv (numeric of length 1)
 }
 \description{
-Compute Functional Divergence FDiv
+Compute Functional Divergence (FDiv)
 }
 \examples{
 data(traits_birds)

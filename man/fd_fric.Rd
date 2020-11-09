@@ -2,7 +2,7 @@
 % Please edit documentation in R/fd_fric.R
 \name{fd_fric}
 \alias{fd_fric}
-\title{Compute Functional Richness FRic}
+\title{Compute Functional Richness (FRic)}
 \usage{
 fd_fric(traits)
 }
@@ -13,7 +13,8 @@ fd_fric(traits)
 The value of FRic (numeric of length 1)
 }
 \description{
-Compute Functional Richness FRic
+Functional Richness is computed as the volume of the convex hull from all
+included traits.
 }
 \examples{
 data(traits_birds)
