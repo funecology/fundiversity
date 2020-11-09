@@ -2,3 +2,4 @@
 
 export(fd_fdiv)
 export(fd_fric)
+export(fd_raoq)
