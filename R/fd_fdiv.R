@@ -14,19 +14,19 @@
 #' ecology, Ecology 89(8), \doi{10.1890/07-1206.1}
 #'
 #' @export
-fd_fdiv <- function(traits) {
+fd_fdiv <- function(traits, sp_com) {
 
-  if (is.data.frame(data)) {
-    data <- as.matrix(data)
+  if (is.data.frame(traits)) {
+    traits <- as.matrix(traits)
   }
 
   if (is.vector(data)) {
-    data <- as.matrix(data)
+    traits <- as.matrix(traits)
   }
 
-  G <- colMeans(data, na.rm = TRUE)
+  G <- colMeans(traits, na.rm = TRUE)
 
-  dG <- sqrt(colSums((t(data) - G)^2, na.rm = TRUE))
+  dG <- sqrt(colSums((t(traits) - G)^2, na.rm = TRUE))
 
   mean_dG <- mean(dG)
 

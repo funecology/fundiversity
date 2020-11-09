@@ -19,14 +19,14 @@
 #' @export
 fd_fric <- function(traits) {
 
-  if (is.data.frame(data)) {
-    data <- as.matrix(data)
+  if (is.data.frame(traits)) {
+    data <- as.matrix(traits)
   }
 
-  if (is.vector(data) || ncol(data) == 1) {
-    return(diff(range(data)))
+  if (is.vector(traits) || ncol(traits) == 1) {
+    return(diff(range(traits)))
   } else {
-    return(geometry::convhulln(data, "FA")$vol)
+    return(geometry::convhulln(traits, "FA")$vol)
   }
 
 }
