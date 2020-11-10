@@ -21,7 +21,7 @@ fd_fdiv <- function(traits, sp_com) {
     traits <- as.matrix(traits)
   }
 
-  if (is.vector(data)) {
+  if (is.vector(traits)) {
     traits <- as.matrix(traits)
   }
 
