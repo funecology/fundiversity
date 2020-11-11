@@ -16,50 +16,56 @@
 #' @export
 fd_fdiv <- function(traits, sp_com) {
 
-  if (is.data.frame(traits)) {
-    traits <- as.matrix(traits)
+  if (missing(traits) | is.null(traits)) {
+    stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if (is.vector(traits)) {
+  if (is.data.frame(traits)) {
     traits <- as.matrix(traits)
   }
 
   if (!missing(sp_com)) {
 
-    abund <- setNames(
-      colSums(sp_com),
-      colnames(sp_com)
-    )
-
-    if (!all(names(traits) %in% names(abund))) {
+    if (!all(row.names(traits) %in% colnames(sp_com))) {
       stop(
-        "Please provide a sp_com matrix that contains all species ",
-        "from your traits dataset.", call. = FALSE
+        "Please provide a site-species matrix that contains all species ",
+        "from your trait dataset", call. = FALSE
       )
     }
 
-    abund[match(abund, rownames(traits))] <- abund
+    sp_com <- sp_com[, row.names(traits), drop = FALSE]
 
   } else {
 
-    abund <- setNames(
-      rep_len(1, nrow(traits)),
-      rownames(traits))
+    sp_com <- matrix(1, ncol = nrow(traits),
+                     dimnames = list("s1", row.names(traits)))
 
   }
 
-  G <- colMeans(traits, na.rm = TRUE)
+  # Standardize abundance per site
+  sp_com <- sweep(sp_com, 1, rowSums(sp_com), "/")
 
-  dG <- sqrt(colSums((t(traits) - G)^2, na.rm = TRUE))
+  # Compute Functional Divergence
+  fdiv_site <- apply(sp_com, 1, function(site_row) {
 
-  mean_dG <- mean(dG)
+    # Sub-select present species
+    sub_abund <- site_row[site_row > 0]
+    # Select traits for species actually in site
+    sub_traits <- traits[site_row > 0,, drop = FALSE]
 
-  deltaD <- sum(abund*(dG - mean_dG))
+    G <- colMeans(sub_traits, na.rm = TRUE)
 
-  deltaD_abs <- sum(abund*abs(dG - mean_dG))
+    dG <- sqrt(colSums((t(sub_traits) - G)^2, na.rm = TRUE))
 
-  FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
+    mean_dG <- mean(dG)
 
-  return(FDiv)
+    deltaD <- sum(sub_abund*(dG - mean_dG))
+
+    deltaD_abs <- sum(sub_abund*abs(dG - mean_dG))
+
+    FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
+  })
+
+  data.frame(site = row.names(sp_com), FDiv = fdiv_site)
 
 }
