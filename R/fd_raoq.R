@@ -48,8 +48,8 @@ fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
 
     if (!all(labels(d)[[1]] %in% colnames(sp_com))) {
       stop(
-        "Please provide a sp_com matrix that contains all species ",
-        "from your traits dataset/dissimilarity matrix.", call. = FALSE
+        "Please provide a site-species matrix that contains all species ",
+        "from your traits dataset/dissimilarity matrix", call. = FALSE
       )
     }
 
