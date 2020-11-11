@@ -48,19 +48,18 @@ fd_fric <- function(traits, sp_com) {
 
   }
 
-
   if (ncol(traits) == 1) {
 
-    fric = apply(sp_com, 1, function(site_row) {
+    fric_site <- apply(sp_com, 1, function(site_row) {
       diff(range(traits[site_row,]))
     })
 
   } else {
 
-    fric = apply(sp_com, 1, function(site_row) {
+    fric_site <- apply(sp_com, 1, function(site_row) {
       geometry::convhulln(traits[site_row > 0,], "FA")$vol
     })
   }
 
-  data.frame(site = row.names(sp_com), FRic = fric)
+  data.frame(site = row.names(sp_com), FRic = fric_site)
 }
