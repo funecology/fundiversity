@@ -28,9 +28,36 @@ devtools::install_github("Bisaloo/fundiversity")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+You can compute functional diversity indices through the functions
+`fd_fric()`, `fd_fdiv()`, and `fd_rao()`:
 
 ``` r
 library(fundiversity)
-## basic example code
+
+# Get trait data included in the package
+data("traits_birds")
+
+# Compute Functional Richness of all birds included
+fd_fric(traits_birds)
+#>    site     FRic
+#> s1   s1 230967.7
 ```
+
+## Related Packages
+
+  - [`FD`](https://cran.r-project.org/package=FD) historical package to
+    compute functional diversity indices, but has not been update since
+    August 2014;
+  - [`hillR`](https://cran.r-project.org/package=hillR) can compute hill
+    Numbers for taxonomic, functional, and phylogenetic diversity, but
+    it does not include other functional diversity indices;
+  - [`adiv`](https://cran.r-project.org/package=adiv) proposes various
+    diversity indices adapted from Rao’s Quadratic Entropy but doesn’t
+    include other functional diversity indices;
+  - [`fundiv`](https://github.com/ibartomeus/fundiv), is a wrapper
+    around the `FD` package but hasn’t been updated since 2016 and
+    hasn’t been published on CRAN;
+
+Read more about other packages that are similar to `fundiversity` on our
+[dedicated wiki
+page](https://github.com/Bisaloo/fundiversity/wiki/Similar-packages)
