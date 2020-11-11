@@ -1,9 +1,6 @@
 #' Compute Rao's entropy index (Rao's Q)
 #'
-#' @param traits The matrix dataset for which you want to compute the index
-#' @param sp_com Site-species matrix with sites as rows and species as columns
-#'               if not provided, `fd_raoq()` considers all species with equal
-#'               abundance in a single site
+#' @inheritParams fd_fric
 #' @param dist_matrix A dissimilarity matrix that can be provided instead of a
 #'                    trait data.frame
 #'

@@ -7,22 +7,27 @@ test_that("Functional Richness output format", {
 
   fric <- expect_silent(fd_fric(traits_birds))
 
-  expect_type(fric, "double")
-  expect_length(fric, 1)
+  expect_s3_class(fric, "data.frame")
+  expect_length(fric, 2)
+  expect_equal(nrow(fric), 1)
+  expect_equal(colnames(fric), c("site", "FRic"))
 
 })
 
-test_that("Functional Richness works in 1D", {
 
-  expect_identical(
-    fd_fric(traits_birds[, 1]),
-    fd_fric(traits_birds[, 1, drop = FALSE])
+test_that("Functional Richness fails gracefully", {
+
+  # No traits
+  expect_error(
+    fd_fric(NULL, matrix(1)),
+    "Please provide a trait dataset", fixed = TRUE
   )
 
-})
-
-test_that("Functional Richness computes correct value", {
-
-  expect_equal(fd_fric(traits_birds_sc), 88.9286, tolerance = 1e-4)
-
+  # Species matrix doesn't contain species from trait data
+  expect_error(
+    fd_raoq(data.frame(a = 1, row.names = "sp1"), matrix(1)),
+    paste0("Please provide a site-species matrix that contains all species ",
+           "from your traits dataset"),
+    fixed = TRUE
+  )
 })

@@ -9,7 +9,9 @@ fd_fdiv(traits, sp_com)
 \arguments{
 \item{traits}{The matrix dataset for which you want to compute the index}
 
-\item{sp_com}{Abundance matrix}
+\item{sp_com}{Site-species matrix with sites as rows and species as columns
+if not provided, the function considers all species with equal
+abundance in a single site}
 }
 \value{
 The value of FDiv (numeric of length 1)

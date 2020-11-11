@@ -1,7 +1,6 @@
 #' Compute Functional Divergence (FDiv)
 #'
-#' @param traits The matrix dataset for which you want to compute the index
-#' @param sp_com Abundance matrix
+#' @inheritParams fd_fric
 #'
 #' @examples
 #' data(traits_birds)

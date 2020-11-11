@@ -4,12 +4,17 @@
 \alias{fd_raoq}
 \title{Compute Rao's entropy index (Rao's Q)}
 \usage{
-fd_raoq(traits, sp_com)
+fd_raoq(traits, sp_com, dist_matrix = NULL)
 }
 \arguments{
 \item{traits}{The matrix dataset for which you want to compute the index}
 
-\item{sp_com}{Abundance matrix}
+\item{sp_com}{Site-species matrix with sites as rows and species as columns
+if not provided, the function considers all species with equal
+abundance in a single site}
+
+\item{dist_matrix}{A dissimilarity matrix that can be provided instead of a
+trait data.frame}
 }
 \value{
 The value of Rao's Q (numeric of length 1)

@@ -4,10 +4,14 @@
 \alias{fd_fric}
 \title{Compute Functional Richness (FRic)}
 \usage{
-fd_fric(traits)
+fd_fric(traits, sp_com)
 }
 \arguments{
 \item{traits}{The matrix dataset for which you want to compute the index}
+
+\item{sp_com}{Site-species matrix with sites as rows and species as columns
+if not provided, the function considers all species with equal
+abundance in a single site}
 }
 \value{
 The value of FRic (numeric of length 1)
