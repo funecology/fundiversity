@@ -52,16 +52,13 @@ fd_fric(traits_birds)
 
 ## Related Packages
 
-* [`FD`](https://cran.r-project.org/package=FD) historical package to compute
-  functional diversity indices, but has not been update since August 2014;
-* [`hillR`](https://cran.r-project.org/package=hillR) can compute hill Numbers
-  for taxonomic, functional, and phylogenetic diversity, but it does not include
-  other functional diversity indices;
-* [`adiv`](https://cran.r-project.org/package=adiv) proposes various diversity
-  indices adapted from Rao's Quadratic Entropy but doesn't include other
-  functional diversity indices;
-* [`fundiv`](https://github.com/ibartomeus/fundiv), is a wrapper around the `FD`
-  package but hasn't been updated since 2016 and hasn't been published on CRAN;
-
-Read more about other packages that are similar to `fundiversity` on our
-[dedicated wiki page](https://github.com/Bisaloo/fundiversity/wiki/Similar-packages)
+| Package Name                                          |                    Indices included                       |     Has tests    | On GitHub        | On CRAN | Last updated (CRAN) |
+|-------------------------------------------------------|-----------------------------------------------------------|------------------|------------------|---------|---------------------|
+| [`FD`](https://github.com/cran/FD)                    |FRic, FDiv, FDis, FEve, Rao's QE, Functional Group Richness|:x:               |:x:               |:white_check_mark:         |2014-08-19           |
+| [`adiv`](https://github.com/cran/adiv)                |Functional Entropy, Functional Redundancy                       |:x:               |:x:               |:white_check_mark:         |2020-08-26           |
+| [`betapart`](https://github.com/cran/betapart)        |Functional β-diversity                                     |:x:               |:x:               |:white_check_mark:         |2020-09-09           |
+| [`entropart`](https://github.com/EricMarcon/entropart)|Functional Entropy                                         |:white_check_mark:|:white_check_mark:|:white_check_mark:        |2020-01-22           |
+| [`hillR`](https://github.com/daijiang/hillR)          |Functional Diversity Hill Number                           |:white_check_mark:|:white_check_mark:|:white_check_mark:        |2020-07-07           |
+| [`fundiv`](https://github.com/ibartomeus/fundiv)      |FRic, FDiv, FDis, FEve, Rao's QE, dendrogram FD            |:x:               |:white_check_mark:|:x:                                          |-                    | 
+| [`vegan`](https://github.com/vegandevs/vegan)         |Only dendrogram-based FD (`treedive()`)                                  |:white_check_mark:|:white_check_mark:|:white_check_mark:        |2019-09-01           |              
+| [`TPD`](https://github.com/cran/TPD)                  |FRic, FDiv, FEve but for probability distributions         |:x:              |:x:                |:white_check_mark:         |2019-07-02           |
