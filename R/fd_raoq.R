@@ -72,11 +72,7 @@ fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
 
   # Compute Rao's Quadratic entropy over each row
   q_site <- apply(sp_com, 1, function(sp_site) {
-    Q <- sum(combn(length(sp_site), 2, function(ij) {
-      i <- ij[1]
-      j <- ij[2]
-      dist_matrix[i,j] * sp_site[i] * sp_site[j]
-    }))
+    Q <- sum(dist_matrix * outer(sp_site, sp_site)) / 2
   })
 
  data.frame(site = row.names(sp_com),
