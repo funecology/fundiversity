@@ -35,27 +35,35 @@ fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
     traits <- as.matrix(traits)
   }
 
-  d <- dist_matrix
-
   if (is.null(dist_matrix)) {
-    d <- as.matrix(dist(traits))
+    dist_matrix <- dist(traits)
   }
+
+  dist_matrix <- as.matrix(dist_matrix)
 
   if (!missing(sp_com)) {
 
-    if (!all(labels(d)[[1]] %in% colnames(sp_com))) {
+    if (!all(rownames(dist_matrix) %in% colnames(sp_com))) {
       stop(
         "Please provide a site-species matrix that contains all species ",
         "from your traits dataset/dissimilarity matrix", call. = FALSE
       )
     }
 
-    sp_com <- sp_com[,labels(d)[[1]], drop = FALSE]
+    if (!all(colnames(sp_com) %in% rownames(dist_matrix))) {
+      warning(
+        "Some species included in your traits dataset/dissimilairy matrix are ",
+        "not included in your sp_com matrix and have been dropped from the ",
+        "computation.", call. = FALSE
+      )
+    }
+
+    sp_com <- sp_com[, rownames(dist_matrix), drop = FALSE]
 
   } else {
 
-    sp_com <- matrix(1, ncol = length(labels(d)[[1]]),
-                     dimnames = list("s1", labels(d)[[1]]))
+    sp_com <- matrix(1, ncol = nrow(dist_matrix),
+                     dimnames = list("s1", rownames(dist_matrix)))
 
   }
 
@@ -67,7 +75,7 @@ fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
     Q <- sum(combn(length(site_row), 2, function(ij) {
       i <- ij[1]
       j <- ij[2]
-      d[i,j] * site_row[i] * site_row[j]
+      dist_matrix[i,j] * site_row[i] * site_row[j]
     }))
   })
 
