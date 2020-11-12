@@ -13,6 +13,15 @@ test_that("Functional Divergence output format", {
   expect_equal(colnames(fdiv), c("site", "FDiv"))
 })
 
+test_that("Functional Divergence works in 1D", {
+
+  expect_identical(
+    fd_fdiv(traits_birds[, 1]),
+    fd_fdiv(traits_birds[, 1, drop = FALSE])
+  )
+
+})
+
 test_that("Functional Divergence fails gracefully", {
 
   # No traits

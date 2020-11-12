@@ -20,7 +20,7 @@ fd_fdiv <- function(traits, sp_com) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if (is.data.frame(traits)) {
+  if (is.data.frame(traits) | is.vector(traits)) {
     traits <- as.matrix(traits)
   }
 

@@ -27,11 +27,7 @@ fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
     )
   }
 
-  if (is.data.frame(traits)) {
-    traits <- as.matrix(traits)
-  }
-
-  if (is.vector(traits)) {
+  if (is.data.frame(traits) | is.vector(traits)) {
     traits <- as.matrix(traits)
   }
 

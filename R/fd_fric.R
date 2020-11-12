@@ -26,7 +26,7 @@ fd_fric <- function(traits, sp_com) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if (is.data.frame(traits)) {
+  if (is.data.frame(traits) | is.vector(traits)) {
     data <- as.matrix(traits)
   }
 
