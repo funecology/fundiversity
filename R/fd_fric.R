@@ -48,10 +48,10 @@ fd_fric <- function(traits, sp_com) {
 
   }
 
-  if (ncol(traits) == 1) {
+  if (ncol(traits) == 1L) {
 
     fric_site <- apply(sp_com, 1, function(site_row) {
-      diff(range(traits[site_row,]))
+      diff(range(traits[site_row > 0,]))
     })
 
   } else {
