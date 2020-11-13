@@ -45,6 +45,9 @@ fd_fric(traits_birds)
 
 ## Related Packages
 
+We only mention here packages that propose original indices and not
+wrappers around these packages.
+
 | Package Name                                           | Indices included                                            | Has tests            | On GitHub            | On CRAN (last updated)                                   |
 | ------------------------------------------------------ | ----------------------------------------------------------- | -------------------- | -------------------- | -------------------------------------------------------- |
 | [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness | :x:                  | :x:                  | ![](https://www.r-pkg.org/badges/last-release/FD)        |
@@ -52,6 +55,5 @@ fd_fric(traits_birds)
 | [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                      | :x:                  | :x:                  | ![](https://www.r-pkg.org/badges/last-release/betapart)  |
 | [`entropart`](https://github.com/EricMarcon/entropart) | Functional Entropy                                          | :white\_check\_mark: | :white\_check\_mark: | ![](https://www.r-pkg.org/badges/last-release/entropart) |
 | [`hillR`](https://github.com/daijiang/hillR)           | Functional Diversity Hill Number                            | :white\_check\_mark: | :white\_check\_mark: | ![](https://www.r-pkg.org/badges/last-release/hillR)     |
-| [`fundiv`](https://github.com/ibartomeus/fundiv)       | FRic, FDiv, FDis, FEve, Rao’s QE, dendrogram FD             | :x:                  | :white\_check\_mark: | ![](https://www.r-pkg.org/badges/last-release/fundiv)    |
 | [`vegan`](https://github.com/vegandevs/vegan)          | Only dendrogram-based FD (`treedive()`)                     | :white\_check\_mark: | :white\_check\_mark: | ![](https://www.r-pkg.org/badges/last-release/vegan)     |
 | [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions          | :x:                  | :x:                  | ![](https://www.r-pkg.org/badges/last-release/TPD)       |
