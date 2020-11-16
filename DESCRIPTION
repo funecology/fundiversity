@@ -1,5 +1,5 @@
 Package: fundiversity
-Title: Fast and modular alternative to compute functional diversity indices
+Title: Fast and Modular Alternative to Compute Functional Diversity Indices
 Version: 0.0.0.9000
 Authors@R: 
     c(
