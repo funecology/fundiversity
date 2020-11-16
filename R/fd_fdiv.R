@@ -49,7 +49,7 @@ fd_fdiv <- function(traits, sp_com) {
   fdiv_site <- apply(sp_com, 1, function(sp_site) {
 
     # Select traits for species actually in site
-    sub_traits <- traits[site_row > 0,, drop = FALSE]
+    sub_traits <- traits[sp_site > 0,, drop = FALSE]
 
     G <- colMeans(sub_traits, na.rm = TRUE)
 
