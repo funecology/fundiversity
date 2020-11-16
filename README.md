@@ -7,6 +7,8 @@
 
 [![Lifecycle:
 maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![R build
+status](https://github.com/Bisaloo/fundiversity/workflows/R-CMD-check/badge.svg)](https://github.com/Bisaloo/fundiversity/actions)
 <!-- badges: end -->
 
 The goal of fundiversity is to provide a package to compute common
@@ -39,8 +41,7 @@ data("traits_birds")
 
 # Compute Functional Richness of all birds included
 fd_fric(traits_birds)
-#>    site     FRic
-#> s1   s1 230967.7
+#> [1] 230967.7
 ```
 
 ## Related Packages
