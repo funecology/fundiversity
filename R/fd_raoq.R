@@ -16,6 +16,8 @@
 #' Environmental and Ecological Statistics, 12(2), 125–138.
 #' \doi{10.1007/s10651-005-1037-2}
 #'
+#' @importFrom stats dist
+#'
 #' @export
 fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
 
