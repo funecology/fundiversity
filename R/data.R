@@ -18,7 +18,7 @@
 #' @source Nowak, Larissa et al. (2019), Data from: Projecting consequences of
 #' global warming for the functional diversity of fleshy-fruited plants and
 #' frugivorous birds along a tropical elevational gradient, Dryad, Dataset,
-#' <doi:10.5061/dryad.c0n737b>
+#' \doi{10.5061/dryad.c0n737b}
 "traits_birds"
 
 #' Functional Traits of Fleshy-fruit plants along a Tropical Gradient
@@ -43,5 +43,5 @@
 #' @source Nowak, Larissa et al. (2019), Data from: Projecting consequences of
 #' global warming for the functional diversity of fleshy-fruited plants and
 #' frugivorous birds along a tropical elevational gradient, Dryad, Dataset,
-#' <doi:10.5061/dryad.c0n737b>
+#' \doi{10.5061/dryad.c0n737b}
 "traits_plants"

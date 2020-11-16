@@ -17,7 +17,7 @@ A data frame with 392 rows and 4 variables:
 Nowak, Larissa et al. (2019), Data from: Projecting consequences of
 global warming for the functional diversity of fleshy-fruited plants and
 frugivorous birds along a tropical elevational gradient, Dryad, Dataset,
-\url{doi:10.5061/dryad.c0n737b}
+\doi{10.5061/dryad.c0n737b}
 }
 \usage{
 traits_plants
