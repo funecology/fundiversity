@@ -30,8 +30,9 @@ devtools::install_github("Bisaloo/fundiversity")
 
 ## Example
 
-You can compute functional diversity indices through the functions
-`fd_fric()`, `fd_fdiv()`, and `fd_rao()`:
+You can compute functional diversity indices `fd_fric()` lets you
+compute Functional Richness, `fd_fdiv()` lets you compute functional
+divergence, and `fd_raoq()` lets you compute Rao’s Quadratic Entropy:
 
 ``` r
 library(fundiversity)
@@ -41,7 +42,29 @@ data("traits_birds")
 
 # Compute Functional Richness of all birds included
 fd_fric(traits_birds)
-#> [1] 230967.7
+#>    site     FRic
+#> s1   s1 230967.7
+
+# Compute Functional Divergence
+fd_fdiv(traits_birds)
+#>    site      FDiv
+#> s1   s1 0.6011971
+
+# Compute Rao's Quadratic Entropy
+fd_raoq(traits_birds)
+#>   site        Q
+#> 1   s1 85.02597
+```
+
+To compute Rao’s Quadratic Entropy, the user can also provide a distance
+matrix between species directly:
+
+``` r
+dist_traits_birds = as.matrix(dist(traits_birds))
+
+fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
+#>   site        Q
+#> 1   s1 85.02597
 ```
 
 ## Related Packages
