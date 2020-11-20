@@ -43,7 +43,7 @@ fd_fdiv <- function(traits, sp_com) {
   }
 
   # Standardize abundance per site
-  sp_com <- sweep(sp_com, 1, rowSums(sp_com), "/")
+  sp_com <- sp_com / rowSums(sp_com)
 
   # Compute Functional Divergence
   fdiv_site <- apply(sp_com, 1, function(sp_site) {
