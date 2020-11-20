@@ -1,6 +1,5 @@
 # Preamble code
 data("traits_birds")
-traits_birds_sc <- scale(traits_birds)
 
 # Actual tests
 test_that("Functional Richness output format", {
@@ -12,6 +11,7 @@ test_that("Functional Richness output format", {
   expect_equal(nrow(fric), 1)
   expect_equal(colnames(fric), c("site", "FRic"))
 
+  expect_equal(fd_fric(traits_birds)$FRic, 230967.7, tolerance = 1e-6)
 })
 
 test_that("Functional Richness works in 1D", {
@@ -33,9 +33,9 @@ test_that("Functional Richness fails gracefully", {
 
   # Species matrix doesn't contain species from trait data
   expect_error(
-    fd_raoq(data.frame(a = 1, row.names = "sp1"), matrix(1)),
+    fd_fric(data.frame(a = 1, row.names = "sp1"), matrix(1)),
     paste0("Please provide a site-species matrix that contains all species ",
-           "from your traits dataset"),
+           "from your trait dataset"),
     fixed = TRUE
   )
 })

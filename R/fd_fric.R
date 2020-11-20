@@ -27,7 +27,7 @@ fd_fric <- function(traits, sp_com) {
   }
 
   if (is.data.frame(traits) | is.vector(traits)) {
-    data <- as.matrix(traits)
+    traits <- as.matrix(traits)
   }
 
   if (!missing(sp_com)) {

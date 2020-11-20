@@ -24,11 +24,8 @@ test_that("Rao's entropy output format", {
 })
 
 test_that("Rao's entropy computation are in line with other packages", {
-  if (requireNamespace("hillR", quietly = TRUE)) {
-    expect_equal(fd_raoq(traits_birds, simple_site_sp)$Q,
-                 hillR::hill_func(simple_site_sp, dist(traits_birds),
-                                  traits_as_is = TRUE)[1,])
-  }
+  expect_equal(fd_raoq(traits_birds, simple_site_sp)$Q, 170.0519,
+               tolerance = 1e-6)
 })
 
 test_that("Rao's entropy works in 1D", {
@@ -59,7 +56,7 @@ test_that("Rao's entropy fails gracefully", {
   expect_error(
     fd_raoq(data.frame(a = 1, row.names = "sp1"), matrix(1)),
     paste0("Please provide a site-species matrix that contains all species ",
-    "from your traits dataset/dissimilarity matrix"),
+           "from your traits dataset/dissimilarity matrix"),
     fixed = TRUE
   )
 })
