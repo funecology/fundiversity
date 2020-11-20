@@ -23,6 +23,14 @@ test_that("Rao's entropy output format", {
 
 })
 
+test_that("Rao's entropy computation are in line with other packages", {
+  if (requireNamespace("hillR", quietly = TRUE)) {
+    expect_equal(fd_raoq(traits_birds, simple_site_sp)$Q,
+                 hillR::hill_func(simple_site_sp, dist(traits_birds),
+                                  traits_as_is = TRUE)[1,])
+  }
+})
+
 test_that("Rao's entropy works in 1D", {
 
   expect_identical(
