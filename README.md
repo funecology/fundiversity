@@ -75,7 +75,7 @@ We only mention here packages that propose original indices and not
 wrappers around these packages.
 
 | Package Name                                           | Indices included                                            | Has tests            | On GitHub            | On CRAN (last updated)                                     |
-|--------------------------------------------------------|-------------------------------------------------------------|----------------------|----------------------|------------------------------------------------------------|
+| ------------------------------------------------------ | ----------------------------------------------------------- | -------------------- | -------------------- | ---------------------------------------------------------- |
 | [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness | :x:                  | :x:                  | ![](https://www.r-pkg.org/badges/last-release/FD)          |
 | [`adiv`](https://github.com/cran/adiv)                 | Functional Entropy, Functional Redundancy                   | :x:                  | :x:                  | ![](https://www.r-pkg.org/badges/last-release/adiv)        |
 | [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                      | :x:                  | :x:                  | ![](https://www.r-pkg.org/badges/last-release/betapart)    |
