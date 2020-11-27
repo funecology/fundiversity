@@ -34,8 +34,8 @@ test_that("Functional Richness fails gracefully", {
   # Species matrix doesn't contain species from trait data
   expect_error(
     fd_fric(data.frame(a = 1, row.names = "sp1"), matrix(1)),
-    paste0("Please provide a site-species matrix that contains all species ",
-           "from your trait dataset"),
+    paste0("No species in common found between trait dataset ",
+           "and site-species matrix"),
     fixed = TRUE
   )
 })

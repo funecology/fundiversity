@@ -41,22 +41,10 @@ fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
 
   if (!missing(sp_com)) {
 
-    if (!all(rownames(dist_matrix) %in% colnames(sp_com))) {
-      stop(
-        "Please provide a site-species matrix that contains all species ",
-        "from your traits dataset/dissimilarity matrix", call. = FALSE
-      )
-    }
+    common_species <- species_in_common(dist_matrix, sp_com)
 
-    if (!all(colnames(sp_com) %in% rownames(dist_matrix))) {
-      warning(
-        "Some species included in your traits dataset/dissimilairy matrix are ",
-        "not included in your sp_com matrix and have been dropped from the ",
-        "computation.", call. = FALSE
-      )
-    }
-
-    sp_com <- sp_com[, rownames(dist_matrix), drop = FALSE]
+    dist_matrix <- dist_matrix[common_species, common_species, drop = FALSE]
+    sp_com      <- sp_com[, common_species, drop = FALSE]
 
   } else {
 
