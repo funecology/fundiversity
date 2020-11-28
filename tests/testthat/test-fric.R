@@ -23,6 +23,21 @@ test_that("Functional Richness works in 1D", {
 
 })
 
+test_that("Function Richness works on subset of site/species", {
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  expect_message(fd_fric(traits_birds, site_sp[, 2:ncol(site_sp),
+                                               drop = FALSE]),
+                 paste0("Differing number of species between trait dataset ",
+                        "and site-species matrix\nTaking subset of species"))
+
+  expect_message(fd_fric(traits_birds[2:nrow(traits_birds),], site_sp),
+                 paste0("Differing number of species between trait dataset ",
+                        "and site-species matrix\nTaking subset of species"))
+})
+
 test_that("Functional Richness fails gracefully", {
 
   # No traits
