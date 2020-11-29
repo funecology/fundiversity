@@ -37,6 +37,21 @@ test_that("Rao's entropy works in 1D", {
 
 })
 
+test_that("Rao's Quadraty Entropy works on subset of site/species", {
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  expect_message(fd_raoq(traits_birds, site_sp[, 2:ncol(site_sp),
+                                               drop = FALSE]),
+                 paste0("Differing number of species between trait dataset ",
+                        "and site-species matrix\nTaking subset of species"))
+
+  expect_message(fd_raoq(traits_birds[2:nrow(traits_birds),], site_sp),
+                 paste0("Differing number of species between trait dataset ",
+                        "and site-species matrix\nTaking subset of species"))
+})
+
 test_that("Rao's entropy fails gracefully", {
   # No traits and no dissimilarity
   expect_error(
@@ -55,8 +70,8 @@ test_that("Rao's entropy fails gracefully", {
   # Species matrix doesn't contain species from trait data
   expect_error(
     fd_raoq(data.frame(a = 1, row.names = "sp1"), matrix(1)),
-    paste0("Please provide a site-species matrix that contains all species ",
-           "from your traits dataset/dissimilarity matrix"),
+    paste0("No species in common found between trait dataset ",
+           "and site-species matrix"),
     fixed = TRUE
   )
 })

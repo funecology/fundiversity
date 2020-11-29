@@ -32,14 +32,11 @@ fd_fric <- function(traits, sp_com) {
 
   if (!missing(sp_com)) {
 
-    if (!all(row.names(traits) %in% colnames(sp_com))) {
-      stop(
-        "Please provide a site-species matrix that contains all species ",
-        "from your trait dataset", call. = FALSE
-      )
-    }
+    common_species <- species_in_common(traits, sp_com)
 
-    sp_com <- sp_com[, row.names(traits), drop = FALSE]
+    traits <- traits[common_species,, drop = FALSE]
+    sp_com <- sp_com[, common_species, drop = FALSE]
+
 
   } else {
 
