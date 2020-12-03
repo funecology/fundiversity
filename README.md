@@ -13,12 +13,14 @@ status](https://github.com/Bisaloo/fundiversity/workflows/R-CMD-check/badge.svg)
 Status](https://codecov.io/gh/Bisaloo/fundiversity/branch/master/graph/badge.svg?token=HR4YH118VT)](https://codecov.io/gh/Bisaloo/fundiversity)
 <!-- badges: end -->
 
-The goal of fundiversity is to provide a package to compute common
+`fundiversity` provides a lightweight package to compute common
 functional diversity indices. The package is built using clear, public
 [design
 principles](https://github.com/Bisaloo/fundiversity/wiki/Design-principles)
 inspired from our own experience and user feedback. We also strive to
-use the latest good practice in software and R package development.
+use the latest good practice in software and R package development,
+including minimal dependencies on external packages (currently
+`fundiversity` only depends on `geometry`).
 
 ## Installation
 
@@ -32,9 +34,11 @@ devtools::install_github("Bisaloo/fundiversity")
 
 ## Example
 
-You can compute functional diversity indices `fd_fric()` lets you
-compute Functional Richness, `fd_fdiv()` lets you compute functional
-divergence, and `fd_raoq()` lets you compute Rao’s Quadratic Entropy:
+`fundiversity` lets you compute three classical functional diversity
+indices: Functional Richness with `fd_fric()`, Functional Divergence
+with `fd_fdiv()`, and Rao’s Quadratic Entropy with \`fd\_raoq(). All
+indices can be computed either using global trait data or at the
+site-level:
 
 ``` r
 library(fundiversity)
@@ -71,8 +75,9 @@ fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 
 ## Related Packages
 
-We only mention here packages that propose original indices and not
-wrappers around these packages.
+Several other packages exist that compute functional diversity indices,
+we here mention some of them (but do not mention the wrappers around
+these packages):
 
 | Package Name                                           | Indices included                                            | Has tests            | On GitHub            | On CRAN (last updated)                                     |
 | ------------------------------------------------------ | ----------------------------------------------------------- | -------------------- | -------------------- | ---------------------------------------------------------- |
