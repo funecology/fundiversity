@@ -14,15 +14,45 @@ knitr::opts_chunk$set(
 )
 ```
 
-fundiversity let's you compute functional diversity indices. Currently it can compute three indices: functional richness, functional divergence, and Rao's quadratic entropy. This vignette will introduce you to the data needed to compute the indices as well as the computation and interpretation of each index.
+fundiversity let's you compute functional diversity indices. Currently it can compute three indices: functional richness (FRic), functional divergence (FDiv), and Rao's quadratic entropy (Q). This vignette will introduce you to the data needed to compute the indices as well as the computation and interpretation of each index.
 
-# What do you need?
 
-For that you need two types of data. Trait data and site-species matrix.
+# The data needed
 
-The row.names of the trait data need to correspond to the column names of the site species matrix.
+To compute functional diversity indices you will need at least a dataset describing species traits, i.e species characteristics. Note that we here talk about species but the reasoning could apply on whatever unit you're interested in whether its individual organisms, ecological plots, or even entire ecosystems. The traits are the features that describe these units.
 
-Data included in the package. Cite the reference
+`fundiversity` comes with one example trait dataset. The dataset comes from Nowak et al. (2019) and describe the traits of birds and plants along a tropical gradient.
+You can see the datasets available in `fundiversity` using the `data()` function:
+
+```{r see-data}
+data(package = "fundiversity")
+```
+
+To load them use their names into the `data()` function:
+
+```{r load-data-traits}
+data("traits_birds")
+
+head(traits_birds)
+
+data("traits_plants")
+
+head(traits_plants)
+```
+
+Note that in these datasets the species are shown in rows, with species names as row names, and traits are in columns.
+
+Functional diversity indices are generally computed at different locations that we call hereafter sites. For that we need a description of which species is in which site in the form of a site-species matrix. Again, we're calling it a site-species matrix but it can varies depending on the unit you want to compute functional diversity on.
+
+`fundiversity` contains the corresponding site-species matrices to the above-mentioned trait dataset (Nowak et al. 2019). 
+
+```{r load-data-site-sp}
+# Show site-species matrices
+```
+
+The site species matrix represent the presence of a given species (in column) in a given site (in row). Here the site-species matrix contains only 0 (absence) and 1 (presence), but `fundiversity` can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).
+
+To ensure the good computation of functional diversity indices, the row names of the trait data need to correspond to the column names of the site species matrix.
 
 # Computing the indices
 
