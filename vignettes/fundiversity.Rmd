@@ -1,0 +1,50 @@
+---
+title: "Computing functional diversity indices with `fundiversity`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{fundiversity}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+fundiversity let's you compute functional diversity indices. Currently it can compute three indices: functional richness, functional divergence, and Rao's quadratic entropy. This vignette will introduce you to the data needed to compute the indices as well as the computation and interpretation of each index.
+
+# What do you need?
+
+For that you need two types of data. Trait data and site-species matrix.
+
+The row.names of the trait data need to correspond to the column names of the site species matrix.
+
+Data included in the package. Cite the reference
+
+# Computing the indices
+
+## Functional Richness (FRic)
+
+It represents this and that. Convex hull volume
+
+## Functional Divergence (FDiv)
+
+Center of gravity. Can be weighted by the abundances.
+
+## Rao's Quadratic Entropy (Q)
+
+```{r setup}
+library(fundiversity)
+```
+
+# What if not all traits are continuous?
+
+Do not panic. You can still compute the above-mentioned functional diversity indices.
+
+PCoA for example -> main dimensions -> trait table back.
+
+Cite mFD paper/Gower's distance/Pavoine et al.
+

@@ -1,0 +1,34 @@
+---
+title: "Performance comparison with other functional diversity packages"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{performance}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette presents some performance tests ran between `fundiversity` and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is **pre-computed**.
+
+# Other packages
+
+# Test data
+
+
+
+```{r setup}
+library(fundiversity)
+```
+
+<details>
+<summary>Session Info on which the benchmark was ran</summary>
+```{r sessioninfo}
+sessioninfo::session_info()
+```
+</details>
