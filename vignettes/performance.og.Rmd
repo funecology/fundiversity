@@ -16,14 +16,31 @@ knitr::opts_chunk$set(
 
 This vignette presents some performance tests ran between `fundiversity` and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is **pre-computed**.
 
-# Other packages
+# Other functions/packages to compute functional diversity indices
+
+FD::dbFD()
+
+hillR::hill_func()
+
+adiv::QE()
+
 
 # Test data
 
-
-
 ```{r setup}
 library(fundiversity)
+```
+
+```{r bench-traits}
+
+```
+
+```{r bench-species}
+
+```
+
+```{r bench-both}
+
 ```
 
 <details>
