@@ -1,8 +1,9 @@
 ---
 title: "Computing functional diversity indices with `fundiversity`"
 output: rmarkdown::html_vignette
+bibliography: fundiversity.bib
 vignette: >
-  %\VignetteIndexEntry{fundiversity}
+  %\VignetteIndexEntry{Computing functional diversity indices with `fundiversity`}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,7 +22,7 @@ fundiversity let's you compute functional diversity indices. Currently it can co
 
 To compute functional diversity indices you will need at least a dataset describing species traits, i.e species characteristics. Note that we here talk about species but the reasoning could apply on whatever unit you're interested in whether its individual organisms, ecological plots, or even entire ecosystems. The traits are the features that describe these units.
 
-`fundiversity` comes with one example trait dataset. The dataset comes from Nowak et al. (2019) and describe the traits of birds and plants along a tropical gradient.
+`fundiversity` comes with one example trait dataset. The dataset comes from Nowak et al. [-@Nowak_Projecting_2019] and describe the traits of birds and plants along a tropical gradient [@Nowak_Data_2019].
 You can see the datasets available in `fundiversity` using the `data()` function:
 
 ```{r see-data}
@@ -31,44 +32,90 @@ data(package = "fundiversity")
 To load them use their names into the `data()` function:
 
 ```{r load-data-traits}
-data("traits_birds")
+data("traits_birds", package = "fundiversity")
 
 head(traits_birds)
 
-data("traits_plants")
+data("traits_plants", package = "fundiversity")
 
 head(traits_plants)
 ```
 
 Note that in these datasets the species are shown in rows, with species names as row names, and traits are in columns.
 
-Functional diversity indices are generally computed at different locations that we call hereafter sites. For that we need a description of which species is in which site in the form of a site-species matrix. Again, we're calling it a site-species matrix but it can varies depending on the unit you want to compute functional diversity on.
+Functional diversity indices are generally computed at different locations that we call hereafter sites. For that we need a description of which species is in which site in the form of a site-species matrix. Again, we're calling it a site-species matrix but the granularity of both your "species" and "site" units can vary depending on what you want to compute functional diversity on.
 
-`fundiversity` contains the corresponding site-species matrices to the above-mentioned trait dataset (Nowak et al. 2019). 
+`fundiversity` contains the corresponding site-species matrices to the above-mentioned trait dataset [@Nowak_Data_2019]: 
 
 ```{r load-data-site-sp}
 # Show site-species matrices
 ```
 
-The site species matrix represent the presence of a given species (in column) in a given site (in row). Here the site-species matrix contains only 0 (absence) and 1 (presence), but `fundiversity` can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).
+The site species matrix represent the presence of a given species (in column) in a given site (in row), similar to the format used in the [`vegan`](https://cran.r-project.org/package=vegan) package. Here the site-species matrix contains only 0 (absence) and 1 (presence), but `fundiversity` can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).
 
-To ensure the good computation of functional diversity indices, the row names of the trait data need to correspond to the column names of the site species matrix.
+To ensure the good computation of functional diversity indices, at least some of species names (row names) in the trait data need to be in to the column names of the site species matrix:
+
+```{r not-enough-speices, error=TRUE}
+
+```
 
 # Computing the indices
 
-## Functional Richness (FRic)
-
-It represents this and that. Convex hull volume
-
-## Functional Divergence (FDiv)
-
-Center of gravity. Can be weighted by the abundances.
-
-## Rao's Quadratic Entropy (Q)
-
 ```{r setup}
-library(fundiversity)
+library("fundiversity")
 ```
+
+
+## Functional Richness (FRic) - `fd_fric()`
+
+Functional Richness (FRic) represents the total amount of functional space filed by a community in a dataset [@Villeger_New_2008]. You can compute FRic in `fundiversity` using the `fd_fric()` function.
+
+For a single trait range FRic is the range of trait observed in the dataset:
+
+```{r fric-1d}
+# Range of bill width in the birds dataset
+diff(range(traits_birds[, "Bill.width..mm."]))
+
+# Computation with fundiversity::fd_ric.
+fd_fric(traits_birds)
+```
+
+The first column `site` describes the site on which FRic has been computed while the `FRic` column contains the computed FRic values. If no site-species matrix has been provided the site is named by default `s1`.
+
+For multiple traits, FRic can be thought as a multi-dimensional range which is computed as the convex hull volume of the considered species [@Villeger_New_2008]:
+
+```{r fric-nd}
+fd_fric(traits_birds)
+```
+
+If you provide only a trait dataset without specifying site-species matrix `fd_fric()` computes FRic on the full trait dataset.
+You can compute FRic values for different sites by providing both a trait dataset and a site-species matrix to `fd_fric()`:
+
+```{r fric-nd-sites}
+
+```
+
+Because the convex hull volume depends on the number and the units of the traits used, it is difficult to compare across datasets, that is why it has been suggested to standardize its value by the total volume comprising all species in the dataset [@Villeger_New_2008]:
+
+```{r fric-stand}
+fd_fric(traits_birds, stand = TRUE)
+```
+
+The newly computed FRic values will then be comprised between 0 and 1.
+
+## Functional Divergence (FDiv) - `fd_fdiv()`
+
+Functional Divergence (FDiv) represents how abundance is spread along the different traits [@Villeger_New_2008].
+
+## Rao's Quadratic Entropy (Q) - `fd_raoq()`
+
+Rao's Quadratic entropy [@Rao_Diversity_1982]
+
+# Standardizing your trait data
+
+`fundiversity` does not modify the input trait or dissimilarity data. In `fd_raoq()` if you provide only continuous trait data then the function will attempt computing Euclidean distance between the species.
+
+In order to get comparable functional diversity indices you can standardize the trait data through different techniques.
 
 # What if not all traits are continuous?
 
@@ -76,5 +123,6 @@ Do not panic. You can still compute the above-mentioned functional diversity ind
 
 PCoA for example -> main dimensions -> trait table back.
 
-Cite mFD paper/Gower's distance/Pavoine et al.
+Cite mFD paper/Gower's distance/Pavoine et al. [@Gower_general_1971; @Maire_How_2015; @Pavoine_challenge_2009; @Podani_Extending_1999].
 
+# References
