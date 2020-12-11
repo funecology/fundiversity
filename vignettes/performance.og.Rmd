@@ -1,8 +1,9 @@
 ---
 title: "Performance comparison with other functional diversity packages"
 output: rmarkdown::html_vignette
+bibliography: performance.bib
 vignette: >
-  %\VignetteIndexEntry{performance}
+  %\VignetteIndexEntry{Performance comparison with other functional diversity packages}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,14 +19,15 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 
 # Other functions/packages to compute functional diversity indices
 
-FD::dbFD()
+**`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by Laliberté and Legendre [-@Laliberte_FD_2014]. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
 
-hillR::hill_func()
+**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by Chao and colleagues [-@Chao_Unifying_2014]. It computes Rao's quadratic entropy, the mean functional diversity per species, the toal functional diversity.
 
-adiv::QE()
-
+**`adiv::QE()`** comes from the `adiv` package which proposes a toolkit to analyze biodiversity [@Pavoine_adiv_2020]. This function computes Rao's quadratic entropy.
 
 # Test data
+
+We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages.
 
 ```{r setup}
 library(fundiversity)
@@ -49,3 +51,5 @@ library(fundiversity)
 sessioninfo::session_info()
 ```
 </details>
+
+# References
