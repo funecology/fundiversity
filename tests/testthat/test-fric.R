@@ -38,6 +38,25 @@ test_that("Function Richness works on subset of site/species", {
                         "and site-species matrix\nTaking subset of species"))
 })
 
+
+test_that("Functional Richness can standardize its values", {
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  site_sp2 <- rbind(site_sp, site_sp)
+  rownames(site_sp2) <- paste0("s", 1:2)
+  site_sp2[2, 120] <- 0  # Remove Penelope jacquacy which is the biggest bird
+
+  fric <- fd_fric(traits_birds, stand = TRUE)
+  fric_low_1 <- suppressMessages(fd_fric(traits_birds, site_sp2, stand = TRUE))
+
+  expect_equal(fric$FRic[[1]], 1)
+  expect_equal(fric_low_1$FRic[[1]], 1)
+  expect_lt(fric_low_1$FRic[[2]], 1)
+})
+
 test_that("Functional Richness fails gracefully", {
 
   # No traits

@@ -4,7 +4,7 @@
 \alias{fd_fric}
 \title{Compute Functional Richness (FRic)}
 \usage{
-fd_fric(traits, sp_com)
+fd_fric(traits, sp_com, stand = FALSE)
 }
 \arguments{
 \item{traits}{The matrix dataset for which you want to compute the index}
@@ -12,6 +12,14 @@ fd_fric(traits, sp_com)
 \item{sp_com}{Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
 abundance in a single site}
+
+\item{stand}{a boolean indicating whether to standardize FRic values over
+the observed maximum over all species (default: \code{FALSE}).
+This scales FRic between 0 and 1.
+\strong{NB}: The maximum FRic values only considers species that are
+present in \strong{both} site-species and trait matrices.
+If you want to consider species that are absent
+in the site-species matrix, add corresponding columns of 0s.}
 }
 \value{
 The value of FRic (numeric of length 1)

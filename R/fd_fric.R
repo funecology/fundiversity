@@ -7,6 +7,13 @@
 #' @param sp_com Site-species matrix with sites as rows and species as columns
 #'               if not provided, the function considers all species with equal
 #'               abundance in a single site
+#' @param stand  a boolean indicating whether to standardize FRic values over
+#'               the observed maximum over all species (default: `FALSE`).
+#'               This scales FRic between 0 and 1.
+#'               **NB**: The maximum FRic values only considers species that are
+#'               present in **both** site-species and trait matrices.
+#'               If you want to consider species that are absent
+#'               in the site-species matrix, add corresponding columns of 0s.
 #'
 #' @examples
 #' data(traits_birds)
@@ -20,7 +27,7 @@
 #' \doi{10.1890/0012-9658(2006)87[1465:ATTFHF]2.0.CO;2}
 #'
 #' @export
-fd_fric <- function(traits, sp_com) {
+fd_fric <- function(traits, sp_com, stand = FALSE) {
 
   if (missing(traits) | is.null(traits)) {
     stop("Please provide a trait dataset", call. = FALSE)
@@ -45,7 +52,13 @@ fd_fric <- function(traits, sp_com) {
 
   }
 
+  max_range <- 1
+
   if (ncol(traits) == 1L) {
+
+    if (stand) {
+      max_range <- diff(range(traits))
+    }
 
     fric_site <- apply(sp_com, 1, function(site_row) {
       diff(range(traits[site_row > 0,]))
@@ -53,10 +66,14 @@ fd_fric <- function(traits, sp_com) {
 
   } else {
 
+    if (stand) {
+      max_range <- geometry::convhulln(traits, "FA")$vol
+    }
+
     fric_site <- apply(sp_com, 1, function(site_row) {
       geometry::convhulln(traits[site_row > 0,], "FA")$vol
     })
   }
 
-  data.frame(site = row.names(sp_com), FRic = fric_site)
+  data.frame(site = row.names(sp_com), FRic = fric_site/max_range)
 }
