@@ -21,6 +21,11 @@ test_that("Functional Richness works in 1D", {
     fd_fric(traits_birds[, 1, drop = FALSE])
   )
 
+  expect_identical(
+    fd_fric(traits_birds[, 1], stand = TRUE),
+    fd_fric(traits_birds[, 1, drop = FALSE], stand = TRUE)
+  )
+
 })
 
 test_that("Function Richness works on subset of site/species", {
