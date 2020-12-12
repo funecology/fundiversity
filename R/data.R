@@ -28,10 +28,8 @@
 #' width (mm), plant height (m) and crop mass (g). Fruit traits have been
 #' measured on fresh fruit samples. Number of fruits per plant
 #' (used to determine the crop mass) and plant height have been estimated
-#' in the field. Given are species mean trait values, except for 23 species
-#' for which no species-level data was available and genus mean trait values
-#' are given (see column "Genus mean"). Species names are indicated as
-#' row names.  Plant.height..m. Crop.mass..g.
+#' in the field. Species names are indicated as
+#' row names.
 #'
 #' @format A data frame with 392 rows and 4 variables:
 #' \describe{
@@ -45,3 +43,49 @@
 #' frugivorous birds along a tropical elevational gradient, Dryad, Dataset,
 #' \doi{10.5061/dryad.c0n737b}
 "traits_plants"
+
+#' Site-species matrix of birds along a Tropical Gradient
+#'
+#' Presences and absences of birds at different elevations along a tropical
+#' gradient. Species names are indicated as row names.
+#'
+#' @format A matrix with 217 rows and 8 columns:
+#' \describe{
+#'   \item{elev_250}{is species present at 250 m elevation? 0=No, 1=Yes}
+#'   \item{elev_500}{is species present at 500 m elevation? 0=No, 1=Yes}
+#'   \item{elev_1000}{is species present at 1000 m elevation? 0=No, 1=Yes}
+#'   \item{elev_1500}{is species present at 1500 m elevation? 0=No, 1=Yes}
+#'   \item{elev_2000}{is species present at 2000 m elevation? 0=No, 1=Yes}
+#'   \item{elev_2500}{is species present at 2500 m elevation? 0=No, 1=Yes}
+#'   \item{elev_3000}{is species present at 3000 m elevation? 0=No, 1=Yes}
+#'   \item{elev_3500}{is species present at 3500 m elevation? 0=No, 1=Yes}
+#' }
+#' @source Nowak, Larissa et al. (2019), Data from: Projecting consequences of
+#' global warming for the functional diversity of fleshy-fruited plants and
+#' frugivorous birds along a tropical elevational gradient, Dryad, Dataset,
+#' \doi{10.5061/dryad.c0n737b}
+"site_sp_birds"
+
+#' Site-species matrix of plants along a Tropical Gradient
+#'
+#' Presences and absences of plants at different elevations along a tropical
+#' gradient. Species names are indicated as row names.
+#'
+#' @format A matrix with 392 rows and 1° columns:
+#' \describe{
+#'   \item{elev_250}{is species present at 250 m elevation? 0=No, 1=Yes}
+#'   \item{elev_500}{is species present at 500 m elevation? 0=No, 1=Yes}
+#'   \item{elev_1000}{is species present at 1000 m elevation? 0=No, 1=Yes}
+#'   \item{elev_1500}{is species present at 1500 m elevation? 0=No, 1=Yes}
+#'   \item{elev_2000}{is species present at 2000 m elevation? 0=No, 1=Yes}
+#'   \item{elev_2500}{is species present at 2500 m elevation? 0=No, 1=Yes}
+#'   \item{elev_3000}{is species present at 3000 m elevation? 0=No, 1=Yes}
+#'   \item{elev_3500}{is species present at 3500 m elevation? 0=No, 1=Yes}
+#'   \item{elev_3750}{is species present at 3750 m elevation? 0=No, 1=Yes}
+#'   \item{elev_4000}{is species present at 4000 m elevation? 0=No, 1=Yes}
+#' }
+#' @source Nowak, Larissa et al. (2019), Data from: Projecting consequences of
+#' global warming for the functional diversity of fleshy-fruited plants and
+#' frugivorous birds along a tropical elevational gradient, Dryad, Dataset,
+#' \doi{10.5061/dryad.c0n737b}
+"site_sp_plants"

@@ -28,9 +28,7 @@ the Manu National Park in south-east Peru. Given are fruit length and
 width (mm), plant height (m) and crop mass (g). Fruit traits have been
 measured on fresh fruit samples. Number of fruits per plant
 (used to determine the crop mass) and plant height have been estimated
-in the field. Given are species mean trait values, except for 23 species
-for which no species-level data was available and genus mean trait values
-are given (see column "Genus mean"). Species names are indicated as
-row names.  Plant.height..m. Crop.mass..g.
+in the field. Species names are indicated as
+row names.
 }
 \keyword{datasets}
