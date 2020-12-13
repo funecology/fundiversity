@@ -181,7 +181,32 @@ fd_raoq(traits = NULL, site_sp_birds, dist_matrix = as.matrix(trait_dissim))
 
 `fundiversity` does not modify the input trait or dissimilarity data. In `fd_raoq()` if you provide only continuous trait data then the function will attempt computing Euclidean distance between the species.
 
-In order to get comparable functional diversity indices you can standardize the trait data. One option would be to consider
+In order to get comparable functional diversity indices you can standardize the trait data. One option would be to consider the `scale()` function to scale each continuous trait with a mean of zero and a standard deviation of one (z-score). Each trait will then have the same importance when computing functional diversity indices:
+
+```{r scale_traits}
+traits_birds_sc <- scale(traits_birds)
+summary(traits_birds_sc)
+
+# Unscaled
+fd_fric(traits_birds)
+
+# Scaled
+fd_fric(traits_birds_sc)
+```
+Another solution to make trait comparable is to scale them between 0 and 1 by scaling each trait by its maximum and minimum values:
+
+```{r minmax_traits}
+min_values <- as.numeric(lapply(as.data.frame(traits_birds), min))
+max_values <- as.numeric(lapply(as.data.frame(traits_birds), max))
+
+traits_birds_minmax <- apply(traits_birds, 1, function(x) {
+  (x - min_values)/(max_values - min_values)
+})
+traits_birds_minmax <- t(traits_birds_minmax)
+summary(traits_birds_minmax)
+```
+
+There are several other options available to standardize trait values, reviewed in Leps et al. [-@Leps_Quantifying_2006a].
 
 If not all the traits you use are continuous, refer to the next section, which suggests ways of computing functional diversity indices with non-continuous traits.
 
