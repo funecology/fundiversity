@@ -17,6 +17,10 @@ knitr::opts_chunk$set(
 
 fundiversity let's you compute functional diversity indices. Currently it can compute three indices: functional richness (FRic), functional divergence (FDiv), and Rao's quadratic entropy (Q). This vignette will introduce you to the data needed to compute the indices as well as the computation and interpretation of each index.
 
+```{r setup}
+library("fundiversity")
+```
+
 
 # The data needed
 
@@ -65,21 +69,16 @@ To ensure the good computation of functional diversity indices, at least some of
 
 ```{r not-enough-species, error=TRUE}
 # Fewer traits than species in the site-species matrix
-fundiversity::fd_fric(traits_birds[2:217,], site_sp_birds)
+fd_fric(traits_birds[2:217,], site_sp_birds)
 
 # Fewer species in the site-species matrix than in the traits
-fundiversity::fd_fric(traits_birds, site_sp_birds[, 1:5])
+fd_fric(traits_birds, site_sp_birds[, 1:5])
 
 # No species in common between both dataset
-fundiversity::fd_fric(traits_birds[1:5,], site_sp_birds[, 6:10])
+fd_fric(traits_birds[1:5,], site_sp_birds[, 6:10])
 ```
 
 # Computing the indices
-
-```{r setup}
-library("fundiversity")
-```
-
 
 ## Functional Richness (FRic) - `fd_fric()`
 
@@ -124,19 +123,67 @@ fd_fric(traits_birds, site_sp_birds, stand = TRUE)
 
 Each row gives the standardized FRic values of each site.
 
+
 ## Functional Divergence (FDiv) - `fd_fdiv()`
 
-Functional Divergence (FDiv) represents how abundance is spread along the different traits [@Villeger_New_2008].
+Functional Divergence (FDiv) represents how abundance is spread along the different traits [@Villeger_New_2008]. When a species with extreme trait values has the highest abundance then functional divergence is high.
+
+Use the `fd_fdiv()` function to compute functional divergence:
+
+```{r fdiv-intro}
+# One-dimension FDiv
+fd_fdiv(traits_birds[, 1, drop = FALSE])
+
+# Multimple dimension FDiv
+fd_fdiv(traits_birds)
+```
+
+When no site-species matrix is provided, FDiv is computed by default considering all the species together. If you provide a site-species matrix then FDiv is computed across all sites:
+
+```{r fdiv-sites}
+fd_fdiv(traits_birds, site_sp_birds)
+```
+
+Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_fdiv()` will take the common subset of species.
+
 
 ## Rao's Quadratic Entropy (Q) - `fd_raoq()`
 
-Rao's Quadratic entropy [@Rao_Diversity_1982]
+Rao's Quadratic entropy assesses the multi-dimensional divergence in trait space [@Rao_Diversity_1982]. It is the abundance-weighted variance of the trait dissimilarities between all species pairs.
+
+You can compute Rao's Quadratic entropy (Q) using the `fd_raoq()` function by providing a trait dataset:
+
+```{r raoq-intro}
+fd_raoq(traits_birds)
+```
+
+If you don't provide a site-species matrix, `fd_raoq()` considers all species provided in the trait dataset present at equal abundances in the same site.
+You can also provide a site-species matrix to compute Q at different sites:
+
+```{r raoq-site}
+fd_raoq(traits_birds, site_sp_birds)
+```
+
+Because the computation of Rao's quadratic entropy requires dissimilarities between all pair of species in the dataset, if you provide a trait dataset `fd_raoq()`, the function will compute the Euclidean distance between all pairs of species.
+If you wish to directly provide species dissimilarities, you can do so through the `dist_matrix` argument:
+
+```{r raoq-dissim}
+# Compute dissimilarity between species with the Manhattan distance
+trait_dissim <- dist(traits_birds, method = "manhattan")
+
+fd_raoq(traits = NULL, dist_matrix = trait_dissim)
+
+fd_raoq(traits = NULL, site_sp_birds, dist_matrix = as.matrix(trait_dissim))
+```
+**NB**: If you do provide a dissimilarity matrix through the `dist_matrix` argument, set up the `traits` argument to `NULL` explicitly with `traits = NULL`.
 
 # Standardizing your trait data
 
 `fundiversity` does not modify the input trait or dissimilarity data. In `fd_raoq()` if you provide only continuous trait data then the function will attempt computing Euclidean distance between the species.
 
-In order to get comparable functional diversity indices you can standardize the trait data through different techniques.
+In order to get comparable functional diversity indices you can standardize the trait data. One option would be to consider
+
+If not all the traits you use are continuous, refer to the next section, which suggests ways of computing functional diversity indices with non-continuous traits.
 
 # What if not all traits are continuous?
 
