@@ -5,7 +5,7 @@
 \alias{site_sp_birds}
 \title{Site-species matrix of birds along a Tropical Gradient}
 \format{
-A matrix with 217 rows and 8 columns:
+A matrix with 217 columns (1 per species) and 8 rows:
 \describe{
 \item{elev_250}{is species present at 250 m elevation? 0=No, 1=Yes}
 \item{elev_500}{is species present at 500 m elevation? 0=No, 1=Yes}
@@ -28,6 +28,6 @@ site_sp_birds
 }
 \description{
 Presences and absences of birds at different elevations along a tropical
-gradient. Species names are indicated as row names.
+gradient. Species names are indicated as column names.
 }
 \keyword{datasets}

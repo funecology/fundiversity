@@ -43,7 +43,8 @@ site_sp_birds <- elev_birds %>%
   mutate(across(where(is.logical), as.numeric)) %>%
   as.data.frame() %>%
   tibble::column_to_rownames("Species") %>%
-  as.matrix()
+  as.matrix() %>%
+  t()
 
 
 # Plants site-species matrix
@@ -67,7 +68,8 @@ site_sp_plants <- elev_plants %>%
   mutate(across(where(is.logical), as.numeric)) %>%
   as.data.frame() %>%
   tibble::column_to_rownames("Species") %>%
-  as.matrix()
+  as.matrix() %>%
+  t()
 
 # Save data in the package -----------------------------------------------------
 

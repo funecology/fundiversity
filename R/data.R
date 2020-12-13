@@ -47,9 +47,9 @@
 #' Site-species matrix of birds along a Tropical Gradient
 #'
 #' Presences and absences of birds at different elevations along a tropical
-#' gradient. Species names are indicated as row names.
+#' gradient. Species names are indicated as column names.
 #'
-#' @format A matrix with 217 rows and 8 columns:
+#' @format A matrix with 217 columns (1 per species) and 8 rows:
 #' \describe{
 #'   \item{elev_250}{is species present at 250 m elevation? 0=No, 1=Yes}
 #'   \item{elev_500}{is species present at 500 m elevation? 0=No, 1=Yes}
@@ -69,9 +69,9 @@
 #' Site-species matrix of plants along a Tropical Gradient
 #'
 #' Presences and absences of plants at different elevations along a tropical
-#' gradient. Species names are indicated as row names.
+#' gradient. Species names are indicated as column names.
 #'
-#' @format A matrix with 392 rows and 1° columns:
+#' @format A matrix with 392 columns (1 per species) and 10 rows:
 #' \describe{
 #'   \item{elev_250}{is species present at 250 m elevation? 0=No, 1=Yes}
 #'   \item{elev_500}{is species present at 500 m elevation? 0=No, 1=Yes}
