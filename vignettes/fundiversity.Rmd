@@ -48,15 +48,30 @@ Functional diversity indices are generally computed at different locations that 
 `fundiversity` contains the corresponding site-species matrices to the above-mentioned trait dataset [@Nowak_Data_2019]: 
 
 ```{r load-data-site-sp}
-# Show site-species matrices
+# Site-species matrix for birds
+data("site_sp_birds", package = "fundiversity")
+
+head(site_sp_birds)
+
+# Site-species matrix for plants
+data("site_sp_plants", package = "fundiversity")
+
+head(site_sp_plants)
 ```
 
 The site species matrix represent the presence of a given species (in column) in a given site (in row), similar to the format used in the [`vegan`](https://cran.r-project.org/package=vegan) package. Here the site-species matrix contains only 0 (absence) and 1 (presence), but `fundiversity` can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).
 
 To ensure the good computation of functional diversity indices, at least some of species names (row names) in the trait data need to be in to the column names of the site species matrix:
 
-```{r not-enough-speices, error=TRUE}
+```{r not-enough-species, error=TRUE}
+# Fewer traits than species in the site-species matrix
+fundiversity::fd_fric(traits_birds[2:217,], site_sp_birds)
 
+# Fewer species in the site-species matrix than in the traits
+fundiversity::fd_fric(traits_birds, site_sp_birds[, 1:5])
+
+# No species in common between both dataset
+fundiversity::fd_fric(traits_birds[1:5,], site_sp_birds[, 6:10])
 ```
 
 # Computing the indices
@@ -92,7 +107,7 @@ If you provide only a trait dataset without specifying site-species matrix `fd_f
 You can compute FRic values for different sites by providing both a trait dataset and a site-species matrix to `fd_fric()`:
 
 ```{r fric-nd-sites}
-
+fd_fric(traits_birds, site_sp_birds)
 ```
 
 Because the convex hull volume depends on the number and the units of the traits used, it is difficult to compare across datasets, that is why it has been suggested to standardize its value by the total volume comprising all species in the dataset [@Villeger_New_2008]:
@@ -101,7 +116,13 @@ Because the convex hull volume depends on the number and the units of the traits
 fd_fric(traits_birds, stand = TRUE)
 ```
 
-The newly computed FRic values will then be comprised between 0 and 1.
+The newly computed FRic values will then be comprised between 0 and 1. It is especially useful when comparing different sites:
+
+```{r fric-stand-sites}
+fd_fric(traits_birds, site_sp_birds, stand = TRUE)
+```
+
+Each row gives the standardized FRic values of each site.
 
 ## Functional Divergence (FDiv) - `fd_fdiv()`
 
