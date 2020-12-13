@@ -21,32 +21,71 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 
 **`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by Laliberté and Legendre [-@Laliberte_FD_2014]. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
 
-**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by Chao and colleagues [-@Chao_Unifying_2014]. It computes Rao's quadratic entropy, the mean functional diversity per species, the toal functional diversity.
+**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by Chao and colleagues [-@Chao_Unifying_2014]. It computes Rao's quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.
 
 **`adiv::QE()`** comes from the `adiv` package which proposes a toolkit to analyze biodiversity [@Pavoine_adiv_2020]. This function computes Rao's quadratic entropy.
 
-# Test data
+**`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
 
-We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages.
+# Benchmark
+
+We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function.
 
 ```{r setup}
 library(fundiversity)
+data("traits_birds", package = "fundiversity")
+data("site_sp_birds", package = "fundiversity")
+
+dist_traits_birds <- dist(traits_birds)
 ```
 
-```{r bench-traits}
+With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
 
+```{r bench-data-rao}
+rao_bench <- microbenchmark::microbenchmark(
+  fundiversity = {
+    fundiversity::fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds)
+  },
+  adiv = {
+    adiv::QE(site_sp_birds, dis = dist_traits_birds)
+  },
+  hillR = {
+    hillR::hill_func(site_sp_birds, dist_traits_birds, traits_as_is = TRUE)[1, ]
+  },
+  SYNCSA = {
+    SYNCSA::rao.diversity(site_sp_birds,
+                          phylodist = as.matrix(dist_traits_birds),
+                          standardize = FALSE)$PhyRao
+  },
+  times = 1000
+)
+
+ggplot2::autoplot(rao_bench)
+
+knitr::kable(summary(rao_bench))
 ```
+
+
+## Increasing the number of species
 
 ```{r bench-species}
+mega_trait_birds
+```
+
+## Increasing the number of sites
+
+```{r}
 
 ```
+
+## Increasing both
 
 ```{r bench-both}
 
 ```
 
 <details>
-<summary>Session Info on which the benchmark was ran</summary>
+<summary>Session info of the machine on which the benchmark was ran</summary>
 ```{r sessioninfo}
 sessioninfo::session_info()
 ```
