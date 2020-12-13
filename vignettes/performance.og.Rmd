@@ -42,7 +42,7 @@ dist_traits_birds <- dist(traits_birds)
 With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
 
 ```{r bench-data-rao}
-rao_bench <- microbenchmark::microbenchmark(
+bench_pkgs <- microbenchmark::microbenchmark(
   fundiversity = {
     fundiversity::fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds)
   },
@@ -57,19 +57,50 @@ rao_bench <- microbenchmark::microbenchmark(
                           phylodist = as.matrix(dist_traits_birds),
                           standardize = FALSE)$PhyRao
   },
+  FD = {
+    FD::dbFD(x = dist_traits_birds, a = site_sp_birds, stand.x = FALSE,
+             calc.FRic = TRUE, calc.CWM = FALSE, calc.FDiv = FALSE,
+             calc.FGR = FALSE, m = "max", stand.FRic = FALSE)
+  }
   times = 1000
 )
 
-ggplot2::autoplot(rao_bench)
+ggplot2::autoplot(bench_pkgs)
 
-knitr::kable(summary(rao_bench))
+knitr::kable(summary(bench_pkgs))
 ```
 
 
 ## Increasing the number of species
 
+```{r bench-species-data}
+make_more_sp <- function(n) {
+  traits <- do.call(rbind, replicate(n, traits_birds, simplify = FALSE))
+  row.names(traits) <- paste0("sp", seq_len(nrow(traits)))
+  
+  site_sp <- do.call(cbind, replicate(n, site_sp_birds, simplify = FALSE))
+  colnames(site_sp) <- paste0("sp", seq_len(ncol(site_sp)))
+  
+  list(tr = traits, si = site_sp)
+}
+
+null_sp_1000   <- make_more_sp(5)
+null_sp_10000  <- make_more_sp(50)
+null_sp_100000 <- make_more_sp(500)
+```
+
 ```{r bench-species}
-mega_trait_birds
+bench_species_fric <- microbenchmark::microbenchmark(
+  species_200    = fd_fric(     traits_birds, site_sp_birds),
+  species_1000   = fd_fric(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_fric( null_sp_10000$tr, null_sp_10000$si),
+  species_100000 = fd_fric(null_sp_100000$tr, null_sp_100000$si),
+  times = 100
+)
+
+ggplot2::autoplot(bench_species_fric)
+
+knitr::kable(summary(bench_species_fric))
 ```
 
 ## Increasing the number of sites
