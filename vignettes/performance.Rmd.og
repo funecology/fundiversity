@@ -77,10 +77,10 @@ knitr::kable(summary(bench_pkgs))
 make_more_sp <- function(n) {
   traits <- do.call(rbind, replicate(n, traits_birds, simplify = FALSE))
   row.names(traits) <- paste0("sp", seq_len(nrow(traits)))
-  
+
   site_sp <- do.call(cbind, replicate(n, site_sp_birds, simplify = FALSE))
   colnames(site_sp) <- paste0("sp", seq_len(ncol(site_sp)))
-  
+
   list(tr = traits, si = site_sp)
 }
 
@@ -89,7 +89,7 @@ null_sp_10000  <- make_more_sp(50)
 null_sp_100000 <- make_more_sp(500)
 ```
 
-```{r bench-species}
+```{r bench-species-fric}
 bench_species_fric <- microbenchmark::microbenchmark(
   species_200    = fd_fric(     traits_birds, site_sp_birds),
   species_1000   = fd_fric(  null_sp_1000$tr, null_sp_1000$si),
@@ -98,9 +98,40 @@ bench_species_fric <- microbenchmark::microbenchmark(
   times = 100
 )
 
-ggplot2::autoplot(bench_species_fric)
+ggplot2::autoplot(bench_species_fric) +
+  ggplot2::labs(title = "FRic with increasing n. of species")
 
 knitr::kable(summary(bench_species_fric))
+```
+
+```{r bench-species-fdiv}
+bench_species_fdiv <- microbenchmark::microbenchmark(
+  species_200    = fd_fdiv(     traits_birds, site_sp_birds),
+  species_1000   = fd_fdiv(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_fdiv( null_sp_10000$tr, null_sp_10000$si),
+  species_100000 = fd_fdiv(null_sp_100000$tr, null_sp_100000$si),
+  times = 100
+)
+
+ggplot2::autoplot(bench_species_fdiv) +
+  ggplot2::labs(title = "FDiv with increasing n. of species")
+
+knitr::kable(summary(bench_species_fdiv))
+```
+
+```{r bench-species-raoq}
+bench_species_raoq <- microbenchmark::microbenchmark(
+  species_200    = fd_raoq(     traits_birds, site_sp_birds),
+  species_1000   = fd_raoq(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_raoq( null_sp_10000$tr, null_sp_10000$si),
+  species_100000 = fd_raoq(null_sp_100000$tr, null_sp_100000$si),
+  times = 100
+)
+
+ggplot2::autoplot(bench_species_raoq) +
+  ggplot2::labs(title = "Rao's Q with increasing n. of species")
+
+knitr::kable(summary(bench_species_raoq))
 ```
 
 ## Increasing the number of sites
