@@ -63,6 +63,7 @@ fd_fdiv <- function(traits, sp_com) {
     FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
   })
 
-  data.frame(site = row.names(sp_com), FDiv = fdiv_site)
+  data.frame(site = row.names(sp_com), FDiv = fdiv_site,
+             row.names = NULL)
 
 }

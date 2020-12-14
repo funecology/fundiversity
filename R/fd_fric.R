@@ -75,5 +75,6 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     })
   }
 
-  data.frame(site = row.names(sp_com), FRic = fric_site/max_range)
+  data.frame(site = row.names(sp_com), FRic = fric_site/max_range,
+             row.names = NULL)
 }
