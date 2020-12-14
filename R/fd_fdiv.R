@@ -44,8 +44,11 @@ fd_fdiv <- function(traits, sp_com) {
   # Compute Functional Divergence
   fdiv_site <- apply(sp_com, 1, function(sp_site) {
 
+    # Select only species that are in site
+    sub_site <- sp_site[sp_site > 0]
+
     # Select traits for species actually in site
-    sub_traits <- traits[sp_site > 0,, drop = FALSE]
+    sub_traits <- traits[names(sub_site),, drop = FALSE]
 
     G <- colMeans(sub_traits, na.rm = TRUE)
 
@@ -53,9 +56,9 @@ fd_fdiv <- function(traits, sp_com) {
 
     mean_dG <- mean(dG)
 
-    deltaD <- sum(sp_site*(dG - mean_dG))
+    deltaD <- sum(sub_site*(dG - mean_dG))
 
-    deltaD_abs <- sum(sp_site*abs(dG - mean_dG))
+    deltaD_abs <- sum(sub_site*abs(dG - mean_dG))
 
     FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
   })
