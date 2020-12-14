@@ -122,6 +122,8 @@ microbenchmark::microbenchmark(
 make_more_sites <- function(n) {
   site_sp <- do.call(rbind, replicate(n, site_sp_birds, simplify = FALSE))
   rownames(site_sp) <- paste0("s", seq_len(nrow(site_sp)))
+
+  site_sp
 }
 
 site_sp_100   <- make_more_sites(12)
