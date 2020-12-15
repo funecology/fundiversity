@@ -57,11 +57,12 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
   if (ncol(traits) == 1L) {
 
     if (stand) {
-      max_range <- diff(range(traits))
+      max_range <- max(traits) - min(traits)
     }
 
     fric_site <- apply(sp_com, 1, function(site_row) {
-      diff(range(traits[site_row > 0,]))
+      traits_site <- traits[site_row > 0,]
+      return(max(traits_site) - min(traits_site))
     })
 
   } else {
