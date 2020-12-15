@@ -24,8 +24,10 @@ species_in_common = function(traits, site_sp) {
   if (length(common_species) == 0) {
     stop("No species in common found between trait dataset and ",
          "site-species matrix", call. = FALSE)
-  } else if (length(common_species) != nrow(traits) |
-             length(common_species) != ncol(site_sp)) {
+  }
+
+  if (length(common_species) != nrow(traits) |
+      length(common_species) != ncol(site_sp)) {
     message("Differing number of species between trait dataset ",
             "and site-species matrix\nTaking subset of species",
             appendLF = TRUE)
