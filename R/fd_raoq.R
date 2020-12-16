@@ -56,10 +56,8 @@ fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
   # Standardize abundance per site
   sp_com <- sp_com / rowSums(sp_com)
 
-  # Compute Rao's Quadratic entropy over each row
-  q_site <- apply(sp_com, 1, function(sp_site) {
-    Q <- sum(dist_matrix * outer(sp_site, sp_site))
-  })
+  # Compute Rao's Quadratic entropy for each site
+  q_site <- diag(sp_com %*% tcrossprod(dist_matrix, sp_com))
 
  data.frame(site = row.names(sp_com),
             Q = q_site,
