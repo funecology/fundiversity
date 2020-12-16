@@ -4,4 +4,4 @@
 ^data-raw$
 ^README\.Rmd$
 ^\.github$
-vignettes/performance.og.Rmd
+vignettes/_performance.Rmd
