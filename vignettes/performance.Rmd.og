@@ -11,7 +11,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  class.warning = "collapsable-warnings"
 )
 ```
 
@@ -171,3 +172,22 @@ sessioninfo::session_info()
 </details>
 
 # References
+
+```{js, echo=FALSE}
+(function() {
+  var codes = document.querySelectorAll('.collapsable-warnings');
+  var code, i, d, s, p;
+  for (i = 0; i < codes.length; i++) {
+    code = codes[i];
+    p = code.parentNode;
+    d = document.createElement('details');
+    s = document.createElement('summary');
+    s.innerText = 'Warnings';
+    // <details><summary>Details</summary></details>
+    d.appendChild(s);
+    // move the code into <details>
+    p.replaceChild(d, code);
+    d.appendChild(code);
+  }
+})();
+```
