@@ -61,12 +61,12 @@ Functional diversity indices are generally computed at different locations that 
 # Site-species matrix for birds
 data("site_sp_birds", package = "fundiversity")
 
-head(site_sp_birds)
+head(site_sp_birds, c(5L, 5L))
 
 # Site-species matrix for plants
 data("site_sp_plants", package = "fundiversity")
 
-head(site_sp_plants)
+head(site_sp_plants, c(5L, 5L))
 ```
 
 The site species matrix represent the presence of a given species (in column) in a given site (in row), similar to the format used in the [`vegan`](https://cran.r-project.org/package=vegan) package. Here the site-species matrix contains only 0 (absence) and 1 (presence), but `fundiversity` can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).
