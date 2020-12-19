@@ -177,11 +177,13 @@ If you wish to directly provide species dissimilarities, you can do so through t
 # Compute dissimilarity between species with the Manhattan distance
 trait_dissim <- dist(traits_birds, method = "manhattan")
 
-fd_raoq(traits = NULL, dist_matrix = trait_dissim)
+fd_raoq(dist_matrix = trait_dissim)
 
-fd_raoq(traits = NULL, site_sp_birds, dist_matrix = as.matrix(trait_dissim))
+fd_raoq(sp_com = site_sp_birds, dist_matrix = as.matrix(trait_dissim))
 ```
-**NB**: If you do provide a dissimilarity matrix through the `dist_matrix` argument, set up the `traits` argument to `NULL` explicitly with `traits = NULL`.
+
+NB: if you want to provide both a site-species matrix and a trait dissimilarity matrix please specify explicitly the arguments names.
+
 
 # Standardizing your trait data
 
@@ -216,6 +218,7 @@ There are several other options available to standardize trait values, reviewed 
 
 If not all the traits you use are continuous, refer to the next section, which suggests ways of computing functional diversity indices with non-continuous traits.
 
+
 # What if not all traits are continuous?
 
 Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species. The general idea we present in this part is to go from the trait table to a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in @Maire_How_2015.
@@ -223,5 +226,15 @@ Do not panic. You can still compute the above-mentioned functional diversity ind
 To compute dissimilarity with non-continuous traits you can user Gower's distance [@Gower_general_1971] or its following adaptations [@Pavoine_challenge_2009; @Podani_Extending_1999]. You can use the following functions: `cluster::daisy()`, `FD::gowdis()`, `ade4::dist.ktab()`, or `vegan::vegdist()`.
 
 Then you can project these dissimilarities with Principal Coordinates using `ape::pcoa()` for example. You can then select the first dimensions that explains the most variance and use theses as the input "traits" to compute functional diversity indices.
+
+
+# What if some traits have missing values?
+
+Sometimes, some of the trait values can be missing for some species in your dataset. Because `fundiversity` does not want to make assumptions without telling you, by default it **drops** the species data for which the trait is missing.
+
+If you want to use data with missing values you can use dissimilarity metrics that accept missing trait values such as some of the methods specified in `vegan::vegdist()`.
+
+Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of `fundiversity` but you can find how to proceed with the reviews by @Penone_Imputation_2014.
+
 
 # References
