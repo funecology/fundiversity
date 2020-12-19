@@ -4,7 +4,7 @@
 \alias{fd_raoq}
 \title{Compute Rao's entropy index (Rao's Q)}
 \usage{
-fd_raoq(traits, sp_com, dist_matrix = NULL)
+fd_raoq(traits = NULL, sp_com, dist_matrix = NULL)
 }
 \arguments{
 \item{traits}{The matrix dataset for which you want to compute the index}

@@ -19,7 +19,7 @@
 #' @importFrom stats dist
 #'
 #' @export
-fd_raoq <- function(traits, sp_com, dist_matrix = NULL) {
+fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   if ((!is.null(traits) & !is.null(dist_matrix)) |
       (is.null(traits) & is.null(dist_matrix))) {
