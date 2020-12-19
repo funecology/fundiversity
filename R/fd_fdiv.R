@@ -24,6 +24,8 @@ fd_fdiv <- function(traits, sp_com) {
     traits <- as.matrix(traits)
   }
 
+  traits <- remove_species_without_trait(traits)
+
   if (!missing(sp_com)) {
 
     common_species <- species_in_common(traits, sp_com)
