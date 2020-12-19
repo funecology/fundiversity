@@ -37,6 +37,8 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     traits <- as.matrix(traits)
   }
 
+  traits <- remove_species_without_trait(traits)
+
   if (!missing(sp_com)) {
 
     common_species <- species_in_common(traits, sp_com)

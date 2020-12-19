@@ -3,4 +3,5 @@
 export(fd_fdiv)
 export(fd_fric)
 export(fd_raoq)
+importFrom(stats,complete.cases)
 importFrom(stats,dist)

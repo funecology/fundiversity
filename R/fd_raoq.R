@@ -34,6 +34,8 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   }
 
   if (is.null(dist_matrix)) {
+    traits <- remove_species_without_trait(traits)
+
     dist_matrix <- dist(traits)
   }
 
