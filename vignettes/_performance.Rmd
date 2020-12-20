@@ -1,0 +1,193 @@
+---
+title: "Performance comparison with other functional diversity packages"
+output: rmarkdown::html_vignette
+bibliography: performance.bib
+vignette: >
+  %\VignetteIndexEntry{Performance comparison with other functional diversity packages}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  class.warning = "collapsable-warnings"
+)
+```
+
+This vignette presents some performance tests ran between `fundiversity` and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is [**pre-computed**](https://ropensci.org/technotes/2019/12/08/precompute-vignettes/).
+
+# Other functions/packages to compute functional diversity indices
+
+**`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by @Laliberte_FD_2014. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
+
+**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by @Chao_Unifying_2014. It computes Rao's quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.
+
+**`adiv::QE()`** comes from the `adiv` package which proposes a toolkit to analyze biodiversity [@Pavoine_adiv_2020]. This function computes Rao's quadratic entropy.
+
+**`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
+
+# Benchmark
+
+We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function.
+
+```{r setup}
+tictoc::tic()
+library(fundiversity)
+data("traits_birds", package = "fundiversity")
+data("site_sp_birds", package = "fundiversity")
+
+dist_traits_birds <- dist(traits_birds)
+```
+
+With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
+
+```{r bench-data-rao}
+microbenchmark::microbenchmark(
+  fundiversity = {
+    fundiversity::fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds)
+  },
+  adiv = {
+    adiv::QE(site_sp_birds, dis = dist_traits_birds)
+  },
+  hillR = {
+    hillR::hill_func(site_sp_birds, dist_traits_birds, traits_as_is = TRUE)[1, ]
+  },
+  SYNCSA = {
+    SYNCSA::rao.diversity(site_sp_birds,
+                          phylodist = as.matrix(dist_traits_birds),
+                          standardize = FALSE)$PhyRao
+  },
+  FD = {
+    suppressMessages(
+      FD::dbFD(x = dist_traits_birds, a = site_sp_birds, stand.x = FALSE,
+               calc.FRic = TRUE, calc.CWM = FALSE, calc.FDiv = FALSE,
+               calc.FGR = FALSE, m = "max", stand.FRic = FALSE))
+  },
+  times = 200
+)
+```
+
+
+## Increasing the number of species
+
+```{r bench-species-data}
+make_more_sp <- function(n) {
+  traits <- do.call(rbind, replicate(n, traits_birds, simplify = FALSE))
+  row.names(traits) <- paste0("sp", seq_len(nrow(traits)))
+
+  site_sp <- do.call(cbind, replicate(n, site_sp_birds, simplify = FALSE))
+  colnames(site_sp) <- paste0("sp", seq_len(ncol(site_sp)))
+
+  list(tr = traits, si = site_sp)
+}
+
+null_sp_1000   <- make_more_sp(5)
+null_sp_10000  <- make_more_sp(50)
+null_sp_100000 <- make_more_sp(500)
+```
+
+```{r bench-species-fric}
+microbenchmark::microbenchmark(
+  species_200    = fd_fric(     traits_birds, site_sp_birds),
+  species_1000   = fd_fric(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_fric( null_sp_10000$tr, null_sp_10000$si),
+  species_100000 = fd_fric(null_sp_100000$tr, null_sp_100000$si),
+  times = 100
+)
+```
+
+```{r bench-species-fdiv}
+microbenchmark::microbenchmark(
+  species_200    = fd_fdiv(     traits_birds, site_sp_birds),
+  species_1000   = fd_fdiv(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_fdiv( null_sp_10000$tr, null_sp_10000$si),
+  species_100000 = fd_fdiv(null_sp_100000$tr, null_sp_100000$si),
+  times = 100
+)
+```
+
+```{r bench-species-raoq}
+microbenchmark::microbenchmark(
+  species_200    = fd_raoq(     traits_birds, site_sp_birds),
+  species_1000   = fd_raoq(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_raoq( null_sp_10000$tr, null_sp_10000$si),
+  times = 100
+)
+```
+
+## Increasing the number of sites
+
+```{r bench-sites-data}
+make_more_sites <- function(n) {
+  site_sp <- do.call(rbind, replicate(n, site_sp_birds, simplify = FALSE))
+  rownames(site_sp) <- paste0("s", seq_len(nrow(site_sp)))
+
+  site_sp
+}
+
+site_sp_100   <- make_more_sites(12)
+site_sp_1000  <- make_more_sites(120)
+site_sp_10000 <- make_more_sites(1200)
+```
+
+```{r bench-sites-fric}
+microbenchmark::microbenchmark(
+  sites_10    = fd_fric(traits_birds, site_sp_birds),
+  sites_100   = fd_fric(traits_birds, site_sp_100),
+  sites_1000  = fd_fric(traits_birds, site_sp_1000),
+  sites_10000 = fd_fric(traits_birds, site_sp_10000),
+  times = 100
+)
+
+```
+
+```{r bench-sites-fdiv}
+microbenchmark::microbenchmark(
+  sites_10    = fd_fdiv(traits_birds, site_sp_birds),
+  sites_100   = fd_fdiv(traits_birds, site_sp_100),
+  sites_1000  = fd_fdiv(traits_birds, site_sp_1000),
+  sites_10000 = fd_fdiv(traits_birds, site_sp_10000),
+  times = 100
+)
+```
+
+```{r bench-sites-raoq}
+microbenchmark::microbenchmark(
+  sites_10    = fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds),
+  sites_100   = fd_raoq(traits = NULL, site_sp_100,   dist_traits_birds),
+  sites_1000  = fd_raoq(traits = NULL, site_sp_1000,  dist_traits_birds),
+  sites_10000 = fd_raoq(traits = NULL, site_sp_10000, dist_traits_birds),
+  times = 100
+)
+```
+
+<details>
+<summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
+```{r sessioninfo}
+tictoc::toc()
+sessioninfo::session_info()
+```
+</details>
+
+# References
+
+```{js, echo=FALSE}
+(function() {
+  var codes = document.querySelectorAll('.collapsable-warnings');
+  var code, i, d, s, p;
+  for (i = 0; i < codes.length; i++) {
+    code = codes[i];
+    p = code.parentNode;
+    d = document.createElement('details');
+    s = document.createElement('summary');
+    s.innerText = 'Warnings';
+    // <details><summary>Details</summary></details>
+    d.appendChild(s);
+    // move the code into <details>
+    p.replaceChild(d, code);
+    d.appendChild(code);
+  }
+})();
+```

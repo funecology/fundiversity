@@ -1,0 +1,589 @@
+---
+title: "Performance comparison with other functional diversity packages"
+output: rmarkdown::html_vignette
+bibliography: performance.bib
+vignette: >
+  %\VignetteIndexEntry{Performance comparison with other functional diversity packages}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+
+This vignette presents some performance tests ran between `fundiversity` and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is **pre-computed**.
+
+# Other functions/packages to compute functional diversity indices
+
+**`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by Laliberté and Legendre [-@Laliberte_FD_2014]. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
+
+**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by Chao and colleagues [-@Chao_Unifying_2014]. It computes Rao's quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.
+
+**`adiv::QE()`** comes from the `adiv` package which proposes a toolkit to analyze biodiversity [@Pavoine_adiv_2020]. This function computes Rao's quadratic entropy.
+
+**`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
+
+# Benchmark
+
+We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function.
+
+
+```r
+tictoc::tic()
+library(fundiversity)
+data("traits_birds", package = "fundiversity")
+data("site_sp_birds", package = "fundiversity")
+
+dist_traits_birds <- dist(traits_birds)
+```
+
+With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
+
+
+```r
+microbenchmark::microbenchmark(
+  fundiversity = {
+    fundiversity::fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds)
+  },
+  adiv = {
+    adiv::QE(site_sp_birds, dis = dist_traits_birds)
+  },
+  hillR = {
+    hillR::hill_func(site_sp_birds, dist_traits_birds, traits_as_is = TRUE)[1, ]
+  },
+  SYNCSA = {
+    SYNCSA::rao.diversity(site_sp_birds,
+                          phylodist = as.matrix(dist_traits_birds),
+                          standardize = FALSE)$PhyRao
+  },
+  FD = {
+    suppressMessages(
+      FD::dbFD(x = dist_traits_birds, a = site_sp_birds, stand.x = FALSE,
+               calc.FRic = TRUE, calc.CWM = FALSE, calc.FDiv = FALSE,
+               calc.FGR = FALSE, m = "max", stand.FRic = FALSE))
+  },
+  times = 200
+)
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
+#> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'.
+#> Unit: milliseconds
+#>          expr         min          lq        mean      median          uq         max neval
+#>  fundiversity    1.621701    1.976002    2.299318    2.256401    2.494601    4.685001   200
+#>          adiv    4.533501    5.247602    6.269176    5.989151    6.636601   14.080302   200
+#>         hillR   19.042400   22.385701   26.064649   25.327751   28.473202   69.697502   200
+#>        SYNCSA   65.969001   79.548151  100.032871   96.257801  111.574801  383.498801   200
+#>            FD 1693.048001 1917.312251 2242.043018 2101.453401 2491.098851 4063.525901   200
+```
+
+
+## Increasing the number of species
+
+
+```r
+make_more_sp <- function(n) {
+  traits <- do.call(rbind, replicate(n, traits_birds, simplify = FALSE))
+  row.names(traits) <- paste0("sp", seq_len(nrow(traits)))
+
+  site_sp <- do.call(cbind, replicate(n, site_sp_birds, simplify = FALSE))
+  colnames(site_sp) <- paste0("sp", seq_len(ncol(site_sp)))
+
+  list(tr = traits, si = site_sp)
+}
+
+null_sp_1000   <- make_more_sp(5)
+null_sp_10000  <- make_more_sp(50)
+null_sp_100000 <- make_more_sp(500)
+```
+
+
+```r
+microbenchmark::microbenchmark(
+  species_200    = fd_fric(     traits_birds, site_sp_birds),
+  species_1000   = fd_fric(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_fric( null_sp_10000$tr, null_sp_10000$si),
+  species_100000 = fd_fric(null_sp_100000$tr, null_sp_100000$si),
+  times = 100
+)
+#> Unit: milliseconds
+#>            expr      min        lq      mean    median        uq      max neval
+#>     species_200  14.7731  17.44850  22.04872  18.92605  19.67305 359.6801   100
+#>    species_1000  19.2705  22.98335  23.97224  24.22245  25.16105  43.8473   100
+#>   species_10000  52.6181  62.00335  64.18040  64.44130  66.26310  84.1689   100
+#>  species_100000 414.3950 495.75780 507.40218 517.87205 532.53500 598.5561   100
+```
+
+
+```r
+microbenchmark::microbenchmark(
+  species_200    = fd_fdiv(     traits_birds, site_sp_birds),
+  species_1000   = fd_fdiv(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_fdiv( null_sp_10000$tr, null_sp_10000$si),
+  species_100000 = fd_fdiv(null_sp_100000$tr, null_sp_100000$si),
+  times = 100
+)
+#> Unit: microseconds
+#>            expr        min          lq       mean      median         uq        max neval
+#>     species_200    746.001    807.7005    898.542    835.7515    891.401   1451.101   100
+#>    species_1000   1422.801   1523.7510   1672.061   1564.8015   1675.501   3082.101   100
+#>   species_10000   9030.401   9752.2005  11820.097  10492.8010  11950.151  33206.000   100
+#>  species_100000 146686.301 164255.2005 180603.325 173419.3515 185185.251 498053.101   100
+```
+
+
+```r
+microbenchmark::microbenchmark(
+  species_200    = fd_raoq(     traits_birds, site_sp_birds),
+  species_1000   = fd_raoq(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_raoq( null_sp_10000$tr, null_sp_10000$si),
+  times = 100
+)
+#> Unit: milliseconds
+#>           expr         min           lq         mean       median           uq        max neval
+#>    species_200    2.325501     2.698201     8.135771     2.904751     3.276052   258.5704   100
+#>   species_1000   62.716601    75.065652    84.869521    81.662751    87.427851   267.6919   100
+#>  species_10000 9884.199601 12087.106450 12954.704923 12702.614551 13878.859601 17256.5673   100
+```
+
+## Increasing the number of sites
+
+
+```r
+make_more_sites <- function(n) {
+  site_sp <- do.call(rbind, replicate(n, site_sp_birds, simplify = FALSE))
+  rownames(site_sp) <- paste0("s", seq_len(nrow(site_sp)))
+
+  site_sp
+}
+
+site_sp_100   <- make_more_sites(12)
+site_sp_1000  <- make_more_sites(120)
+site_sp_10000 <- make_more_sites(1200)
+```
+
+
+```r
+microbenchmark::microbenchmark(
+  sites_10    = fd_fric(traits_birds, site_sp_birds),
+  sites_100   = fd_fric(traits_birds, site_sp_100),
+  sites_1000  = fd_fric(traits_birds, site_sp_1000),
+  sites_10000 = fd_fric(traits_birds, site_sp_10000),
+  times = 100
+)
+#> Unit: milliseconds
+#>         expr        min         lq        mean      median         uq        max neval
+#>     sites_10    15.1317    20.0233    26.43628    28.11535    30.8419    46.1268   100
+#>    sites_100   232.0272   297.7563   323.26524   319.36880   337.6000   606.7137   100
+#>   sites_1000  2982.9265  3108.9671  3237.64577  3195.31785  3283.0058  4301.4143   100
+#>  sites_10000 30381.2284 31200.3329 32292.54986 32127.58240 32851.0629 37712.3218   100
+```
+
+
+```r
+microbenchmark::microbenchmark(
+  sites_10    = fd_fdiv(traits_birds, site_sp_birds),
+  sites_100   = fd_fdiv(traits_birds, site_sp_100),
+  sites_1000  = fd_fdiv(traits_birds, site_sp_1000),
+  sites_10000 = fd_fdiv(traits_birds, site_sp_10000),
+  times = 100
+)
+#> Unit: microseconds
+#>         expr      min        lq       mean    median        uq       max neval
+#>     sites_10    665.8    904.90   1100.185   1001.25   1207.15    3284.9   100
+#>    sites_100   4223.4   5867.50   6932.231   6468.00   7757.25   14041.9   100
+#>   sites_1000  41638.2  59098.65  76939.392  66086.25  81537.00  227174.5   100
+#>  sites_10000 507793.2 642200.30 749072.301 707047.70 777718.70 1861800.1   100
+```
+
+
+```r
+microbenchmark::microbenchmark(
+  sites_10    = fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds),
+  sites_100   = fd_raoq(traits = NULL, site_sp_100,   dist_traits_birds),
+  sites_1000  = fd_raoq(traits = NULL, site_sp_1000,  dist_traits_birds),
+  sites_10000 = fd_raoq(traits = NULL, site_sp_10000, dist_traits_birds),
+  times = 100
+)
+#> Unit: milliseconds
+#>         expr       min         lq        mean     median         uq       max neval
+#>     sites_10    1.8678    2.54165    3.635836    2.72865    3.22945   48.7785   100
+#>    sites_100   13.8451   19.07875   26.006103   20.45995   27.43520   92.8903   100
+#>   sites_1000  176.3430  209.23480  253.049425  226.94435  266.12875  655.5948   100
+#>  sites_10000 2038.6368 2131.33580 2455.365682 2242.49310 2549.52255 5141.7989   100
+```
+
+<details>
+<summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
+
+```r
+tictoc::toc()
+#> 5810.02 sec elapsed
+sessioninfo::session_info()
+#> - Session info --------------------------------------------------------------------------------------------------------------------
+#>  setting  value                       
+#>  version  R version 4.0.2 (2020-06-22)
+#>  os       Windows 10 x64              
+#>  system   x86_64, mingw32             
+#>  ui       RStudio                     
+#>  language (EN)                        
+#>  collate  French_France.1252          
+#>  ctype    French_France.1252          
+#>  tz       Europe/Berlin               
+#>  date     2020-12-14                  
+#> 
+#> - Packages ------------------------------------------------------------------------------------------------------------------------
+#>  package           * version    date       lib source        
+#>  abind               1.4-5      2016-07-21 [1] CRAN (R 4.0.3)
+#>  ade4                1.7-16     2020-10-28 [1] CRAN (R 4.0.3)
+#>  adegenet            2.1.3      2020-05-10 [1] CRAN (R 4.0.3)
+#>  adegraphics         1.0-15     2018-12-18 [1] CRAN (R 4.0.3)
+#>  adephylo            1.1-11     2017-12-18 [1] CRAN (R 4.0.3)
+#>  adiv                2.0.1      2020-08-26 [1] CRAN (R 4.0.3)
+#>  ape                 5.4-1      2020-08-13 [1] CRAN (R 4.0.3)
+#>  assertthat          0.2.1      2019-03-21 [1] CRAN (R 4.0.3)
+#>  audio               0.1-7      2020-03-09 [1] CRAN (R 4.0.3)
+#>  beepr               1.3        2018-06-04 [1] CRAN (R 4.0.3)
+#>  boot                1.3-25     2020-04-26 [2] CRAN (R 4.0.2)
+#>  callr               3.5.1      2020-10-13 [1] CRAN (R 4.0.3)
+#>  class               7.3-17     2020-04-26 [2] CRAN (R 4.0.2)
+#>  classInt            0.4-3      2020-04-07 [1] CRAN (R 4.0.3)
+#>  cli                 2.2.0      2020-11-20 [1] CRAN (R 4.0.3)
+#>  cluster             2.1.0      2019-06-19 [2] CRAN (R 4.0.2)
+#>  clusterGeneration   1.3.6      2020-11-22 [1] CRAN (R 4.0.3)
+#>  coda                0.19-4     2020-09-30 [1] CRAN (R 4.0.3)
+#>  codetools           0.2-18     2020-11-04 [1] CRAN (R 4.0.3)
+#>  colorspace          2.0-0      2020-11-11 [1] CRAN (R 4.0.3)
+#>  combinat            0.0-8      2012-10-29 [1] CRAN (R 4.0.3)
+#>  crayon              1.3.4      2017-09-16 [1] CRAN (R 4.0.3)
+#>  crosstalk           1.1.0.1    2020-03-13 [1] CRAN (R 4.0.3)
+#>  DBI                 1.1.0      2019-12-15 [1] CRAN (R 4.0.3)
+#>  deldir              0.2-3      2020-11-09 [1] CRAN (R 4.0.3)
+#>  desc                1.2.0      2018-05-01 [1] CRAN (R 4.0.3)
+#>  devtools            2.3.2      2020-09-18 [1] CRAN (R 4.0.3)
+#>  diffobj             0.3.2      2020-10-05 [1] CRAN (R 4.0.3)
+#>  digest              0.6.27     2020-10-24 [1] CRAN (R 4.0.3)
+#>  dplyr               1.0.2      2020-08-18 [1] CRAN (R 4.0.3)
+#>  DT                  0.16       2020-10-13 [1] CRAN (R 4.0.3)
+#>  e1071               1.7-4      2020-10-14 [1] CRAN (R 4.0.3)
+#>  ellipsis            0.3.1      2020-05-15 [1] CRAN (R 4.0.3)
+#>  evaluate            0.14       2019-05-28 [1] CRAN (R 4.0.3)
+#>  expm                0.999-5    2020-07-20 [1] CRAN (R 4.0.3)
+#>  FactoMineR          2.4        2020-12-11 [1] CRAN (R 4.0.3)
+#>  fansi               0.4.1      2020-01-08 [1] CRAN (R 4.0.3)
+#>  farver              2.0.3      2020-01-16 [1] CRAN (R 4.0.3)
+#>  fastmap             1.0.1      2019-10-08 [1] CRAN (R 4.0.3)
+#>  fastmatch           1.1-0      2017-01-28 [1] CRAN (R 4.0.3)
+#>  FD                  1.0-12     2014-08-19 [1] CRAN (R 4.0.3)
+#>  flashClust          1.01-2     2012-08-21 [1] CRAN (R 4.0.3)
+#>  fs                  1.5.0      2020-07-31 [1] CRAN (R 4.0.3)
+#>  fundiversity      * 0.0.0.9000 2020-12-14 [1] local         
+#>  gdata               2.18.0     2017-06-06 [1] CRAN (R 4.0.3)
+#>  generics            0.1.0      2020-10-31 [1] CRAN (R 4.0.3)
+#>  geometry            0.4.5      2019-12-04 [1] CRAN (R 4.0.3)
+#>  ggplot2             3.3.2      2020-06-19 [1] CRAN (R 4.0.3)
+#>  ggrepel             0.8.2      2020-03-08 [1] CRAN (R 4.0.3)
+#>  glue                1.4.2      2020-08-27 [1] CRAN (R 4.0.3)
+#>  gmodels             2.18.1     2018-06-25 [1] CRAN (R 4.0.3)
+#>  gtable              0.3.0      2019-03-25 [1] CRAN (R 4.0.3)
+#>  gtools              3.8.2      2020-03-31 [1] CRAN (R 4.0.3)
+#>  highr               0.8        2019-03-20 [1] CRAN (R 4.0.3)
+#>  hillR               0.5.0      2020-07-07 [1] CRAN (R 4.0.3)
+#>  hms                 0.5.3      2020-01-08 [1] CRAN (R 4.0.3)
+#>  htmltools           0.5.0      2020-06-16 [1] CRAN (R 4.0.3)
+#>  htmlwidgets         1.5.3      2020-12-10 [1] CRAN (R 4.0.2)
+#>  httpuv              1.5.4      2020-06-06 [1] CRAN (R 4.0.3)
+#>  httr                1.4.2      2020-07-20 [1] CRAN (R 4.0.3)
+#>  igraph              1.2.6      2020-10-06 [1] CRAN (R 4.0.3)
+#>  jpeg                0.1-8.1    2019-10-24 [1] CRAN (R 4.0.3)
+#>  jsonlite            1.7.2      2020-12-09 [1] CRAN (R 4.0.3)
+#>  KernSmooth          2.23-18    2020-10-29 [1] CRAN (R 4.0.3)
+#>  knitr               1.30       2020-09-22 [1] CRAN (R 4.0.3)
+#>  later               1.1.0.1    2020-06-05 [1] CRAN (R 4.0.3)
+#>  lattice             0.20-41    2020-04-02 [2] CRAN (R 4.0.2)
+#>  latticeExtra        0.6-29     2019-12-19 [1] CRAN (R 4.0.3)
+#>  lazyeval            0.2.2      2019-03-15 [1] CRAN (R 4.0.3)
+#>  leaps               3.1        2020-01-16 [1] CRAN (R 4.0.3)
+#>  LearnBayes          2.15.1     2018-03-18 [1] CRAN (R 4.0.3)
+#>  lifecycle           0.2.0      2020-03-06 [1] CRAN (R 4.0.3)
+#>  magic               1.5-9      2018-09-17 [1] CRAN (R 4.0.3)
+#>  magrittr            2.0.1      2020-11-17 [1] CRAN (R 4.0.3)
+#>  manipulateWidget    0.10.1     2020-02-24 [1] CRAN (R 4.0.3)
+#>  maps                3.3.0      2018-04-03 [1] CRAN (R 4.0.3)
+#>  MASS                7.3-53     2020-09-09 [1] CRAN (R 4.0.3)
+#>  Matrix              1.2-18     2019-11-27 [2] CRAN (R 4.0.2)
+#>  memoise             1.1.0      2017-04-21 [1] CRAN (R 4.0.3)
+#>  mgcv                1.8-33     2020-08-27 [1] CRAN (R 4.0.3)
+#>  microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 4.0.3)
+#>  mime                0.9        2020-02-04 [1] CRAN (R 4.0.3)
+#>  miniUI              0.1.1.1    2018-05-18 [1] CRAN (R 4.0.3)
+#>  mnormt              2.0.2      2020-09-01 [1] CRAN (R 4.0.3)
+#>  munsell             0.5.0      2018-06-12 [1] CRAN (R 4.0.3)
+#>  nlme                3.1-150    2020-10-24 [1] CRAN (R 4.0.3)
+#>  numDeriv            2016.8-1.1 2019-06-06 [1] CRAN (R 4.0.3)
+#>  permute             0.9-5      2019-03-12 [1] CRAN (R 4.0.3)
+#>  phangorn            2.5.5      2019-06-19 [1] CRAN (R 4.0.3)
+#>  phylobase           0.8.10     2020-03-01 [1] CRAN (R 4.0.3)
+#>  phytools            0.7-70     2020-09-19 [1] CRAN (R 4.0.3)
+#>  pillar              1.4.7      2020-11-20 [1] CRAN (R 4.0.2)
+#>  pkgbuild            1.1.0      2020-07-13 [1] CRAN (R 4.0.3)
+#>  pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 4.0.3)
+#>  pkgload             1.1.0      2020-05-29 [1] CRAN (R 4.0.3)
+#>  plotrix             3.7-8      2020-04-16 [1] CRAN (R 4.0.3)
+#>  plyr                1.8.6      2020-03-03 [1] CRAN (R 4.0.3)
+#>  png                 0.1-7      2013-12-03 [1] CRAN (R 4.0.3)
+#>  prettyunits         1.1.1      2020-01-24 [1] CRAN (R 4.0.3)
+#>  processx            3.4.5      2020-11-30 [1] CRAN (R 4.0.3)
+#>  progress            1.2.2      2019-05-16 [1] CRAN (R 4.0.3)
+#>  promises            1.1.1      2020-06-09 [1] CRAN (R 4.0.3)
+#>  ps                  1.5.0      2020-12-05 [1] CRAN (R 4.0.3)
+#>  purrr               0.3.4      2020-04-17 [1] CRAN (R 4.0.3)
+#>  quadprog            1.5-8      2019-11-20 [1] CRAN (R 4.0.3)
+#>  R6                  2.5.0      2020-10-28 [1] CRAN (R 4.0.3)
+#>  raster              3.4-5      2020-11-14 [1] CRAN (R 4.0.3)
+#>  RColorBrewer        1.1-2      2014-12-07 [1] CRAN (R 4.0.3)
+#>  Rcpp                1.0.5      2020-07-06 [1] CRAN (R 4.0.3)
+#>  RcppArmadillo       0.10.1.2.0 2020-11-16 [1] CRAN (R 4.0.3)
+#>  rematch2            2.1.2      2020-05-01 [1] CRAN (R 4.0.3)
+#>  remotes             2.2.0      2020-07-21 [1] CRAN (R 4.0.3)
+#>  reshape2            1.4.4      2020-04-09 [1] CRAN (R 4.0.3)
+#>  rgl                 0.103.5    2020-11-23 [1] CRAN (R 4.0.3)
+#>  rlang               0.4.9      2020-11-26 [1] CRAN (R 4.0.3)
+#>  rmarkdown           2.5        2020-10-21 [1] CRAN (R 4.0.3)
+#>  rncl                0.8.4      2020-02-10 [1] CRAN (R 4.0.3)
+#>  RNeXML              2.4.5      2020-06-18 [1] CRAN (R 4.0.3)
+#>  rprojroot           2.0.2      2020-11-15 [1] CRAN (R 4.0.2)
+#>  rstudioapi          0.13       2020-11-12 [1] CRAN (R 4.0.3)
+#>  scales              1.1.1      2020-05-11 [1] CRAN (R 4.0.3)
+#>  scatterplot3d       0.3-41     2018-03-14 [1] CRAN (R 4.0.3)
+#>  seqinr              4.2-4      2020-10-10 [1] CRAN (R 4.0.3)
+#>  sessioninfo         1.1.1      2018-11-05 [1] CRAN (R 4.0.3)
+#>  sf                  0.9-6      2020-09-13 [1] CRAN (R 4.0.3)
+#>  shiny               1.5.0      2020-06-23 [1] CRAN (R 4.0.3)
+#>  sp                  1.4-4      2020-10-07 [1] CRAN (R 4.0.3)
+#>  spData              0.3.8      2020-07-03 [1] CRAN (R 4.0.3)
+#>  spdep               1.1-5      2020-06-29 [1] CRAN (R 4.0.3)
+#>  stringi             1.5.3      2020-09-09 [1] CRAN (R 4.0.3)
+#>  stringr             1.4.0      2019-02-10 [1] CRAN (R 4.0.3)
+#>  SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 4.0.3)
+#>  testthat          * 3.0.0      2020-10-31 [1] CRAN (R 4.0.3)
+#>  tibble              3.0.4      2020-10-12 [1] CRAN (R 4.0.3)
+#>  tictoc              1.0        2014-06-17 [1] CRAN (R 4.0.3)
+#>  tidyr               1.1.2      2020-08-27 [1] CRAN (R 4.0.3)
+#>  tidyselect          1.1.0      2020-05-11 [1] CRAN (R 4.0.3)
+#>  tmvnsim             1.0-2      2016-12-15 [1] CRAN (R 4.0.3)
+#>  units               0.6-7      2020-06-13 [1] CRAN (R 4.0.3)
+#>  usethis             2.0.0      2020-12-10 [1] CRAN (R 4.0.2)
+#>  uuid                0.1-4      2020-02-26 [1] CRAN (R 4.0.3)
+#>  vctrs               0.3.5      2020-11-17 [1] CRAN (R 4.0.3)
+#>  vegan               2.5-7      2020-11-28 [1] CRAN (R 4.0.3)
+#>  waldo               0.2.3      2020-11-09 [1] CRAN (R 4.0.2)
+#>  webshot             0.5.2      2019-11-22 [1] CRAN (R 4.0.3)
+#>  withr               2.3.0      2020-09-22 [1] CRAN (R 4.0.3)
+#>  xfun                0.19       2020-10-30 [1] CRAN (R 4.0.3)
+#>  XML                 3.99-0.5   2020-07-23 [1] CRAN (R 4.0.3)
+#>  xml2                1.3.2      2020-04-23 [1] CRAN (R 4.0.3)
+#>  xtable              1.8-4      2019-04-21 [1] CRAN (R 4.0.3)
+#>  yaml                2.2.1      2020-02-01 [1] CRAN (R 4.0.3)
+#> 
+#> [1] C:/Users/ke76dimu/R/win-library/4.0
+#> [2] C:/Program Files/R/R-4.0.2/library
+```
+</details>
+
+# References
