@@ -10,13 +10,13 @@ vignette: >
 
 
 
-This vignette presents some performance tests ran between `fundiversity` and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is **pre-computed**.
+This vignette presents some performance tests ran between `fundiversity` and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is [**pre-computed**](https://ropensci.org/technotes/2019/12/08/precompute-vignettes/).
 
 # Other functions/packages to compute functional diversity indices
 
-**`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by Laliberté and Legendre [-@Laliberte_FD_2014]. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
+**`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by @Laliberte_FD_2014. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
 
-**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by Chao and colleagues [-@Chao_Unifying_2014]. It computes Rao's quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.
+**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by @Chao_Unifying_2014. It computes Rao's quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.
 
 **`adiv::QE()`** comes from the `adiv` package which proposes a toolkit to analyze biodiversity [@Pavoine_adiv_2020]. This function computes Rao's quadratic entropy.
 
@@ -63,6 +63,29 @@ microbenchmark::microbenchmark(
   },
   times = 200
 )
+#> Registered S3 method overwritten by 'httr':
+#>   method           from  
+#>   print.cache_info hoardr
+#> Registered S3 method overwritten by 'spdep':
+#>   method   from
+#>   plot.mst ape
+#> Registered S3 methods overwritten by 'adegraphics':
+#>   method         from
+#>   biplot.dudi    ade4
+#>   kplot.foucart  ade4
+#>   kplot.mcoa     ade4
+#>   kplot.mfa      ade4
+#>   kplot.pta      ade4
+#>   kplot.sepan    ade4
+#>   kplot.statis   ade4
+#>   scatter.coa    ade4
+#>   scatter.dudi   ade4
+#>   scatter.nipals ade4
+#>   scatter.pco    ade4
+#>   score.acm      ade4
+#>   score.mix      ade4
+#>   score.pca      ade4
+#>   screeplot.dudi ade4
 #> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
 #> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
 #> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
@@ -264,12 +287,12 @@ microbenchmark::microbenchmark(
 #> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. 
 #> FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'.
 #> Unit: milliseconds
-#>          expr         min          lq        mean      median          uq         max neval
-#>  fundiversity    1.621701    1.976002    2.299318    2.256401    2.494601    4.685001   200
-#>          adiv    4.533501    5.247602    6.269176    5.989151    6.636601   14.080302   200
-#>         hillR   19.042400   22.385701   26.064649   25.327751   28.473202   69.697502   200
-#>        SYNCSA   65.969001   79.548151  100.032871   96.257801  111.574801  383.498801   200
-#>            FD 1693.048001 1917.312251 2242.043018 2101.453401 2491.098851 4063.525901   200
+#>          expr         min          lq        mean      median         uq        max neval
+#>  fundiversity    1.851354    2.542076    3.365577    2.791778    3.04240   38.14967   200
+#>          adiv   12.792653   16.816339   55.450231   18.243288   29.86532 5768.08026   200
+#>         hillR   29.956149   34.316934   38.575301   35.670645   37.93952   65.61948   200
+#>        SYNCSA  125.443289  134.822229  155.041107  139.802255  153.00069 1704.38972   200
+#>            FD 3532.270819 3724.509356 3806.177318 3776.269202 3808.17436 4507.80683   200
 ```
 
 
@@ -302,11 +325,11 @@ microbenchmark::microbenchmark(
   times = 100
 )
 #> Unit: milliseconds
-#>            expr      min        lq      mean    median        uq      max neval
-#>     species_200  14.7731  17.44850  22.04872  18.92605  19.67305 359.6801   100
-#>    species_1000  19.2705  22.98335  23.97224  24.22245  25.16105  43.8473   100
-#>   species_10000  52.6181  62.00335  64.18040  64.44130  66.26310  84.1689   100
-#>  species_100000 414.3950 495.75780 507.40218 517.87205 532.53500 598.5561   100
+#>            expr       min        lq      mean    median        uq        max neval
+#>     species_200  10.76294  11.62333  12.44972  12.03686  12.72876   33.22621   100
+#>    species_1000  16.29932  16.99070  18.02814  17.48805  18.12360   37.33834   100
+#>   species_10000  67.61056  71.21242  82.27261  72.80377  76.38987  415.09088   100
+#>  species_100000 658.87513 700.67516 772.14282 714.53837 725.69648 1060.69525   100
 ```
 
 
@@ -319,11 +342,11 @@ microbenchmark::microbenchmark(
   times = 100
 )
 #> Unit: microseconds
-#>            expr        min          lq       mean      median         uq        max neval
-#>     species_200    746.001    807.7005    898.542    835.7515    891.401   1451.101   100
-#>    species_1000   1422.801   1523.7510   1672.061   1564.8015   1675.501   3082.101   100
-#>   species_10000   9030.401   9752.2005  11820.097  10492.8010  11950.151  33206.000   100
-#>  species_100000 146686.301 164255.2005 180603.325 173419.3515 185185.251 498053.101   100
+#>            expr        min         lq       mean     median         uq        max neval
+#>     species_200    922.623   1006.933   1118.715   1067.642   1184.442   1534.966   100
+#>    species_1000   1800.785   1967.479   2517.570   2063.514   2345.487  20611.676   100
+#>   species_10000  13731.881  15379.155  23686.937  16648.117  25652.694 349575.552   100
+#>  species_100000 281523.065 299145.966 377736.411 311178.407 327716.989 658842.841   100
 ```
 
 
@@ -335,10 +358,10 @@ microbenchmark::microbenchmark(
   times = 100
 )
 #> Unit: milliseconds
-#>           expr         min           lq         mean       median           uq        max neval
-#>    species_200    2.325501     2.698201     8.135771     2.904751     3.276052   258.5704   100
-#>   species_1000   62.716601    75.065652    84.869521    81.662751    87.427851   267.6919   100
-#>  species_10000 9884.199601 12087.106450 12954.704923 12702.614551 13878.859601 17256.5673   100
+#>           expr          min           lq         mean       median           uq          max neval
+#>    species_200     1.939792     2.683184     3.140481     3.209565     3.604634     4.503351   100
+#>   species_1000    65.511345    77.482245    87.384007    91.956021    94.771501   102.199256   100
+#>  species_10000 11507.284679 12083.469165 12219.250343 12193.617353 12298.252644 13788.846889   100
 ```
 
 ## Increasing the number of sites
@@ -367,11 +390,11 @@ microbenchmark::microbenchmark(
   times = 100
 )
 #> Unit: milliseconds
-#>         expr        min         lq        mean      median         uq        max neval
-#>     sites_10    15.1317    20.0233    26.43628    28.11535    30.8419    46.1268   100
-#>    sites_100   232.0272   297.7563   323.26524   319.36880   337.6000   606.7137   100
-#>   sites_1000  2982.9265  3108.9671  3237.64577  3195.31785  3283.0058  4301.4143   100
-#>  sites_10000 30381.2284 31200.3329 32292.54986 32127.58240 32851.0629 37712.3218   100
+#>         expr        min          lq        mean      median          uq         max neval
+#>     sites_10    10.9185    12.05121    14.17099    12.87236    14.82578    27.72141   100
+#>    sites_100   132.1644   140.84784   161.67556   149.90241   172.00912   320.97972   100
+#>   sites_1000  1339.8927  1437.91395  1575.44224  1525.65797  1641.65260  2128.72415   100
+#>  sites_10000 14018.8311 15012.69823 16154.88210 15408.78725 17487.24474 24961.83631   100
 ```
 
 
@@ -384,11 +407,11 @@ microbenchmark::microbenchmark(
   times = 100
 )
 #> Unit: microseconds
-#>         expr      min        lq       mean    median        uq       max neval
-#>     sites_10    665.8    904.90   1100.185   1001.25   1207.15    3284.9   100
-#>    sites_100   4223.4   5867.50   6932.231   6468.00   7757.25   14041.9   100
-#>   sites_1000  41638.2  59098.65  76939.392  66086.25  81537.00  227174.5   100
-#>  sites_10000 507793.2 642200.30 749072.301 707047.70 777718.70 1861800.1   100
+#>         expr        min         lq       mean     median         uq         max neval
+#>     sites_10    978.697   1103.675   1268.132   1183.312   1415.331    2555.331   100
+#>    sites_100   6452.074   7667.274  11889.898   8195.945   9213.770  145204.433   100
+#>   sites_1000  66256.557  73591.984  84025.394  76426.329  82809.934  244538.251   100
+#>  sites_10000 769836.433 837475.358 868610.774 859412.459 889204.755 1269670.008   100
 ```
 
 
@@ -401,11 +424,11 @@ microbenchmark::microbenchmark(
   times = 100
 )
 #> Unit: milliseconds
-#>         expr       min         lq        mean     median         uq       max neval
-#>     sites_10    1.8678    2.54165    3.635836    2.72865    3.22945   48.7785   100
-#>    sites_100   13.8451   19.07875   26.006103   20.45995   27.43520   92.8903   100
-#>   sites_1000  176.3430  209.23480  253.049425  226.94435  266.12875  655.5948   100
-#>  sites_10000 2038.6368 2131.33580 2455.365682 2242.49310 2549.52255 5141.7989   100
+#>         expr          min           lq         mean       median           uq          max neval
+#>     sites_10     1.499525     2.088144     2.480647     2.494496     2.725040     3.684319   100
+#>    sites_100     6.443244     7.566733     8.291933     8.081411     8.982254    11.023804   100
+#>   sites_1000   179.060921   201.041081   212.259842   208.973225   216.875272   606.465796   100
+#>  sites_10000 16896.036539 17939.155262 18255.608318 18411.737917 18674.157952 19293.420115   100
 ```
 
 <details>
@@ -413,177 +436,178 @@ microbenchmark::microbenchmark(
 
 ```r
 tictoc::toc()
-#> 5810.02 sec elapsed
+#> 5909.941 sec elapsed
 sessioninfo::session_info()
-#> - Session info --------------------------------------------------------------------------------------------------------------------
+#> ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────
 #>  setting  value                       
-#>  version  R version 4.0.2 (2020-06-22)
-#>  os       Windows 10 x64              
-#>  system   x86_64, mingw32             
+#>  version  R version 4.0.3 (2020-10-10)
+#>  os       macOS High Sierra 10.13.6   
+#>  system   x86_64, darwin17.0          
 #>  ui       RStudio                     
 #>  language (EN)                        
-#>  collate  French_France.1252          
-#>  ctype    French_France.1252          
-#>  tz       Europe/Berlin               
-#>  date     2020-12-14                  
+#>  collate  fr_FR.UTF-8                 
+#>  ctype    fr_FR.UTF-8                 
+#>  tz       Europe/Paris                
+#>  date     2020-12-20                  
 #> 
-#> - Packages ------------------------------------------------------------------------------------------------------------------------
+#> ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────
 #>  package           * version    date       lib source        
-#>  abind               1.4-5      2016-07-21 [1] CRAN (R 4.0.3)
-#>  ade4                1.7-16     2020-10-28 [1] CRAN (R 4.0.3)
-#>  adegenet            2.1.3      2020-05-10 [1] CRAN (R 4.0.3)
-#>  adegraphics         1.0-15     2018-12-18 [1] CRAN (R 4.0.3)
-#>  adephylo            1.1-11     2017-12-18 [1] CRAN (R 4.0.3)
-#>  adiv                2.0.1      2020-08-26 [1] CRAN (R 4.0.3)
-#>  ape                 5.4-1      2020-08-13 [1] CRAN (R 4.0.3)
-#>  assertthat          0.2.1      2019-03-21 [1] CRAN (R 4.0.3)
-#>  audio               0.1-7      2020-03-09 [1] CRAN (R 4.0.3)
-#>  beepr               1.3        2018-06-04 [1] CRAN (R 4.0.3)
-#>  boot                1.3-25     2020-04-26 [2] CRAN (R 4.0.2)
-#>  callr               3.5.1      2020-10-13 [1] CRAN (R 4.0.3)
-#>  class               7.3-17     2020-04-26 [2] CRAN (R 4.0.2)
-#>  classInt            0.4-3      2020-04-07 [1] CRAN (R 4.0.3)
+#>  abind               1.4-5      2016-07-21 [1] CRAN (R 4.0.2)
+#>  ade4                1.7-16     2020-10-28 [1] CRAN (R 4.0.2)
+#>  adegenet            2.1.3      2020-05-10 [1] CRAN (R 4.0.2)
+#>  adegraphics         1.0-15     2018-12-18 [1] CRAN (R 4.0.2)
+#>  adephylo            1.1-11     2017-12-18 [1] CRAN (R 4.0.2)
+#>  adiv                2.0.1      2020-08-26 [1] CRAN (R 4.0.2)
+#>  ape                 5.4-1      2020-08-13 [1] CRAN (R 4.0.2)
+#>  assertthat          0.2.1      2019-03-21 [1] CRAN (R 4.0.2)
+#>  boot                1.3-25     2020-04-26 [1] CRAN (R 4.0.3)
+#>  callr               3.5.1      2020-10-13 [1] CRAN (R 4.0.2)
+#>  class               7.3-17     2020-04-26 [1] CRAN (R 4.0.3)
+#>  classInt            0.4-3      2020-04-07 [1] CRAN (R 4.0.2)
 #>  cli                 2.2.0      2020-11-20 [1] CRAN (R 4.0.3)
-#>  cluster             2.1.0      2019-06-19 [2] CRAN (R 4.0.2)
-#>  clusterGeneration   1.3.6      2020-11-22 [1] CRAN (R 4.0.3)
-#>  coda                0.19-4     2020-09-30 [1] CRAN (R 4.0.3)
-#>  codetools           0.2-18     2020-11-04 [1] CRAN (R 4.0.3)
-#>  colorspace          2.0-0      2020-11-11 [1] CRAN (R 4.0.3)
-#>  combinat            0.0-8      2012-10-29 [1] CRAN (R 4.0.3)
-#>  crayon              1.3.4      2017-09-16 [1] CRAN (R 4.0.3)
-#>  crosstalk           1.1.0.1    2020-03-13 [1] CRAN (R 4.0.3)
-#>  DBI                 1.1.0      2019-12-15 [1] CRAN (R 4.0.3)
-#>  deldir              0.2-3      2020-11-09 [1] CRAN (R 4.0.3)
-#>  desc                1.2.0      2018-05-01 [1] CRAN (R 4.0.3)
-#>  devtools            2.3.2      2020-09-18 [1] CRAN (R 4.0.3)
-#>  diffobj             0.3.2      2020-10-05 [1] CRAN (R 4.0.3)
-#>  digest              0.6.27     2020-10-24 [1] CRAN (R 4.0.3)
-#>  dplyr               1.0.2      2020-08-18 [1] CRAN (R 4.0.3)
-#>  DT                  0.16       2020-10-13 [1] CRAN (R 4.0.3)
-#>  e1071               1.7-4      2020-10-14 [1] CRAN (R 4.0.3)
-#>  ellipsis            0.3.1      2020-05-15 [1] CRAN (R 4.0.3)
-#>  evaluate            0.14       2019-05-28 [1] CRAN (R 4.0.3)
-#>  expm                0.999-5    2020-07-20 [1] CRAN (R 4.0.3)
+#>  cluster             2.1.0      2019-06-19 [1] CRAN (R 4.0.3)
+#>  clusterGeneration   1.3.7      2020-12-15 [1] CRAN (R 4.0.3)
+#>  coda                0.19-4     2020-09-30 [1] CRAN (R 4.0.2)
+#>  codetools           0.2-18     2020-11-04 [1] CRAN (R 4.0.2)
+#>  colorspace          2.0-0      2020-11-11 [1] CRAN (R 4.0.2)
+#>  combinat            0.0-8      2012-10-29 [1] CRAN (R 4.0.2)
+#>  crayon              1.3.4      2017-09-16 [1] CRAN (R 4.0.2)
+#>  crosstalk           1.1.0.1    2020-03-13 [1] CRAN (R 4.0.2)
+#>  crul                1.0.0      2020-07-30 [1] CRAN (R 4.0.2)
+#>  curl                4.3        2019-12-02 [1] CRAN (R 4.0.1)
+#>  DBI                 1.1.0      2019-12-15 [1] CRAN (R 4.0.2)
+#>  deldir              0.2-3      2020-11-09 [1] CRAN (R 4.0.2)
+#>  desc                1.2.0      2018-05-01 [1] CRAN (R 4.0.2)
+#>  devtools            2.3.2      2020-09-18 [1] CRAN (R 4.0.2)
+#>  digest              0.6.27     2020-10-24 [1] CRAN (R 4.0.2)
+#>  dplyr               1.0.2      2020-08-18 [1] CRAN (R 4.0.2)
+#>  DT                  0.16       2020-10-13 [1] CRAN (R 4.0.2)
+#>  e1071               1.7-4      2020-10-14 [1] CRAN (R 4.0.2)
+#>  ellipsis            0.3.1      2020-05-15 [1] CRAN (R 4.0.2)
+#>  evaluate            0.14       2019-05-28 [1] CRAN (R 4.0.1)
+#>  expm                0.999-5    2020-07-20 [1] CRAN (R 4.0.2)
 #>  FactoMineR          2.4        2020-12-11 [1] CRAN (R 4.0.3)
-#>  fansi               0.4.1      2020-01-08 [1] CRAN (R 4.0.3)
-#>  farver              2.0.3      2020-01-16 [1] CRAN (R 4.0.3)
-#>  fastmap             1.0.1      2019-10-08 [1] CRAN (R 4.0.3)
-#>  fastmatch           1.1-0      2017-01-28 [1] CRAN (R 4.0.3)
-#>  FD                  1.0-12     2014-08-19 [1] CRAN (R 4.0.3)
-#>  flashClust          1.01-2     2012-08-21 [1] CRAN (R 4.0.3)
-#>  fs                  1.5.0      2020-07-31 [1] CRAN (R 4.0.3)
-#>  fundiversity      * 0.0.0.9000 2020-12-14 [1] local         
-#>  gdata               2.18.0     2017-06-06 [1] CRAN (R 4.0.3)
-#>  generics            0.1.0      2020-10-31 [1] CRAN (R 4.0.3)
-#>  geometry            0.4.5      2019-12-04 [1] CRAN (R 4.0.3)
-#>  ggplot2             3.3.2      2020-06-19 [1] CRAN (R 4.0.3)
-#>  ggrepel             0.8.2      2020-03-08 [1] CRAN (R 4.0.3)
-#>  glue                1.4.2      2020-08-27 [1] CRAN (R 4.0.3)
-#>  gmodels             2.18.1     2018-06-25 [1] CRAN (R 4.0.3)
-#>  gtable              0.3.0      2019-03-25 [1] CRAN (R 4.0.3)
-#>  gtools              3.8.2      2020-03-31 [1] CRAN (R 4.0.3)
-#>  highr               0.8        2019-03-20 [1] CRAN (R 4.0.3)
-#>  hillR               0.5.0      2020-07-07 [1] CRAN (R 4.0.3)
-#>  hms                 0.5.3      2020-01-08 [1] CRAN (R 4.0.3)
-#>  htmltools           0.5.0      2020-06-16 [1] CRAN (R 4.0.3)
-#>  htmlwidgets         1.5.3      2020-12-10 [1] CRAN (R 4.0.2)
-#>  httpuv              1.5.4      2020-06-06 [1] CRAN (R 4.0.3)
-#>  httr                1.4.2      2020-07-20 [1] CRAN (R 4.0.3)
-#>  igraph              1.2.6      2020-10-06 [1] CRAN (R 4.0.3)
-#>  jpeg                0.1-8.1    2019-10-24 [1] CRAN (R 4.0.3)
+#>  fansi               0.4.1      2020-01-08 [1] CRAN (R 4.0.2)
+#>  fastmap             1.0.1      2019-10-08 [1] CRAN (R 4.0.2)
+#>  fastmatch           1.1-0      2017-01-28 [1] CRAN (R 4.0.2)
+#>  FD                  1.0-12     2014-08-19 [1] CRAN (R 4.0.2)
+#>  flashClust          1.01-2     2012-08-21 [1] CRAN (R 4.0.2)
+#>  fs                  1.5.0      2020-07-31 [1] CRAN (R 4.0.2)
+#>  fundiversity      * 0.0.0.9000 2020-12-20 [1] local         
+#>  gdata               2.18.0     2017-06-06 [1] CRAN (R 4.0.2)
+#>  generics            0.1.0      2020-10-31 [1] CRAN (R 4.0.2)
+#>  geometry            0.4.5      2019-12-04 [1] CRAN (R 4.0.2)
+#>  ggplot2             3.3.2      2020-06-19 [1] CRAN (R 4.0.2)
+#>  ggrepel             0.9.0      2020-12-16 [1] CRAN (R 4.0.3)
+#>  glue                1.4.2      2020-08-27 [1] CRAN (R 4.0.2)
+#>  gmodels             2.18.1     2018-06-25 [1] CRAN (R 4.0.2)
+#>  gtable              0.3.0      2019-03-25 [1] CRAN (R 4.0.2)
+#>  gtools              3.8.2      2020-03-31 [1] CRAN (R 4.0.2)
+#>  hillR               0.5.0      2020-07-07 [1] CRAN (R 4.0.2)
+#>  hms                 0.5.3      2020-01-08 [1] CRAN (R 4.0.2)
+#>  hoardr              0.5.2      2018-12-02 [1] CRAN (R 4.0.2)
+#>  htmltools           0.5.0      2020-06-16 [1] CRAN (R 4.0.2)
+#>  htmlwidgets         1.5.3      2020-12-10 [1] CRAN (R 4.0.3)
+#>  httpcode            0.3.0      2020-04-10 [1] CRAN (R 4.0.2)
+#>  httpuv              1.5.4      2020-06-06 [1] CRAN (R 4.0.2)
+#>  httr                1.4.2      2020-07-20 [1] CRAN (R 4.0.2)
+#>  igraph              1.2.6      2020-10-06 [1] CRAN (R 4.0.2)
+#>  jpeg                0.1-8.1    2019-10-24 [1] CRAN (R 4.0.2)
 #>  jsonlite            1.7.2      2020-12-09 [1] CRAN (R 4.0.3)
-#>  KernSmooth          2.23-18    2020-10-29 [1] CRAN (R 4.0.3)
-#>  knitr               1.30       2020-09-22 [1] CRAN (R 4.0.3)
-#>  later               1.1.0.1    2020-06-05 [1] CRAN (R 4.0.3)
-#>  lattice             0.20-41    2020-04-02 [2] CRAN (R 4.0.2)
-#>  latticeExtra        0.6-29     2019-12-19 [1] CRAN (R 4.0.3)
-#>  lazyeval            0.2.2      2019-03-15 [1] CRAN (R 4.0.3)
-#>  leaps               3.1        2020-01-16 [1] CRAN (R 4.0.3)
-#>  LearnBayes          2.15.1     2018-03-18 [1] CRAN (R 4.0.3)
-#>  lifecycle           0.2.0      2020-03-06 [1] CRAN (R 4.0.3)
-#>  magic               1.5-9      2018-09-17 [1] CRAN (R 4.0.3)
-#>  magrittr            2.0.1      2020-11-17 [1] CRAN (R 4.0.3)
-#>  manipulateWidget    0.10.1     2020-02-24 [1] CRAN (R 4.0.3)
-#>  maps                3.3.0      2018-04-03 [1] CRAN (R 4.0.3)
+#>  KernSmooth          2.23-18    2020-10-29 [1] CRAN (R 4.0.2)
+#>  knitr               1.30       2020-09-22 [1] CRAN (R 4.0.2)
+#>  later               1.1.0.1    2020-06-05 [1] CRAN (R 4.0.2)
+#>  lattice             0.20-41    2020-04-02 [1] CRAN (R 4.0.3)
+#>  latticeExtra        0.6-29     2019-12-19 [1] CRAN (R 4.0.2)
+#>  lazyeval            0.2.2      2019-03-15 [1] CRAN (R 4.0.2)
+#>  leaps               3.1        2020-01-16 [1] CRAN (R 4.0.2)
+#>  LearnBayes          2.15.1     2018-03-18 [1] CRAN (R 4.0.2)
+#>  lifecycle           0.2.0      2020-03-06 [1] CRAN (R 4.0.2)
+#>  magic               1.5-9      2018-09-17 [1] CRAN (R 4.0.2)
+#>  magrittr            2.0.1      2020-11-17 [1] CRAN (R 4.0.2)
+#>  manipulateWidget    0.10.1     2020-02-24 [1] CRAN (R 4.0.2)
+#>  maps                3.3.0      2018-04-03 [1] CRAN (R 4.0.2)
 #>  MASS                7.3-53     2020-09-09 [1] CRAN (R 4.0.3)
-#>  Matrix              1.2-18     2019-11-27 [2] CRAN (R 4.0.2)
-#>  memoise             1.1.0      2017-04-21 [1] CRAN (R 4.0.3)
+#>  Matrix              1.2-18     2019-11-27 [1] CRAN (R 4.0.3)
+#>  memoise             1.1.0      2017-04-21 [1] CRAN (R 4.0.2)
 #>  mgcv                1.8-33     2020-08-27 [1] CRAN (R 4.0.3)
-#>  microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 4.0.3)
-#>  mime                0.9        2020-02-04 [1] CRAN (R 4.0.3)
-#>  miniUI              0.1.1.1    2018-05-18 [1] CRAN (R 4.0.3)
-#>  mnormt              2.0.2      2020-09-01 [1] CRAN (R 4.0.3)
-#>  munsell             0.5.0      2018-06-12 [1] CRAN (R 4.0.3)
-#>  nlme                3.1-150    2020-10-24 [1] CRAN (R 4.0.3)
-#>  numDeriv            2016.8-1.1 2019-06-06 [1] CRAN (R 4.0.3)
-#>  permute             0.9-5      2019-03-12 [1] CRAN (R 4.0.3)
-#>  phangorn            2.5.5      2019-06-19 [1] CRAN (R 4.0.3)
-#>  phylobase           0.8.10     2020-03-01 [1] CRAN (R 4.0.3)
-#>  phytools            0.7-70     2020-09-19 [1] CRAN (R 4.0.3)
-#>  pillar              1.4.7      2020-11-20 [1] CRAN (R 4.0.2)
-#>  pkgbuild            1.1.0      2020-07-13 [1] CRAN (R 4.0.3)
-#>  pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 4.0.3)
-#>  pkgload             1.1.0      2020-05-29 [1] CRAN (R 4.0.3)
-#>  plotrix             3.7-8      2020-04-16 [1] CRAN (R 4.0.3)
-#>  plyr                1.8.6      2020-03-03 [1] CRAN (R 4.0.3)
-#>  png                 0.1-7      2013-12-03 [1] CRAN (R 4.0.3)
-#>  prettyunits         1.1.1      2020-01-24 [1] CRAN (R 4.0.3)
+#>  microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 4.0.2)
+#>  mime                0.9        2020-02-04 [1] CRAN (R 4.0.2)
+#>  miniUI              0.1.1.1    2018-05-18 [1] CRAN (R 4.0.2)
+#>  mnormt              2.0.2      2020-09-01 [1] CRAN (R 4.0.2)
+#>  munsell             0.5.0      2018-06-12 [1] CRAN (R 4.0.2)
+#>  nlme                3.1-151    2020-12-10 [1] CRAN (R 4.0.3)
+#>  numDeriv            2016.8-1.1 2019-06-06 [1] CRAN (R 4.0.2)
+#>  permute             0.9-5      2019-03-12 [1] CRAN (R 4.0.2)
+#>  phangorn            2.5.5      2019-06-19 [1] CRAN (R 4.0.2)
+#>  phylobase           0.8.10     2020-03-01 [1] CRAN (R 4.0.2)
+#>  phytools            0.7-70     2020-09-19 [1] CRAN (R 4.0.2)
+#>  pillar              1.4.7      2020-11-20 [1] CRAN (R 4.0.3)
+#>  pkgbuild            1.2.0      2020-12-15 [1] CRAN (R 4.0.3)
+#>  pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 4.0.2)
+#>  pkgload             1.1.0      2020-05-29 [1] CRAN (R 4.0.2)
+#>  plotrix             3.7-8      2020-04-16 [1] CRAN (R 4.0.2)
+#>  plyr                1.8.6      2020-03-03 [1] CRAN (R 4.0.2)
+#>  png                 0.1-7      2013-12-03 [1] CRAN (R 4.0.2)
+#>  prettyunits         1.1.1      2020-01-24 [1] CRAN (R 4.0.2)
 #>  processx            3.4.5      2020-11-30 [1] CRAN (R 4.0.3)
-#>  progress            1.2.2      2019-05-16 [1] CRAN (R 4.0.3)
-#>  promises            1.1.1      2020-06-09 [1] CRAN (R 4.0.3)
-#>  ps                  1.5.0      2020-12-05 [1] CRAN (R 4.0.3)
-#>  purrr               0.3.4      2020-04-17 [1] CRAN (R 4.0.3)
-#>  quadprog            1.5-8      2019-11-20 [1] CRAN (R 4.0.3)
-#>  R6                  2.5.0      2020-10-28 [1] CRAN (R 4.0.3)
-#>  raster              3.4-5      2020-11-14 [1] CRAN (R 4.0.3)
-#>  RColorBrewer        1.1-2      2014-12-07 [1] CRAN (R 4.0.3)
-#>  Rcpp                1.0.5      2020-07-06 [1] CRAN (R 4.0.3)
-#>  RcppArmadillo       0.10.1.2.0 2020-11-16 [1] CRAN (R 4.0.3)
-#>  rematch2            2.1.2      2020-05-01 [1] CRAN (R 4.0.3)
-#>  remotes             2.2.0      2020-07-21 [1] CRAN (R 4.0.3)
-#>  reshape2            1.4.4      2020-04-09 [1] CRAN (R 4.0.3)
+#>  progress            1.2.2      2019-05-16 [1] CRAN (R 4.0.2)
+#>  promises            1.1.1      2020-06-09 [1] CRAN (R 4.0.2)
+#>  ps                  1.5.0      2020-12-05 [1] CRAN (R 4.0.2)
+#>  purrr               0.3.4      2020-04-17 [1] CRAN (R 4.0.2)
+#>  quadprog            1.5-8      2019-11-20 [1] CRAN (R 4.0.2)
+#>  R6                  2.5.0      2020-10-28 [1] CRAN (R 4.0.2)
+#>  rappdirs            0.3.1      2016-03-28 [1] CRAN (R 4.0.2)
+#>  raster              3.4-5      2020-11-14 [1] CRAN (R 4.0.2)
+#>  RColorBrewer        1.1-2      2014-12-07 [1] CRAN (R 4.0.2)
+#>  Rcpp                1.0.5      2020-07-06 [1] CRAN (R 4.0.2)
+#>  RcppArmadillo       0.10.1.2.0 2020-11-16 [1] CRAN (R 4.0.2)
+#>  rdryad              1.0.0      2020-06-25 [1] CRAN (R 4.0.2)
+#>  remotes             2.2.0      2020-07-21 [1] CRAN (R 4.0.2)
+#>  reshape2            1.4.4      2020-04-09 [1] CRAN (R 4.0.2)
 #>  rgl                 0.103.5    2020-11-23 [1] CRAN (R 4.0.3)
 #>  rlang               0.4.9      2020-11-26 [1] CRAN (R 4.0.3)
-#>  rmarkdown           2.5        2020-10-21 [1] CRAN (R 4.0.3)
-#>  rncl                0.8.4      2020-02-10 [1] CRAN (R 4.0.3)
-#>  RNeXML              2.4.5      2020-06-18 [1] CRAN (R 4.0.3)
+#>  rmarkdown           2.6        2020-12-14 [1] CRAN (R 4.0.2)
+#>  rncl                0.8.4      2020-02-10 [1] CRAN (R 4.0.2)
+#>  RNeXML              2.4.5      2020-06-18 [1] CRAN (R 4.0.2)
 #>  rprojroot           2.0.2      2020-11-15 [1] CRAN (R 4.0.2)
-#>  rstudioapi          0.13       2020-11-12 [1] CRAN (R 4.0.3)
-#>  scales              1.1.1      2020-05-11 [1] CRAN (R 4.0.3)
-#>  scatterplot3d       0.3-41     2018-03-14 [1] CRAN (R 4.0.3)
-#>  seqinr              4.2-4      2020-10-10 [1] CRAN (R 4.0.3)
-#>  sessioninfo         1.1.1      2018-11-05 [1] CRAN (R 4.0.3)
-#>  sf                  0.9-6      2020-09-13 [1] CRAN (R 4.0.3)
-#>  shiny               1.5.0      2020-06-23 [1] CRAN (R 4.0.3)
-#>  sp                  1.4-4      2020-10-07 [1] CRAN (R 4.0.3)
-#>  spData              0.3.8      2020-07-03 [1] CRAN (R 4.0.3)
-#>  spdep               1.1-5      2020-06-29 [1] CRAN (R 4.0.3)
-#>  stringi             1.5.3      2020-09-09 [1] CRAN (R 4.0.3)
-#>  stringr             1.4.0      2019-02-10 [1] CRAN (R 4.0.3)
-#>  SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 4.0.3)
-#>  testthat          * 3.0.0      2020-10-31 [1] CRAN (R 4.0.3)
-#>  tibble              3.0.4      2020-10-12 [1] CRAN (R 4.0.3)
-#>  tictoc              1.0        2014-06-17 [1] CRAN (R 4.0.3)
-#>  tidyr               1.1.2      2020-08-27 [1] CRAN (R 4.0.3)
-#>  tidyselect          1.1.0      2020-05-11 [1] CRAN (R 4.0.3)
-#>  tmvnsim             1.0-2      2016-12-15 [1] CRAN (R 4.0.3)
-#>  units               0.6-7      2020-06-13 [1] CRAN (R 4.0.3)
-#>  usethis             2.0.0      2020-12-10 [1] CRAN (R 4.0.2)
-#>  uuid                0.1-4      2020-02-26 [1] CRAN (R 4.0.3)
-#>  vctrs               0.3.5      2020-11-17 [1] CRAN (R 4.0.3)
-#>  vegan               2.5-7      2020-11-28 [1] CRAN (R 4.0.3)
-#>  waldo               0.2.3      2020-11-09 [1] CRAN (R 4.0.2)
-#>  webshot             0.5.2      2019-11-22 [1] CRAN (R 4.0.3)
-#>  withr               2.3.0      2020-09-22 [1] CRAN (R 4.0.3)
-#>  xfun                0.19       2020-10-30 [1] CRAN (R 4.0.3)
-#>  XML                 3.99-0.5   2020-07-23 [1] CRAN (R 4.0.3)
-#>  xml2                1.3.2      2020-04-23 [1] CRAN (R 4.0.3)
-#>  xtable              1.8-4      2019-04-21 [1] CRAN (R 4.0.3)
-#>  yaml                2.2.1      2020-02-01 [1] CRAN (R 4.0.3)
+#>  rstudioapi          0.13       2020-11-12 [1] CRAN (R 4.0.2)
+#>  scales              1.1.1      2020-05-11 [1] CRAN (R 4.0.2)
+#>  scatterplot3d       0.3-41     2018-03-14 [1] CRAN (R 4.0.2)
+#>  seqinr              4.2-5      2020-12-17 [1] CRAN (R 4.0.3)
+#>  sessioninfo         1.1.1      2018-11-05 [1] CRAN (R 4.0.2)
+#>  sf                  0.9-6      2020-09-13 [1] CRAN (R 4.0.2)
+#>  shiny               1.5.0      2020-06-23 [1] CRAN (R 4.0.2)
+#>  sp                  1.4-4      2020-10-07 [1] CRAN (R 4.0.2)
+#>  spData              0.3.8      2020-07-03 [1] CRAN (R 4.0.2)
+#>  spdep               1.1-5      2020-06-29 [1] CRAN (R 4.0.2)
+#>  stringi             1.5.3      2020-09-09 [1] CRAN (R 4.0.2)
+#>  stringr             1.4.0      2019-02-10 [1] CRAN (R 4.0.2)
+#>  SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 4.0.2)
+#>  testthat            3.0.1      2020-12-17 [1] CRAN (R 4.0.3)
+#>  tibble              3.0.4      2020-10-12 [1] CRAN (R 4.0.2)
+#>  tictoc              1.0        2014-06-17 [1] CRAN (R 4.0.2)
+#>  tidyr               1.1.2      2020-08-27 [1] CRAN (R 4.0.2)
+#>  tidyselect          1.1.0      2020-05-11 [1] CRAN (R 4.0.2)
+#>  tmvnsim             1.0-2      2016-12-15 [1] CRAN (R 4.0.2)
+#>  units               0.6-7      2020-06-13 [1] CRAN (R 4.0.2)
+#>  usethis             2.0.0      2020-12-10 [1] CRAN (R 4.0.3)
+#>  uuid                0.1-4      2020-02-26 [1] CRAN (R 4.0.2)
+#>  vctrs               0.3.6      2020-12-17 [1] CRAN (R 4.0.3)
+#>  vegan               2.5-7      2020-11-28 [1] CRAN (R 4.0.2)
+#>  webshot             0.5.2      2019-11-22 [1] CRAN (R 4.0.2)
+#>  withr               2.3.0      2020-09-22 [1] CRAN (R 4.0.2)
+#>  xfun                0.19       2020-10-30 [1] CRAN (R 4.0.2)
+#>  XML                 3.99-0.5   2020-07-23 [1] CRAN (R 4.0.2)
+#>  xml2                1.3.2      2020-04-23 [1] CRAN (R 4.0.2)
+#>  xtable              1.8-4      2019-04-21 [1] CRAN (R 4.0.2)
+#>  yaml                2.2.1      2020-02-01 [1] CRAN (R 4.0.2)
+#>  zip                 2.1.1      2020-08-27 [1] CRAN (R 4.0.2)
 #> 
-#> [1] C:/Users/ke76dimu/R/win-library/4.0
-#> [2] C:/Program Files/R/R-4.0.2/library
+#> [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
 ```
 </details>
 
 # References
+
+
