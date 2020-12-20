@@ -52,9 +52,9 @@ fd_fdiv <- function(traits, sp_com) {
     # Select traits for species actually in site
     sub_traits <- traits[names(sub_site),, drop = FALSE]
 
-    G <- colMeans(sub_traits, na.rm = TRUE)
+    G <- colMeans(sub_traits)
 
-    dG <- sqrt(colSums((t(sub_traits) - G)^2, na.rm = TRUE))
+    dG <- sqrt(colSums((t(sub_traits) - G)^2))
 
     mean_dG <- mean(dG)
 
