@@ -107,7 +107,7 @@
 <span class="va">dist_traits_birds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></code></pre></div>
 <p>With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in <code>fundiversity</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
+<code class="sourceCode R"><span class="va">pkg_bench</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   fundiversity <span class="op">=</span> <span class="op">{</span>
     <span class="fu">fundiversity</span><span class="fu">::</span><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>
   <span class="op">}</span>,
@@ -126,244 +126,30 @@
     <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span>
       <span class="fu">FD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FD/man/dbFD.html">dbFD</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dist_traits_birds</span>, a <span class="op">=</span> <span class="va">site_sp_birds</span>, stand.x <span class="op">=</span> <span class="cn">FALSE</span>,
                calc.FRic <span class="op">=</span> <span class="cn">TRUE</span>, calc.CWM <span class="op">=</span> <span class="cn">FALSE</span>, calc.FDiv <span class="op">=</span> <span class="cn">FALSE</span>,
-               calc.FGR <span class="op">=</span> <span class="cn">FALSE</span>, m <span class="op">=</span> <span class="st">"max"</span>, stand.FRic <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
+               calc.FGR <span class="op">=</span> <span class="cn">FALSE</span>, m <span class="op">=</span> <span class="st">"max"</span>, stand.FRic <span class="op">=</span> <span class="cn">FALSE</span>,
+               messages <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
   <span class="op">}</span>,
   times <span class="op">=</span> <span class="fl">200</span>
 <span class="op">)</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'httr':</span>
-<span class="co">#&gt;   method           from  </span>
-<span class="co">#&gt;   print.cache_info hoardr</span>
-<span class="co">#&gt; Registered S3 method overwritten by 'spdep':</span>
-<span class="co">#&gt;   method   from</span>
-<span class="co">#&gt;   plot.mst ape</span>
-<span class="co">#&gt; Registered S3 methods overwritten by 'adegraphics':</span>
-<span class="co">#&gt;   method         from</span>
-<span class="co">#&gt;   biplot.dudi    ade4</span>
-<span class="co">#&gt;   kplot.foucart  ade4</span>
-<span class="co">#&gt;   kplot.mcoa     ade4</span>
-<span class="co">#&gt;   kplot.mfa      ade4</span>
-<span class="co">#&gt;   kplot.pta      ade4</span>
-<span class="co">#&gt;   kplot.sepan    ade4</span>
-<span class="co">#&gt;   kplot.statis   ade4</span>
-<span class="co">#&gt;   scatter.coa    ade4</span>
-<span class="co">#&gt;   scatter.dudi   ade4</span>
-<span class="co">#&gt;   scatter.nipals ade4</span>
-<span class="co">#&gt;   scatter.pco    ade4</span>
-<span class="co">#&gt;   score.acm      ade4</span>
-<span class="co">#&gt;   score.mix      ade4</span>
-<span class="co">#&gt;   score.pca      ade4</span>
-<span class="co">#&gt;   screeplot.dudi ade4</span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'. </span>
-<span class="co">#&gt; FRic: No dimensionality reduction was required. All 3 PCoA axes were kept as 'traits'.</span>
+
+<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">pkg_bench</span><span class="op">)</span>
+<span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span></code></pre></div>
+<div class="figure">
+<img src="figure/bench-data-rao-1.png" alt=""><p class="caption">plot of chunk bench-data-rao</p>
+</div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pkg_bench</span>
 <span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;          expr         min          lq        mean      median         uq        max neval</span>
-<span class="co">#&gt;  fundiversity    1.851354    2.542076    3.365577    2.791778    3.04240   38.14967   200</span>
-<span class="co">#&gt;          adiv   12.792653   16.816339   55.450231   18.243288   29.86532 5768.08026   200</span>
-<span class="co">#&gt;         hillR   29.956149   34.316934   38.575301   35.670645   37.93952   65.61948   200</span>
-<span class="co">#&gt;        SYNCSA  125.443289  134.822229  155.041107  139.802255  153.00069 1704.38972   200</span>
-<span class="co">#&gt;            FD 3532.270819 3724.509356 3806.177318 3776.269202 3808.17436 4507.80683   200</span></code></pre></div>
+<span class="co">#&gt;          expr         min          lq        mean      median          uq        max neval</span>
+<span class="co">#&gt;  fundiversity    1.863386    2.441076    2.913054    2.577694    2.885569   54.35921   200</span>
+<span class="co">#&gt;          adiv   11.981201   14.506356   15.329875   15.020157   16.533973   21.55288   200</span>
+<span class="co">#&gt;         hillR   27.315183   31.083622   33.531208   33.341518   35.130225   91.48873   200</span>
+<span class="co">#&gt;        SYNCSA  115.935464  127.572537  143.239939  135.809189  150.027610  227.86547   200</span>
+<span class="co">#&gt;            FD 3223.731269 3435.351428 3578.451279 3554.086026 3699.409863 4247.18007   200</span></code></pre></div>
 <div id="increasing-the-number-of-species" class="section level2">
 <h2 class="hasAnchor">
 <a href="#increasing-the-number-of-species" class="anchor"></a>Increasing the number of species</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">make_more_sp</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">traits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">traits_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -377,51 +163,75 @@
 <span class="va">null_sp_1000</span>   <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="va">null_sp_10000</span>  <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
 <span class="va">null_sp_100000</span> <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">500</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sp_fric</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
   species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
   species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
   species_100000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">null_sp_100000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_100000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
   times <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
+
+<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_fric</span><span class="op">)</span>
+<span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span></code></pre></div>
+<div class="figure">
+<img src="figure/bench-species-fric-1.png" alt=""><p class="caption">plot of chunk bench-species-fric</p>
+</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sp_fric</span>
 <span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;            expr       min        lq      mean    median        uq        max neval</span>
-<span class="co">#&gt;     species_200  10.76294  11.62333  12.44972  12.03686  12.72876   33.22621   100</span>
-<span class="co">#&gt;    species_1000  16.29932  16.99070  18.02814  17.48805  18.12360   37.33834   100</span>
-<span class="co">#&gt;   species_10000  67.61056  71.21242  82.27261  72.80377  76.38987  415.09088   100</span>
-<span class="co">#&gt;  species_100000 658.87513 700.67516 772.14282 714.53837 725.69648 1060.69525   100</span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
+<span class="co">#&gt;            expr       min        lq      mean    median        uq       max neval</span>
+<span class="co">#&gt;     species_200  10.84210  11.54099  12.57978  12.26813  13.52466  15.97170   100</span>
+<span class="co">#&gt;    species_1000  15.93499  16.57488  17.46400  16.95719  18.45719  20.93172   100</span>
+<span class="co">#&gt;   species_10000  66.80963  71.37006  74.72363  72.78925  75.08444 160.20633   100</span>
+<span class="co">#&gt;  species_100000 615.87082 633.10734 647.28969 640.84589 650.36929 732.03345   100</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sp_fdiv</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
   species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
   species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
   species_100000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">null_sp_100000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_100000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
   times <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
+
+<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_fdiv</span><span class="op">)</span>
+<span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span></code></pre></div>
+<div class="figure">
+<img src="figure/bench-species-fdiv-1.png" alt=""><p class="caption">plot of chunk bench-species-fdiv</p>
+</div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sp_fdiv</span>
 <span class="co">#&gt; Unit: microseconds</span>
-<span class="co">#&gt;            expr        min         lq       mean     median         uq        max neval</span>
-<span class="co">#&gt;     species_200    922.623   1006.933   1118.715   1067.642   1184.442   1534.966   100</span>
-<span class="co">#&gt;    species_1000   1800.785   1967.479   2517.570   2063.514   2345.487  20611.676   100</span>
-<span class="co">#&gt;   species_10000  13731.881  15379.155  23686.937  16648.117  25652.694 349575.552   100</span>
-<span class="co">#&gt;  species_100000 281523.065 299145.966 377736.411 311178.407 327716.989 658842.841   100</span></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
+<span class="co">#&gt;            expr        min          lq       mean     median         uq        max neval</span>
+<span class="co">#&gt;     species_200    930.180    961.3905   1080.651   1012.947   1079.422   2171.028   100</span>
+<span class="co">#&gt;    species_1000   1752.773   1825.4955   2066.027   1866.644   2078.891   4161.213   100</span>
+<span class="co">#&gt;   species_10000  13293.426  14592.5720  17123.837  14722.230  17071.145  52775.676   100</span>
+<span class="co">#&gt;  species_100000 246436.097 253756.9225 273249.967 258218.452 285439.424 791230.381   100</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sp_raoq</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
   species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
   species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
   times <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
+
+<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_raoq</span><span class="op">)</span>
+<span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span></code></pre></div>
+<div class="figure">
+<img src="figure/bench-species-raoq-1.png" alt=""><p class="caption">plot of chunk bench-species-raoq</p>
+</div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sp_raoq</span>
 <span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;           expr          min           lq         mean       median           uq          max neval</span>
-<span class="co">#&gt;    species_200     1.939792     2.683184     3.140481     3.209565     3.604634     4.503351   100</span>
-<span class="co">#&gt;   species_1000    65.511345    77.482245    87.384007    91.956021    94.771501   102.199256   100</span>
-<span class="co">#&gt;  species_10000 11507.284679 12083.469165 12219.250343 12193.617353 12298.252644 13788.846889   100</span></code></pre></div>
+<span class="co">#&gt;           expr         min           lq         mean      median           uq          max neval</span>
+<span class="co">#&gt;    species_200     1.80713     2.834975     3.037292     3.05944     3.286123     4.384588   100</span>
+<span class="co">#&gt;   species_1000    61.38127    71.479951    82.990208    82.45437    86.744722   276.436579   100</span>
+<span class="co">#&gt;  species_10000 10558.17581 10865.956971 11216.003726 10952.63983 11472.627559 14014.047380   100</span></code></pre></div>
 </div>
 <div id="increasing-the-number-of-sites" class="section level2">
 <h2 class="hasAnchor">
 <a href="#increasing-the-number-of-sites" class="anchor"></a>Increasing the number of sites</h2>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">make_more_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
   <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
@@ -432,52 +242,76 @@
 <span class="va">site_sp_100</span>   <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>
 <span class="va">site_sp_1000</span>  <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">120</span><span class="op">)</span>
 <span class="va">site_sp_10000</span> <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">1200</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sites_fric</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
   sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_100</span><span class="op">)</span>,
   sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_1000</span><span class="op">)</span>,
   sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_10000</span><span class="op">)</span>,
   times <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
+
+<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_fric</span><span class="op">)</span>
+<span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span></code></pre></div>
+<div class="figure">
+<img src="figure/bench-sites-fric-1.png" alt=""><p class="caption">plot of chunk bench-sites-fric</p>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sites_fric</span>
 <span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;         expr        min          lq        mean      median          uq         max neval</span>
-<span class="co">#&gt;     sites_10    10.9185    12.05121    14.17099    12.87236    14.82578    27.72141   100</span>
-<span class="co">#&gt;    sites_100   132.1644   140.84784   161.67556   149.90241   172.00912   320.97972   100</span>
-<span class="co">#&gt;   sites_1000  1339.8927  1437.91395  1575.44224  1525.65797  1641.65260  2128.72415   100</span>
-<span class="co">#&gt;  sites_10000 14018.8311 15012.69823 16154.88210 15408.78725 17487.24474 24961.83631   100</span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
+<span class="co">#&gt;         expr         min          lq        mean     median          uq         max neval</span>
+<span class="co">#&gt;     sites_10    11.01436    12.04389    16.81316    13.8014    20.23088    35.31706   100</span>
+<span class="co">#&gt;    sites_100   132.61491   139.63566   172.88135   147.8368   195.82013   545.97395   100</span>
+<span class="co">#&gt;   sites_1000  1372.08612  1404.14795  1729.04754  1699.3230  2013.31901  2664.22125   100</span>
+<span class="co">#&gt;  sites_10000 14047.10664 15043.00775 17499.70169 17552.9594 19679.55124 23450.60644   100</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sites_fdiv</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
   sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_100</span><span class="op">)</span>,
   sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_1000</span><span class="op">)</span>,
   sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_10000</span><span class="op">)</span>,
   times <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
+
+<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_fdiv</span><span class="op">)</span>
+<span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span></code></pre></div>
+<div class="figure">
+<img src="figure/bench-sites-fdiv-1.png" alt=""><p class="caption">plot of chunk bench-sites-fdiv</p>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sites_fdiv</span>
 <span class="co">#&gt; Unit: microseconds</span>
 <span class="co">#&gt;         expr        min         lq       mean     median         uq         max neval</span>
-<span class="co">#&gt;     sites_10    978.697   1103.675   1268.132   1183.312   1415.331    2555.331   100</span>
-<span class="co">#&gt;    sites_100   6452.074   7667.274  11889.898   8195.945   9213.770  145204.433   100</span>
-<span class="co">#&gt;   sites_1000  66256.557  73591.984  84025.394  76426.329  82809.934  244538.251   100</span>
-<span class="co">#&gt;  sites_10000 769836.433 837475.358 868610.774 859412.459 889204.755 1269670.008   100</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
+<span class="co">#&gt;     sites_10    939.524   1032.186   1113.090   1085.959   1138.392    1687.892   100</span>
+<span class="co">#&gt;    sites_100   6479.203   7348.852   9177.323   7743.045   8172.043  132371.734   100</span>
+<span class="co">#&gt;   sites_1000  61535.232  69113.630  83060.118  74834.411  78962.458  222549.336   100</span>
+<span class="co">#&gt;  sites_10000 681759.670 737978.595 811958.888 836983.525 876478.651 1073351.781   100</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sites_raoq</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,
   sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_100</span>,   <span class="va">dist_traits_birds</span><span class="op">)</span>,
   sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_1000</span>,  <span class="va">dist_traits_birds</span><span class="op">)</span>,
   sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_10000</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,
   times <span class="op">=</span> <span class="fl">100</span>
 <span class="op">)</span>
+
+<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_raoq</span><span class="op">)</span>
+<span class="co">#&gt; Coordinate system already present. Adding new coordinate system, which will replace the existing one.</span></code></pre></div>
+<div class="figure">
+<img src="figure/bench-sites-raoq-1.png" alt=""><p class="caption">plot of chunk bench-sites-raoq</p>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bench_sites_raoq</span>
 <span class="co">#&gt; Unit: milliseconds</span>
 <span class="co">#&gt;         expr          min           lq         mean       median           uq          max neval</span>
-<span class="co">#&gt;     sites_10     1.499525     2.088144     2.480647     2.494496     2.725040     3.684319   100</span>
-<span class="co">#&gt;    sites_100     6.443244     7.566733     8.291933     8.081411     8.982254    11.023804   100</span>
-<span class="co">#&gt;   sites_1000   179.060921   201.041081   212.259842   208.973225   216.875272   606.465796   100</span>
-<span class="co">#&gt;  sites_10000 16896.036539 17939.155262 18255.608318 18411.737917 18674.157952 19293.420115   100</span></code></pre></div>
+<span class="co">#&gt;     sites_10     1.683676     2.065809     2.422585     2.438306     2.648451     3.824958   100</span>
+<span class="co">#&gt;    sites_100     6.639772     7.329503     7.875020     7.790197     7.954831    11.013202   100</span>
+<span class="co">#&gt;   sites_1000   180.390511   192.404293   196.486331   196.455088   200.635546   214.666764   100</span>
+<span class="co">#&gt;  sites_10000 17201.430605 17366.557870 17443.189195 17422.679464 17485.161654 18349.838490   100</span></code></pre></div>
 <details><p><summary>Session info of the machine on which the benchmark was ran and time it took to run</summary></p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tictoc</span><span class="fu">::</span><span class="fu">toc</span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; 5909.941 sec elapsed</span>
+<span class="co">#&gt; 5793.308 sec elapsed</span>
 <span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sessioninfo/man/session_info.html">session_info</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────</span>
 <span class="co">#&gt;  setting  value                       </span>
@@ -489,163 +323,163 @@
 <span class="co">#&gt;  collate  fr_FR.UTF-8                 </span>
 <span class="co">#&gt;  ctype    fr_FR.UTF-8                 </span>
 <span class="co">#&gt;  tz       Europe/Paris                </span>
-<span class="co">#&gt;  date     2020-12-20                  </span>
+<span class="co">#&gt;  date     2020-12-26                  </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt;  package           * version    date       lib source        </span>
-<span class="co">#&gt;  abind               1.4-5      2016-07-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  ade4                1.7-16     2020-10-28 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  adegenet            2.1.3      2020-05-10 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  adegraphics         1.0-15     2018-12-18 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  adephylo            1.1-11     2017-12-18 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  adiv                2.0.1      2020-08-26 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  ape                 5.4-1      2020-08-13 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  assertthat          0.2.1      2019-03-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  boot                1.3-25     2020-04-26 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  callr               3.5.1      2020-10-13 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  class               7.3-17     2020-04-26 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  classInt            0.4-3      2020-04-07 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  cli                 2.2.0      2020-11-20 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  cluster             2.1.0      2019-06-19 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  clusterGeneration   1.3.7      2020-12-15 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  coda                0.19-4     2020-09-30 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  codetools           0.2-18     2020-11-04 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  colorspace          2.0-0      2020-11-11 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  combinat            0.0-8      2012-10-29 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  crayon              1.3.4      2017-09-16 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  crosstalk           1.1.0.1    2020-03-13 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  crul                1.0.0      2020-07-30 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  curl                4.3        2019-12-02 [1] CRAN (R 4.0.1)</span>
-<span class="co">#&gt;  DBI                 1.1.0      2019-12-15 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  deldir              0.2-3      2020-11-09 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  desc                1.2.0      2018-05-01 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  devtools            2.3.2      2020-09-18 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  digest              0.6.27     2020-10-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  dplyr               1.0.2      2020-08-18 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  DT                  0.16       2020-10-13 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  e1071               1.7-4      2020-10-14 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  ellipsis            0.3.1      2020-05-15 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  evaluate            0.14       2019-05-28 [1] CRAN (R 4.0.1)</span>
-<span class="co">#&gt;  expm                0.999-5    2020-07-20 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  FactoMineR          2.4        2020-12-11 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  fansi               0.4.1      2020-01-08 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  fastmap             1.0.1      2019-10-08 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  fastmatch           1.1-0      2017-01-28 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  FD                  1.0-12     2014-08-19 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  flashClust          1.01-2     2012-08-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  fs                  1.5.0      2020-07-31 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  fundiversity      * 0.0.0.9000 2020-12-20 [1] local         </span>
-<span class="co">#&gt;  gdata               2.18.0     2017-06-06 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  generics            0.1.0      2020-10-31 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  geometry            0.4.5      2019-12-04 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  ggplot2             3.3.2      2020-06-19 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  ggrepel             0.9.0      2020-12-16 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  glue                1.4.2      2020-08-27 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  gmodels             2.18.1     2018-06-25 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  gtable              0.3.0      2019-03-25 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  gtools              3.8.2      2020-03-31 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  hillR               0.5.0      2020-07-07 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  hms                 0.5.3      2020-01-08 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  hoardr              0.5.2      2018-12-02 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  htmltools           0.5.0      2020-06-16 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  htmlwidgets         1.5.3      2020-12-10 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  httpcode            0.3.0      2020-04-10 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  httpuv              1.5.4      2020-06-06 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  httr                1.4.2      2020-07-20 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  igraph              1.2.6      2020-10-06 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  jpeg                0.1-8.1    2019-10-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  jsonlite            1.7.2      2020-12-09 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  KernSmooth          2.23-18    2020-10-29 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  knitr               1.30       2020-09-22 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  later               1.1.0.1    2020-06-05 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  lattice             0.20-41    2020-04-02 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  latticeExtra        0.6-29     2019-12-19 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  lazyeval            0.2.2      2019-03-15 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  leaps               3.1        2020-01-16 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  LearnBayes          2.15.1     2018-03-18 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  lifecycle           0.2.0      2020-03-06 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  magic               1.5-9      2018-09-17 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  magrittr            2.0.1      2020-11-17 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  manipulateWidget    0.10.1     2020-02-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  maps                3.3.0      2018-04-03 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  MASS                7.3-53     2020-09-09 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  Matrix              1.2-18     2019-11-27 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  memoise             1.1.0      2017-04-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  mgcv                1.8-33     2020-08-27 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  mime                0.9        2020-02-04 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  miniUI              0.1.1.1    2018-05-18 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  mnormt              2.0.2      2020-09-01 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  munsell             0.5.0      2018-06-12 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  nlme                3.1-151    2020-12-10 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  numDeriv            2016.8-1.1 2019-06-06 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  permute             0.9-5      2019-03-12 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  phangorn            2.5.5      2019-06-19 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  phylobase           0.8.10     2020-03-01 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  phytools            0.7-70     2020-09-19 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  pillar              1.4.7      2020-11-20 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  pkgbuild            1.2.0      2020-12-15 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  pkgload             1.1.0      2020-05-29 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  plotrix             3.7-8      2020-04-16 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  plyr                1.8.6      2020-03-03 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  png                 0.1-7      2013-12-03 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  prettyunits         1.1.1      2020-01-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  processx            3.4.5      2020-11-30 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  progress            1.2.2      2019-05-16 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  promises            1.1.1      2020-06-09 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  ps                  1.5.0      2020-12-05 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  purrr               0.3.4      2020-04-17 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  quadprog            1.5-8      2019-11-20 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  R6                  2.5.0      2020-10-28 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rappdirs            0.3.1      2016-03-28 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  raster              3.4-5      2020-11-14 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  RColorBrewer        1.1-2      2014-12-07 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  Rcpp                1.0.5      2020-07-06 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  RcppArmadillo       0.10.1.2.0 2020-11-16 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rdryad              1.0.0      2020-06-25 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  remotes             2.2.0      2020-07-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  reshape2            1.4.4      2020-04-09 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rgl                 0.103.5    2020-11-23 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  rlang               0.4.9      2020-11-26 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  rmarkdown           2.6        2020-12-14 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rncl                0.8.4      2020-02-10 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  RNeXML              2.4.5      2020-06-18 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rprojroot           2.0.2      2020-11-15 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rstudioapi          0.13       2020-11-12 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  scales              1.1.1      2020-05-11 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  scatterplot3d       0.3-41     2018-03-14 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  seqinr              4.2-5      2020-12-17 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  sessioninfo         1.1.1      2018-11-05 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  sf                  0.9-6      2020-09-13 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  shiny               1.5.0      2020-06-23 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  sp                  1.4-4      2020-10-07 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  spData              0.3.8      2020-07-03 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  spdep               1.1-5      2020-06-29 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  stringi             1.5.3      2020-09-09 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  stringr             1.4.0      2019-02-10 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  testthat            3.0.1      2020-12-17 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  tibble              3.0.4      2020-10-12 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  tictoc              1.0        2014-06-17 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  tidyr               1.1.2      2020-08-27 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  tidyselect          1.1.0      2020-05-11 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  tmvnsim             1.0-2      2016-12-15 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  units               0.6-7      2020-06-13 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  usethis             2.0.0      2020-12-10 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  uuid                0.1-4      2020-02-26 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  vctrs               0.3.6      2020-12-17 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  vegan               2.5-7      2020-11-28 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  webshot             0.5.2      2019-11-22 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  withr               2.3.0      2020-09-22 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  xfun                0.19       2020-10-30 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  XML                 3.99-0.5   2020-07-23 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  xml2                1.3.2      2020-04-23 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  xtable              1.8-4      2019-04-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  yaml                2.2.1      2020-02-01 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  zip                 2.1.1      2020-08-27 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;  ! package           * version    date       lib source        </span>
+<span class="co">#&gt;    abind               1.4-5      2016-07-21 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    ade4                1.7-16     2020-10-28 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    adegenet            2.1.3      2020-05-10 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    adegraphics         1.0-15     2018-12-18 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    adephylo            1.1-11     2017-12-18 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    adiv                2.0.1      2020-08-26 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    ape                 5.4-1      2020-08-13 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    assertthat          0.2.1      2019-03-21 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    boot                1.3-25     2020-04-26 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    callr               3.5.1      2020-10-13 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    class               7.3-17     2020-04-26 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    classInt            0.4-3      2020-04-07 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    cli                 2.2.0      2020-11-20 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    cluster             2.1.0      2019-06-19 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    clusterGeneration   1.3.7      2020-12-15 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    coda                0.19-4     2020-09-30 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    codetools           0.2-18     2020-11-04 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    colorspace          2.0-0      2020-11-11 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    combinat            0.0-8      2012-10-29 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    crayon              1.3.4      2017-09-16 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    crosstalk           1.1.0.1    2020-03-13 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    crul                1.0.0      2020-07-30 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    curl                4.3        2019-12-02 [1] CRAN (R 4.0.1)</span>
+<span class="co">#&gt;    DBI                 1.1.0      2019-12-15 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    deldir              0.2-3      2020-11-09 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    desc                1.2.0      2018-05-01 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    digest              0.6.27     2020-10-24 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    dplyr               1.0.2      2020-08-18 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    DT                  0.16       2020-10-13 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    e1071               1.7-4      2020-10-14 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    ellipsis            0.3.1      2020-05-15 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    evaluate            0.14       2019-05-28 [1] CRAN (R 4.0.1)</span>
+<span class="co">#&gt;    expm                0.999-5    2020-07-20 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    FactoMineR          2.4        2020-12-11 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    fansi               0.4.1      2020-01-08 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    farver              2.0.3      2020-01-16 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    fastmap             1.0.1      2019-10-08 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    fastmatch           1.1-0      2017-01-28 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    FD                  1.0-12     2014-08-19 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    flashClust          1.01-2     2012-08-21 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    fs                  1.5.0      2020-07-31 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;  P fundiversity      * 0.0.0.9000 2020-12-20 [?] local         </span>
+<span class="co">#&gt;    gdata               2.18.0     2017-06-06 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    generics            0.1.0      2020-10-31 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    geometry            0.4.5      2019-12-04 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    ggplot2             3.3.2      2020-06-19 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    ggrepel             0.9.0      2020-12-16 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    glue                1.4.2      2020-08-27 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    gmodels             2.18.1     2018-06-25 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    gtable              0.3.0      2019-03-25 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    gtools              3.8.2      2020-03-31 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    highr               0.8        2019-03-20 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    hillR               0.5.0      2020-07-07 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    hms                 0.5.3      2020-01-08 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    hoardr              0.5.2      2018-12-02 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    htmltools           0.5.0      2020-06-16 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    htmlwidgets         1.5.3      2020-12-10 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    httpcode            0.3.0      2020-04-10 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    httpuv              1.5.4      2020-06-06 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    httr                1.4.2      2020-07-20 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    igraph              1.2.6      2020-10-06 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    jpeg                0.1-8.1    2019-10-24 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    jsonlite            1.7.2      2020-12-09 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    KernSmooth          2.23-18    2020-10-29 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    knitr               1.30       2020-09-22 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    later               1.1.0.1    2020-06-05 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    lattice             0.20-41    2020-04-02 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    latticeExtra        0.6-29     2019-12-19 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    lazyeval            0.2.2      2019-03-15 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    leaps               3.1        2020-01-16 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    LearnBayes          2.15.1     2018-03-18 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    lifecycle           0.2.0      2020-03-06 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    magic               1.5-9      2018-09-17 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    magrittr            2.0.1      2020-11-17 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    manipulateWidget    0.10.1     2020-02-24 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    maps                3.3.0      2018-04-03 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    MASS                7.3-53     2020-09-09 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    Matrix              1.3-0      2020-12-22 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    mgcv                1.8-33     2020-08-27 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    mime                0.9        2020-02-04 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    miniUI              0.1.1.1    2018-05-18 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    mnormt              2.0.2      2020-09-01 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    munsell             0.5.0      2018-06-12 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    nlme                3.1-151    2020-12-10 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    numDeriv            2016.8-1.1 2019-06-06 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    permute             0.9-5      2019-03-12 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    phangorn            2.5.5      2019-06-19 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    phylobase           0.8.10     2020-03-01 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    phytools            0.7-70     2020-09-19 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    pillar              1.4.7      2020-11-20 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    pkgbuild            1.2.0      2020-12-15 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    pkgload             1.1.0      2020-05-29 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    plotrix             3.7-8      2020-04-16 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    plyr                1.8.6      2020-03-03 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    png                 0.1-7      2013-12-03 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    prettyunits         1.1.1      2020-01-24 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    processx            3.4.5      2020-11-30 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    progress            1.2.2      2019-05-16 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    promises            1.1.1      2020-06-09 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    ps                  1.5.0      2020-12-05 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    purrr               0.3.4      2020-04-17 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    quadprog            1.5-8      2019-11-20 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    R6                  2.5.0      2020-10-28 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    rappdirs            0.3.1      2016-03-28 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    raster              3.4-5      2020-11-14 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    RColorBrewer        1.1-2      2014-12-07 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    Rcpp                1.0.5      2020-07-06 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    RcppArmadillo       0.10.1.2.0 2020-11-16 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    rdryad              1.0.0      2020-06-25 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    reshape2            1.4.4      2020-04-09 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    rgl                 0.103.5    2020-11-23 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    rlang               0.4.9      2020-11-26 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    rncl                0.8.4      2020-02-10 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    RNeXML              2.4.5      2020-06-18 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    rprojroot           2.0.2      2020-11-15 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    rstudioapi          0.13       2020-11-12 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    scales              1.1.1      2020-05-11 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    scatterplot3d       0.3-41     2018-03-14 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    seqinr              4.2-5      2020-12-17 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    sessioninfo         1.1.1      2018-11-05 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    sf                  0.9-6      2020-09-13 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    shiny               1.5.0      2020-06-23 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    sp                  1.4-4      2020-10-07 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    spData              0.3.8      2020-07-03 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    spdep               1.1-5      2020-06-29 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    stringi             1.5.3      2020-09-09 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    stringr             1.4.0      2019-02-10 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    testthat          * 3.0.1      2020-12-17 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    tibble              3.0.4      2020-10-12 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    tictoc              1.0        2014-06-17 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    tidyr               1.1.2      2020-08-27 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    tidyselect          1.1.0      2020-05-11 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    tmvnsim             1.0-2      2016-12-15 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    units               0.6-7      2020-06-13 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    usethis             2.0.0      2020-12-10 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    uuid                0.1-4      2020-02-26 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    vctrs               0.3.6      2020-12-17 [1] CRAN (R 4.0.3)</span>
+<span class="co">#&gt;    vegan               2.5-7      2020-11-28 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    webshot             0.5.2      2019-11-22 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    withr               2.3.0      2020-09-22 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    xfun                0.19       2020-10-30 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    XML                 3.99-0.5   2020-07-23 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    xml2                1.3.2      2020-04-23 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    xtable              1.8-4      2019-04-21 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    yaml                2.2.1      2020-02-01 [1] CRAN (R 4.0.2)</span>
+<span class="co">#&gt;    zip                 2.1.1      2020-08-27 [1] CRAN (R 4.0.2)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</span></code></pre></div>
+<span class="co">#&gt; [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  P ── Loaded and on-disk path mismatch.</span></code></pre></div>
 </details>
 </div>
 </div>
