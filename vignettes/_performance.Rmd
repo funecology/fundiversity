@@ -12,7 +12,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  class.warning = "collapsable-warnings"
+  class.warning = "collapsable-warnings",
+  fig.path = "fd-"
 )
 ```
 

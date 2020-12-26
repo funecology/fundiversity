@@ -5,4 +5,3 @@
 ^README\.Rmd$
 ^\.github$
 vignettes/_performance.Rmd
-^figure/.*
