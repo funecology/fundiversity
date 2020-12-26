@@ -44,7 +44,7 @@ dist_traits_birds <- dist(traits_birds)
 With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
 
 ```{r bench-data-rao}
-microbenchmark::microbenchmark(
+pkg_bench = microbenchmark::microbenchmark(
   fundiversity = {
     fundiversity::fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds)
   },
@@ -63,10 +63,14 @@ microbenchmark::microbenchmark(
     suppressMessages(
       FD::dbFD(x = dist_traits_birds, a = site_sp_birds, stand.x = FALSE,
                calc.FRic = TRUE, calc.CWM = FALSE, calc.FDiv = FALSE,
-               calc.FGR = FALSE, m = "max", stand.FRic = FALSE))
+               calc.FGR = FALSE, m = "max", stand.FRic = FALSE,
+               messages = FALSE))
   },
   times = 200
 )
+
+ggplot2::autoplot(pkg_bench)
+pkg_bench
 ```
 
 
@@ -89,32 +93,41 @@ null_sp_100000 <- make_more_sp(500)
 ```
 
 ```{r bench-species-fric}
-microbenchmark::microbenchmark(
+bench_sp_fric = microbenchmark::microbenchmark(
   species_200    = fd_fric(     traits_birds, site_sp_birds),
   species_1000   = fd_fric(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_fric( null_sp_10000$tr, null_sp_10000$si),
   species_100000 = fd_fric(null_sp_100000$tr, null_sp_100000$si),
   times = 100
 )
+
+ggplot2::autoplot(bench_sp_fric)
+bench_sp_fric
 ```
 
 ```{r bench-species-fdiv}
-microbenchmark::microbenchmark(
+bench_sp_fdiv = microbenchmark::microbenchmark(
   species_200    = fd_fdiv(     traits_birds, site_sp_birds),
   species_1000   = fd_fdiv(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_fdiv( null_sp_10000$tr, null_sp_10000$si),
   species_100000 = fd_fdiv(null_sp_100000$tr, null_sp_100000$si),
   times = 100
 )
+
+ggplot2::autoplot(bench_sp_fdiv)
+bench_sp_fdiv
 ```
 
 ```{r bench-species-raoq}
-microbenchmark::microbenchmark(
+bench_sp_raoq = microbenchmark::microbenchmark(
   species_200    = fd_raoq(     traits_birds, site_sp_birds),
   species_1000   = fd_raoq(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_raoq( null_sp_10000$tr, null_sp_10000$si),
   times = 100
 )
+
+ggplot2::autoplot(bench_sp_raoq)
+bench_sp_raoq
 ```
 
 ## Increasing the number of sites
@@ -133,7 +146,7 @@ site_sp_10000 <- make_more_sites(1200)
 ```
 
 ```{r bench-sites-fric}
-microbenchmark::microbenchmark(
+bench_sites_fric = microbenchmark::microbenchmark(
   sites_10    = fd_fric(traits_birds, site_sp_birds),
   sites_100   = fd_fric(traits_birds, site_sp_100),
   sites_1000  = fd_fric(traits_birds, site_sp_1000),
@@ -141,26 +154,34 @@ microbenchmark::microbenchmark(
   times = 100
 )
 
+ggplot2::autoplot(bench_sites_fric)
+bench_sites_fric
 ```
 
 ```{r bench-sites-fdiv}
-microbenchmark::microbenchmark(
+bench_sites_fdiv = microbenchmark::microbenchmark(
   sites_10    = fd_fdiv(traits_birds, site_sp_birds),
   sites_100   = fd_fdiv(traits_birds, site_sp_100),
   sites_1000  = fd_fdiv(traits_birds, site_sp_1000),
   sites_10000 = fd_fdiv(traits_birds, site_sp_10000),
   times = 100
 )
+
+ggplot2::autoplot(bench_sites_fdiv)
+bench_sites_fdiv
 ```
 
 ```{r bench-sites-raoq}
-microbenchmark::microbenchmark(
+bench_sites_raoq = microbenchmark::microbenchmark(
   sites_10    = fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_raoq(traits = NULL, site_sp_100,   dist_traits_birds),
   sites_1000  = fd_raoq(traits = NULL, site_sp_1000,  dist_traits_birds),
   sites_10000 = fd_raoq(traits = NULL, site_sp_10000, dist_traits_birds),
   times = 100
 )
+
+ggplot2::autoplot(bench_sites_raoq)
+bench_sites_raoq
 ```
 
 <details>
