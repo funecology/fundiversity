@@ -36,7 +36,7 @@ devtools::install_github("Bisaloo/fundiversity")
 
 `fundiversity` lets you compute three classical functional diversity
 indices: Functional Richness with `fd_fric()`, Functional Divergence
-with `fd_fdiv()`, and Rao’s Quadratic Entropy with \`fd\_raoq(). All
+with `fd_fdiv()`, and Rao’s Quadratic Entropy with `fd_raoq()`. All
 indices can be computed either using global trait data or at the
 site-level:
 
@@ -80,7 +80,7 @@ we here mention some of them (but do not mention the wrappers around
 these packages):
 
 | Package Name                                           | Indices included                                            | Has tests | On GitHub | On CRAN (last updated)                                     |
-| ------------------------------------------------------ | ----------------------------------------------------------- | --------- | --------- | ---------------------------------------------------------- |
+|--------------------------------------------------------|-------------------------------------------------------------|-----------|-----------|------------------------------------------------------------|
 | [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness | :x:       | :x:       | ![](https://www.r-pkg.org/badges/last-release/FD)          |
 | [`adiv`](https://github.com/cran/adiv)                 | Functional Entropy, Functional Redundancy                   | :x:       | :x:       | ![](https://www.r-pkg.org/badges/last-release/adiv)        |
 | [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                      | :x:       | :x:       | ![](https://www.r-pkg.org/badges/last-release/betapart)    |

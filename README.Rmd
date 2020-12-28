@@ -52,7 +52,7 @@ devtools::install_github("Bisaloo/fundiversity")
 ## Example
 
 `fundiversity` lets you compute three classical functional diversity indices: Functional Richness with `fd_fric()`, Functional Divergence with
-`fd_fdiv()`, and Rao's Quadratic Entropy with `fd_raoq().
+`fd_fdiv()`, and Rao's Quadratic Entropy with `fd_raoq()`.
 All indices can be computed either using global trait data or at the site-level:
 
 ```{r example}
