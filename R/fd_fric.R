@@ -70,14 +70,26 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
   } else {
 
     if (stand) {
-      max_range <- geometry::convhulln(traits, "FA")$vol
+      max_range <- fd_fric_single(traits)
     }
 
     fric_site <- apply(sp_com, 1, function(site_row) {
-      geometry::convhulln(traits[site_row > 0,], "FA")$vol
+      fd_fric_single(traits[site_row > 0,])
     })
   }
 
   data.frame(site = row.names(sp_com), FRic = fric_site/max_range,
              row.names = NULL)
+}
+
+# A wrapper around geometry::convhulln() to properly handle errors and specific
+# cases
+fd_fric_single <- function(traits) {
+
+  if (nrow(traits) <= ncol(traits)) {
+    return(NA_real_)
+  }
+
+  return(geometry::convhulln(traits, "FA")$vol)
+
 }
