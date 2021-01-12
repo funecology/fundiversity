@@ -89,8 +89,8 @@
 <div id="other-functionspackages-to-compute-functional-diversity-indices" class="section level1">
 <h1 class="hasAnchor">
 <a href="#other-functionspackages-to-compute-functional-diversity-indices" class="anchor"></a>Other functions/packages to compute functional diversity indices</h1>
-<p><strong><code><a href="https://rdrr.io/pkg/FD/man/dbFD.html">FD::dbFD()</a></code></strong> is probably the most known function to compute functional diversity indices. It comes from the <code>FD</code> package proposed by <span class="citation">Laliberté, Legendre, and Shipley (2014)</span>. It can compute many indices: functional richness, Rao’s quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.</p>
-<p><strong><code><a href="https://rdrr.io/pkg/hillR/man/hill_func.html">hillR::hill_func()</a></code></strong> comes from the <code>hillR</code> package that computes Hill numbers for taxonomic, functional, and functional diversity <span class="citation">(Li 2018)</span>. It implements indices proposed by <span class="citation">Chao, Chiu, and Jost (2014)</span>. It computes Rao’s quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.</p>
+<p><strong><code>FD::dbFD()</code></strong> is probably the most known function to compute functional diversity indices. It comes from the <code>FD</code> package proposed by <span class="citation">Laliberté, Legendre, and Shipley (2014)</span>. It can compute many indices: functional richness, Rao’s quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.</p>
+<p><strong><code>hillR::hill_func()</code></strong> comes from the <code>hillR</code> package that computes Hill numbers for taxonomic, functional, and functional diversity <span class="citation">(Li 2018)</span>. It implements indices proposed by <span class="citation">Chao, Chiu, and Jost (2014)</span>. It computes Rao’s quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.</p>
 <p><strong><code>adiv::QE()</code></strong> comes from the <code>adiv</code> package which proposes a toolkit to analyze biodiversity <span class="citation">(Pavoine 2020)</span>. This function computes Rao’s quadratic entropy.</p>
 <p><strong><code>SYNCSA::rao.diversity()</code></strong> comes from <code>SYNCSA</code> package which proposes a simulation framework for meta-communities <span class="citation">(Debastiani and Pillar 2012)</span>. The function computes Rao’s quadratic entropy as well as functional redundancy.</p>
 </div>
@@ -115,7 +115,7 @@
     <span class="fu">adiv</span><span class="fu">::</span><span class="fu">QE</span><span class="op">(</span><span class="va">site_sp_birds</span>, dis <span class="op">=</span> <span class="va">dist_traits_birds</span><span class="op">)</span>
   <span class="op">}</span>,
   hillR <span class="op">=</span> <span class="op">{</span>
-    <span class="fu">hillR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/hillR/man/hill_func.html">hill_func</a></span><span class="op">(</span><span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span>, traits_as_is <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>
+    <span class="fu">hillR</span><span class="fu">::</span><span class="fu">hill_func</span><span class="op">(</span><span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span>, traits_as_is <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>
   <span class="op">}</span>,
   SYNCSA <span class="op">=</span> <span class="op">{</span>
     <span class="fu">SYNCSA</span><span class="fu">::</span><span class="fu">rao.diversity</span><span class="op">(</span><span class="va">site_sp_birds</span>,
@@ -124,7 +124,7 @@
   <span class="op">}</span>,
   FD <span class="op">=</span> <span class="op">{</span>
     <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span>
-      <span class="fu">FD</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/FD/man/dbFD.html">dbFD</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dist_traits_birds</span>, a <span class="op">=</span> <span class="va">site_sp_birds</span>, stand.x <span class="op">=</span> <span class="cn">FALSE</span>,
+      <span class="fu">FD</span><span class="fu">::</span><span class="fu">dbFD</span><span class="op">(</span>x <span class="op">=</span> <span class="va">dist_traits_birds</span>, a <span class="op">=</span> <span class="va">site_sp_birds</span>, stand.x <span class="op">=</span> <span class="cn">FALSE</span>,
                calc.FRic <span class="op">=</span> <span class="cn">TRUE</span>, calc.CWM <span class="op">=</span> <span class="cn">FALSE</span>, calc.FDiv <span class="op">=</span> <span class="cn">FALSE</span>,
                calc.FGR <span class="op">=</span> <span class="cn">FALSE</span>, m <span class="op">=</span> <span class="st">"max"</span>, stand.FRic <span class="op">=</span> <span class="cn">FALSE</span>,
                messages <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
@@ -335,7 +335,7 @@
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tictoc</span><span class="fu">::</span><span class="fu">toc</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; 6424.435 sec elapsed</span>
-<span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sessioninfo/man/session_info.html">session_info</a></span><span class="op">(</span><span class="op">)</span>
+<span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu">session_info</span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────</span>
 <span class="co">#&gt;  setting  value                       </span>
 <span class="co">#&gt;  version  R version 4.0.3 (2020-10-10)</span>

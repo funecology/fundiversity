@@ -190,12 +190,7 @@
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; Differing number of species between trait dataset and site-species matrix</span>
 <span class="co">#&gt; Taking subset of species</span>
-<span class="co">#&gt; Error in geometry::convhulln(traits[site_row &gt; 0, ], "FA"): Received error code 1 from qhull. Qhull error:</span>
-<span class="co">#&gt; QH6214 qhull input error: not enough points(2) to construct initial simplex (need 5)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; While executing:  | qhull FA  Qt</span>
-<span class="co">#&gt; Options selected for Qhull 2015.2.r 2016/01/18:</span>
-<span class="co">#&gt;   run-id 1819879894  FArea-total  Qtriangulate  _pre-merge  _zero-centrum</span>
+<span class="co">#&gt; Error in if (nrow(traits) &lt;= ncol(traits)) {: argument is of length zero</span>
 
 <span class="co"># No species in common between both dataset</span>
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
@@ -379,14 +374,14 @@
 <h1 class="hasAnchor">
 <a href="#what-if-not-all-traits-are-continuous" class="anchor"></a>What if not all traits are continuous?</h1>
 <p>Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species. The general idea we present in this part is to go from the trait table to a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in <span class="citation">Maire et al. (2015)</span>.</p>
-<p>To compute dissimilarity with non-continuous traits you can user Gower’s distance <span class="citation">(Gower 1971)</span> or its following adaptations <span class="citation">(Pavoine et al. 2009; Podani 1999)</span>. You can use the following functions: <code><a href="https://rdrr.io/pkg/cluster/man/daisy.html">cluster::daisy()</a></code>, <code><a href="https://rdrr.io/pkg/FD/man/gowdis.html">FD::gowdis()</a></code>, <code><a href="https://rdrr.io/pkg/ade4/man/dist.ktab.html">ade4::dist.ktab()</a></code>, or <code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegan::vegdist()</a></code>.</p>
-<p>Then you can project these dissimilarities with Principal Coordinates using <code><a href="https://rdrr.io/pkg/ape/man/pcoa.html">ape::pcoa()</a></code> for example. You can then select the first dimensions that explains the most variance and use theses as the input “traits” to compute functional diversity indices.</p>
+<p>To compute dissimilarity with non-continuous traits you can user Gower’s distance <span class="citation">(Gower 1971)</span> or its following adaptations <span class="citation">(Pavoine et al. 2009; Podani 1999)</span>. You can use the following functions: <code><a href="https://rdrr.io/pkg/cluster/man/daisy.html">cluster::daisy()</a></code>, <code>FD::gowdis()</code>, <code>ade4::dist.ktab()</code>, or <code>vegan::vegdist()</code>.</p>
+<p>Then you can project these dissimilarities with Principal Coordinates using <code>ape::pcoa()</code> for example. You can then select the first dimensions that explains the most variance and use theses as the input “traits” to compute functional diversity indices.</p>
 </div>
 <div id="what-if-some-traits-have-missing-values" class="section level1">
 <h1 class="hasAnchor">
 <a href="#what-if-some-traits-have-missing-values" class="anchor"></a>What if some traits have missing values?</h1>
 <p>Sometimes, some of the trait values can be missing for some species in your dataset. Because <code>fundiversity</code> does not want to make assumptions without telling you, by default it <strong>drops</strong> the species data for which the trait is missing.</p>
-<p>If you want to use data with missing values you can use dissimilarity metrics that accept missing trait values such as some of the methods specified in <code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegan::vegdist()</a></code>.</p>
+<p>If you want to use data with missing values you can use dissimilarity metrics that accept missing trait values such as some of the methods specified in <code>vegan::vegdist()</code>.</p>
 <p>Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of <code>fundiversity</code> but you can find some details on how to proceed with the review by <span class="citation">Penone et al. (2014)</span>.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
