@@ -62,6 +62,15 @@ test_that("Functional Richness can standardize its values", {
   expect_lt(fric_low_1$FRic[[2]], 1)
 })
 
+test_that("Functional Richness edge cases", {
+
+  expect_identical(
+    fd_fric(traits_birds[1:4, ])[["FRic"]],
+    NA_real_
+  )
+
+})
+
 test_that("Functional Richness fails gracefully", {
 
   # No traits
