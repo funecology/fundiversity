@@ -190,7 +190,7 @@
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; Differing number of species between trait dataset and site-species matrix</span>
 <span class="co">#&gt; Taking subset of species</span>
-<span class="co">#&gt; Error in if (nrow(traits) &lt;= ncol(traits)) {: argument is of length zero</span>
+<span class="co">#&gt; Error in traits[!duplicated(traits), , drop = FALSE]: incorrect number of dimensions</span>
 
 <span class="co"># No species in common between both dataset</span>
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
