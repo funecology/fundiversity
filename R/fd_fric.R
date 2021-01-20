@@ -19,7 +19,9 @@
 #' data(traits_birds)
 #' fd_fric(traits_birds)
 #'
-#' @return The value of FRic (numeric of length 1)
+#' @return a data.frame with two columns:
+#' * `site` the names of the sites as the row names of the input `sp_com`,
+#' * `FRic` the values of functional richness at each site.
 #'
 #' @references
 #' Cornwell W. K., Schwilk D. W., Ackerly D. D. (2006), A trait-based test for

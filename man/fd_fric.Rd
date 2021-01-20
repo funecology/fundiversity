@@ -22,7 +22,11 @@ If you want to consider species that are absent
 in the site-species matrix, add corresponding columns of 0s.}
 }
 \value{
-The value of FRic (numeric of length 1)
+a data.frame with two columns:
+\itemize{
+\item \code{site} the names of the sites as the row names of the input \code{sp_com},
+\item \code{FRic} the values of functional richness at each site.
+}
 }
 \description{
 Functional Richness is computed as the volume of the convex hull from all

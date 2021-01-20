@@ -14,7 +14,11 @@ if not provided, the function considers all species with equal
 abundance in a single site}
 }
 \value{
-The value of FDiv (numeric of length 1)
+a data.frame with two columns:
+\itemize{
+\item \code{site} the names of the sites as the row names of the input \code{sp_com},
+\item \code{FDiv} the values of functional divergence at each site.
+}
 }
 \description{
 Compute Functional Divergence (FDiv)
