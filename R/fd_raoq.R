@@ -2,13 +2,15 @@
 #'
 #' @inheritParams fd_fric
 #' @param dist_matrix A dissimilarity matrix that can be provided instead of a
-#'                    trait data.frame
+#'                    trait data.frame (default: `NULL`).
 #'
 #' @examples
 #' data(traits_birds)
 #' fd_raoq(traits_birds)
 #'
-#' @return The value of Rao's Q (numeric of length 1)
+#' @return a data.frame with two columns:
+#' * `site` the names of the sites as the row names of the input `sp_com`,
+#' * `Q` the values of Rao's quadratic entropy at each site.
 #'
 #' @references
 #' Pavoine S., Dolédec S. (2005). The apportionment of quadratic entropy: a

@@ -14,10 +14,14 @@ if not provided, the function considers all species with equal
 abundance in a single site}
 
 \item{dist_matrix}{A dissimilarity matrix that can be provided instead of a
-trait data.frame}
+trait data.frame (default: \code{NULL}).}
 }
 \value{
-The value of Rao's Q (numeric of length 1)
+a data.frame with two columns:
+\itemize{
+\item \code{site} the names of the sites as the row names of the input \code{sp_com},
+\item \code{Q} the values of Rao's quadratic entropy at each site.
+}
 }
 \description{
 Compute Rao's entropy index (Rao's Q)

@@ -6,7 +6,9 @@
 #' data(traits_birds)
 #' fd_fdiv(traits_birds)
 #'
-#' @return The value of FDiv (numeric of length 1)
+#' @return a data.frame with two columns:
+#' * `site` the names of the sites as the row names of the input `sp_com`,
+#' * `FDiv` the values of functional divergence at each site.
 #'
 #' @references
 #' Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional
