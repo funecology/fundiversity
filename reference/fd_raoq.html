@@ -145,13 +145,17 @@ abundance in a single site</p></td>
     <tr>
       <th>dist_matrix</th>
       <td><p>A dissimilarity matrix that can be provided instead of a
-trait data.frame</p></td>
+trait data.frame (default: <code>NULL</code>).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The value of Rao's Q (numeric of length 1)</p>
+    <p>a data.frame with two columns:</p><ul>
+<li><p><code>site</code> the names of the sites as the row names of the input <code>sp_com</code>,</p></li>
+<li><p><code>Q</code> the values of Rao's quadratic entropy at each site.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Pavoine S., Dolédec S. (2005). The apportionment of quadratic entropy: a
