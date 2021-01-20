@@ -69,6 +69,14 @@ test_that("Functional Richness edge cases", {
     NA_real_
   )
 
+  dup_traits <- lapply(1:5, function(x) traits_birds[1,, drop = FALSE])
+  dup_traits <- do.call(rbind, dup_traits)
+
+  expect_identical(
+    fd_fric(dup_traits)[["FRic"]],
+    NA_real_
+  )
+
 })
 
 test_that("Functional Richness fails gracefully", {
