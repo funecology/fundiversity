@@ -88,6 +88,8 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
 # cases
 fd_fric_single <- function(traits) {
 
+  traits <- traits[!duplicated(traits),, drop = FALSE]
+
   if (nrow(traits) <= ncol(traits)) {
     return(NA_real_)
   }
