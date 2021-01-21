@@ -66,6 +66,12 @@ test_that("Functional Evenness works on subset of site/species", {
                         "and site-species matrix\nTaking subset of species"))
 })
 
+test_that("Functional Evenness edge cases", {
+  expect_equal(fd_feve(traits_birds[1:2,],
+                       simple_site_sp[, 1:2, drop = FALSE])[["FEve"]],
+               NA_real_)
+})
+
 test_that("Functional Evenness fails gracefully", {
   # No traits and no dissimilarity
   expect_error(
