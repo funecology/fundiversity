@@ -30,14 +30,14 @@ test_that("Functional Evenness computation are in line with other packages", {
                tolerance = 1e-6)
 
   # With perfectly spread dataset
-  test_dissim  = matrix(c(
+  test_dissim  <- matrix(c(
     0, 1, 2,
     1, 0, 1,
     2, 1, 0
   ),
   byrow = TRUE, ncol = 3, dimnames = list(letters[1:3], letters[1:3]))
 
-  abund_mat = matrix(1, ncol = 3, dimnames = list("site1", letters[1:3]))
+  abund_mat <- matrix(1, ncol = 3, dimnames = list("site1", letters[1:3]))
 
   expect_equal(fd_feve(sp_com = abund_mat, dist_matrix = test_dissim)$FEve, 1)
 })
