@@ -86,7 +86,8 @@ test_that("Functional Richness edge cases", {
     fd_fric(many_traits),
     paste0(
       "Due to computational limits FRic can only be computed with n <= 16 ",
-      "traits\nConsider PCA if you have more than 16 traits"),
+      "traits\nConsider dimension reduction techniques if you have more than",
+      " 16 traits"),
     fixed = TRUE
   )
 
