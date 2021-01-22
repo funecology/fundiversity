@@ -39,6 +39,11 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     traits <- as.matrix(traits)
   }
 
+  if (ncol(traits) > 16) {
+    stop("Due to computational limits FRic can only be computed with n <= 16 ",
+         "traits\nConsider PCA if you have more than 16 traits")
+  }
+
   traits <- remove_species_without_trait(traits)
 
   if (!missing(sp_com)) {
