@@ -142,7 +142,6 @@ bench_sp_raoq <- microbenchmark::microbenchmark(
   species_200    = fd_raoq(     traits_birds, site_sp_birds),
   species_1000   = fd_raoq(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_raoq( null_sp_10000$tr, null_sp_10000$si),
-  species_100000 = fd_raoq(null_sp_100000$tr, null_sp_100000$si),
   times = 30
 )
 
@@ -157,7 +156,6 @@ bench_sp_feve <- microbenchmark::microbenchmark(
   species_200    = fd_feve(     traits_birds, site_sp_birds),
   species_1000   = fd_feve(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_feve( null_sp_10000$tr, null_sp_10000$si),
-  species_100000 = fd_feve(null_sp_100000$tr, null_sp_100000$si),
   times = 30
 )
 
@@ -168,10 +166,10 @@ bench_sp_feve
 ### Comparing between indices
 
 ```{r bench-species-compare, fig.cap="Performance comparison between functions for distinct indices in `fundiversity` with increasing number of species. Smoothed trend lines and standard error enveloppes ares shown."}
-all_bench_sp <- list(fric = bench_species_fric,
-                     fdiv = bench_species_fdiv,
-                     raoq = bench_species_raoq,
-                     feve = bench_species_feve) %>%
+all_bench_sp <- list(fric = bench_sp_fric,
+                     fdiv = bench_sp_fdiv,
+                     raoq = bench_sp_raoq,
+                     feve = bench_sp_feve) %>%
   bind_rows(.id = "fd_index") %>%
   mutate(n_sp = gsub("species_", "", expr) %>%
            as.numeric())
@@ -299,7 +297,7 @@ all_bench_sites %>%
 <details>
 <summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
 ```{r sessioninfo}
-tictoc::toc(msg = "Time needed to generate this document")
+tictoc::toc(func.toc = function(x, y) tictoc::toc.outmsg(x, y, msg = "Time needed to generate this document"))
 sessioninfo::session_info()
 ```
 </details>
