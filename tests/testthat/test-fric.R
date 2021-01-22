@@ -64,17 +64,30 @@ test_that("Functional Richness can standardize its values", {
 
 test_that("Functional Richness edge cases", {
 
+  # Not enough species compared to the number of traits to be computed
   expect_identical(
     fd_fric(traits_birds[1:4, ])[["FRic"]],
     NA_real_
   )
 
+  # Several species with similar trait values -> not enought species for FRic
   dup_traits <- lapply(1:5, function(x) traits_birds[1,, drop = FALSE])
   dup_traits <- do.call(rbind, dup_traits)
 
   expect_identical(
     fd_fric(dup_traits)[["FRic"]],
     NA_real_
+  )
+
+  # Trying to compute FRic with >16 traits
+  many_traits <- cbind(traits_birds, traits_birds, traits_birds, traits_birds,
+                       traits_birds)
+  expect_error(
+    fd_fric(many_traits),
+    paste0(
+      "Due to computational limits FRic can only be computed with n <= 16 ",
+      "traits\nConsider PCA if you have more than 16 traits"),
+    fixed = TRUE
   )
 
 })
