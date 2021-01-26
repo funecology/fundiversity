@@ -74,10 +74,7 @@ test_that("Functional Richness edge cases", {
   dup_traits <- lapply(1:5, function(x) traits_birds[1,, drop = FALSE])
   dup_traits <- do.call(rbind, dup_traits)
 
-  expect_identical(
-    fd_fric(dup_traits)[["FRic"]],
-    NA_real_
-  )
+  expect_identical(fd_fric(dup_traits)[["FRic"]], NA_real_)
 
   # Trying to compute FRic with >16 traits
   many_traits <- cbind(traits_birds, traits_birds, traits_birds, traits_birds,
@@ -90,6 +87,15 @@ test_that("Functional Richness edge cases", {
       " 16 traits"),
     fixed = TRUE
   )
+
+  # Compute FRic for site with a single species
+  site_sp <- matrix(0, ncol = nrow(traits_birds), nrow = 1,
+                    dimnames = list("s1", rownames(traits_birds)))
+  site_sp[1,1] <- 1
+
+  expect_silent(fd_fric(traits_birds, site_sp))
+
+  expect_identical(fd_fric(traits_birds, site_sp)[["FRic"]], NA_real_)
 
 })
 
