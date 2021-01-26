@@ -82,7 +82,7 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     }
 
     fric_site <- apply(sp_com, 1, function(site_row) {
-      fd_fric_single(traits[site_row > 0,])
+      fd_fric_single(traits[site_row > 0,, drop = FALSE])
     })
   }
 
