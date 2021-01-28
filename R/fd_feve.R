@@ -70,15 +70,16 @@ fd_feve_single <- function(site_row, dist_matrix) {
   if (sum(site_row > 0) < 3) {
     FEve <- NA_real_
   } else {
-    present_species <- names(site_row)[site_row > 0]
+    species <- names(site_row)[site_row > 0]
 
-    min_span_tree <- vegan::spantree(dist_matrix[present_species, present_species])
+    mst <- vegan::spantree(dist_matrix[species, species])
 
-    one_over_s_minus_one <- 1 / (min_span_tree$n - 1)
+    one_over_s_minus_one <- 1 / (mst$n - 1)
 
-    ew <- min_span_tree$dist /
-      (site_row[min_span_tree$labels[seq_along(min_span_tree$kid) + 1]] +
-        site_row[min_span_tree$labels[min_span_tree$kid]])
+    parent_nodes <- mst$labels[seq_along(mst$kid) + 1]
+    child_nodes  <- mst$labels[mst$kid]
+
+    ew <- mst$dist / (site_row[parent_nodes] + site_row[child_nodes])
 
     pew <- ew / sum(ew)
 
