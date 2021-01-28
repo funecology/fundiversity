@@ -140,7 +140,7 @@ Use the `fd_fdiv()` function to compute functional divergence:
 # One-dimension FDiv
 fd_fdiv(traits_birds[, 1, drop = FALSE])
 
-# Multimple dimension FDiv
+# Multiple dimension FDiv
 fd_fdiv(traits_birds)
 ```
 
@@ -151,6 +151,28 @@ fd_fdiv(traits_birds, site_sp_birds)
 ```
 
 Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_fdiv()` will take the common subset of species.
+
+## Functional Evenness (FEve) - `fd_feve()`
+
+Functional Evenness (FEve) describes the regularity of the distribution of species (and their abundances) in trait space [@Villeger_New_2008]. FEve is bounded between 0 and 1. FEve is close to 0 when most species (and abundances) are tightly packed in a portion of the trait space while it is close to 1 if species are regularly spread (with even abundances) along the trait space.
+
+Use the `fd_fdiv()` function to compute functional divergence:
+
+```{r feve-intro}
+# One-dimension FEve
+fd_feve(traits_birds[, 1, drop = FALSE])
+
+# Multiple dimension FEve
+fd_feve(traits_birds)
+```
+
+When no site-species matrix is provided, FEve is computed by default considering all the species together. If you provide a site-species matrix, then FEve is computed across all sites:
+
+```{r feve-sites}
+fd_feve(traits_birds, site_sp_birds)
+```
+
+Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_feve()` will take the common subset of species.
 
 
 ## Rao's Quadratic Entropy (Q) - `fd_raoq()`
