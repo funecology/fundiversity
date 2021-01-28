@@ -13,13 +13,21 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   class.warning = "collapsable-warnings",
-  fig.path = "fd-"
+  fig.path = "fd-",
+  message = FALSE
 )
+
+suppressPackageStartupMessages({
+  library("dplyr")
+  library("ggplot2")
+})
 ```
 
 This vignette presents some performance tests ran between `fundiversity` and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is [**pre-computed**](https://ropensci.org/technotes/2019/12/08/precompute-vignettes/).
 
-# Other functions/packages to compute functional diversity indices
+# Other packages to compute FD indices
+
+## Main functions
 
 **`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by @Laliberte_FD_2014. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
 
@@ -29,7 +37,7 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 
 **`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
 
-# Benchmark
+## Benchmark between packages
 
 We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function.
 
@@ -44,8 +52,8 @@ dist_traits_birds <- dist(traits_birds)
 
 With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
 
-```{r bench-data-rao}
-pkg_bench = microbenchmark::microbenchmark(
+```{r bench-data-rao, fig.cap="Performance comparison in computing Rao's quadratic entropy between `fundiversity` and other packages"}
+pkg_bench <- microbenchmark::microbenchmark(
   fundiversity = {
     fundiversity::fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds)
   },
@@ -67,13 +75,17 @@ pkg_bench = microbenchmark::microbenchmark(
                calc.FGR = FALSE, m = "max", stand.FRic = FALSE,
                messages = FALSE))
   },
-  times = 200
+  times = 30
 )
 
 ggplot2::autoplot(pkg_bench)
 pkg_bench
 ```
 
+
+# Benchmark within `fundiversity`
+
+We now proceed to the performance evaluation of functions within `fundiversity` with datasets of increasing sizes.
 
 ## Increasing the number of species
 
@@ -93,42 +105,89 @@ null_sp_10000  <- make_more_sp(50)
 null_sp_100000 <- make_more_sp(500)
 ```
 
-```{r bench-species-fric}
-bench_sp_fric = microbenchmark::microbenchmark(
+### Functional Richness
+
+```{r bench-species-fric, fig.cap = "Performance comparison of `fd_fric()` with increasing number of species."}
+bench_sp_fric <- microbenchmark::microbenchmark(
   species_200    = fd_fric(     traits_birds, site_sp_birds),
   species_1000   = fd_fric(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_fric( null_sp_10000$tr, null_sp_10000$si),
   species_100000 = fd_fric(null_sp_100000$tr, null_sp_100000$si),
-  times = 100
+  times = 30
 )
 
 ggplot2::autoplot(bench_sp_fric)
 bench_sp_fric
 ```
 
-```{r bench-species-fdiv}
-bench_sp_fdiv = microbenchmark::microbenchmark(
+### Functional Divergence
+
+```{r bench-species-fdiv, fig.cap = "Performance comparison of `fd_fdiv()` with increasing number of species."}
+bench_sp_fdiv <- microbenchmark::microbenchmark(
   species_200    = fd_fdiv(     traits_birds, site_sp_birds),
   species_1000   = fd_fdiv(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_fdiv( null_sp_10000$tr, null_sp_10000$si),
   species_100000 = fd_fdiv(null_sp_100000$tr, null_sp_100000$si),
-  times = 100
+  times = 30
 )
 
 ggplot2::autoplot(bench_sp_fdiv)
 bench_sp_fdiv
 ```
 
-```{r bench-species-raoq}
-bench_sp_raoq = microbenchmark::microbenchmark(
+### Rao's Quadratric Entropy
+
+```{r bench-species-raoq, fig.cap = "Performance comparison of `fd_raoq()` with increasing number of species."}
+bench_sp_raoq <- microbenchmark::microbenchmark(
   species_200    = fd_raoq(     traits_birds, site_sp_birds),
   species_1000   = fd_raoq(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_raoq( null_sp_10000$tr, null_sp_10000$si),
-  times = 100
+  times = 30
 )
 
 ggplot2::autoplot(bench_sp_raoq)
 bench_sp_raoq
+```
+
+### Functional Evenness
+
+```{r bench-species-feve, fig.cap = "Performance comparison of `fd_feve()` with increasing number of species."}
+bench_sp_feve <- microbenchmark::microbenchmark(
+  species_200    = fd_feve(     traits_birds, site_sp_birds),
+  species_1000   = fd_feve(  null_sp_1000$tr, null_sp_1000$si),
+  species_10000  = fd_feve( null_sp_10000$tr, null_sp_10000$si),
+  times = 30
+)
+
+ggplot2::autoplot(bench_sp_feve)
+bench_sp_feve
+```
+
+### Comparing between indices
+
+```{r bench-species-compare, fig.cap="Performance comparison between functions for distinct indices in `fundiversity` with increasing number of species. Smoothed trend lines and standard error enveloppes ares shown."}
+all_bench_sp <- list(fric = bench_sp_fric,
+                     fdiv = bench_sp_fdiv,
+                     raoq = bench_sp_raoq,
+                     feve = bench_sp_feve) %>%
+  bind_rows(.id = "fd_index") %>%
+  mutate(n_sp = gsub("species_", "", expr) %>%
+           as.numeric())
+
+all_bench_sp %>%
+  ggplot(aes(n_sp, time * 1e-9, color = fd_index)) +
+  geom_point(alpha = 1/3) +
+  geom_smooth() +
+  scale_x_log10() +
+  scale_y_log10() +
+  scale_color_brewer(type = "qual",
+                     labels = c(fric = "FRic", fdiv = "FDiv", raoq = "Rao's Q",
+                                feve = "FEve")) +
+  labs(title = "Performance comparison between indices",
+       x = "# of species", y = "Time (in seconds)",
+       color = "FD index") +
+  theme_bw() +
+  theme(aspect.ratio = 1)
 ```
 
 ## Increasing the number of sites
@@ -146,49 +205,100 @@ site_sp_1000  <- make_more_sites(120)
 site_sp_10000 <- make_more_sites(1200)
 ```
 
-```{r bench-sites-fric}
+
+### Functional Richness
+
+```{r bench-sites-fric, fig.cap = "Performance comparison of `fd_fric()` with increasing number of sites."}
 bench_sites_fric = microbenchmark::microbenchmark(
   sites_10    = fd_fric(traits_birds, site_sp_birds),
   sites_100   = fd_fric(traits_birds, site_sp_100),
   sites_1000  = fd_fric(traits_birds, site_sp_1000),
   sites_10000 = fd_fric(traits_birds, site_sp_10000),
-  times = 100
+  times = 30
 )
 
 ggplot2::autoplot(bench_sites_fric)
 bench_sites_fric
 ```
 
-```{r bench-sites-fdiv}
+### Functional Divergence
+
+```{r bench-sites-fdiv, fig.cap = "Performance comparison of `fd_fdiv()` with increasing number of sites."}
 bench_sites_fdiv = microbenchmark::microbenchmark(
   sites_10    = fd_fdiv(traits_birds, site_sp_birds),
   sites_100   = fd_fdiv(traits_birds, site_sp_100),
   sites_1000  = fd_fdiv(traits_birds, site_sp_1000),
   sites_10000 = fd_fdiv(traits_birds, site_sp_10000),
-  times = 100
+  times = 30
 )
 
 ggplot2::autoplot(bench_sites_fdiv)
 bench_sites_fdiv
 ```
 
-```{r bench-sites-raoq}
+### Rao's Quadratic Entropy
+
+```{r bench-sites-raoq, fig.cap = "Performance comparison of `fd_raoq()` with increasing number of sites."}
 bench_sites_raoq = microbenchmark::microbenchmark(
   sites_10    = fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_raoq(traits = NULL, site_sp_100,   dist_traits_birds),
   sites_1000  = fd_raoq(traits = NULL, site_sp_1000,  dist_traits_birds),
   sites_10000 = fd_raoq(traits = NULL, site_sp_10000, dist_traits_birds),
-  times = 100
+  times = 30
 )
 
 ggplot2::autoplot(bench_sites_raoq)
 bench_sites_raoq
 ```
 
+### Functional Evenness
+
+```{r bench-sites-feve, fig.cap = "Performance comparison of `fd_feve()` with increasing number of sites"}
+bench_sites_feve = microbenchmark::microbenchmark(
+  sites_10    = fd_feve(traits = NULL, site_sp_birds, dist_traits_birds),
+  sites_100   = fd_feve(traits = NULL, site_sp_100,   dist_traits_birds),
+  sites_1000  = fd_feve(traits = NULL, site_sp_1000,  dist_traits_birds),
+  sites_10000 = fd_feve(traits = NULL, site_sp_10000, dist_traits_birds),
+  times = 30
+)
+
+ggplot2::autoplot(bench_sites_feve)
+bench_sites_feve
+```
+
+
+### Comparing between indices
+
+```{r bench-sites-compare, fig.cap = "Performance comparison between functions for distinct indices in `fundiversity` with increasing number of sites. Smoothed trend lines and standard error enveloppes ares shown."}
+all_bench_sites <- list(fric = bench_sites_fric,
+                        fdiv = bench_sites_fdiv,
+                        raoq = bench_sites_raoq,
+                        feve = bench_sites_feve) %>%
+  bind_rows(.id = "fd_index") %>%
+  mutate(n_sites = gsub("sites", "", expr) %>%
+           as.numeric())
+
+all_bench_sites %>%
+  ggplot(aes(n_sites, time * 1e-9, color = fd_index)) +
+  geom_point(alpha = 1/3) +
+  geom_smooth() +
+  scale_x_log10() +
+  scale_y_log10() +
+  scale_color_brewer(type = "qual",
+                     labels = c(fric = "FRic", fdiv = "FDiv", raoq = "Rao's Q",
+                                feve = "FEve")) +
+  labs(title = "Performance comparison between indices",
+       x = "# of sites", y = "Time (in seconds)",
+       color = "FD index") +
+  theme_bw() +
+  theme(aspect.ratio = 1)
+```
+
 <details>
 <summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
-```{r sessioninfo}
-tictoc::toc()
+```{r sessioninfo, include=FALSE}
+
+tictoc::toc(func.toc = function(x, y, msg) tictoc::toc.outmsg(x, y, paste0(msg, " seconds needed to generate this document")))
 sessioninfo::session_info()
 ```
 </details>
