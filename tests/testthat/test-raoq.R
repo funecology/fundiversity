@@ -60,9 +60,9 @@ test_that("Rao's Quadratic Entropy works on sparse matrices", {
   colnames(site_sp) <-  rownames(traits_birds)
   rownames(site_sp) <- "s1"
 
-  sparse_site_sp <- as(site_sp, "sparseMatrix")
+  sparse_site_sp <- Matrix(site_sp, sparse = TRUE)
 
-  sparse_dist_mat <- as(as.matrix(dist(traits_birds)), "sparseMatrix")
+  sparse_dist_mat <- Matrix(as.matrix(dist(traits_birds)), sparse = TRUE)
 
   # Only site-species matrix is sparse
   expect_silent(fd_raoq(traits_birds, sparse_site_sp))

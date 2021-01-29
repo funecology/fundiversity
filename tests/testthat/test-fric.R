@@ -107,7 +107,7 @@ test_that("Functional Richness works on sparse matrices", {
   colnames(site_sp) <-  rownames(traits_birds)
   rownames(site_sp) <- "s1"
 
-  sparse_site_sp <- as(site_sp, "sparseMatrix")
+  sparse_site_sp <- Matrix(site_sp, sparse = TRUE)
 
   expect_silent(fd_fric(traits_birds, sparse_site_sp))
 

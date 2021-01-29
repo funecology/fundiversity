@@ -46,7 +46,7 @@ test_that("Functional Divergence works with sparse matrices", {
   colnames(site_sp) <-  rownames(traits_birds)
   rownames(site_sp) <- "s1"
 
-  sparse_site_sp <- as(site_sp, "sparseMatrix")
+  sparse_site_sp <- Matrix(site_sp, sparse = TRUE)
 
   fdiv <- expect_silent(fd_fdiv(traits_birds, sparse_site_sp))
 
