@@ -57,7 +57,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/performance.html">Performance comparison with other functional diversity packages</a>
+      <a href="../articles/performance.html">UNKNOWN TITLE</a>
     </li>
   </ul>
 </li>
@@ -86,11 +86,12 @@
 
     
     
-<p><code>fundiversity</code> lets you compute functional diversity indices. Currently it can compute three indices:</p>
+<p><code>fundiversity</code> lets you compute functional diversity indices. Currently it can compute four indices:</p>
 <ul>
-<li>functional richness (FRic)</li>
-<li>functional divergence (FDiv)</li>
-<li>Rao’s quadratic entropy (Q)</li>
+<li>functional richness (FRic),</li>
+<li>functional divergence (FDiv),</li>
+<li>functional evenness (FEve),</li>
+<li>Rao’s quadratic entropy (Q).</li>
 </ul>
 <p>This vignette will introduce you to the data needed to compute the indices as well as the computation and interpretation of each index.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -271,7 +272,7 @@
 <span class="co">#&gt;   site      FDiv</span>
 <span class="co">#&gt; 1   s1 0.6344607</span>
 
-<span class="co"># Multimple dimension FDiv</span>
+<span class="co"># Multiple dimension FDiv</span>
 <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site      FDiv</span>
 <span class="co">#&gt; 1   s1 0.6011971</span></code></pre></div>
@@ -289,18 +290,48 @@
 <span class="co">#&gt; 8 elev_3500 0.6292052</span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> will take the common subset of species.</p>
 </div>
+<div id="functional-evenness-feve---fd_feve" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functional-evenness-feve---fd_feve" class="anchor"></a>Functional Evenness (FEve) - <code>fd_feve()</code>
+</h2>
+<p>Functional Evenness (FEve) describes the regularity of the distribution of species (and their abundances) in trait space <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>. FEve is bounded between 0 and 1. FEve is close to 0 when most species (and abundances) are tightly packed in a portion of the trait space while it is close to 1 if species are regularly spread (with even abundances) along the trait space.</p>
+<p>Use the <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> function to compute functional divergence:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># One-dimension FEve</span>
+<span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
+<span class="co">#&gt;   site      FEve</span>
+<span class="co">#&gt; 1   s1 0.4454885</span>
+
+<span class="co"># Multiple dimension FEve</span>
+<span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
+<span class="co">#&gt;   site      FEve</span>
+<span class="co">#&gt; 1   s1 0.3743341</span></code></pre></div>
+<p>When no site-species matrix is provided, FEve is computed by default considering all the species together. If you provide a site-species matrix, then FEve is computed across all sites:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
+<span class="co">#&gt;        site      FEve</span>
+<span class="co">#&gt; 1  elev_250 0.3841202</span>
+<span class="co">#&gt; 2  elev_500 0.3846186</span>
+<span class="co">#&gt; 3 elev_1000 0.3426688</span>
+<span class="co">#&gt; 4 elev_1500 0.2965585</span>
+<span class="co">#&gt; 5 elev_2000 0.3523994</span>
+<span class="co">#&gt; 6 elev_2500 0.3552671</span>
+<span class="co">#&gt; 7 elev_3000 0.3492529</span>
+<span class="co">#&gt; 8 elev_3500 0.4222442</span></code></pre></div>
+<p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_feve.html">fd_feve()</a></code> will take the common subset of species.</p>
+</div>
 <div id="raos-quadratic-entropy-q---fd_raoq" class="section level2">
 <h2 class="hasAnchor">
 <a href="#raos-quadratic-entropy-q---fd_raoq" class="anchor"></a>Rao’s Quadratic Entropy (Q) - <code>fd_raoq()</code>
 </h2>
 <p>Rao’s Quadratic entropy assesses the multi-dimensional divergence in trait space <span class="citation">(Rao 1982)</span>. It is the abundance-weighted variance of the trait dissimilarities between all species pairs.</p>
 <p>You can compute Rao’s Quadratic entropy (Q) using the <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> function by providing a trait dataset:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site        Q</span>
 <span class="co">#&gt; 1   s1 170.0519</span></code></pre></div>
 <p>If you don’t provide a site-species matrix, <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> considers all species provided in the trait dataset present at equal abundances in the same site. You can also provide a site-species matrix to compute Q at different sites:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
 <span class="co">#&gt;        site         Q</span>
 <span class="co">#&gt; 1  elev_250 194.78095</span>
@@ -312,7 +343,7 @@
 <span class="co">#&gt; 7 elev_3000 113.22049</span>
 <span class="co">#&gt; 8 elev_3500  87.04750</span></code></pre></div>
 <p>Because the computation of Rao’s quadratic entropy requires dissimilarities between all pair of species in the dataset, if you provide a trait dataset <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code>, the function will compute the Euclidean distance between all pairs of species. If you wish to directly provide species dissimilarities, you can do so through the <code>dist_matrix</code> argument:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Compute dissimilarity between species with the Manhattan distance</span>
 <span class="va">trait_dissim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">traits_birds</span>, method <span class="op">=</span> <span class="st">"manhattan"</span><span class="op">)</span>
 
@@ -338,7 +369,7 @@
 <a href="#standardizing-your-trait-data" class="anchor"></a>Standardizing your trait data</h1>
 <p><code>fundiversity</code> does not perform any transformation on the input trait or dissimilarity data. In <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> if you provide only continuous trait data then the function will attempt computing Euclidean distance between the species.</p>
 <p>In order to get comparable functional diversity indices you can standardize the trait data. One option would be to consider the <code><a href="https://rdrr.io/r/base/scale.html">scale()</a></code> function to scale each continuous trait with a mean of zero and a standard deviation of one (z-score). Each trait will then have the same importance when computing functional diversity indices:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">traits_birds_sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">traits_birds_sc</span><span class="op">)</span>
 <span class="co">#&gt;  Bill.width..mm.   Bill.length..mm.    Kipp.s.index      Bodymass..g.     </span>
@@ -359,7 +390,7 @@
 <span class="co">#&gt;   site    FRic</span>
 <span class="co">#&gt; 1   s1 88.9286</span></code></pre></div>
 <p>Another solution to make trait comparable is to scale them between 0 and 1 by scaling each trait by its maximum and minimum values:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">min_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>, <span class="va">min</span><span class="op">)</span><span class="op">)</span>
 <span class="va">max_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span>
 
@@ -382,14 +413,14 @@
 <h1 class="hasAnchor">
 <a href="#what-if-not-all-traits-are-continuous" class="anchor"></a>What if not all traits are continuous?</h1>
 <p>Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species. The general idea we present in this part is to go from the trait table to a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in <span class="citation">Maire et al. (2015)</span>.</p>
-<p>To compute dissimilarity with non-continuous traits you can user Gower’s distance <span class="citation">(Gower 1971)</span> or its following adaptations <span class="citation">(Pavoine et al. 2009; Podani 1999)</span>. You can use the following functions: <code><a href="https://rdrr.io/pkg/cluster/man/daisy.html">cluster::daisy()</a></code>, <code>FD::gowdis()</code>, <code>ade4::dist.ktab()</code>, or <code>vegan::vegdist()</code>.</p>
+<p>To compute dissimilarity with non-continuous traits you can user Gower’s distance <span class="citation">(Gower 1971)</span> or its following adaptations <span class="citation">(Pavoine et al. 2009; Podani 1999)</span>. You can use the following functions: <code><a href="https://rdrr.io/pkg/cluster/man/daisy.html">cluster::daisy()</a></code>, <code>FD::gowdis()</code>, <code>ade4::dist.ktab()</code>, or <code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegan::vegdist()</a></code>.</p>
 <p>Then you can project these dissimilarities with Principal Coordinates using <code>ape::pcoa()</code> for example. You can then select the first dimensions that explains the most variance and use theses as the input “traits” to compute functional diversity indices.</p>
 </div>
 <div id="what-if-some-traits-have-missing-values" class="section level1">
 <h1 class="hasAnchor">
 <a href="#what-if-some-traits-have-missing-values" class="anchor"></a>What if some traits have missing values?</h1>
 <p>Sometimes, some of the trait values can be missing for some species in your dataset. Because <code>fundiversity</code> does not want to make assumptions without telling you, by default it <strong>drops</strong> the species data for which the trait is missing.</p>
-<p>If you want to use data with missing values you can use dissimilarity metrics that accept missing trait values such as some of the methods specified in <code>vegan::vegdist()</code>.</p>
+<p>If you want to use data with missing values you can use dissimilarity metrics that accept missing trait values such as some of the methods specified in <code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegan::vegdist()</a></code>.</p>
 <p>Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of <code>fundiversity</code> but you can find some details on how to proceed with the review by <span class="citation">Penone et al. (2014)</span>.</p>
 </div>
 <div id="references" class="section level1 unnumbered">

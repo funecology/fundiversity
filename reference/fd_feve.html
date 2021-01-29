@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Functional Traits of Fleshy-fruit plants along a Tropical Gradient — traits_plants • fundiversity</title>
+<title>Compute Functional Evenness (FEve) — fd_feve • fundiversity</title>
 
 
 <!-- jquery -->
@@ -39,14 +39,8 @@
 
 
 
-<meta property="og:title" content="Functional Traits of Fleshy-fruit plants along a Tropical Gradient — traits_plants" />
-<meta property="og:description" content="Taxonomy and functional traits of 392 fleshy-fruited plant species from
-the Manu National Park in south-east Peru. Given are fruit length and
-width (mm), plant height (m) and crop mass (g). Fruit traits have been
-measured on fresh fruit samples. Number of fruits per plant
-(used to determine the crop mass) and plant height have been estimated
-in the field. Species names are indicated as
-row names." />
+<meta property="og:title" content="Compute Functional Evenness (FEve) — fd_feve" />
+<meta property="og:description" content="Compute Functional Evenness (FEve)" />
 
 
 
@@ -124,41 +118,57 @@ row names." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Functional Traits of Fleshy-fruit plants along a Tropical Gradient</h1>
+    <h1>Compute Functional Evenness (FEve)</h1>
     
-    <div class="hidden name"><code>traits_plants.Rd</code></div>
+    <div class="hidden name"><code>fd_feve.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Taxonomy and functional traits of 392 fleshy-fruited plant species from
-the Manu National Park in south-east Peru. Given are fruit length and
-width (mm), plant height (m) and crop mass (g). Fruit traits have been
-measured on fresh fruit samples. Number of fruits per plant
-(used to determine the crop mass) and plant height have been estimated
-in the field. Species names are indicated as
-row names.</p>
+    <p>Compute Functional Evenness (FEve)</p>
     </div>
 
-    <pre class="usage"><span class='va'>traits_plants</span></pre>
+    <pre class="usage"><span class='fu'>fd_feve</span><span class='op'>(</span>traits <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>sp_com</span>, dist_matrix <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>traits</th>
+      <td><p>The matrix dataset for which you want to compute the index</p></td>
+    </tr>
+    <tr>
+      <th>sp_com</th>
+      <td><p>Site-species matrix with sites as rows and species as columns
+if not provided, the function considers all species with equal
+abundance in a single site</p></td>
+    </tr>
+    <tr>
+      <th>dist_matrix</th>
+      <td><p>A dissimilarity matrix that can be provided instead of a
+trait data.frame</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame with 392 rows and 4 variables:</p><dl>
-<dt>Fruit.length..mm.</dt><dd><p>fruit length, in mm</p></dd>
-<dt>Fruit.width..mm.</dt><dd><p>fruit width, in mm</p></dd>
-<dt>Plant.height..m.</dt><dd><p>plant height, in m</p></dd>
-<dt>Crop.mass..g.</dt><dd><p>seed mass, in g</p></dd>
+    <p>a data.frame with two columns:</p><ul>
+<li><p><code>site</code> character column that contains site names based on input <code>sp_com</code>
+row names,</p></li>
+<li><p><code>FEve</code> numeric column that contains FEve values corresponding to each site.</p></li>
+</ul>
 
-</dl>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+    <p>Villéger, S., Mason, N.W.H., Mouillot, D., 2008. New Multidimensional
+Functional Diversity Indices for a Multifaceted Framework in Functional
+Ecology. Ecology 89, 2290–2301. doi: <a href='https://doi.org/10.1890/07-1206.1'>10.1890/07-1206.1</a></p>
 
-    <p>Nowak, Larissa et al. (2019), Data from: Projecting consequences of
-global warming for the functional diversity of fleshy-fruited plants and
-frugivorous birds along a tropical elevational gradient, Dryad, Dataset,
-doi: <a href='https://doi.org/10.5061/dryad.c0n737b'>10.5061/dryad.c0n737b</a></p>
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
+<span class='fu'>fd_feve</span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   site      FEve
+#&gt; 1   s1 0.3743341</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
