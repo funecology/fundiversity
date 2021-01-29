@@ -214,7 +214,7 @@ Provide `Matrix` objects as inputs of the indices function `fundiversity`, they 
 
 ```{r sparse-matrix-example}
 # Convert site-species matrix to sparse matrix
-sparse_site_sp <- Matrix(site_sp_birds, sparse = TRUE)
+sparse_site_sp <- Matrix::Matrix(site_sp_birds, sparse = TRUE)
 
 fd_raoq(traits_birds, site_sp_birds)
 ```
