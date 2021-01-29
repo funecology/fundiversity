@@ -296,11 +296,12 @@ all_bench_sites %>%
 
 <details>
 <summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
-```{r sessioninfo, include=FALSE}
 
+```{r sessioninfo, echo = FALSE}
 tictoc::toc(func.toc = function(x, y, msg) tictoc::toc.outmsg(x, y, paste0(msg, " seconds needed to generate this document")))
 sessioninfo::session_info()
 ```
+
 </details>
 
 # References
