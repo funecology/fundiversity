@@ -7,14 +7,15 @@
 #'
 #' @param traits  a `matrix` or `data.frame` that describe the traits of species
 #'                with each species as a row and traits as columns
-#' @param site_sp a `matrix` or `data.frame` with the abundances or occurrences
-#'                of species in each site, with sites as rows and
-#'                species as columns
+#' @param site_sp a `matrix`, `data.frame` or a `sparseMatrix` with the
+#'                abundances or occurrences of species in each site,
+#'                with sites as rows and species as columns
 species_in_common = function(traits, site_sp) {
   if (!is.matrix(traits) & !is.data.frame(traits)) {
     stop("Trait dataset not of good type, check trait dataset", call. = FALSE)
   }
-  if (!is.matrix(site_sp) & !is.data.frame(site_sp)) {
+  if (!is.matrix(site_sp) & !is.data.frame(site_sp) &
+      !inherits(site_sp, "sparseMatrix")) {
     stop("Site-species matrix not of good type, check site-species matrix",
          call. = FALSE)
   }
