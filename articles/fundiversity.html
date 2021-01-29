@@ -140,36 +140,40 @@
 <code class="sourceCode R"><span class="co"># Site-species matrix for birds</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">site_sp_birds</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5L</span>, <span class="fl">5L</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">site_sp_birds</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
 <span class="co">#&gt;           Aburria_aburri Amazona_farinosa Amazona_mercenaria</span>
 <span class="co">#&gt; elev_250               0                1                  0</span>
 <span class="co">#&gt; elev_500               0                1                  0</span>
 <span class="co">#&gt; elev_1000              1                1                  1</span>
 <span class="co">#&gt; elev_1500              1                0                  1</span>
 <span class="co">#&gt; elev_2000              0                0                  1</span>
+<span class="co">#&gt; elev_2500              0                0                  1</span>
 <span class="co">#&gt;           Amazona_ochrocephala Ampelioides_tschudii</span>
 <span class="co">#&gt; elev_250                     1                    0</span>
 <span class="co">#&gt; elev_500                     1                    0</span>
 <span class="co">#&gt; elev_1000                    0                    1</span>
 <span class="co">#&gt; elev_1500                    0                    0</span>
 <span class="co">#&gt; elev_2000                    0                    0</span>
+<span class="co">#&gt; elev_2500                    0                    0</span>
 
 <span class="co"># Site-species matrix for plants</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"site_sp_plants"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">site_sp_plants</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5L</span>, <span class="fl">5L</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">site_sp_plants</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
 <span class="co">#&gt;           Abuta_grandifolia Alchornea_latifolia Alchornea_triplinervia</span>
 <span class="co">#&gt; elev_250                  1                   1                      1</span>
 <span class="co">#&gt; elev_500                  1                   1                      1</span>
 <span class="co">#&gt; elev_1000                 0                   0                      1</span>
 <span class="co">#&gt; elev_1500                 0                   0                      1</span>
 <span class="co">#&gt; elev_2000                 0                   0                      1</span>
+<span class="co">#&gt; elev_2500                 0                   0                      1</span>
 <span class="co">#&gt;           Allophylus_punctatus Alnus_acuminata</span>
 <span class="co">#&gt; elev_250                     1               1</span>
 <span class="co">#&gt; elev_500                     1               1</span>
 <span class="co">#&gt; elev_1000                    1               1</span>
 <span class="co">#&gt; elev_1500                    1               1</span>
-<span class="co">#&gt; elev_2000                    1               1</span></code></pre></div>
+<span class="co">#&gt; elev_2000                    1               1</span>
+<span class="co">#&gt; elev_2500                    1               1</span></code></pre></div>
 <p>The site species matrix represent the presence of a given species (in column) in a given site (in row), similar to the format used in the <a href="https://cran.r-project.org/package=vegan"><code>vegan</code></a> package. Here the site-species matrix contains only 0 (absence) and 1 (presence), but <code>fundiversity</code> can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).</p>
 <p>To ensure the good computation of functional diversity indices, at least some of species names (row names) in the trait data need to be in to the column names of the site species matrix:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
