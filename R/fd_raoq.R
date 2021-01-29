@@ -63,7 +63,7 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   # Compute Rao's Quadratic entropy for each site
   q_site <- diag(sp_com %*% tcrossprod(dist_matrix, sp_com))
 
- data.frame(site = row.names(sp_com),
+ data.frame(site = rownames(sp_com),
             Q = q_site,
             row.names = NULL)
 }

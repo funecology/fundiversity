@@ -38,7 +38,7 @@ fd_fdiv <- function(traits, sp_com) {
   } else {
 
     sp_com <- matrix(1, ncol = nrow(traits),
-                     dimnames = list("s1", row.names(traits)))
+                     dimnames = list("s1", rownames(traits)))
 
   }
 
@@ -67,7 +67,7 @@ fd_fdiv <- function(traits, sp_com) {
     FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
   })
 
-  data.frame(site = row.names(sp_com), FDiv = fdiv_site,
+  data.frame(site = rownames(sp_com), FDiv = fdiv_site,
              row.names = NULL)
 
 }
