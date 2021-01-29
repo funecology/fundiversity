@@ -58,7 +58,7 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
   } else {
 
     sp_com <- matrix(1, ncol = nrow(traits),
-                     dimnames = list("s1", row.names(traits)))
+                     dimnames = list("s1", rownames(traits)))
 
   }
 
@@ -86,7 +86,7 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     })
   }
 
-  data.frame(site = row.names(sp_com), FRic = fric_site/max_range,
+  data.frame(site = rownames(sp_com), FRic = fric_site/max_range,
              row.names = NULL)
 }
 
