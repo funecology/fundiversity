@@ -15,11 +15,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-`fundiversity` lets you compute functional diversity indices. Currently it can compute three indices:
+`fundiversity` lets you compute functional diversity indices. Currently it can compute four indices:
 
-- functional richness (FRic)
-- functional divergence (FDiv)
-- Rao's quadratic entropy (Q)
+- functional richness (FRic),
+- functional divergence (FDiv),
+- functional evenness (FEve),
+- Rao's quadratic entropy (Q).
 
 This vignette will introduce you to the data needed to compute the indices as well as the computation and interpretation of each index.
 
