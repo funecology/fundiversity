@@ -67,11 +67,12 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
 # Hide gory details of computing single FEve values
 fd_feve_single <- function(site_row, dist_matrix) {
-  if (sum(site_row > 0) < 3) {
+
+  species <- site_row > 0
+
+  if (sum(species) < 3) {
     return(NA_real_)
   }
-
-  species <- names(site_row)[site_row > 0]
 
   mst <- vegan::spantree(dist_matrix[species, species])
 
