@@ -99,6 +99,19 @@ test_that("Functional Richness edge cases", {
 
 })
 
+test_that("Functional Richness works on sparse matrices", {
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  sparse_site_sp <- as(site_sp, "sparseMatrix")
+
+  expect_silent(fd_fric(traits_birds, sparse_site_sp))
+
+  expect_equal(fd_fric(traits_birds, sparse_site_sp)$FRic, 230967.7,
+               tolerance = 1e-6)
+})
+
 test_that("Functional Richness fails gracefully", {
 
   # No traits
