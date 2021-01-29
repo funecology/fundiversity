@@ -72,6 +72,38 @@ test_that("Functional Evenness edge cases", {
                NA_real_)
 })
 
+test_that("Functional Evenness works on sparse matrices", {
+
+  skip_if_not_installed("Matrix")
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  sparse_site_sp <- Matrix(site_sp, sparse = TRUE)
+
+  sparse_dist_mat <- Matrix(as.matrix(dist(traits_birds)), sparse = TRUE)
+
+  # Only site-species matrix is sparse
+  expect_silent(fd_feve(traits_birds, sparse_site_sp))
+
+  expect_equal(fd_feve(traits_birds, sparse_site_sp)$FEve, 0.3743341,
+               tolerance = 1e-6)
+
+  # Only distance matrix is sparse
+  expect_silent(fd_feve(sp_com = site_sp, dist_matrix = sparse_dist_mat))
+
+  expect_equal(fd_feve(sp_com = site_sp, dist_matrix = sparse_dist_mat)$FEve,
+               0.3743341, tolerance = 1e-6)
+
+  # Both site-species and distance matrix are sparse
+  expect_silent(fd_feve(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat))
+
+  expect_equal(
+    fd_feve(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat)$FEve,
+    0.3743341, tolerance = 1e-6)
+})
+
 test_that("Functional Evenness fails gracefully", {
   # No traits and no dissimilarity
   expect_error(
