@@ -14,7 +14,7 @@ if not provided, the function considers all species with equal
 abundance in a single site}
 
 \item{dist_matrix}{A dissimilarity matrix that can be provided instead of a
-trait data.frame}
+trait data.frame (default: \code{NULL}).}
 }
 \value{
 a data.frame with two columns:
@@ -30,7 +30,6 @@ Compute Functional Evenness (FEve)
 \examples{
 data(traits_birds)
 fd_feve(traits_birds)
-
 }
 \references{
 Villéger, S., Mason, N.W.H., Mouillot, D., 2008. New Multidimensional

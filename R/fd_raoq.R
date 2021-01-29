@@ -19,6 +19,7 @@
 #' \doi{10.1007/s10651-005-1037-2}
 #'
 #' @importFrom stats dist
+#' @import Matrix
 #'
 #' @export
 fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {

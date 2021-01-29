@@ -101,7 +101,7 @@ test_that("Functional Richness edge cases", {
 
 test_that("Functional Richness works on sparse matrices", {
 
-  library("Matrix")
+  skip_if_not_installed("Matrix")
 
   site_sp <- matrix(1, ncol = nrow(traits_birds))
   colnames(site_sp) <-  rownames(traits_birds)
