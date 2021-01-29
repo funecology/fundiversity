@@ -59,10 +59,26 @@ test_that("Rao's Quadratic Entropy works on sparse matrices", {
 
   sparse_site_sp <- as(site_sp, "sparseMatrix")
 
+  sparse_dist_mat <- as(as.matrix(dist(traits_birds)), "sparseMatrix")
+
+  # Only site-species matrix is sparse
   expect_silent(fd_raoq(traits_birds, sparse_site_sp))
 
   expect_equal(fd_raoq(traits_birds, sparse_site_sp)$Q, 170.0519,
                tolerance = 1e-6)
+
+  # Only distance matrix is sparse
+  expect_silent(fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat))
+
+  expect_equal(fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat)$Q,
+               170.0519, tolerance = 1e-6)
+
+  # Both site-species and distance matrix are sparse
+  expect_silent(fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat))
+
+  expect_equal(
+    fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat)$Q,
+    170.0519, tolerance = 1e-6)
 
 })
 
