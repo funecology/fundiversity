@@ -68,24 +68,24 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 # Hide gory details of computing single FEve values
 fd_feve_single <- function(site_row, dist_matrix) {
   if (sum(site_row > 0) < 3) {
-    FEve <- NA_real_
-  } else {
-    species <- names(site_row)[site_row > 0]
-
-    mst <- vegan::spantree(dist_matrix[species, species])
-
-    one_over_s_minus_one <- 1 / (mst$n - 1)
-
-    parent_nodes <- mst$labels[seq_along(mst$kid) + 1]
-    child_nodes  <- mst$labels[mst$kid]
-
-    ew <- mst$dist / (site_row[parent_nodes] + site_row[child_nodes])
-
-    pew <- ew / sum(ew)
-
-    FEve <- (sum(pmin(pew, one_over_s_minus_one)) - one_over_s_minus_one) /
-      (1 - one_over_s_minus_one)
+    return(NA_real_)
   }
+
+  species <- names(site_row)[site_row > 0]
+
+  mst <- vegan::spantree(dist_matrix[species, species])
+
+  one_over_s_minus_one <- 1 / (mst$n - 1)
+
+  parent_nodes <- mst$labels[seq_along(mst$kid) + 1]
+  child_nodes  <- mst$labels[mst$kid]
+
+  ew <- mst$dist / (site_row[parent_nodes] + site_row[child_nodes])
+
+  pew <- ew / sum(ew)
+
+  FEve <- (sum(pmin(pew, one_over_s_minus_one)) - one_over_s_minus_one) /
+    (1 - one_over_s_minus_one)
 
   return(FEve)
 }
