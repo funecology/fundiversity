@@ -38,6 +38,28 @@ test_that("Functional Divergence works in 1D", {
 
 })
 
+test_that("Functional Divergence works with sparse matrices", {
+
+  skip_if_not_installed("Matrix")
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  sparse_site_sp <- as(site_sp, "sparseMatrix")
+
+  fdiv <- expect_silent(fd_fdiv(traits_birds, sparse_site_sp))
+
+  expect_s3_class(fdiv, "data.frame")
+  expect_length(fdiv, 2)
+  expect_equal(nrow(fdiv), 1)
+  expect_equal(colnames(fdiv), c("site", "FDiv"))
+
+  expect_equal(fd_fdiv(traits_birds, sparse_site_sp)$FDiv, 0.6011971,
+               tolerance = 1e-7)
+
+})
+
 test_that("Functional Divergence fails gracefully", {
 
   # No traits
