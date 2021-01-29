@@ -53,6 +53,9 @@ test_that("Rao's Quadratic Entropy works on subset of site/species", {
 })
 
 test_that("Rao's Quadratic Entropy works on sparse matrices", {
+
+  library("Matrix")
+
   site_sp <- matrix(1, ncol = nrow(traits_birds))
   colnames(site_sp) <-  rownames(traits_birds)
   rownames(site_sp) <- "s1"
