@@ -57,21 +57,13 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   }
 
-  if (!inherits(sp_com, "sparseMatrix")) {
-    # Standardize abundance per site
-    sp_com <- sp_com / rowSums(sp_com)
+  # Standardize abundance per site
+  sp_com <- sp_com / rowSums(sp_com)
 
-    # Compute Rao's Quadratic entropy for each site
-    q_site <- diag(sp_com %*% tcrossprod(dist_matrix, sp_com))
-  } else {
-    # Standardize abundance per site
-    sp_com <- sp_com / Matrix::rowSums(sp_com)
+  # Compute Rao's Quadratic entropy for each site
+  q_site <- diag(sp_com %*% tcrossprod(dist_matrix, sp_com))
 
-    # Compute Rao's Quadratic entropy for each site
-    q_site <- Matrix::diag(sp_com %*% Matrix::tcrossprod(dist_matrix, sp_com))
-  }
-
- data.frame(site = row.names(sp_com),
-            Q = q_site,
-            row.names = NULL)
+  data.frame(site = row.names(sp_com),
+             Q = q_site,
+             row.names = NULL)
 }
