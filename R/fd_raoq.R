@@ -3,6 +3,8 @@
 #' @inheritParams fd_fric
 #' @param dist_matrix A dissimilarity matrix that can be provided instead of a
 #'                    trait data.frame (default: `NULL`).
+#'                    This can be either a `matrix`, a `data.frame`,
+#'                    or a [Matrix::Matrix()] object.
 #'
 #' @examples
 #' data(traits_birds)
