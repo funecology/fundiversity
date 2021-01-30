@@ -10,7 +10,7 @@
 #' @param site_sp a `matrix` or `data.frame` with the abundances or occurrences
 #'                of species in each site, with sites as rows and
 #'                species as columns
-species_in_common = function(traits, site_sp) {
+species_in_common <- function(traits, site_sp) {
   if (!is.matrix(traits) & !is.data.frame(traits)) {
     stop("Trait dataset not of good type, check trait dataset", call. = FALSE)
   }

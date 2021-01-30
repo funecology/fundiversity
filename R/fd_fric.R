@@ -41,8 +41,8 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
 
   if (ncol(traits) > 16) {
     stop("Due to computational limits FRic can only be computed with n <= 16 ",
-         "traits\nConsider dimension reduction techniques if you have more than",
-         " 16 traits")
+         "traits\nConsider dimension reduction techniques if you have more ",
+         "than 16 traits")
   }
 
   traits <- remove_species_without_trait(traits)
