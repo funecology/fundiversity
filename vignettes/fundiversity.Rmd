@@ -206,6 +206,19 @@ fd_raoq(sp_com = site_sp_birds, dist_matrix = as.matrix(trait_dissim))
 
 NB: if you want to provide both a site-species matrix and a trait dissimilarity matrix please specify explicitly the arguments names.
 
+# Working with large site-species data
+
+[Sparse matrices](https://en.wikipedia.org/wiki/Sparse_matrix) are memory efficient ways of storing matrix object that contains many zeros. `fundiversity` is fully compatible with sparse matrices through the [`Matrix` package](https://cran.r-project.org/package=Matrix). They can be used to encode site-species information or distance matrices.
+
+Provide `Matrix` objects as inputs of the indices function `fundiversity`, they will transparently use them for efficient computation.
+
+```{r sparse-matrix-example}
+# Convert site-species matrix to sparse matrix
+sparse_site_sp <- Matrix::Matrix(site_sp_birds, sparse = TRUE)
+
+fd_raoq(traits_birds, site_sp_birds)
+```
+
 
 # Standardizing your trait data
 

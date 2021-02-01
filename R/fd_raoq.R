@@ -3,6 +3,8 @@
 #' @inheritParams fd_fric
 #' @param dist_matrix A dissimilarity matrix that can be provided instead of a
 #'                    trait data.frame (default: `NULL`).
+#'                    This can be either a `matrix`, a `data.frame`,
+#'                    or a [Matrix::Matrix()] object.
 #'
 #' @examples
 #' data(traits_birds)
@@ -19,6 +21,7 @@
 #' \doi{10.1007/s10651-005-1037-2}
 #'
 #' @importFrom stats dist
+#' @import Matrix
 #'
 #' @export
 fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
@@ -62,6 +65,7 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   # Compute Rao's Quadratic entropy for each site
   q_site <- diag(sp_com %*% tcrossprod(dist_matrix, sp_com))
+
 
  data.frame(site = rownames(sp_com),
             Q = q_site,

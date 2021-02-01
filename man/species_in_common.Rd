@@ -10,9 +10,9 @@ species_in_common(traits, site_sp)
 \item{traits}{a \code{matrix} or \code{data.frame} that describe the traits of species
 with each species as a row and traits as columns}
 
-\item{site_sp}{a \code{matrix} or \code{data.frame} with the abundances or occurrences
-of species in each site, with sites as rows and
-species as columns}
+\item{site_sp}{a \code{matrix}, \code{data.frame} or a \code{Matrix} with the
+abundances or occurrences of species in each site,
+with sites as rows and species as columns}
 }
 \description{
 This functions returns the list of species in common between trait dataset

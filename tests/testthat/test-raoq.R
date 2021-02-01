@@ -52,6 +52,39 @@ test_that("Rao's Quadratic Entropy works on subset of site/species", {
                         "and site-species matrix\nTaking subset of species"))
 })
 
+test_that("Rao's Quadratic Entropy works on sparse matrices", {
+
+  skip_if_not_installed("Matrix")
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  sparse_site_sp <- Matrix(site_sp, sparse = TRUE)
+
+  sparse_dist_mat <- Matrix(as.matrix(dist(traits_birds)), sparse = TRUE)
+
+  # Only site-species matrix is sparse
+  expect_silent(fd_raoq(traits_birds, sparse_site_sp))
+
+  expect_equal(fd_raoq(traits_birds, sparse_site_sp)$Q, 170.0519,
+               tolerance = 1e-6)
+
+  # Only distance matrix is sparse
+  expect_silent(fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat))
+
+  expect_equal(fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat)$Q,
+               170.0519, tolerance = 1e-6)
+
+  # Both site-species and distance matrix are sparse
+  expect_silent(fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat))
+
+  expect_equal(
+    fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat)$Q,
+    170.0519, tolerance = 1e-6)
+
+})
+
 test_that("Rao's entropy fails gracefully", {
   # No traits and no dissimilarity
   expect_error(
