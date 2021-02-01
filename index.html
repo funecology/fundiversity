@@ -87,7 +87,14 @@
 <a href="#fundiversity" class="anchor"></a>fundiversity</h1></div>
 <!-- badges: start -->
 
-<p><code>fundiversity</code> provides a lightweight package to compute common functional diversity indices. The package is built using clear, public <a href="https://github.com/Bisaloo/fundiversity/wiki/Design-principles">design principles</a> inspired from our own experience and user feedback. We also strive to use the latest good practice in software and R package development, including minimal dependencies on external packages (currently <code>fundiversity</code> only depends on <code>geometry</code>).</p>
+<p><code>fundiversity</code> provides a lightweight package to compute common functional diversity indices. The package is built using clear, public <a href="https://github.com/Bisaloo/fundiversity/wiki/Design-principles">design principles</a> inspired from our own experience and user feedback:</p>
+<ul>
+<li>one functional diversity index = one function,</li>
+<li>consistent input types between functions,</li>
+<li>consistent output types between functions,</li>
+<li>minimum data transformation internally without explicit choice of the user.</li>
+</ul>
+<p>We also strive to use the latest good practice in software and R package development, including minimal dependencies on external packages (currently <code>fundiversity</code> only depends on <code>geometry</code> and <code>vegan</code>).</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -99,7 +106,7 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p><code>fundiversity</code> lets you compute three classical functional diversity indices: Functional Richness with <code><a href="reference/fd_fric.html">fd_fric()</a></code>, Functional Divergence with <code><a href="reference/fd_fdiv.html">fd_fdiv()</a></code>, and Rao’s Quadratic Entropy with <code><a href="reference/fd_raoq.html">fd_raoq()</a></code>. All indices can be computed either using global trait data or at the site-level:</p>
+<p><code>fundiversity</code> lets you compute four classical functional diversity indices: Functional Richness with <code><a href="reference/fd_fric.html">fd_fric()</a></code>, Functional Divergence with <code><a href="reference/fd_fdiv.html">fd_fdiv()</a></code>, Rao’s Quadratic Entropy with <code><a href="reference/fd_raoq.html">fd_raoq()</a></code>, and Functional Evenness with <code><a href="reference/fd_feve.html">fd_feve()</a></code>. All indices can be computed either using global trait data or at the site-level:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bisaloo.github.io/fundiversity/">fundiversity</a></span><span class="op">)</span>
 
@@ -119,7 +126,12 @@
 <span class="co"># Compute Rao's Quadratic Entropy</span>
 <span class="fu"><a href="reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site        Q</span>
-<span class="co">#&gt; 1   s1 170.0519</span></code></pre></div>
+<span class="co">#&gt; 1   s1 170.0519</span>
+
+<span class="co"># Compute Functional Evenness</span>
+<span class="fu"><a href="reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
+<span class="co">#&gt;   site      FEve</span>
+<span class="co">#&gt; 1   s1 0.3743341</span></code></pre></div>
 <p>To compute Rao’s Quadratic Entropy, the user can also provide a distance matrix between species directly:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dist_traits_birds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span><span class="op">)</span>
@@ -127,6 +139,45 @@
 <span class="fu"><a href="reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, dist_matrix <span class="op">=</span> <span class="va">dist_traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site        Q</span>
 <span class="co">#&gt; 1   s1 170.0519</span></code></pre></div>
+</div>
+<div id="available-functional-diversity-indices" class="section level2">
+<h2 class="hasAnchor">
+<a href="#available-functional-diversity-indices" class="anchor"></a>Available functional diversity indices</h2>
+<p>According to Pavoine &amp; Bonsall (2011) classification, functional diversity indices can be classified in three “domains” that asses different properties of the functional space: richness, divergence, and regularity. <code>fundiversity</code> provides function to compute indices that assess this three facets at the site scale:</p>
+<table class="table">
+<colgroup>
+<col width="9%">
+<col width="22%">
+<col width="46%">
+<col width="22%">
+</colgroup>
+<thead><tr class="header">
+<th>Scale</th>
+<th>Richness</th>
+<th>Divergence</th>
+<th>Evenness</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>α-diversity<br>(= among sites)</td>
+<td>FRic with <a href="https://bisaloo.github.io/fundiversity/reference/fd_fric.html"><code>fd_fric()</code></a>
+</td>
+<td>FDiv with <a href="https://bisaloo.github.io/fundiversity/reference/fd_fdiv.html"><code>fd_fdiv()</code></a><br>Rao’s QE with <a href="https://bisaloo.github.io/fundiversity/reference/fd_raoq.html"><code>fd_raoq()</code></a>
+</td>
+<td>FEve with <a href="https://bisaloo.github.io/fundiversity/reference/fd_feve.html"><code>fd_feve()</code></a>
+</td>
+</tr>
+<tr class="even">
+<td>β-diversity<br>(= between sites)</td>
+<td>available in <code>betapart</code>
+</td>
+<td>available in <code>entropart</code>, <code>betapart</code> or <code>hillR</code>
+</td>
+<td>available in <code>BAT</code>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="related-packages" class="section level2">
 <h2 class="hasAnchor">
