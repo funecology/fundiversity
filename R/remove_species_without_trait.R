@@ -4,7 +4,7 @@
 #'                  columns
 #'
 #' @importFrom stats complete.cases
-remove_species_without_trait = function(trait_mat) {
+remove_species_without_trait <- function(trait_mat) {
 
   complete_traits <- complete.cases(trait_mat)
 

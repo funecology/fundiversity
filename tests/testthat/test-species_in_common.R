@@ -1,7 +1,6 @@
 traits <- data.frame(tr = 1:3)
 rownames(traits) <- letters[1:3]
-
-sitesp           <- matrix(1, ncol = 3)
+sitesp <- matrix(1, ncol = 3)
 rownames(sitesp) <- "s1"
 colnames(sitesp) <- letters[1:3]
 

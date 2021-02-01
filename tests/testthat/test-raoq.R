@@ -1,6 +1,6 @@
 # Preamble code
 data("traits_birds")
-simple_site_sp = matrix(1, nrow = 1, ncol = nrow(traits_birds),
+simple_site_sp <- matrix(1, nrow = 1, ncol = nrow(traits_birds),
                         dimnames = list("s1", row.names(traits_birds)))
 
 # Actual tests
