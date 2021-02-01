@@ -14,15 +14,17 @@ knitr::opts_chunk$set(
 
 temp_dir = tempdir(check = TRUE)
 
-pkg_has_tests = function(pkg_name, pkg_dir = temp_dir) {
+pkg_has_vignettes_and_test = function(pkg_name, pkg_dir = temp_dir) {
   pkg_archive = download.packages(pkg_name, destdir = pkg_dir,
                                   repos = "https://cran.r-project.org")
   
   files_list = untar(pkg_archive[1, 2], list = TRUE)
   
+  has_vignette = paste0(pkg_archive[1, 1], "/vignettes/") %in% files_list
+
   has_tests = paste0(pkg_archive[1, 1], "/tests/") %in% files_list
-  
-  ifelse(has_tests, "✅", ":x:")
+
+  c(ifelse(has_vignette, "✅", ":x:"), ifelse(has_tests, "✅", ":x:"))
 }
 ```
 
@@ -100,16 +102,28 @@ According to Pavoine & Bonsall (2011) classification, functional diversity indic
  
 ## Related Packages
 
+```{r pkg-vign-tests, include = FALSE}
+fd          = pkg_has_vignettes_and_test("FD")
+adiv        = pkg_has_vignettes_and_test("adiv")
+betapart    = pkg_has_vignettes_and_test("betapart")
+entropart   = pkg_has_vignettes_and_test("entropart")
+hillr       = pkg_has_vignettes_and_test("hillR")
+vegan       = pkg_has_vignettes_and_test("vegan")
+tpd         = pkg_has_vignettes_and_test("TPD")
+hypervolume = pkg_has_vignettes_and_test("hypervolume")
+bat         = pkg_has_vignettes_and_test("BAT")
+```
+
 Several other packages exist that compute functional diversity indices, we here mention some of them (but do not mention the wrappers around these packages):
 
-| Package Name                                          |                     Indices included                        |            Has tests           |     On GitHub      | On CRAN (last updated) |
-|-------------------------------------------------------|-------------------------------------------------------------|--------------------------------|--------------------|------------------------------|
-| [`FD`](https://github.com/cran/FD)                    | FRic, FDiv, FDis, FEve, Rao's QE, Functional Group Richness |`r pkg_has_tests("FD")`         | :x:                | ![](https://www.r-pkg.org/badges/last-release/FD)  |
-| [`adiv`](https://github.com/cran/adiv)                | Functional Entropy, Functional Redundancy                   |`r pkg_has_tests("adiv")`       | :x:                | ![](https://www.r-pkg.org/badges/last-release/adiv)|
-| [`betapart`](https://github.com/cran/betapart)        | Functional β-diversity                                      |`r pkg_has_tests("betapart")`   | :x:                | ![](https://www.r-pkg.org/badges/last-release/betapart)|
-| [`entropart`](https://github.com/EricMarcon/entropart)| Functional Entropy                                          |`r pkg_has_tests("entropart")`  | ✅ | ![](https://www.r-pkg.org/badges/last-release/entropart)|
-| [`hillR`](https://github.com/daijiang/hillR)          | Functional Diversity Hill Number                            |`r pkg_has_tests("hillR")`      | ✅ | ![](https://www.r-pkg.org/badges/last-release/hillR)|
-| [`vegan`](https://github.com/vegandevs/vegan)         | Only dendrogram-based FD (`treedive()`)                     |`r pkg_has_tests("vegan")`      | ✅ | ![](https://www.r-pkg.org/badges/last-release/vegan)|              
-| [`TPD`](https://github.com/cran/TPD)                  | FRic, FDiv, FEve but for probability distributions          |`r pkg_has_tests("TPD")`        | :x:                | ![](https://www.r-pkg.org/badges/last-release/TPD)|
-| [`hypervolume`](https://github.com/cran/hypervolume)  | Hypervolume measure functional diversity (~FRic)            |`r pkg_has_tests("hypervolume")`| ✅ | ![](https://www.r-pkg.org/badges/last-release/hypervolume)|
-| [`BAT`](https://github.com/cran/BAT)                  | β-, Richness, divergence, and evenness with hypervolumes    |`r pkg_has_tests("BAT")`        | ✅ | ![](https://www.r-pkg.org/badges/last-release/BAT)|
+| Package Name                                          |                     Indices included                        |    Has vignettes   |      Has tests     | On GitHub | On CRAN (last updated)                                    |
+|-------------------------------------------------------|-------------------------------------------------------------|--------------------|--------------------|-----------|-----------------------------------------------------------|
+| [`FD`](https://github.com/cran/FD)                    | FRic, FDiv, FDis, FEve, Rao's QE, Functional Group Richness |`r fd[[1]]`         |`r fd[[2]]`         | :x:       | ![](https://www.r-pkg.org/badges/last-release/FD)         |
+| [`adiv`](https://github.com/cran/adiv)                | Functional Entropy, Functional Redundancy                   |`r adiv[[1]]`       |`r adiv[[2]]`       | :x:       | ![](https://www.r-pkg.org/badges/last-release/adiv)       |
+| [`betapart`](https://github.com/cran/betapart)        | Functional β-diversity                                      |`r betapart[[1]]`   |`r betapart[[2]]`   | :x:       | ![](https://www.r-pkg.org/badges/last-release/betapart)   |
+| [`entropart`](https://github.com/EricMarcon/entropart)| Functional Entropy                                          |`r entropart[[1]]`  |`r entropart[[2]]`  | ✅        | ![](https://www.r-pkg.org/badges/last-release/entropart)  |  
+| [`hillR`](https://github.com/daijiang/hillR)          | Functional Diversity Hill Number                            |`r hillr[[1]]`      |`r hillr[[2]]`      | ✅        | ![](https://www.r-pkg.org/badges/last-release/hillR)      |    
+| [`vegan`](https://github.com/vegandevs/vegan)         | Only dendrogram-based FD (`treedive()`)                     |`r vegan[[1]]`      |`r vegan[[2]]`      | ✅        | ![](https://www.r-pkg.org/badges/last-release/vegan)      |                 
+| [`TPD`](https://github.com/cran/TPD)                  | FRic, FDiv, FEve but for probability distributions          |`r tpd[[1]]`        |`r tpd[[2]]`        | :x:       | ![](https://www.r-pkg.org/badges/last-release/TPD)        |
+| [`hypervolume`](https://github.com/cran/hypervolume)  | Hypervolume measure functional diversity (~FRic)            |`r hypervolume[[1]]`|`r hypervolume[[2]]`| ✅        | ![](https://www.r-pkg.org/badges/last-release/hypervolume)|
+| [`BAT`](https://github.com/cran/BAT)                  | β-, Richness, divergence, and evenness with hypervolumes    |`r bat[[1]]`        |`r bat[[2]]`        | ✅        | ![](https://www.r-pkg.org/badges/last-release/BAT)        |  
