@@ -375,12 +375,32 @@
 <p>NB: if you want to provide both a site-species matrix and a trait dissimilarity matrix please specify explicitly the arguments names.</p>
 </div>
 </div>
+<div id="working-with-large-site-species-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#working-with-large-site-species-data" class="anchor"></a>Working with large site-species data</h1>
+<p><a href="https://en.wikipedia.org/wiki/Sparse_matrix">Sparse matrices</a> are memory efficient ways of storing matrix object that contains many zeros. <code>fundiversity</code> is fully compatible with sparse matrices through the <a href="https://cran.r-project.org/package=Matrix"><code>Matrix</code> package</a>. They can be used to encode site-species information or distance matrices.</p>
+<p>Provide <code>Matrix</code> objects as inputs of the indices function <code>fundiversity</code>, they will transparently use them for efficient computation.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Convert site-species matrix to sparse matrix</span>
+<span class="va">sparse_site_sp</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html">Matrix</a></span><span class="op">(</span><span class="va">site_sp_birds</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+
+<span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
+<span class="co">#&gt;        site         Q</span>
+<span class="co">#&gt; 1  elev_250 194.78095</span>
+<span class="co">#&gt; 2  elev_500 197.08184</span>
+<span class="co">#&gt; 3 elev_1000 200.52231</span>
+<span class="co">#&gt; 4 elev_1500 178.24801</span>
+<span class="co">#&gt; 5 elev_2000  97.32416</span>
+<span class="co">#&gt; 6 elev_2500 102.22461</span>
+<span class="co">#&gt; 7 elev_3000 113.22049</span>
+<span class="co">#&gt; 8 elev_3500  87.04750</span></code></pre></div>
+</div>
 <div id="standardizing-your-trait-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#standardizing-your-trait-data" class="anchor"></a>Standardizing your trait data</h1>
 <p><code>fundiversity</code> does not perform any transformation on the input trait or dissimilarity data. In <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> if you provide only continuous trait data then the function will attempt computing Euclidean distance between the species.</p>
 <p>In order to get comparable functional diversity indices you can standardize the trait data. One option would be to consider the <code><a href="https://rdrr.io/r/base/scale.html">scale()</a></code> function to scale each continuous trait with a mean of zero and a standard deviation of one (z-score). Each trait will then have the same importance when computing functional diversity indices:</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">traits_birds_sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html">scale</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">traits_birds_sc</span><span class="op">)</span>
 <span class="co">#&gt;  Bill.width..mm.   Bill.length..mm.    Kipp.s.index      Bodymass..g.     </span>
@@ -401,7 +421,7 @@
 <span class="co">#&gt;   site    FRic</span>
 <span class="co">#&gt; 1   s1 88.9286</span></code></pre></div>
 <p>Another solution to make trait comparable is to scale them between 0 and 1 by scaling each trait by its maximum and minimum values:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">min_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>, <span class="va">min</span><span class="op">)</span><span class="op">)</span>
 <span class="va">max_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span>
 

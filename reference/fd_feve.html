@@ -145,12 +145,16 @@
       <th>sp_com</th>
       <td><p>Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
-abundance in a single site</p></td>
+abundance in a single site. This can be either a <code>matrix</code>,
+a <code>data.frame</code>, or a <code><a href='https://rdrr.io/pkg/Matrix/man/Matrix.html'>Matrix::Matrix()</a></code> object.
+package.</p></td>
     </tr>
     <tr>
       <th>dist_matrix</th>
       <td><p>A dissimilarity matrix that can be provided instead of a
-trait data.frame</p></td>
+trait data.frame (default: <code>NULL</code>).
+This can be either a <code>matrix</code>, a <code>data.frame</code>,
+or a <code><a href='https://rdrr.io/pkg/Matrix/man/Matrix.html'>Matrix::Matrix()</a></code> object.</p></td>
     </tr>
     </table>
 
@@ -172,8 +176,7 @@ Ecology. Ecology 89, 2290–2301. doi: <a href='https://doi.org/10.1890/07-1206.
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
 <span class='fu'>fd_feve</span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   site      FEve
-#&gt; 1   s1 0.3743341</div><div class='input'>
-</div></pre>
+#&gt; 1   s1 0.3743341</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

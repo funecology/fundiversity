@@ -145,12 +145,16 @@
       <th>sp_com</th>
       <td><p>Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
-abundance in a single site</p></td>
+abundance in a single site. This can be either a <code>matrix</code>,
+a <code>data.frame</code>, or a <code><a href='https://rdrr.io/pkg/Matrix/man/Matrix.html'>Matrix::Matrix()</a></code> object.
+package.</p></td>
     </tr>
     <tr>
       <th>dist_matrix</th>
       <td><p>A dissimilarity matrix that can be provided instead of a
-trait data.frame (default: <code>NULL</code>).</p></td>
+trait data.frame (default: <code>NULL</code>).
+This can be either a <code>matrix</code>, a <code>data.frame</code>,
+or a <code><a href='https://rdrr.io/pkg/Matrix/man/Matrix.html'>Matrix::Matrix()</a></code> object.</p></td>
     </tr>
     </table>
 
