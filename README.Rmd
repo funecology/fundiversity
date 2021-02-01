@@ -37,8 +37,14 @@ pkg_has_tests = function(pkg_name, pkg_dir = temp_dir) {
 `fundiversity` provides a lightweight package to compute common functional
 diversity indices. The package is built using clear, public 
 [design principles](https://github.com/Bisaloo/fundiversity/wiki/Design-principles)
-inspired from our own experience and user feedback. We also strive to use the
-latest good practice in software and R package development, including minimal dependencies on external packages (currently `fundiversity` only depends on `geometry`).
+inspired from our own experience and user feedback:
+
+* one functional diversity index = one function,
+* consistent input types between functions,
+* consistent output types between functions,
+* minimum data transformation internally without explicit choice of the user.
+
+We also strive to use the latest good practice in software and R package development, including minimal dependencies on external packages (currently `fundiversity` only depends on `geometry` and `vegan`).
 
 ## Installation
 
@@ -51,8 +57,8 @@ devtools::install_github("Bisaloo/fundiversity")
 
 ## Example
 
-`fundiversity` lets you compute three classical functional diversity indices: Functional Richness with `fd_fric()`, Functional Divergence with
-`fd_fdiv()`, and Rao's Quadratic Entropy with `fd_raoq()`.
+`fundiversity` lets you compute four classical functional diversity indices: Functional Richness with `fd_fric()`, Functional Divergence with
+`fd_fdiv()`, Rao's Quadratic Entropy with `fd_raoq()`, and Functional Evenness with `fd_feve()`.
 All indices can be computed either using global trait data or at the site-level:
 
 ```{r example}
@@ -69,6 +75,9 @@ fd_fdiv(traits_birds)
 
 # Compute Rao's Quadratic Entropy
 fd_raoq(traits_birds)
+
+# Compute Functional Evenness
+fd_feve(traits_birds)
 ```
 
 To compute Rao's Quadratic Entropy, the user can also provide a distance matrix between species directly:
@@ -79,6 +88,16 @@ dist_traits_birds = as.matrix(dist(traits_birds))
 fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 ```
 
+## Available functional diversity indices
+
+According to Pavoine & Bonsall (2011) classification, functional diversity indices can be classified in three "domains" that asses different properties of the functional space: richness, divergence, and regularity.
+`fundiversity` provides function to compute indices that assess this three facets at the site scale:
+
+|               Scale                |                                      Richness                                            |                   Divergence                                                                                     |        Evenness                                                                        |
+|----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|--------------------------------------------------|----------------------------------------------------------------------------------------|
+| α-diversity<br />(= among sites)   | FRic with [`fd_fric()`](https://bisaloo.github.io/fundiversity/reference/fd_fric.html)   | FDiv with [`fd_fdiv()`](https://bisaloo.github.io/fundiversity/reference/fd_fdiv.html)<br />Rao's QE with [`fd_raoq()`](https://bisaloo.github.io/fundiversity/reference/fd_raoq.html) | FEve with [`fd_feve()`](https://bisaloo.github.io/fundiversity/reference/fd_feve.html) |
+| β-diversity<br />(= between sites) | available in `betapart` | available in `entropart`, `betapart` or `hillR`  | available in `BAT`    |
+ 
 ## Related Packages
 
 Several other packages exist that compute functional diversity indices, we here mention some of them (but do not mention the wrappers around these packages):
