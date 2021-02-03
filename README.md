@@ -61,7 +61,7 @@ fd_fric(traits_birds)
 # Compute Functional Divergence
 fd_fdiv(traits_birds)
 #>   site      FDiv
-#> 1   s1 0.6011971
+#> 1   s1 0.7282172
 
 # Compute Rao's Quadratic Entropy
 fd_raoq(traits_birds)
