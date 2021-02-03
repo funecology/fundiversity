@@ -80,11 +80,11 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
   } else {
 
     if (stand) {
-      max_range <- fd_chull(traits)
+      max_range <- fd_chull(traits)$vol
     }
 
     fric_site <- apply(sp_com, 1, function(site_row) {
-      fd_chull(traits[site_row > 0,, drop = FALSE])
+      fd_chull(traits[site_row > 0,, drop = FALSE])$vol
     })
   }
 

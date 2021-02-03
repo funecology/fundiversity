@@ -8,6 +8,6 @@ fd_chull <- function(traits) {
     return(NA_real_)
   }
 
-  return(geometry::convhulln(traits, "FA")$vol)
+  return(geometry::convhulln(traits, "FA"))
 
 }
