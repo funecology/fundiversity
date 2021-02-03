@@ -56,7 +56,7 @@ fd_fdiv <- function(traits, sp_com) {
 
     ch <- fd_chull(sub_traits)
 
-    verts <- ch$p[unique(c(ch$hull))]
+    verts <- ch$p[unique(c(ch$hull)),, drop = FALSE]
 
     G <- colMeans(verts)
 
