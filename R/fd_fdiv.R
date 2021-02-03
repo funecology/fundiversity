@@ -54,7 +54,11 @@ fd_fdiv <- function(traits, sp_com) {
     # Select traits for species actually in site
     sub_traits <- traits[names(sub_site),, drop = FALSE]
 
-    G <- colMeans(sub_traits)
+    ch <- fd_chull(sub_traits)
+
+    verts <- ch$p[unique(c(ch$hull))]
+
+    G <- colMeans(verts)
 
     dG <- sqrt(colSums((t(sub_traits) - G)^2))
 
