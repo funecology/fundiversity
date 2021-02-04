@@ -281,24 +281,24 @@
 <code class="sourceCode R"><span class="co"># One-dimension FDiv</span>
 <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt;   site      FDiv</span>
-<span class="co">#&gt; 1   s1 0.6344607</span>
+<span class="co">#&gt; 1   s1 0.7490732</span>
 
 <span class="co"># Multiple dimension FDiv</span>
 <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site      FDiv</span>
-<span class="co">#&gt; 1   s1 0.6011971</span></code></pre></div>
+<span class="co">#&gt; 1   s1 0.7282172</span></code></pre></div>
 <p>When no site-species matrix is provided, FDiv is computed by default considering all the species together. If you provide a site-species matrix, then FDiv is computed across all sites:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
 <span class="co">#&gt;        site      FDiv</span>
-<span class="co">#&gt; 1  elev_250 0.6054795</span>
-<span class="co">#&gt; 2  elev_500 0.6089524</span>
-<span class="co">#&gt; 3 elev_1000 0.5920337</span>
-<span class="co">#&gt; 4 elev_1500 0.6013418</span>
-<span class="co">#&gt; 5 elev_2000 0.6231133</span>
-<span class="co">#&gt; 6 elev_2500 0.6195107</span>
-<span class="co">#&gt; 7 elev_3000 0.6197650</span>
-<span class="co">#&gt; 8 elev_3500 0.6292052</span></code></pre></div>
+<span class="co">#&gt; 1  elev_250 0.6847251</span>
+<span class="co">#&gt; 2  elev_500 0.6937866</span>
+<span class="co">#&gt; 3 elev_1000 0.7056772</span>
+<span class="co">#&gt; 4 elev_1500 0.7269801</span>
+<span class="co">#&gt; 5 elev_2000 0.7509511</span>
+<span class="co">#&gt; 6 elev_2500 0.6985280</span>
+<span class="co">#&gt; 7 elev_3000 0.6627204</span>
+<span class="co">#&gt; 8 elev_3500 0.6422068</span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> will take the common subset of species.</p>
 </div>
 <div id="functional-evenness-feve---fd_feve" class="section level2">
