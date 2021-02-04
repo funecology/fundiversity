@@ -39,6 +39,14 @@ Additionally, special care is taken with packages that rely on external
 libraries, as [their installation might be an issue on shared computing 
 platforms where users don't have super-user privileges](https://twitter.com/groundwalkergmb/status/1350336844022521857).
 
+fundiversity does however depend on 
+[vegan](https://cran.r-project.org/package=vegan) which brings quite a number of
+other dependencies. vegan is still heavy developed and as such shouldn't be 
+archived by CRAN without notice. fundiversity users probably already have vegan
+installed as they are probably also interested in other community ecology
+analyses provided by vegan. Thus depending on vegan is not a dependency nor
+an installation burden.
+
 ## Functions
 
 ### Each index should be computed in its own separate function
