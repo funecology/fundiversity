@@ -12,7 +12,7 @@ test_that("Functional Divergence output format", {
   expect_equal(nrow(fdiv), 1)
   expect_equal(colnames(fdiv), c("site", "FDiv"))
 
-  expect_equal(fd_fdiv(traits_birds)$FDiv, 0.6011971, tolerance = 1e-7)
+  expect_equal(fdiv$FDiv, 0.7282172, tolerance = 1e-7)
 })
 
 test_that("Function Divergence works on subset of site/species", {
@@ -55,8 +55,10 @@ test_that("Functional Divergence works with sparse matrices", {
   expect_equal(nrow(fdiv), 1)
   expect_equal(colnames(fdiv), c("site", "FDiv"))
 
-  expect_equal(fd_fdiv(traits_birds, sparse_site_sp)$FDiv, 0.6011971,
-               tolerance = 1e-7)
+  expect_identical(
+    fd_fdiv(traits_birds, sparse_site_sp),
+    fd_fdiv(traits_birds, site_sp)
+  )
 
 })
 

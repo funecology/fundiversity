@@ -66,42 +66,14 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
 
   max_range <- 1
 
-  if (ncol(traits) == 1L) {
-
-    if (stand) {
-      max_range <- max(traits) - min(traits)
-    }
-
-    fric_site <- apply(sp_com, 1, function(site_row) {
-      traits_site <- traits[site_row > 0,]
-      return(max(traits_site) - min(traits_site))
-    })
-
-  } else {
-
-    if (stand) {
-      max_range <- fd_fric_single(traits)
-    }
-
-    fric_site <- apply(sp_com, 1, function(site_row) {
-      fd_fric_single(traits[site_row > 0,, drop = FALSE])
-    })
+  if (stand) {
+    max_range <- fd_chull(traits)$vol
   }
+
+  fric_site <- apply(sp_com, 1, function(site_row) {
+    fd_chull(traits[site_row > 0,, drop = FALSE])$vol
+  })
 
   data.frame(site = rownames(sp_com), FRic = fric_site/max_range,
              row.names = NULL)
-}
-
-# A wrapper around geometry::convhulln() to properly handle errors and specific
-# cases
-fd_fric_single <- function(traits) {
-
-  traits <- traits[!duplicated(traits),, drop = FALSE]
-
-  if (nrow(traits) <= ncol(traits)) {
-    return(NA_real_)
-  }
-
-  return(geometry::convhulln(traits, "FA")$vol)
-
 }
