@@ -1,0 +1,88 @@
+---
+title: "Design Principles"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Design Principles}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This package is built with a clear set of design principles based on current
+best practices. These design principles have been established before writing any
+code to make sure obstacles along the way would not lower our expectations.
+
+## Scope
+
+## Dependencies
+
+We aim at having as few as dependencies as possible, unless they remain 
+relatively lightweight **and** provide a large speed boost.
+
+As CRAN packages are now automatically archived at the same time of any of their
+strong dependencies, dependencies for fundiversity should be well established,
+have a good track record at remaining on CRAN, and ideally already have a large
+number of reverse-dependencies.
+
+Based on these guidelines, some acceptable dependencies are:
+
+- [Rccp](https://cran.r-project.org/package=Rcpp)
+- [geometry](https://davidcsterratt.github.io/geometry/)
+
+Additionally, special care is taken with packages that rely on external
+libraries, as [their installation might be an issue on shared computing 
+platforms where users don't have super-user privileges](https://twitter.com/groundwalkergmb/status/1350336844022521857).
+
+## Functions
+
+### Each index should be computed in its own separate function
+
+Putting each index in its own function improves maintainability by having 
+shorter, more easily readable functions, with less control-flow.
+
+Additionally, it speeds up computation (versus the case where all indices 
+would be computed each time) and keep the number of columns in the output 
+constant (as opposed to the case where an argument would control which index
+is returned by a single function with all indices).
+
+### Input data should not be transformed without any explicit action from the user
+
+Some packages in functional ecology transform the data before processing it.
+One common such transformation is the use of dimensionality reduction 
+techniques.
+
+Such transformations should only be done by the user if they wish to do so but
+never by the package itself. Even when documented in the function help, it is
+easily overlooked by users and may lead to misinterpreted results.
+
+## Inputs
+
+Two inputs are acceptable in fundiversity functions:
+
+- tabular data (such as a `matrix`, or a `tibble`, but with a preference for
+`data.frame`s)  with individuals as rows and characteristics as columns.
+- a distance matrix between individuals.
+
+The rationale is that providing `data.frame`s with characteristics is more 
+user-friendly, as they are a common format in functional ecology, and 
+`data.frame`s are a familiar object in R.
+
+However, only allowing `data.frame`s doesn't provide enough flexibility. In
+particular, advanced users may want to compute distances with a custom function 
+(instead of Euclidean distances).
+
+## Outputs
+
+The functions should return `data.frame`s whenever possible for several reasons:
+
+- `data.frame`s are one of the most common object in the R ecosystem meaning 
+they are familiar to beginners and there exist many S3 methods for them.
+- `data.frame`s enable a pipe-able workflow, which is important it is already 
+prevalent in the tidyverse and will be part of base R 4.1
+
