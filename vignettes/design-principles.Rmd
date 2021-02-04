@@ -20,6 +20,13 @@ code to make sure obstacles along the way would not lower our expectations.
 
 ## Scope
 
+fundiversity aims to provide a reliable tool to compute functional diversity
+indices. As some of the most used functional diversity indices are defined in
+Villéger et al. (2008), fundiversity adopts this framework.
+Rao's Quadratic Entropy is quite popular as an additional functional diversity
+index, which makes it a good addition to the panel of indices computable with
+fundiversity.
+
 ## Dependencies
 
 We aim at having as few as dependencies as possible, unless they remain 
