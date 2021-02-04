@@ -38,7 +38,7 @@ pkg_has_vignettes_and_test = function(pkg_name, pkg_dir = temp_dir) {
 
 `fundiversity` provides a lightweight package to compute common functional
 diversity indices. The package is built using clear, public 
-[design principles](https://github.com/Bisaloo/fundiversity/wiki/Design-principles)
+[design principles](https://bisaloo/github.com/articles/design-principles.html)
 inspired from our own experience and user feedback:
 
 * one functional diversity index = one function,
