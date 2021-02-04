@@ -79,10 +79,27 @@ particular, advanced users may want to compute distances with a custom function
 
 ## Outputs
 
+### Functions should output `data.frame`s
+
 The functions should return `data.frame`s whenever possible for several reasons:
 
 - `data.frame`s are one of the most common object in the R ecosystem meaning 
 they are familiar to beginners and there exist many S3 methods for them.
 - `data.frame`s enable a pipe-able workflow, which is important it is already 
 prevalent in the tidyverse and will be part of base R 4.1
+
+### The outputs of functions should be similar in structure
+
+To avoid further steps of data wrangling after running analyses, all functions
+should output similar structured data. When computing functional diversity
+indices most users want to compute site-level metric. To make our functions
+easy to use and flexible, they should only output the absolutely necessary data:
+
+- a column named `site` containing the site names as given by the user 
+(guessed from the row names in the input site-species matrix),
+- a column named following the computed functional index (`FDiv`, `FRic`, etc.)
+that contains the values of the indices.
+
+That way our functions only outputs unambiguous data that can easily be reused
+and merged with other data at the site-level.
 
