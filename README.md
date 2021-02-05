@@ -16,9 +16,9 @@ Status](https://codecov.io/gh/Bisaloo/fundiversity/branch/master/graph/badge.svg
 `fundiversity` provides a lightweight package to compute common
 functional diversity indices. To a get a glimpse of what `fundiversity`
 can do refer to the [introductory
-vignette](https://bisaloo.github.io/articles/fundiversity.html). The
-package is built using clear, public [design
-principles](https://bisaloo.github.io/articles/design-principles.html)
+vignette](https://bisaloo.github.io/fundiversity/articles/fundiversity.html).
+The package is built using clear, public [design
+principles](https://bisaloo.github.io/fundiversity/articles/design-principles.html)
 inspired from our own experience and user feedback.
 
 ## Installation
