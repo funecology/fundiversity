@@ -7,3 +7,4 @@
 vignettes/_performance.Rmd
 ^pkgdown$
 ^cran-comments\.md$
+^CRAN-RELEASE$
