@@ -32,7 +32,7 @@ development, including minimal dependencies on external packages
 ## Installation
 
 You can install the development version from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/Bisaloo/fundiversity) with:
 
 ``` r
 # install.packages("devtools")
@@ -44,8 +44,12 @@ devtools::install_github("Bisaloo/fundiversity")
 `fundiversity` lets you compute four classical functional diversity
 indices: Functional Richness with `fd_fric()`, Functional Divergence
 with `fd_fdiv()`, Rao’s Quadratic Entropy with `fd_raoq()`, and
-Functional Evenness with `fd_feve()`. All indices can be computed either
-using global trait data or at the site-level:
+Functional Evenness with `fd_feve()`. You can have a brief overview of
+the indices in the [introductory
+vignette](https://bisaloo.github.io/fundiversity/articles/fundiversity.html).
+
+All indices can be computed either using global trait data or at the
+site-level:
 
 ``` r
 library(fundiversity)
@@ -100,9 +104,11 @@ assess this three facets at the site scale:
 
 ## Related Packages
 
-Several other packages exist that compute functional diversity indices,
-we here mention some of them (but do not mention the wrappers around
-these packages):
+Several other packages exist that compute functional diversity indices.
+We have performed a [performance
+comparison](https://bisaloo.github.io/fundiversity/articles/performance.html)
+between packages. We here mention some of them (but do not mention the
+wrappers around these packages):
 
 | Package Name                                           | Indices included                                            | Has vignettes | Has tests | On GitHub | On CRAN (last updated)                                     |
 | ------------------------------------------------------ | ----------------------------------------------------------- | ------------- | --------- | --------- | ---------------------------------------------------------- |
