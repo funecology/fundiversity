@@ -14,20 +14,12 @@ Status](https://codecov.io/gh/Bisaloo/fundiversity/branch/master/graph/badge.svg
 <!-- badges: end -->
 
 `fundiversity` provides a lightweight package to compute common
-functional diversity indices. The package is built using clear, public
-[design
-principles](https://github.com/Bisaloo/fundiversity/wiki/Design-principles)
-inspired from our own experience and user feedback:
-
-  - one functional diversity index = one function,
-  - consistent input types between functions,
-  - consistent output types between functions,
-  - minimum data transformation internally without explicit choice of
-    the user.
-
-We also strive to use the latest good practice in software and R package
-development, including minimal dependencies on external packages
-(currently `fundiversity` only depends on `geometry` and `vegan`).
+functional diversity indices. To a get a glimpse of what `fundiversity`
+can do refer to the [introductory
+vignette](https://bisaloo/github.com/articles/fundiversity.html). The
+package is built using clear, public [design
+principles](https://bisaloo/github.com/articles/design-principles.html)
+inspired from our own experience and user feedback.
 
 ## Installation
 
