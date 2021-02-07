@@ -2,7 +2,7 @@ GNU General Public License
 ==========================
 
 _Version 3, 29 June 2007_  
-_Copyright © 2007 Free Software Foundation, Inc. &lt;<http://fsf.org/>&gt;_
+_Copyright © 2007 Free Software Foundation, Inc. &lt;<https://fsf.org/>&gt;_
 
 Everyone is permitted to copy and distribute verbatim copies of this license
 document, but changing it is not allowed.
@@ -566,7 +566,7 @@ where the full notice is found.
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Also add information on how to contact you by electronic and paper mail.
 
@@ -585,11 +585,11 @@ for a GUI interface, you would use an “about box”.
 You should also get your employer (if you work as a programmer) or school, if any, to
 sign a “copyright disclaimer” for the program, if necessary. For more
 information on this, and how to apply and follow the GNU GPL, see
-&lt;<http://www.gnu.org/licenses/>&gt;.
+&lt;<https://www.gnu.org/licenses/>&gt;.
 
 The GNU General Public License does not permit incorporating your program into
 proprietary programs. If your program is a subroutine library, you may consider it
 more useful to permit linking proprietary applications with the library. If this is
 what you want to do, use the GNU Lesser General Public License instead of this
 License. But first, please read
-&lt;<http://www.gnu.org/philosophy/why-not-lgpl.html>&gt;.
+&lt;<https://www.gnu.org/philosophy/why-not-lgpl.html>&gt;.
