@@ -112,4 +112,4 @@ wrappers around these packages):
 | [`vegan`](https://github.com/vegandevs/vegan)          | Only dendrogram-based FD (`treedive()`)                     | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/vegan)       |
 | [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions          | ✅             | :x:       | :x:       | ![](https://www.r-pkg.org/badges/last-release/TPD)         |
 | [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure functional diversity (\~FRic)           | :x:           | :x:       | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
-| [`BAT`](https://github.com/cran/BAT)                   | β-, Richness, divergence, and evenness with hypervolumes    | :x:           | :x:       | ✅         | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
+| [`BAT`](https://github.com/cardosopmb/BAT)             | β-, Richness, divergence, and evenness with hypervolumes    | :x:           | :x:       | ✅         | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
