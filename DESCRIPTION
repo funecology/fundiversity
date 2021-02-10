@@ -25,7 +25,8 @@ Depends:
 Imports:
     geometry,
     Matrix,
-    vegan
+    vegan,
+    memoise
 Suggests:
     testthat (>= 3.0.0),
     knitr,
