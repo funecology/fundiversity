@@ -1,4 +1,11 @@
+## General comments
+
+2nd resubmission:
+* Corrected missing \value{} in .Rd files by removing .Rd files for unexported
+functions.
+
 ## Test environments
+
 * Mac OS High Sierra 10.13.6 (local), R 4.0.3
 * (rhub) Debian Linux, R-devel, clang, ISO-8859-15 locale
 * (rhub) Debian Linux, R-devel, GCC
@@ -30,13 +37,3 @@
 0 errors | 0 warnings | 1 Note
 
 * This is a new release.
-* Possibly mis-spelled words in DESCRIPTION:
-  FDiv (15:14)
-  FRic (15:64)
-  Feve (15:38)
-  Fonctional (15:44)
-  Indices (2:55)
-  Rao's (15:74)
-  Vill�ger (16:26)
-  et (16:35)
-  indices (14:52, 17:67)
