@@ -25,5 +25,3 @@ fd_chull <- function(traits) {
   return(geometry::convhulln(traits, "FA"))
 
 }
-
-fd_chull_memoised <- memoise::memoise(fd_chull)

@@ -54,7 +54,7 @@ fd_fdiv <- function(traits, sp_com) {
     # Select traits for species actually in site
     sub_traits <- traits[names(sub_site),, drop = FALSE]
 
-    ch <- fd_chull_memoised(sub_traits)
+    ch <- fd_chull(sub_traits)
 
     verts <- ch$p[unique(c(ch$hull)),, drop = FALSE]
 
