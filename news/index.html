@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute Functional Divergence (FDiv) — fd_fdiv • fundiversity</title>
+<title>Changelog • fundiversity</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,7 @@
 
 
 
-<meta property="og:title" content="Compute Functional Divergence (FDiv) — fd_fdiv" />
-<meta property="og:description" content="Compute Functional Divergence (FDiv)" />
+<meta property="og:title" content="Changelog" />
 
 
 
@@ -59,7 +58,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -129,59 +128,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute Functional Divergence (FDiv)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Bisaloo/fundiversity/blob/master/R/fd_fdiv.R'><code>R/fd_fdiv.R</code></a></small>
-    <div class="hidden name"><code>fd_fdiv.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/Bisaloo/fundiversity/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>Compute Functional Divergence (FDiv)</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>fd_fdiv</span><span class='op'>(</span><span class='va'>traits</span>, <span class='va'>sp_com</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>traits</th>
-      <td><p>The matrix dataset for which you want to compute the index</p></td>
-    </tr>
-    <tr>
-      <th>sp_com</th>
-      <td><p>Site-species matrix with sites as rows and species as columns
-if not provided, the function considers all species with equal
-abundance in a single site. This can be either a <code>matrix</code>,
-a <code>data.frame</code>, or a <code><a href='https://rdrr.io/pkg/Matrix/man/Matrix.html'>Matrix::Matrix()</a></code> object.
-package.</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a data.frame with two columns:</p><ul>
-<li><p><code>site</code> the names of the sites as the row names of the input <code>sp_com</code>,</p></li>
-<li><p><code>FDiv</code> the values of functional divergence at each site.</p></li>
+    <div id="fundiversity-002" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.2">
+<a href="#fundiversity-002" class="anchor"></a>fundiversity 0.0.2<small> Unreleased </small>
+</h1>
+</div>
+    <div id="fundiversity-001" class="section level1">
+<h1 class="page-header" data-toc-text="0.0.1">
+<a href="#fundiversity-001" class="anchor"></a>fundiversity 0.0.1<small> 2021-02-15 </small>
+</h1>
+<ul>
+<li>First CRAN release (01751f1) <span class="emoji" data-emoji="tada">🎉</span>!</li>
+<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
 </ul>
-
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
-
-    <p>Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional
-functional diversity indices for a multifaceted framework in functional
-ecology, Ecology 89(8), doi: <a href='https://doi.org/10.1890/07-1206.1'>10.1890/07-1206.1</a></p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
-<span class='fu'>fd_fdiv</span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   site      FDiv
-#&gt; 1   s1 0.7282172</div><div class='input'>
-</div></pre>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 
