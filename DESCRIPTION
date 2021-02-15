@@ -25,12 +25,12 @@ Depends:
 Imports:
     geometry,
     Matrix,
-    vegan,
-    memoise
+    vegan
 Suggests:
     testthat (>= 3.0.0),
     knitr,
-    rmarkdown
+    rmarkdown,
+    memoise
 URL: https://bisaloo.github.io/fundiversity/, https://github.com/bisaloo/fundiversity
 BugReports: https://github.com/Bisaloo/fundiversity/issues
 Config/testthat/edition: 3
