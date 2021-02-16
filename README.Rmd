@@ -24,7 +24,7 @@ pkg_has_vignettes_and_test = function(pkg_name, pkg_dir = temp_dir) {
 
   has_tests = paste0(pkg_archive[1, 1], "/tests/") %in% files_list
 
-  c(ifelse(has_vignette, "✅", ":x:"), ifelse(has_tests, "✅", ":x:"))
+  c(ifelse(has_vignette, "✅", "❌"), ifelse(has_tests, "✅", "❌"))
 }
 ```
 
