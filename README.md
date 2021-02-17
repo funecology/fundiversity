@@ -23,12 +23,16 @@ inspired from our own experience and user feedback.
 
 ## Installation
 
-You can install the development version from
-[GitHub](https://github.com/Bisaloo/fundiversity) with:
+You can install the stable version from CRAN with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("Bisaloo/fundiversity")
+install.packages("fundiversity")
+```
+
+Alternatively, you can install the development version with:
+
+``` r
+install.packages("fundiversity", repos = "https://bisaloo.r-universe.dev")
 ```
 
 ## Example
