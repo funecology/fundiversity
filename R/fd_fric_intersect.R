@@ -19,9 +19,9 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
   }
 
   if (ncol(traits) > 16) {
-    stop("Due to computational limits FRic can only be computed with n <= 16 ",
-         "traits\nConsider dimension reduction techniques if you have more ",
-         "than 16 traits")
+    stop("Due to computational limits FRic intersect can only be computed ",
+         "with n <= 16 traits\nConsider dimension reduction techniques ",
+         "if you have more than 16 traits")
   }
 
   traits <- remove_species_without_trait(traits)
@@ -61,8 +61,8 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
      fd_chull_intersect(first_traits, second_traits)$ch$vol
     })
 
-  data.frame(first_site = all_site_comb[[1]],
-             second_site = all_site_comb[[2]],
+  data.frame(first_site = all_site_comb[,1],
+             second_site = all_site_comb[,2],
              FRic_intersect = fric_intersect/max_range,
              row.names = NULL)
 }

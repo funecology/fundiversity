@@ -20,10 +20,12 @@ fd_chull_intersect <- function(traits1, traits2) {
 
     return(
       list(
-      "hull" = r3,
-      "area" = r_overlap,
-      "vol" = r_overlap
-    )
+        ch =list(
+          "hull" = r3,
+          "area" = r_overlap,
+          "vol" = r_overlap
+        )
+      )
     )
   }
 
