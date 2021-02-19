@@ -13,7 +13,7 @@ test_that("Functional Richness Intersection output format", {
                1, tolerance = 1e-6)
 })
 
-test_that("Functional Richness works in 1D", {
+test_that("Functional Richness Intersection works in 1D", {
 
   expect_identical(
     fd_fric_intersect(traits_birds[, 1]),
@@ -27,7 +27,7 @@ test_that("Functional Richness works in 1D", {
 
 })
 
-test_that("Function Richness works on subset of site/species", {
+test_that("Function Richness Intersection works on subset of site/species", {
   site_sp <- matrix(1, ncol = nrow(traits_birds))
   colnames(site_sp) <-  rownames(traits_birds)
   rownames(site_sp) <- "s1"
@@ -45,7 +45,7 @@ test_that("Function Richness works on subset of site/species", {
 })
 
 
-test_that("Functional Richness can standardize its values", {
+test_that("Functional Richness Intersection can standardize its values", {
 
   site_sp <- matrix(1, ncol = nrow(traits_birds))
   colnames(site_sp) <-  rownames(traits_birds)
@@ -64,7 +64,7 @@ test_that("Functional Richness can standardize its values", {
   expect_lt(fric_int_low_1$FRic_intersect[[2]], 1)
 })
 
-test_that("Functional Richness edge cases", {
+test_that("Functional Richness Intersection edge cases", {
 
   # Not enough species compared to the number of traits to be computed
   expect_identical(
@@ -84,9 +84,9 @@ test_that("Functional Richness edge cases", {
   expect_error(
     fd_fric_intersect(many_traits),
     paste0(
-      "Due to computational limits FRic can only be computed with n <= 16 ",
-      "traits\nConsider dimension reduction techniques if you have more than",
-      " 16 traits"),
+      "Due to computational limits FRic intersect can only be computed ",
+      "with n <= 16 traits\nConsider dimension reduction techniques ",
+      "if you have more than 16 traits"),
     fixed = TRUE
   )
 
@@ -102,7 +102,7 @@ test_that("Functional Richness edge cases", {
 
 })
 
-test_that("Functional Richness works on sparse matrices", {
+test_that("Functional Richness Intersection works on sparse matrices", {
 
   skip_if_not_installed("Matrix")
 
@@ -119,7 +119,7 @@ test_that("Functional Richness works on sparse matrices", {
     1, tolerance = 1e-6)
 })
 
-test_that("Functional Richness fails gracefully", {
+test_that("Functional Richness Intersection fails gracefully", {
 
   # No traits
   expect_error(
