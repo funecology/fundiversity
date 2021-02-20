@@ -1,12 +1,20 @@
-#' Compute intersection between functional volume of pairs of sites
+#' Intersection between functional volume of pairs of sites
+#'
+#' Compute volume of the intersection of functional volumes of all pairs
+#' of sites.
 #'
 #' @inheritParams fd_fric
 #'
-#' #' @return a data.frame with three columns:
+#' @return a data.frame with three columns:
 #' * `first_site` the names of the first site used in the pair `sp_com`,
 #' * `second_site` the names of the first site used in the pair,
 #' * `FRic_intersect` the values of intersection of functional volumes of each
 #' pair of site.
+#'
+#' @examples
+#' data(traits_birds)
+#' fd_fric_intersect(traits_birds)
+#'
 #' @export
 fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
 
