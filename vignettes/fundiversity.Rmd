@@ -15,14 +15,15 @@ knitr::opts_chunk$set(
 )
 ```
 
-`fundiversity` lets you compute functional diversity indices. Currently it can compute four indices:
+`fundiversity` lets you compute functional diversity indices. Currently it can compute five indices:
 
 - functional richness (FRic),
+- functional volume intersections (FRic_intersect),
 - functional divergence (FDiv),
 - functional evenness (FEve),
 - Rao's quadratic entropy (Q).
 
-This vignette will introduce you to the data needed to compute the indices as well as the computation and interpretation of each index.
+This vignette will introduce you to the data needed as well as how to compute and interpret each index.
 
 ```{r setup}
 library("fundiversity")
@@ -51,7 +52,7 @@ data("traits_plants", package = "fundiversity")
 head(traits_plants)
 ```
 
-Note that in these datasets the species are shown in rows, with species names as row names, and traits are in columns.
+Note that in these datasets the **species** are shown in **rows**, with species names as row names, and **traits** are in **columns**.
 
 Functional diversity indices are generally computed at different locations that we hereafter call sites. We thus need a description of which species is in which site in the form of a site-species matrix. Again, we're calling it a site-species matrix but the granularity of both your "species" and "site" units can vary depending on what you want to compute functional diversity on.
 
@@ -69,12 +70,12 @@ data("site_sp_plants", package = "fundiversity")
 head(site_sp_plants)[, 1:5]
 ```
 
-The site species matrix represent the presence of a given species (in column) in a given site (in row), similar to the format used in the [`vegan`](https://cran.r-project.org/package=vegan) package. Here the site-species matrix contains only 0 (absence) and 1 (presence), but `fundiversity` can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).
+The site species matrix represent the presence of a given **species** (in **column**) in a given **site** (in **row**), similar to the format used in the [`vegan`](https://cran.r-project.org/package=vegan) package. Here the site-species matrix contains only 0 (absence) and 1 (presence), but `fundiversity` can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).
 
 To ensure the good computation of functional diversity indices, at least some of species names (row names) in the trait data need to be in to the column names of the site species matrix:
 
 ```{r not-enough-species, error=TRUE}
-# Fewer traits than species in the site-species matrix
+# Fewer species in trait dataset than species in the site-species matrix
 fd_fric(traits_birds[2:217,], site_sp_birds)
 
 # Fewer species in the site-species matrix than in the traits
@@ -129,6 +130,33 @@ fd_fric(traits_birds, site_sp_birds, stand = TRUE)
 
 Each row gives the standardized FRic values of each site.
 
+
+## Intersect convex functional volume (FRic_intersect) - `fd_fric_intersect()`
+
+Sometimes you're interested in the shared functional volumes between pairs of sites more than in the functional volumes of each site separately. fundiversity provides the 
+`fd_fric_intersect()` function for this exact use case.
+
+It follows the same interface as `fd_fric()` with similar named arguments:
+
+```{r fric-intersect-intro}
+fd_fric_intersect(traits_birds)
+```
+
+`fd_fric_intersect()` computes the shared functional volumes between each pair of sites, including self-intersection which correspond to the functional volume of each site. Similarly to `fd_fric()` if no site-species data is provided, `fd_fric_intersect()` considers a site that contains all species from the trait dataset.
+
+```{r fric-intersect-all}
+fd_fric_intersect(traits_birds, site_sp_birds)
+```
+
+The output is a data.frame where the two first columns (`first_site` and `second_site`) define the sites on which the intersection is computed, the third column (`FRic_intersect`) contains the volume of the intersection.
+
+Similarly to `fd_fric()` the intersections volumes can be standardized:
+
+```{r fric-intersect-stand}
+fd_fric_intersect(traits_birds, site_sp_birds, stand = TRUE)
+```
+
+Note that when standardizing the volumes, the behavior is similar to that of `fd_fric()` which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.
 
 ## Functional Divergence (FDiv) - `fd_fdiv()`
 
@@ -205,6 +233,7 @@ fd_raoq(sp_com = site_sp_birds, dist_matrix = as.matrix(trait_dissim))
 ```
 
 NB: if you want to provide both a site-species matrix and a trait dissimilarity matrix please specify explicitly the arguments names.
+
 
 # Working with large site-species data
 
