@@ -33,7 +33,10 @@ pair of site.
 }
 \description{
 Compute volume of the intersection of functional volumes of all pairs
-of sites.
+of sites (including self-intersection, which corresponds to their functional
+volumes). Note that when standardizing functional volumes of intersections,
+this function uses the functional volume all provided traits,
+thus standardized self-intersection volumes can be lower than one.
 }
 \examples{
 data(traits_birds)
