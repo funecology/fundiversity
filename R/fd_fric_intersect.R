@@ -55,10 +55,21 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
     max_range <- fd_chull(traits)$vol
   }
 
-  all_site_comb <- expand.grid(first_site  = rownames(sp_com),
-                               second_site = rownames(sp_com))
+  # All pairs of sites (not within themselves)
+  all_site_comb <- tryCatch({
+    t(combn(rownames(sp_com), 2))
+  },
+  error = function(x, msg) {
+    return(numeric(0))
+  })
 
-   fric_intersect <- apply(all_site_comb, 1, function(site_comb) {
+  self_intersection <- matrix(rep(rownames(sp_com), each = 2),
+                              ncol = 2)
+
+  all_site_comb <- rbind(all_site_comb, self_intersection)
+
+  # Compute Index for each pair of sites
+  fric_intersect <- apply(all_site_comb, 1, function(site_comb) {
 
      first_row     <- sp_com[site_comb[[1]],, drop = TRUE]
      first_traits  <- traits[first_row > 0,,  drop = FALSE]
