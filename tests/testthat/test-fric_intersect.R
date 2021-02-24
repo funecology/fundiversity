@@ -60,8 +60,9 @@ test_that("Functional Richness Intersection can standardize its values", {
                                                    stand = TRUE))
 
   expect_equal(fric_int$FRic_intersect[[1]], 1)
-  expect_equal(fric_int_low_1$FRic_intersect[[1]], 1)
-  expect_lt(fric_int_low_1$FRic_intersect[[2]], 1)
+  expect_equal(fric_int_low_1$FRic_intersect[[2]], 1)
+  expect_lt(fric_int_low_1$FRic_intersect[[3]], 1)
+  expect_lt(fric_int_low_1$FRic_intersect[[1]], 1)
 })
 
 test_that("Functional Richness Intersection edge cases", {

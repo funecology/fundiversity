@@ -64,7 +64,7 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
   })
 
   self_intersection <- matrix(rep(rownames(sp_com), each = 2),
-                              ncol = 2)
+                              byrow = TRUE, ncol = 2)
 
   all_site_comb <- rbind(all_site_comb, self_intersection)
 
