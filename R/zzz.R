@@ -4,5 +4,6 @@
 .onLoad <- function(pkgname, libname) {
   if (requireNamespace("memoise", quietly = TRUE)) {
     fd_chull <<- memoise::memoise(fd_chull)
+    fd_chull_intersect <<-  memoise::memoise(fd_chull_intersect)
   }
 }
