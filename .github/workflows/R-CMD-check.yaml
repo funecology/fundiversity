@@ -76,6 +76,11 @@ jobs:
           if (identical(Sys.getenv("DEPS"), "hard") && "VignetteBuilder: knitr" %in% readLines("DESCRIPTION")) {
             remotes::install_cran("knitr")
           }
+          # 'Manually' install testthat even when we only want hard deps because
+          # we still want to run tests
+          if (any(identical(Sys.getenv("DEPS"), "hard"), grepl("^Config/testthat", readLines("DESCRIPTION"))) {
+            remotes::install_cran("testthat")
+          }
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
