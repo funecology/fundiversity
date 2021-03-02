@@ -16,7 +16,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}, deps=${{ matrix.config.deps }})
 
     strategy:
       fail-fast: false
@@ -71,6 +71,16 @@ jobs:
       - name: Install dependencies
         run: |
           remotes::install_deps(dependencies = Sys.getenv("DEPS"))
+          # 'Manually' install knitr even when we only want hard deps because
+          # R CMD check complains when it sees it in the VignetteBuilder field
+          if (identical(Sys.getenv("DEPS"), "hard") && "VignetteBuilder: knitr" %in% readLines("DESCRIPTION")) {
+            remotes::install_cran("knitr")
+          }
+          # 'Manually' install testthat even when we only want hard deps because
+          # we still want to run tests
+          if (any(identical(Sys.getenv("DEPS"), "hard"), grepl("^Config/testthat", readLines("DESCRIPTION")))) {
+            remotes::install_cran("testthat")
+          }
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
