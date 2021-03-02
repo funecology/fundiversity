@@ -34,6 +34,15 @@ a data.frame with two columns:
 Functional Richness is computed as the volume of the convex hull from all
 included traits.
 }
+\details{
+By default, when loading \code{fundiversity}, the functions to compute
+convex hulls are \href{https://en.wikipedia.org/wiki/Memoization}{memoised}
+through the \code{memoise} package if it is installed. To deactivate this behavior
+you can set the option \code{fundiversity.memoise} to \code{FALSE} by running the
+following line: \code{options(fundiversity.memoise = FALSE)}.
+If you use it interactively it will only affect your current session.
+Add it to your script(s) or \code{.Rprofile} file to avoid toggling it each time.
+}
 \examples{
 data(traits_birds)
 fd_fric(traits_birds)
