@@ -60,7 +60,7 @@ install.packages("fundiversity", repos = "https://bisaloo.r-universe.dev")
 ## Example
 
 `fundiversity` lets you compute four classical functional diversity indices: Functional Richness with `fd_fric()`, Functional Divergence with
-`fd_fdiv()`, Rao's Quadratic Entropy with `fd_raoq()`, and Functional Evenness with `fd_feve()`. You can have a brief overview of the indices in the [introductory vignette](https://bisaloo.github.io/fundiversity/articles/fundiversity.html).
+`fd_fdiv()`, Rao's Quadratic Entropy with `fd_raoq()`, Functional Dispersion with `fd_fdis()` and Functional Evenness with `fd_feve()`. You can have a brief overview of the indices in the [introductory vignette](https://bisaloo.github.io/fundiversity/articles/fundiversity.html).
 
 All indices can be computed either using global trait data or at the site-level:
 
@@ -78,6 +78,9 @@ fd_fdiv(traits_birds)
 
 # Compute Rao's Quadratic Entropy
 fd_raoq(traits_birds)
+
+# Compute Functional Dispersion
+fd_fdis(traits_birds)
 
 # Compute Functional Evenness
 fd_feve(traits_birds)
@@ -98,7 +101,7 @@ According to Pavoine & Bonsall (2011) classification, functional diversity indic
 
 |               Scale                |                                      Richness                                            |                   Divergence                                                                                     |        Evenness                                                                        |
 |----------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|--------------------------------------------------|----------------------------------------------------------------------------------------|
-| α-diversity<br />(= among sites)   | FRic with [`fd_fric()`](https://bisaloo.github.io/fundiversity/reference/fd_fric.html)   | FDiv with [`fd_fdiv()`](https://bisaloo.github.io/fundiversity/reference/fd_fdiv.html)<br />Rao's QE with [`fd_raoq()`](https://bisaloo.github.io/fundiversity/reference/fd_raoq.html) | FEve with [`fd_feve()`](https://bisaloo.github.io/fundiversity/reference/fd_feve.html) |
+| α-diversity<br />(= among sites)   | FRic with [`fd_fric()`](https://bisaloo.github.io/fundiversity/reference/fd_fric.html)   | FDiv with [`fd_fdiv()`](https://bisaloo.github.io/fundiversity/reference/fd_fdiv.html)<br />Rao's QE with [`fd_raoq()`](https://bisaloo.github.io/fundiversity/reference/fd_raoq.html)<br />FDis with [`fd_fdis()`](https://bisaloo.github.io/fundiversity/reference/fd_raoq.html) | FEve with [`fd_feve()`](https://bisaloo.github.io/fundiversity/reference/fd_feve.html) |
 | β-diversity<br />(= between sites) | available in `betapart` | available in `entropart`, `betapart` or `hillR`  | available in `BAT`    |
  
 ## Related Packages
