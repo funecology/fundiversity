@@ -4,6 +4,8 @@
 .onLoad <- function(libname, pkgname) {
   if (requireNamespace("memoise", quietly = TRUE) &
       getOption("fundiversity.memoise", TRUE)) {
-    fd_chull <<- memoise::memoise(fd_chull)
+    fd_chull_memoised <<- memoise::memoise(fd_chull)
+  } else {
+    fd_chull_memoised <- fd_chull
   }
 }
