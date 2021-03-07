@@ -7,14 +7,11 @@ fd_chull_intersect <- function(traits1, traits2) {
 
   if (ncol(traits1) == 1L & ncol(traits2) == 1L) {
 
-    r1 <- range(traits1)
-    r2 <- range(traits2)
-
     # Range of the overlap
-    r3 <- c(max(r1[1], r2[1]),
-            min(r1[2], r2[2]))
+    r3 <- c(max(traits1, traits2),
+            min(traits1, traits2))
 
-    r_overlap <- diff(r3)
+    r_overlap <- r3[2] - r3[1]
 
     r_overlap <- ifelse(r_overlap < 0, NA_real_, r_overlap)
 

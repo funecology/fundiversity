@@ -14,6 +14,8 @@
 #' * `FRic_intersect` the values of intersection of functional volumes of each
 #' pair of site.
 #'
+#' @seealso [fd_fric()], [geometry::intersectn()]
+#'
 #' @examples
 #' data(traits_birds)
 #' fd_fric_intersect(traits_birds)
