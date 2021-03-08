@@ -61,29 +61,37 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
   }
 
   # All pairs of sites (not within themselves)
-  all_site_comb <- tryCatch({
-    t(combn(rownames(sp_com), 2))
-  },
-  error = function(x, msg) {
-    return(numeric(0))
-  })
+  if (nrow(sp_com) >= 2) {
+    all_site_comb <- t(combn(rownames(sp_com), 2))
+  } else {
+    all_site_comb <- NULL
+  }
 
   self_intersection <- matrix(rep(rownames(sp_com), each = 2),
                               byrow = TRUE, ncol = 2)
 
   all_site_comb <- rbind(all_site_comb, self_intersection)
 
-  # Compute Index for each pair of sites
+
   fric_intersect <- apply(all_site_comb, 1, function(site_comb) {
 
-     first_row     <- sp_com[site_comb[[1]],, drop = TRUE]
-     first_traits  <- traits[first_row > 0,,  drop = FALSE]
+    first_row     <- sp_com[site_comb[[1]],, drop = TRUE]
+    first_traits  <- traits[first_row > 0,,  drop = FALSE]
 
-     second_row    <- sp_com[site_comb[[2]],, drop = TRUE]
-     second_traits <- traits[second_row > 0,, drop = FALSE]
+    # Compute intersections
+    if (site_comb[[1]] != site_comb[[2]]) {
+      # True intersections
 
-     fd_chull_intersect(first_traits, second_traits)$ch$vol
-    })
+      second_row    <- sp_com[site_comb[[2]],, drop = TRUE]
+      second_traits <- traits[second_row > 0,, drop = FALSE]
+
+      fd_chull_intersect(first_traits, second_traits)$vol
+    } else {
+      # Self-intersection (equivalent to regular convex hulls)
+      # way more efficient that compute with fd_chull_inters
+      fd_chull(first_traits)$vol
+    }
+  })
 
   data.frame(first_site = all_site_comb[,1],
              second_site = all_site_comb[,2],
