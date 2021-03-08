@@ -12,8 +12,7 @@ fd_feve(traits = NULL, sp_com, dist_matrix = NULL)
 \item{sp_com}{Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
 abundance in a single site. This can be either a \code{matrix},
-a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}} object.
-package.}
+a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}} object.}
 
 \item{dist_matrix}{A dissimilarity matrix that can be provided instead of a
 trait data.frame (default: \code{NULL}).
