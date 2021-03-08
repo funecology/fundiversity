@@ -16,6 +16,8 @@
 #'
 #' @seealso [fd_fric()], [geometry::intersectn()], [geometry::convhulln()]
 #'
+#' @importFrom utils combn
+#'
 #' @examples
 #' data(traits_birds)
 #' fd_fric_intersect(traits_birds)
