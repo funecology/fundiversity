@@ -13,8 +13,6 @@ fd_chull_intersect <- function(traits1, traits2) {
 
     r_overlap <- r3[2] - r3[1]
 
-    r_overlap <- ifelse(r_overlap < 0, NA_real_, r_overlap)
-
     return(
       list(
         "hull" = r3,
