@@ -2,7 +2,7 @@
 % Please edit documentation in R/fd_fric_intersect.R
 \name{fd_fric_intersect}
 \alias{fd_fric_intersect}
-\title{Intersection between functional volume of pairs of sites}
+\title{Intersection between convex hulls of pairs of sites}
 \usage{
 fd_fric_intersect(traits, sp_com, stand = FALSE)
 }
@@ -27,19 +27,22 @@ a data.frame with three columns:
 \itemize{
 \item \code{first_site} the names of the first site used in the pair \code{sp_com},
 \item \code{second_site} the names of the first site used in the pair,
-\item \code{FRic_intersect} the values of intersection of functional volumes of each
+\item \code{FRic_intersect} the volume of the convex hulls intersection of each
 pair of site.
 }
 }
 \description{
-Compute volume of the intersection of functional volumes of all pairs
-of sites (including self-intersection, which corresponds to their functional
-volumes). Note that when standardizing functional volumes of intersections,
-this function uses the functional volume all provided traits,
-thus standardized self-intersection volumes can be lower than one.
+Compute volume of the intersection of the convex hulls of all pairs
+of sites (including self-intersection, which corresponds to their convex
+hull). Note that when standardizing convex hulls of intersections,
+this function uses the convex hull of all provided traits,
+thus standardized volume of self-intersection hulls can be lower than one.
 }
 \examples{
 data(traits_birds)
 fd_fric_intersect(traits_birds)
 
+}
+\seealso{
+\code{\link[=fd_fric]{fd_fric()}}, \code{\link[geometry:intersectn]{geometry::intersectn()}}, \code{\link[geometry:convhulln]{geometry::convhulln()}}
 }

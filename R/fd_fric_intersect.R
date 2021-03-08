@@ -1,20 +1,20 @@
-#' Intersection between functional volume of pairs of sites
+#' Intersection between convex hulls of pairs of sites
 #'
-#' Compute volume of the intersection of functional volumes of all pairs
-#' of sites (including self-intersection, which corresponds to their functional
-#' volumes). Note that when standardizing functional volumes of intersections,
-#' this function uses the functional volume all provided traits,
-#' thus standardized self-intersection volumes can be lower than one.
+#' Compute volume of the intersection of the convex hulls of all pairs
+#' of sites (including self-intersection, which corresponds to their convex
+#' hull). Note that when standardizing convex hulls of intersections,
+#' this function uses the convex hull of all provided traits,
+#' thus standardized volume of self-intersection hulls can be lower than one.
 #'
 #' @inheritParams fd_fric
 #'
 #' @return a data.frame with three columns:
 #' * `first_site` the names of the first site used in the pair `sp_com`,
 #' * `second_site` the names of the first site used in the pair,
-#' * `FRic_intersect` the values of intersection of functional volumes of each
+#' * `FRic_intersect` the volume of the convex hulls intersection of each
 #' pair of site.
 #'
-#' @seealso [fd_fric()], [geometry::intersectn()]
+#' @seealso [fd_fric()], [geometry::intersectn()], [geometry::convhulln()]
 #'
 #' @examples
 #' data(traits_birds)
