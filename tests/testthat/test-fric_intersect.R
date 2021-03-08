@@ -1,3 +1,7 @@
+# Preamble code
+data("traits_birds")
+data("site_sp_birds")
+
 # Actual tests
 test_that("Functional Richness Intersection output format", {
 
@@ -16,13 +20,13 @@ test_that("Functional Richness Intersection output format", {
 test_that("Functional Richness Intersection works in 1D", {
 
   expect_identical(
-    fd_fric_intersect(traits_birds[, 1]),
-    fd_fric_intersect(traits_birds[, 1, drop = FALSE])
+    fd_fric_intersect(traits_birds[, 1], site_sp_birds),
+    fd_fric_intersect(traits_birds[, 1, drop = FALSE], site_sp_birds)
   )
 
   expect_identical(
-    fd_fric_intersect(traits_birds[, 1], stand = TRUE),
-    fd_fric_intersect(traits_birds[, 1, drop = FALSE], stand = TRUE)
+    fd_fric_intersect(traits_birds[, 1], site_sp_birds, stand = TRUE),
+    fd_fric_intersect(traits_birds[, 1, drop = FALSE], site_sp_birds, stand = TRUE)
   )
 
 })
@@ -70,6 +74,13 @@ test_that("Functional Richness Intersection edge cases", {
   # Not enough species compared to the number of traits to be computed
   expect_identical(
     fd_fric_intersect(traits_birds[1:4, ])[["FRic_intersect"]],
+    NA_real_
+  )
+
+  expect_setequal(
+    expect_message(
+      fd_fric_intersect(traits_birds[1:4, ], site_sp_birds)[["FRic_intersect"]]
+    ),
     NA_real_
   )
 
