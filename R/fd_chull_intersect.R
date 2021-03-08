@@ -17,11 +17,9 @@ fd_chull_intersect <- function(traits1, traits2) {
 
     return(
       list(
-        ch =list(
-          "hull" = r3,
-          "area" = r_overlap,
-          "vol" = r_overlap
-        )
+        "hull" = r3,
+        "area" = r_overlap,
+        "vol" = r_overlap
       )
     )
   }
@@ -29,15 +27,12 @@ fd_chull_intersect <- function(traits1, traits2) {
   if (nrow(traits1) <= ncol(traits1) | nrow(traits2) <= ncol(traits2)) {
     return(
       list(
-        ch = list(
-          "hull" = seq_len(nrow(traits1) + nrow(traits2)),
-          "area" = NA_real_,
-          "vol" = NA_real_
-        )
+        "hull" = seq_len(nrow(traits1) + nrow(traits2)),
+        "area" = NA_real_,
+        "vol" = NA_real_
       )
     )
   }
 
-  return(geometry::intersectn(traits1, traits2, options = "FA"))
-
+  return(geometry::intersectn(traits1, traits2, options = "FA")[["ch"]])
 }
