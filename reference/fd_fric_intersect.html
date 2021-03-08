@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compute Functional Divergence (FDiv) — fd_fdiv • fundiversity</title>
+<title>Intersection between convex hulls of pairs of sites — fd_fric_intersect • fundiversity</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,12 @@
 
 
 
-<meta property="og:title" content="Compute Functional Divergence (FDiv) — fd_fdiv" />
-<meta property="og:description" content="Compute Functional Divergence (FDiv)" />
+<meta property="og:title" content="Intersection between convex hulls of pairs of sites — fd_fric_intersect" />
+<meta property="og:description" content="Compute volume of the intersection of the convex hulls of all pairs
+of sites (including self-intersection, which corresponds to their convex
+hull). Note that when standardizing convex hulls of intersections,
+this function uses the convex hull of all provided traits,
+thus standardized volume of self-intersection hulls can be lower than one." />
 
 
 
@@ -129,16 +133,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Compute Functional Divergence (FDiv)</h1>
-    <small class="dont-index">Source: <a href='https://github.com/Bisaloo/fundiversity/blob/master/R/fd_fdiv.R'><code>R/fd_fdiv.R</code></a></small>
-    <div class="hidden name"><code>fd_fdiv.Rd</code></div>
+    <h1>Intersection between convex hulls of pairs of sites</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Bisaloo/fundiversity/blob/master/R/fd_fric_intersect.R'><code>R/fd_fric_intersect.R</code></a></small>
+    <div class="hidden name"><code>fd_fric_intersect.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Compute Functional Divergence (FDiv)</p>
+    <p>Compute volume of the intersection of the convex hulls of all pairs
+of sites (including self-intersection, which corresponds to their convex
+hull). Note that when standardizing convex hulls of intersections,
+this function uses the convex hull of all provided traits,
+thus standardized volume of self-intersection hulls can be lower than one.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>fd_fdiv</span><span class='op'>(</span><span class='va'>traits</span>, <span class='va'>sp_com</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>fd_fric_intersect</span><span class='op'>(</span><span class='va'>traits</span>, <span class='va'>sp_com</span>, stand <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,26 +162,36 @@ if not provided, the function considers all species with equal
 abundance in a single site. This can be either a <code>matrix</code>,
 a <code>data.frame</code>, or a <code><a href='https://rdrr.io/pkg/Matrix/man/Matrix.html'>Matrix::Matrix()</a></code> object.</p></td>
     </tr>
+    <tr>
+      <th>stand</th>
+      <td><p>a boolean indicating whether to standardize FRic values over
+the observed maximum over all species (default: <code>FALSE</code>).
+This scales FRic between 0 and 1.
+<strong>NB</strong>: The maximum FRic values only considers species that are
+present in <strong>both</strong> site-species and trait matrices.
+If you want to consider species that are absent
+in the site-species matrix, add corresponding columns of 0s.</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data.frame with two columns:</p><ul>
-<li><p><code>site</code> the names of the sites as the row names of the input <code>sp_com</code>,</p></li>
-<li><p><code>FDiv</code> the values of functional divergence at each site.</p></li>
+    <p>a data.frame with three columns:</p><ul>
+<li><p><code>first_site</code> the names of the first site used in the pair <code>sp_com</code>,</p></li>
+<li><p><code>second_site</code> the names of the first site used in the pair,</p></li>
+<li><p><code>FRic_intersect</code> the volume of the convex hulls intersection of each
+pair of site.</p></li>
 </ul>
 
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional
-functional diversity indices for a multifaceted framework in functional
-ecology, Ecology 89(8), doi: <a href='https://doi.org/10.1890/07-1206.1'>10.1890/07-1206.1</a></p>
+    <div class='dont-index'><p><code><a href='fd_fric.html'>fd_fric()</a></code>, <code><a href='https://rdrr.io/pkg/geometry/man/intersectn.html'>geometry::intersectn()</a></code>, <code><a href='https://rdrr.io/pkg/geometry/man/convhulln.html'>geometry::convhulln()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
-<span class='fu'>fd_fdiv</span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   site      FDiv
-#&gt; 1   s1 0.7282172</div><div class='input'>
+<span class='fu'>fd_fric_intersect</span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   first_site second_site FRic_intersect
+#&gt; 1         s1          s1       230967.7</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
