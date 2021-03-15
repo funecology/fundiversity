@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • fundiversity</title>
+<title>Compute Functional Dispersion (FDis) — fd_fdis • fundiversity</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Compute Functional Dispersion (FDis) — fd_fdis" />
+<meta property="og:description" content="Compute Functional Dispersion (FDis)" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -126,96 +127,64 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Compute Functional Dispersion (FDis)</h1>
+    <small class="dont-index">Source: <a href='https://github.com/Bisaloo/fundiversity/blob/master/R/fd_fdis.R'><code>R/fd_fdis.R</code></a></small>
+    <div class="hidden name"><code>fd_fdis.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Compute Functional Dispersion (FDis)</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>fd_fdis</span><span class='op'>(</span><span class='va'>traits</span>, <span class='va'>sp_com</span><span class='op'>)</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="fd_fdis.html">fd_fdis()</a></code> </p>
-        </td>
-        <td><p>Compute Functional Dispersion (FDis)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fd_fdiv.html">fd_fdiv()</a></code> </p>
-        </td>
-        <td><p>Compute Functional Divergence (FDiv)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fd_feve.html">fd_feve()</a></code> </p>
-        </td>
-        <td><p>Compute Functional Evenness (FEve)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fd_fric.html">fd_fric()</a></code> </p>
-        </td>
-        <td><p>Compute Functional Richness (FRic)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fd_fric_intersect.html">fd_fric_intersect()</a></code> </p>
-        </td>
-        <td><p>Intersection between convex hulls of pairs of sites</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="fd_raoq.html">fd_raoq()</a></code> </p>
-        </td>
-        <td><p>Compute Rao's entropy index (Rao's Q)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="site_sp_birds.html">site_sp_birds</a></code> </p>
-        </td>
-        <td><p>Site-species matrix of birds along a Tropical Gradient</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="site_sp_plants.html">site_sp_plants</a></code> </p>
-        </td>
-        <td><p>Site-species matrix of plants along a Tropical Gradient</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="traits_birds.html">traits_birds</a></code> </p>
-        </td>
-        <td><p>Functional Traits of Frugivorous Birds along a Tropical Gradient</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="traits_plants.html">traits_plants</a></code> </p>
-        </td>
-        <td><p>Functional Traits of Fleshy-fruit plants along a Tropical Gradient</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>traits</th>
+      <td><p>The matrix dataset for which you want to compute the index</p></td>
+    </tr>
+    <tr>
+      <th>sp_com</th>
+      <td><p>Site-species matrix with sites as rows and species as columns
+if not provided, the function considers all species with equal
+abundance in a single site. This can be either a <code>matrix</code>,
+a <code>data.frame</code>, or a <code><a href='https://rdrr.io/pkg/Matrix/man/Matrix.html'>Matrix::Matrix()</a></code> object.
+package.</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a data.frame with two columns:</p><ul>
+<li><p><code>site</code> the names of the sites as the row names of the input <code>sp_com</code>,</p></li>
+<li><p><code>FDis</code> the values of functional dispersion at each site.</p></li>
+</ul>
+
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Laliberté, E., &amp; Legendre, P. (2010). A distance-based framework for
+measuring functional diversity from multiple traits. Ecology, 91(1),
+299–305. doi: <a href='https://doi.org/10.1890/08-2244.1'>10.1890/08-2244.1</a></p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>site_sp_birds</span><span class='op'>)</span>
+<span class='fu'>fd_fdis</span><span class='op'>(</span><span class='va'>traits_birds</span>, <span class='va'>site_sp_birds</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;        site      FDis
+#&gt; 1  elev_250 165.58561
+#&gt; 2  elev_500 168.34567
+#&gt; 3 elev_1000 173.92101
+#&gt; 4 elev_1500 156.19006
+#&gt; 5 elev_2000  86.39285
+#&gt; 6 elev_2500  88.28895
+#&gt; 7 elev_3000  97.11743
+#&gt; 8 elev_3500  80.70000</div><div class='input'>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
