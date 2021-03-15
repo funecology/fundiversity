@@ -8,7 +8,6 @@
 #'               if not provided, the function considers all species with equal
 #'               abundance in a single site. This can be either a `matrix`,
 #'               a `data.frame`, or a [Matrix::Matrix()] object.
-#'               package.
 #' @param stand  a boolean indicating whether to standardize FRic values over
 #'               the observed maximum over all species (default: `FALSE`).
 #'               This scales FRic between 0 and 1.

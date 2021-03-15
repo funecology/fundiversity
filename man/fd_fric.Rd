@@ -12,8 +12,7 @@ fd_fric(traits, sp_com, stand = FALSE)
 \item{sp_com}{Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
 abundance in a single site. This can be either a \code{matrix},
-a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}} object.
-package.}
+a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}} object.}
 
 \item{stand}{a boolean indicating whether to standardize FRic values over
 the observed maximum over all species (default: \code{FALSE}).
