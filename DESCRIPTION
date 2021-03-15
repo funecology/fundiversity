@@ -11,10 +11,11 @@ Authors@R:
         role = "aut",
         comment = c(ORCID = "0000-0002-4094-1476"))
     )
-Description: Computes 4 alpha-functional diversity indices: Functional
-  Divergence FDiv, Function Evenness Feve, Functional Richness FRic, and Rao's
-  entropy Q (reviewed in Villéger et al. 2008 <doi:10.1890/07-1206.1>). Provides
-  efficient and modular functions to compute functional diversity indices.
+Description: Computes 5 alpha-functional diversity indices: Functional
+  Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic),
+  Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger
+  et al. 2008 <doi:10.1890/07-1206.1>). Provides efficient and modular functions
+  to compute functional diversity indices.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

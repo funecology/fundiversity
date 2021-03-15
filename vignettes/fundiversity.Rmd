@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
 - functional volume intersections (FRic_intersect),
 - functional divergence (FDiv),
 - functional evenness (FEve),
+- functional dispersion (FDis)
 - Rao's quadratic entropy (Q).
 
 This vignette will introduce you to the data needed as well as how to compute and interpret each index.
@@ -203,6 +204,23 @@ fd_feve(traits_birds, site_sp_birds)
 Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_feve()` will take the common subset of species.
 
 
+## Functional Dispersion (FDis) - `fd_fdis()`
+
+Functional Dispersion reflects changes in the abundance-weighted deviation of species trait values from the center of the functional space.
+
+You can compute Functional Dispersion (FDis) using the `fd_fdis()` function by providing a trait dataset:
+
+```{r fdis-intro}
+fd_fdis(traits_birds)
+```
+
+If you don't provide a site-species matrix, `fd_fdis()` considers all species provided in the trait dataset present at equal abundances in the same site.
+You can also provide a site-species matrix to compute FDis at different sites:
+
+```{r fdis-sites}
+fd_fdis(traits_birds, site_sp_birds)
+```
+
 ## Rao's Quadratic Entropy (Q) - `fd_raoq()`
 
 Rao's Quadratic entropy assesses the multi-dimensional divergence in trait space [@Rao_Diversity_1982]. It is the abundance-weighted variance of the trait dissimilarities between all species pairs.
@@ -216,7 +234,7 @@ fd_raoq(traits_birds)
 If you don't provide a site-species matrix, `fd_raoq()` considers all species provided in the trait dataset present at equal abundances in the same site.
 You can also provide a site-species matrix to compute Q at different sites:
 
-```{r raoq-site}
+```{r raoq-sites}
 fd_raoq(traits_birds, site_sp_birds)
 ```
 
