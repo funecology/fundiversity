@@ -90,6 +90,20 @@ fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 #> 1   s1 170.0519
 ```
 
+## Paralellization
+
+Thanks to the `future.apply` package, all functions (except `fd_raoq()`)
+within `fundiversity` support parallelization through the `future`
+backend. To toggle parallelization follow the [`future`
+syntax](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html):
+
+``` r
+future::plan(future::multisession)
+fd_fdiv(traits_birds)
+#>   site      FDiv
+#> 1   s1 0.7282172
+```
+
 ## Available functional diversity indices
 
 According to Pavoine & Bonsall (2011) classification, functional
