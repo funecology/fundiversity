@@ -29,6 +29,7 @@
 #' habitat filtering; convex hull volume, Ecology 84(6),
 #' \doi{10.1890/0012-9658(2006)87[1465:ATTFHF]2.0.CO;2}
 #'
+#' @importFrom future.apply future_apply
 #' @export
 fd_fric <- function(traits, sp_com, stand = FALSE) {
 
@@ -69,7 +70,7 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     max_range <- fd_chull(traits)$vol
   }
 
-  fric_site <- apply(sp_com, 1, function(site_row) {
+  fric_site <- future_apply(sp_com, 1, function(site_row) {
     fd_chull(traits[site_row > 0,, drop = FALSE])$vol
   })
 

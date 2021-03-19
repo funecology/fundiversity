@@ -16,6 +16,7 @@
 #' Ecology. Ecology 89, 2290–2301. \doi{10.1890/07-1206.1}
 #'
 #' @importFrom stats dist
+#' @importFrom future.apply future_apply
 #'
 #' @export
 fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
@@ -54,7 +55,7 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   # Standardize abundance per site
   sp_com <- sp_com / rowSums(sp_com)
 
-  feve_site <- apply(sp_com, 1, function(site_row) {
+  feve_site <- future_apply(sp_com, 1, function(site_row) {
     fd_feve_single(site_row, dist_matrix)
   })
 
