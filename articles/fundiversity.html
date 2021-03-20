@@ -235,7 +235,7 @@
 <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="st">"Bill.width..mm."</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 33.64</span>
 
-<span class="co"># Computation with fundiversity::fd_ric.</span>
+<span class="co"># Using fundiversity::fd_fric()</span>
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site     FRic</span>
 <span class="co">#&gt; 1   s1 230967.7</span></code></pre></div>
@@ -496,7 +496,7 @@
 </div>
 <div id="non-continuous-traits" class="section level1">
 <h1 class="hasAnchor">
-<a href="#non-continuous-traits" class="anchor"></a>Non-continuous traitS?</h1>
+<a href="#non-continuous-traits" class="anchor"></a>Non-continuous traits?</h1>
 <p>Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species, you need to transform the non-continuous trait data into a continuous form. The general idea is to obtain from the trait table a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in <span class="citation">Maire et al. (2015)</span>.</p>
 <p>To compute dissimilarity with non-continuous traits you can user Gower’s distance <span class="citation">(Gower 1971)</span> or its following adaptations <span class="citation">(Pavoine et al. 2009; Podani 1999)</span>. You can use the following functions: <code><a href="https://rdrr.io/pkg/cluster/man/daisy.html">cluster::daisy()</a></code>, <code>FD::gowdis()</code>, <code>ade4::dist.ktab()</code>, or <code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegan::vegdist()</a></code>.</p>
 <p>Then you can project these dissimilarities with Principal Coordinates using <code>ape::pcoa()</code> for example. You can then select the first dimensions that explains the most variance and use theses as the input “traits” to compute functional diversity indices.</p>
