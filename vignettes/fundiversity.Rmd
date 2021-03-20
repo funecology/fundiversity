@@ -8,7 +8,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r vignette-setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -30,7 +30,7 @@ This vignette will introduce you to the data needed as well as how to compute an
 library("fundiversity")
 ```
 
-# The required data 
+# Required data 
 
 To compute functional diversity indices, you will need at least a dataset describing species traits, i.e. species characteristics. Note that we here talk about species but the reasoning could apply on whatever unit you're interested in whether it's individual organisms, ecological plots, or even entire ecosystems. The traits are the features that describe these units.
 
@@ -86,9 +86,7 @@ fd_fric(traits_birds, site_sp_birds[, 1:5])
 fd_fric(traits_birds[1:5,], site_sp_birds[, 6:10])
 ```
 
-# Computing the indices
-
-## Functional Richness (FRic) - `fd_fric()`
+# Functional Richness (FRic) - `fd_fric()`
 
 Functional Richness (FRic) represents the total amount of functional space filed by a community in a dataset [@Villeger_New_2008]. You can compute FRic in `fundiversity` using the `fd_fric()` function.
 
@@ -132,7 +130,7 @@ fd_fric(traits_birds, site_sp_birds, stand = TRUE)
 Each row gives the standardized FRic values of each site.
 
 
-## Intersect convex functional volume (FRic_intersect) - `fd_fric_intersect()`
+# Functional volume intersect (FRic_intersect) - `fd_fric_intersect()`
 
 Sometimes you're interested in the shared functional volumes between pairs of sites more than in the functional volumes of each site separately. fundiversity provides the 
 `fd_fric_intersect()` function for this exact use case.
@@ -146,7 +144,7 @@ fd_fric_intersect(traits_birds)
 `fd_fric_intersect()` computes the shared functional volumes between each pair of sites, including self-intersection which correspond to the functional volume of each site. Similarly to `fd_fric()` if no site-species data is provided, `fd_fric_intersect()` considers a site that contains all species from the trait dataset.
 
 ```{r fric-intersect-all}
-fd_fric_intersect(traits_birds, site_sp_birds)
+fd_fric_intersect(traits_birds, site_sp_birds[1:2,])
 ```
 
 The output is a data.frame where the two first columns (`first_site` and `second_site`) define the sites on which the intersection is computed, the third column (`FRic_intersect`) contains the volume of the intersection.
@@ -154,12 +152,12 @@ The output is a data.frame where the two first columns (`first_site` and `second
 Similarly to `fd_fric()` the intersections volumes can be standardized:
 
 ```{r fric-intersect-stand}
-fd_fric_intersect(traits_birds, site_sp_birds, stand = TRUE)
+fd_fric_intersect(traits_birds, site_sp_birds[1:2,], stand = TRUE)
 ```
 
 Note that when standardizing the volumes, the behavior is similar to that of `fd_fric()` which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.
 
-## Functional Divergence (FDiv) - `fd_fdiv()`
+# Functional Divergence (FDiv) - `fd_fdiv()`
 
 Functional Divergence (FDiv) represents how abundance is spread along the different traits [@Villeger_New_2008]. When a species with extreme trait values has the highest abundance, then functional divergence is high.
 
@@ -181,7 +179,7 @@ fd_fdiv(traits_birds, site_sp_birds)
 
 Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_fdiv()` will take the common subset of species.
 
-## Functional Evenness (FEve) - `fd_feve()`
+# Functional Evenness (FEve) - `fd_feve()`
 
 Functional Evenness (FEve) describes the regularity of the distribution of species (and their abundances) in trait space [@Villeger_New_2008]. FEve is bounded between 0 and 1. FEve is close to 0 when most species (and abundances) are tightly packed in a portion of the trait space while it is close to 1 if species are regularly spread (with even abundances) along the trait space.
 
@@ -204,7 +202,7 @@ fd_feve(traits_birds, site_sp_birds)
 Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_feve()` will take the common subset of species.
 
 
-## Functional Dispersion (FDis) - `fd_fdis()`
+# Functional Dispersion (FDis) - `fd_fdis()`
 
 Functional Dispersion reflects changes in the abundance-weighted deviation of species trait values from the center of the functional space.
 
@@ -221,7 +219,7 @@ You can also provide a site-species matrix to compute FDis at different sites:
 fd_fdis(traits_birds, site_sp_birds)
 ```
 
-## Rao's Quadratic Entropy (Q) - `fd_raoq()`
+# Rao's Quadratic Entropy (Q) - `fd_raoq()`
 
 Rao's Quadratic entropy assesses the multi-dimensional divergence in trait space [@Rao_Diversity_1982]. It is the abundance-weighted variance of the trait dissimilarities between all species pairs.
 
@@ -253,7 +251,7 @@ fd_raoq(sp_com = site_sp_birds, dist_matrix = as.matrix(trait_dissim))
 NB: if you want to provide both a site-species matrix and a trait dissimilarity matrix please specify explicitly the arguments names.
 
 
-# Working with large site-species data
+# Large site-species data / sparse matrices
 
 [Sparse matrices](https://en.wikipedia.org/wiki/Sparse_matrix) are memory efficient ways of storing matrix object that contains many zeros. `fundiversity` is fully compatible with sparse matrices through the [`Matrix` package](https://cran.r-project.org/package=Matrix). They can be used to encode site-species information or distance matrices.
 
@@ -267,7 +265,7 @@ fd_raoq(traits_birds, site_sp_birds)
 ```
 
 
-# Standardizing your trait data
+# Standardizing trait data
 
 `fundiversity` does not perform any transformation on the input trait or dissimilarity data. In `fd_raoq()` if you provide only continuous trait data then the function will attempt computing Euclidean distance between the species.
 
@@ -301,22 +299,22 @@ There are several other options available to standardize trait values, reviewed 
 If not all the traits you use are continuous, refer to the next section, which suggests ways of computing functional diversity indices with non-continuous traits.
 
 
-# What if not all traits are continuous?
+# Non-continuous traitS?
 
-Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species. The general idea we present in this part is to go from the trait table to a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in @Maire_How_2015.
+Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species, you need to transform the non-continuous trait data into a continuous form. The general idea is to obtain from the trait table a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in @Maire_How_2015.
 
 To compute dissimilarity with non-continuous traits you can user Gower's distance [@Gower_general_1971] or its following adaptations [@Pavoine_challenge_2009; @Podani_Extending_1999]. You can use the following functions: `cluster::daisy()`, `FD::gowdis()`, `ade4::dist.ktab()`, or `vegan::vegdist()`.
 
 Then you can project these dissimilarities with Principal Coordinates using `ape::pcoa()` for example. You can then select the first dimensions that explains the most variance and use theses as the input "traits" to compute functional diversity indices.
 
 
-# What if some traits have missing values?
+# Missing values in traits?
 
 Sometimes, some of the trait values can be missing for some species in your dataset. Because `fundiversity` does not want to make assumptions without telling you, by default it **drops** the species data for which the trait is missing.
 
 If you want to use data with missing values you can use dissimilarity metrics that accept missing trait values such as some of the methods specified in `vegan::vegdist()`.
 
-Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of `fundiversity` but you can find some details on how to proceed with the review by @Penone_Imputation_2014.
+Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of `fundiversity` but you can find some details on how to proceed reviewed by @Penone_Imputation_2014.
 
 
 # References
