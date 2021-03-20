@@ -60,7 +60,7 @@
       <a href="../articles/design-principles.html">Design Principles</a>
     </li>
     <li>
-      <a href="../articles/performance.html">Performance comparison with other functional diversity packages</a>
+      <a href="../articles/performance.html">Performance Comparison</a>
     </li>
   </ul>
 </li>
@@ -111,9 +111,9 @@
 <p>This vignette will introduce you to the data needed as well as how to compute and interpret each index.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://bisaloo.github.io/fundiversity/">"fundiversity"</a></span><span class="op">)</span></code></pre></div>
-<div id="the-required-data" class="section level1">
+<div id="required-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#the-required-data" class="anchor"></a>The required data</h1>
+<a href="#required-data" class="anchor"></a>Required data</h1>
 <p>To compute functional diversity indices, you will need at least a dataset describing species traits, i.e. species characteristics. Note that we here talk about species but the reasoning could apply on whatever unit you’re interested in whether it’s individual organisms, ecological plots, or even entire ecosystems. The traits are the features that describe these units.</p>
 <p><code>fundiversity</code> comes with one example trait dataset. The dataset comes from <span class="citation">Nowak, Kissling, Bender, Dehling, Töpfer, Böhning-Gaese, et al. (2019)</span> and describe the traits of birds and plants along a tropical gradient <span class="citation">(Nowak, Kissling, Bender, Dehling, Töpfer, Böhning-Gaese, et al. 2019)</span>. You can see the datasets available in <code>fundiversity</code> using the <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -224,13 +224,10 @@
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; Error: No species in common found between trait dataset and site-species matrix</span></code></pre></div>
 </div>
-<div id="computing-the-indices" class="section level1">
+<div id="functional-richness-fric---fd_fric" class="section level1">
 <h1 class="hasAnchor">
-<a href="#computing-the-indices" class="anchor"></a>Computing the indices</h1>
-<div id="functional-richness-fric---fd_fric" class="section level2">
-<h2 class="hasAnchor">
 <a href="#functional-richness-fric---fd_fric" class="anchor"></a>Functional Richness (FRic) - <code>fd_fric()</code>
-</h2>
+</h1>
 <p>Functional Richness (FRic) represents the total amount of functional space filed by a community in a dataset <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>. You can compute FRic in <code>fundiversity</code> using the <code><a href="../reference/fd_fric.html">fd_fric()</a></code> function.</p>
 <p>For a single trait range FRic is the range of trait observed in the dataset:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -279,10 +276,10 @@
 <span class="co">#&gt; 8 elev_3500 0.01605737</span></code></pre></div>
 <p>Each row gives the standardized FRic values of each site.</p>
 </div>
-<div id="intersect-convex-functional-volume-fric_intersect---fd_fric_intersect" class="section level2">
-<h2 class="hasAnchor">
-<a href="#intersect-convex-functional-volume-fric_intersect---fd_fric_intersect" class="anchor"></a>Intersect convex functional volume (FRic_intersect) - <code>fd_fric_intersect()</code>
-</h2>
+<div id="functional-volume-intersect-fric_intersect---fd_fric_intersect" class="section level1">
+<h1 class="hasAnchor">
+<a href="#functional-volume-intersect-fric_intersect---fd_fric_intersect" class="anchor"></a>Functional volume intersect (FRic_intersect) - <code>fd_fric_intersect()</code>
+</h1>
 <p>Sometimes you’re interested in the shared functional volumes between pairs of sites more than in the functional volumes of each site separately. fundiversity provides the <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> function for this exact use case.</p>
 <p>It follows the same interface as <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with similar named arguments:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
@@ -291,91 +288,25 @@
 <span class="co">#&gt; 1         s1          s1       230967.7</span></code></pre></div>
 <p><code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> computes the shared functional volumes between each pair of sites, including self-intersection which correspond to the functional volume of each site. Similarly to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> if no site-species data is provided, <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> considers a site that contains all species from the trait dataset.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
-<span class="co">#&gt;    first_site second_site FRic_intersect</span>
-<span class="co">#&gt; 1    elev_250    elev_500     171532.551</span>
-<span class="co">#&gt; 2    elev_250   elev_1000     106172.721</span>
-<span class="co">#&gt; 3    elev_250   elev_1500      55368.035</span>
-<span class="co">#&gt; 4    elev_250   elev_2000      18288.475</span>
-<span class="co">#&gt; 5    elev_250   elev_2500      17320.022</span>
-<span class="co">#&gt; 6    elev_250   elev_3000      16634.232</span>
-<span class="co">#&gt; 7    elev_250   elev_3500       3666.732</span>
-<span class="co">#&gt; 8    elev_500   elev_1000     108318.835</span>
-<span class="co">#&gt; 9    elev_500   elev_1500      56752.281</span>
-<span class="co">#&gt; 10   elev_500   elev_2000      18466.089</span>
-<span class="co">#&gt; 11   elev_500   elev_2500      17420.499</span>
-<span class="co">#&gt; 12   elev_500   elev_3000      16722.671</span>
-<span class="co">#&gt; 13   elev_500   elev_3500       3671.530</span>
-<span class="co">#&gt; 14  elev_1000   elev_1500      58229.747</span>
-<span class="co">#&gt; 15  elev_1000   elev_2000      18246.210</span>
-<span class="co">#&gt; 16  elev_1000   elev_2500      17275.839</span>
-<span class="co">#&gt; 17  elev_1000   elev_3000      16518.824</span>
-<span class="co">#&gt; 18  elev_1000   elev_3500       3679.026</span>
-<span class="co">#&gt; 19  elev_1500   elev_2000      19793.215</span>
-<span class="co">#&gt; 20  elev_1500   elev_2500      18120.455</span>
-<span class="co">#&gt; 21  elev_1500   elev_3000      17305.013</span>
-<span class="co">#&gt; 22  elev_1500   elev_3500       3690.239</span>
-<span class="co">#&gt; 23  elev_2000   elev_2500      18298.807</span>
-<span class="co">#&gt; 24  elev_2000   elev_3000      17226.978</span>
-<span class="co">#&gt; 25  elev_2000   elev_3500       3695.685</span>
-<span class="co">#&gt; 26  elev_2500   elev_3000      17186.733</span>
-<span class="co">#&gt; 27  elev_2500   elev_3500       3694.470</span>
-<span class="co">#&gt; 28  elev_3000   elev_3500       3708.735</span>
-<span class="co">#&gt; 29   elev_250    elev_250     171543.730</span>
-<span class="co">#&gt; 30   elev_500    elev_500     185612.548</span>
-<span class="co">#&gt; 31  elev_1000   elev_1000     112600.176</span>
-<span class="co">#&gt; 32  elev_1500   elev_1500      66142.748</span>
-<span class="co">#&gt; 33  elev_2000   elev_2000      20065.764</span>
-<span class="co">#&gt; 34  elev_2500   elev_2500      18301.176</span>
-<span class="co">#&gt; 35  elev_3000   elev_3000      17530.651</span>
-<span class="co">#&gt; 36  elev_3500   elev_3500       3708.735</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span>
+<span class="co">#&gt;   first_site second_site FRic_intersect</span>
+<span class="co">#&gt; 1   elev_250    elev_500       171532.6</span>
+<span class="co">#&gt; 2   elev_250    elev_250       171543.7</span>
+<span class="co">#&gt; 3   elev_500    elev_500       185612.5</span></code></pre></div>
 <p>The output is a data.frame where the two first columns (<code>first_site</code> and <code>second_site</code>) define the sites on which the intersection is computed, the third column (<code>FRic_intersect</code>) contains the volume of the intersection.</p>
 <p>Similarly to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> the intersections volumes can be standardized:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt;    first_site second_site FRic_intersect</span>
-<span class="co">#&gt; 1    elev_250    elev_500     0.74266892</span>
-<span class="co">#&gt; 2    elev_250   elev_1000     0.45968640</span>
-<span class="co">#&gt; 3    elev_250   elev_1500     0.23972196</span>
-<span class="co">#&gt; 4    elev_250   elev_2000     0.07918195</span>
-<span class="co">#&gt; 5    elev_250   elev_2500     0.07498893</span>
-<span class="co">#&gt; 6    elev_250   elev_3000     0.07201972</span>
-<span class="co">#&gt; 7    elev_250   elev_3500     0.01587552</span>
-<span class="co">#&gt; 8    elev_500   elev_1000     0.46897823</span>
-<span class="co">#&gt; 9    elev_500   elev_1500     0.24571520</span>
-<span class="co">#&gt; 10   elev_500   elev_2000     0.07995095</span>
-<span class="co">#&gt; 11   elev_500   elev_2500     0.07542395</span>
-<span class="co">#&gt; 12   elev_500   elev_3000     0.07240263</span>
-<span class="co">#&gt; 13   elev_500   elev_3500     0.01589629</span>
-<span class="co">#&gt; 14  elev_1000   elev_1500     0.25211205</span>
-<span class="co">#&gt; 15  elev_1000   elev_2000     0.07899896</span>
-<span class="co">#&gt; 16  elev_1000   elev_2500     0.07479763</span>
-<span class="co">#&gt; 17  elev_1000   elev_3000     0.07152005</span>
-<span class="co">#&gt; 18  elev_1000   elev_3500     0.01592875</span>
-<span class="co">#&gt; 19  elev_1500   elev_2000     0.08569689</span>
-<span class="co">#&gt; 20  elev_1500   elev_2500     0.07845449</span>
-<span class="co">#&gt; 21  elev_1500   elev_3000     0.07492394</span>
-<span class="co">#&gt; 22  elev_1500   elev_3500     0.01597729</span>
-<span class="co">#&gt; 23  elev_2000   elev_2500     0.07922669</span>
-<span class="co">#&gt; 24  elev_2000   elev_3000     0.07458608</span>
-<span class="co">#&gt; 25  elev_2000   elev_3500     0.01600087</span>
-<span class="co">#&gt; 26  elev_2500   elev_3000     0.07441184</span>
-<span class="co">#&gt; 27  elev_2500   elev_3500     0.01599561</span>
-<span class="co">#&gt; 28  elev_3000   elev_3500     0.01605737</span>
-<span class="co">#&gt; 29   elev_250    elev_250     0.74271733</span>
-<span class="co">#&gt; 30   elev_500    elev_500     0.80362981</span>
-<span class="co">#&gt; 31  elev_1000   elev_1000     0.48751477</span>
-<span class="co">#&gt; 32  elev_1500   elev_1500     0.28637225</span>
-<span class="co">#&gt; 33  elev_2000   elev_2000     0.08687692</span>
-<span class="co">#&gt; 34  elev_2500   elev_2500     0.07923694</span>
-<span class="co">#&gt; 35  elev_3000   elev_3000     0.07590087</span>
-<span class="co">#&gt; 36  elev_3500   elev_3500     0.01605737</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">]</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="co">#&gt;   first_site second_site FRic_intersect</span>
+<span class="co">#&gt; 1   elev_250    elev_500      0.7426689</span>
+<span class="co">#&gt; 2   elev_250    elev_250      0.7427173</span>
+<span class="co">#&gt; 3   elev_500    elev_500      0.8036298</span></code></pre></div>
 <p>Note that when standardizing the volumes, the behavior is similar to that of <code><a href="../reference/fd_fric.html">fd_fric()</a></code> which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.</p>
 </div>
-<div id="functional-divergence-fdiv---fd_fdiv" class="section level2">
-<h2 class="hasAnchor">
+<div id="functional-divergence-fdiv---fd_fdiv" class="section level1">
+<h1 class="hasAnchor">
 <a href="#functional-divergence-fdiv---fd_fdiv" class="anchor"></a>Functional Divergence (FDiv) - <code>fd_fdiv()</code>
-</h2>
+</h1>
 <p>Functional Divergence (FDiv) represents how abundance is spread along the different traits <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>. When a species with extreme trait values has the highest abundance, then functional divergence is high.</p>
 <p>Use the <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> function to compute functional divergence:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -402,10 +333,10 @@
 <span class="co">#&gt; 8 elev_3500 0.6422068</span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> will take the common subset of species.</p>
 </div>
-<div id="functional-evenness-feve---fd_feve" class="section level2">
-<h2 class="hasAnchor">
+<div id="functional-evenness-feve---fd_feve" class="section level1">
+<h1 class="hasAnchor">
 <a href="#functional-evenness-feve---fd_feve" class="anchor"></a>Functional Evenness (FEve) - <code>fd_feve()</code>
-</h2>
+</h1>
 <p>Functional Evenness (FEve) describes the regularity of the distribution of species (and their abundances) in trait space <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>. FEve is bounded between 0 and 1. FEve is close to 0 when most species (and abundances) are tightly packed in a portion of the trait space while it is close to 1 if species are regularly spread (with even abundances) along the trait space.</p>
 <p>Use the <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> function to compute functional divergence:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -432,10 +363,10 @@
 <span class="co">#&gt; 8 elev_3500 0.4222442</span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_feve.html">fd_feve()</a></code> will take the common subset of species.</p>
 </div>
-<div id="functional-dispersion-fdis---fd_fdis" class="section level2">
-<h2 class="hasAnchor">
+<div id="functional-dispersion-fdis---fd_fdis" class="section level1">
+<h1 class="hasAnchor">
 <a href="#functional-dispersion-fdis---fd_fdis" class="anchor"></a>Functional Dispersion (FDis) - <code>fd_fdis()</code>
-</h2>
+</h1>
 <p>Functional Dispersion reflects changes in the abundance-weighted deviation of species trait values from the center of the functional space.</p>
 <p>You can compute Functional Dispersion (FDis) using the <code><a href="../reference/fd_fdis.html">fd_fdis()</a></code> function by providing a trait dataset:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
@@ -455,10 +386,10 @@
 <span class="co">#&gt; 7 elev_3000  97.11743</span>
 <span class="co">#&gt; 8 elev_3500  80.70000</span></code></pre></div>
 </div>
-<div id="raos-quadratic-entropy-q---fd_raoq" class="section level2">
-<h2 class="hasAnchor">
+<div id="raos-quadratic-entropy-q---fd_raoq" class="section level1">
+<h1 class="hasAnchor">
 <a href="#raos-quadratic-entropy-q---fd_raoq" class="anchor"></a>Rao’s Quadratic Entropy (Q) - <code>fd_raoq()</code>
-</h2>
+</h1>
 <p>Rao’s Quadratic entropy assesses the multi-dimensional divergence in trait space <span class="citation">(Rao 1982)</span>. It is the abundance-weighted variance of the trait dissimilarities between all species pairs.</p>
 <p>You can compute Rao’s Quadratic entropy (Q) using the <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> function by providing a trait dataset:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
@@ -498,10 +429,9 @@
 <span class="co">#&gt; 8 elev_3500 104.8981</span></code></pre></div>
 <p>NB: if you want to provide both a site-species matrix and a trait dissimilarity matrix please specify explicitly the arguments names.</p>
 </div>
-</div>
-<div id="working-with-large-site-species-data" class="section level1">
+<div id="large-site-species-data-sparse-matrices" class="section level1">
 <h1 class="hasAnchor">
-<a href="#working-with-large-site-species-data" class="anchor"></a>Working with large site-species data</h1>
+<a href="#large-site-species-data-sparse-matrices" class="anchor"></a>Large site-species data / sparse matrices</h1>
 <p><a href="https://en.wikipedia.org/wiki/Sparse_matrix">Sparse matrices</a> are memory efficient ways of storing matrix object that contains many zeros. <code>fundiversity</code> is fully compatible with sparse matrices through the <a href="https://cran.r-project.org/package=Matrix"><code>Matrix</code> package</a>. They can be used to encode site-species information or distance matrices.</p>
 <p>Provide <code>Matrix</code> objects as inputs of the indices function <code>fundiversity</code>, they will transparently use them for efficient computation.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -519,9 +449,9 @@
 <span class="co">#&gt; 7 elev_3000 113.22049</span>
 <span class="co">#&gt; 8 elev_3500  87.04750</span></code></pre></div>
 </div>
-<div id="standardizing-your-trait-data" class="section level1">
+<div id="standardizing-trait-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#standardizing-your-trait-data" class="anchor"></a>Standardizing your trait data</h1>
+<a href="#standardizing-trait-data" class="anchor"></a>Standardizing trait data</h1>
 <p><code>fundiversity</code> does not perform any transformation on the input trait or dissimilarity data. In <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> if you provide only continuous trait data then the function will attempt computing Euclidean distance between the species.</p>
 <p>In order to get comparable functional diversity indices you can standardize the trait data. One option would be to consider the <code><a href="https://rdrr.io/r/base/scale.html">scale()</a></code> function to scale each continuous trait with a mean of zero and a standard deviation of one (z-score). Each trait will then have the same importance when computing functional diversity indices:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
@@ -564,19 +494,19 @@
 <p>There are several other options available to standardize trait values, reviewed in <span class="citation">Leps et al. (2006)</span>.</p>
 <p>If not all the traits you use are continuous, refer to the next section, which suggests ways of computing functional diversity indices with non-continuous traits.</p>
 </div>
-<div id="what-if-not-all-traits-are-continuous" class="section level1">
+<div id="non-continuous-traits" class="section level1">
 <h1 class="hasAnchor">
-<a href="#what-if-not-all-traits-are-continuous" class="anchor"></a>What if not all traits are continuous?</h1>
-<p>Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species. The general idea we present in this part is to go from the trait table to a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in <span class="citation">Maire et al. (2015)</span>.</p>
+<a href="#non-continuous-traits" class="anchor"></a>Non-continuous traitS?</h1>
+<p>Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species, you need to transform the non-continuous trait data into a continuous form. The general idea is to obtain from the trait table a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in <span class="citation">Maire et al. (2015)</span>.</p>
 <p>To compute dissimilarity with non-continuous traits you can user Gower’s distance <span class="citation">(Gower 1971)</span> or its following adaptations <span class="citation">(Pavoine et al. 2009; Podani 1999)</span>. You can use the following functions: <code><a href="https://rdrr.io/pkg/cluster/man/daisy.html">cluster::daisy()</a></code>, <code>FD::gowdis()</code>, <code>ade4::dist.ktab()</code>, or <code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegan::vegdist()</a></code>.</p>
 <p>Then you can project these dissimilarities with Principal Coordinates using <code>ape::pcoa()</code> for example. You can then select the first dimensions that explains the most variance and use theses as the input “traits” to compute functional diversity indices.</p>
 </div>
-<div id="what-if-some-traits-have-missing-values" class="section level1">
+<div id="missing-values-in-traits" class="section level1">
 <h1 class="hasAnchor">
-<a href="#what-if-some-traits-have-missing-values" class="anchor"></a>What if some traits have missing values?</h1>
+<a href="#missing-values-in-traits" class="anchor"></a>Missing values in traits?</h1>
 <p>Sometimes, some of the trait values can be missing for some species in your dataset. Because <code>fundiversity</code> does not want to make assumptions without telling you, by default it <strong>drops</strong> the species data for which the trait is missing.</p>
 <p>If you want to use data with missing values you can use dissimilarity metrics that accept missing trait values such as some of the methods specified in <code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegan::vegdist()</a></code>.</p>
-<p>Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of <code>fundiversity</code> but you can find some details on how to proceed with the review by <span class="citation">Penone et al. (2014)</span>.</p>
+<p>Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of <code>fundiversity</code> but you can find some details on how to proceed reviewed by <span class="citation">Penone et al. (2014)</span>.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
