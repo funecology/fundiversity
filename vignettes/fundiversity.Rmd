@@ -96,7 +96,7 @@ For a single trait range FRic is the range of trait observed in the dataset:
 # Range of bill width in the birds dataset
 diff(range(traits_birds[, "Bill.width..mm."]))
 
-# Computation with fundiversity::fd_ric.
+# Using fundiversity::fd_fric()
 fd_fric(traits_birds)
 ```
 
@@ -299,7 +299,7 @@ There are several other options available to standardize trait values, reviewed 
 If not all the traits you use are continuous, refer to the next section, which suggests ways of computing functional diversity indices with non-continuous traits.
 
 
-# Non-continuous traitS?
+# Non-continuous traits?
 
 Do not panic. You can still compute the above-mentioned functional diversity indices. However, as all indices need continuous descriptors for all considered species, you need to transform the non-continuous trait data into a continuous form. The general idea is to obtain from the trait table a table of quantitative descriptions by defining specific dissimilarity and projecting species dissimilarities onto quantitative space using Principal Coordinates Analysis (PCoA). The framework is fully described in @Maire_How_2015.
 
