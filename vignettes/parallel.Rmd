@@ -7,15 +7,14 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r vignette-setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
-```{r setup}
+
+
+```r
 library("fundiversity")
+
+data("traits_birds", package = "fundiversity")
+data("site_sp_birds", package = "fundiversity")
 ```
 
 Within `fundiversity` the computation of most indices can be parallelized using the `future` package. The indices that currently support parallelization are: **FRic**, **FDis**, **FDiv**, and **FEve**. The goal of this vignette is to explain how to toggle and use parallelization in `fundiversity`.
@@ -27,7 +26,8 @@ The `future` package provides a simple and general framework to allow asynchrono
 
 By default the `fundiversity` code will run sequentially on a single core. To trigger parallelization the user needs to define a `future::plan()` object with a parallel backend such as `future::multisession` to split the execution across multiple R sessions.
 
-```{r future-plan}
+
+```r
 # Sequential execution
 fric1 <- fd_fric(traits_birds)
 
@@ -36,15 +36,18 @@ future::plan(future::multisession)  # Plan definition
 fric2 <- fd_fric(traits_birds)  # The code resolve in similar fashion
 
 identical(fric1, fric2)
+#> [1] TRUE
 ```
 
 Within the `future::multisession` backend you can specify the number of cores on which the function should be parallelized over through the argument `workers`, you can change it in the `future::plan()` call:
 
-```{r future-plan-workers, options}
+
+```r
 future::plan(future::multisession, workers = 2)  # Only 2 cores are used
 fric3 <- fd_fric(traits_birds)
 
 identitical(fric3, fric2)
+#> Error in identitical(fric3, fric2): impossible de trouver la fonction "identitical"
 ```
 
 To learn more about the different backends available and the related arguments needed, please refer to the documentation of `future::plan()` and the [overview vignette](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html).
@@ -54,7 +57,8 @@ To learn more about the different backends available and the related arguments n
 
 We can now compare the difference in performance to see the performance gain thanks to parallelization:
 
-```{r perf-comp}
+
+```r
 future::plan(future::sequential)
 non_parallel_bench <- microbenchmark::microbenchmark(
   non_parallel = {
@@ -72,11 +76,16 @@ parallel_bench <- microbenchmark::microbenchmark(
 )
 
 rbind(non_parallel_bench, parallel_bench)
+#> Unit: milliseconds
+#>          expr      min       lq      mean   median        uq        max neval
+#>  non_parallel 13.00123 13.18442  14.06151 13.36761  14.59166   15.81571     3
+#>      parallel 35.12852 44.55738 491.53305 53.98624 719.73531 1385.48439     3
 ```
 
 The non parallelized code runs faster than the parallelized one! Indeed, the parallelization in `fundiversity` parallelize the computation across different sites. So parallelization should be used when you have many sites on which you want to compute similar indices.
 
-```{r make-more-sp}
+
+```r
 # Function to make a bigger site-sp dataset
 make_more_sites <- function(n) {
   site_sp <- do.call(rbind, replicate(n, site_sp_birds, simplify = FALSE))
@@ -86,10 +95,11 @@ make_more_sites <- function(n) {
 }
 ```
 
-For example with a dataset 100 times bigger:
+For example with a dataset 5000 times bigger:
 
-```{r bench-100-times}
-bigger_site <- make_more_sites(1000)
+
+```r
+bigger_site <- make_more_sites(5000)
 
 future::plan(future::sequential)
 non_parallel_bench <- microbenchmark::microbenchmark(
@@ -99,7 +109,7 @@ non_parallel_bench <- microbenchmark::microbenchmark(
   times = 5
 )
 
-future::plan(future::multisession, workers = 2)
+future::plan(future::multisession, workers = 5)
 parallel_bench <- microbenchmark::microbenchmark(
   parallel = {
     fd_fric(traits_birds, bigger_site)
@@ -108,4 +118,107 @@ parallel_bench <- microbenchmark::microbenchmark(
 )
 
 rbind(non_parallel_bench, parallel_bench)
+#> Unit: seconds
+#>          expr      min       lq     mean   median       uq      max neval
+#>  non_parallel 5.881017 5.958572 5.975198 5.983409 6.018941  6.03405     5
+#>      parallel 5.794567 5.830969 7.225739 5.847995 6.183259 12.47190     5
 ```
+
+<details>
+<summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
+
+
+```
+#>  seconds needed to generate this document: 80.093 sec elapsed
+#> ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────────────────────
+#>  setting  value                       
+#>  version  R version 4.0.3 (2020-10-10)
+#>  os       macOS High Sierra 10.13.6   
+#>  system   x86_64, darwin17.0          
+#>  ui       RStudio                     
+#>  language (EN)                        
+#>  collate  fr_FR.UTF-8                 
+#>  ctype    fr_FR.UTF-8                 
+#>  tz       Europe/Paris                
+#>  date     2021-03-21                  
+#> 
+#> ─ Packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#>  ! package        * version  date       lib source        
+#>    abind            1.4-5    2016-07-21 [1] CRAN (R 4.0.2)
+#>    assertthat       0.2.1    2019-03-21 [1] CRAN (R 4.0.2)
+#>    cachem           1.0.4    2021-02-13 [1] CRAN (R 4.0.3)
+#>    callr            3.5.1    2020-10-13 [1] CRAN (R 4.0.2)
+#>    cli              2.3.1    2021-02-23 [1] CRAN (R 4.0.3)
+#>    cluster          2.1.1    2021-02-14 [1] CRAN (R 4.0.3)
+#>    codetools        0.2-18   2020-11-04 [1] CRAN (R 4.0.2)
+#>    colorspace       2.0-0    2020-11-11 [1] CRAN (R 4.0.2)
+#>    crayon           1.4.1    2021-02-08 [1] CRAN (R 4.0.3)
+#>    DBI              1.1.1    2021-01-15 [1] CRAN (R 4.0.2)
+#>    desc             1.3.0    2021-03-05 [1] CRAN (R 4.0.3)
+#>    digest           0.6.27   2020-10-24 [1] CRAN (R 4.0.2)
+#>    dplyr            1.0.5    2021-03-05 [1] CRAN (R 4.0.3)
+#>    ellipsis         0.3.1    2020-05-15 [1] CRAN (R 4.0.2)
+#>    evaluate         0.14     2019-05-28 [1] CRAN (R 4.0.1)
+#>    fansi            0.4.2    2021-01-15 [1] CRAN (R 4.0.2)
+#>    fastmap          1.1.0    2021-01-25 [1] CRAN (R 4.0.3)
+#>  P fundiversity   * 0.0.2    2021-02-24 [?] local         
+#>    future           1.21.0   2020-12-10 [1] CRAN (R 4.0.3)
+#>    future.apply     1.7.0    2021-01-04 [1] CRAN (R 4.0.3)
+#>    generics         0.1.0    2020-10-31 [1] CRAN (R 4.0.2)
+#>    geometry         0.4.5    2019-12-04 [1] CRAN (R 4.0.2)
+#>    ggplot2          3.3.3    2020-12-30 [1] CRAN (R 4.0.2)
+#>    globals          0.14.0   2020-11-22 [1] CRAN (R 4.0.3)
+#>    glue             1.4.2    2020-08-27 [1] CRAN (R 4.0.2)
+#>    gtable           0.3.0    2019-03-25 [1] CRAN (R 4.0.2)
+#>    highr            0.8      2019-03-20 [1] CRAN (R 4.0.2)
+#>    htmltools        0.5.1.1  2021-01-22 [1] CRAN (R 4.0.3)
+#>    knitr            1.31     2021-01-27 [1] CRAN (R 4.0.3)
+#>    lattice          0.20-41  2020-04-02 [1] CRAN (R 4.0.3)
+#>    lifecycle        1.0.0    2021-02-15 [1] CRAN (R 4.0.3)
+#>    listenv          0.8.0    2019-12-05 [1] CRAN (R 4.0.2)
+#>    magic            1.5-9    2018-09-17 [1] CRAN (R 4.0.2)
+#>    magrittr         2.0.1    2020-11-17 [1] CRAN (R 4.0.2)
+#>    MASS             7.3-53.1 2021-02-12 [1] CRAN (R 4.0.3)
+#>    Matrix           1.3-2    2021-01-06 [1] CRAN (R 4.0.3)
+#>    memoise          2.0.0    2021-01-26 [1] CRAN (R 4.0.3)
+#>    mgcv             1.8-34   2021-02-16 [1] CRAN (R 4.0.2)
+#>    microbenchmark   1.4-7    2019-09-24 [1] CRAN (R 4.0.2)
+#>    munsell          0.5.0    2018-06-12 [1] CRAN (R 4.0.2)
+#>    nlme             3.1-152  2021-02-04 [1] CRAN (R 4.0.3)
+#>    parallelly       1.24.0   2021-03-14 [1] CRAN (R 4.0.3)
+#>    permute          0.9-5    2019-03-12 [1] CRAN (R 4.0.2)
+#>    pillar           1.5.1    2021-03-05 [1] CRAN (R 4.0.3)
+#>    pkgbuild         1.2.0    2020-12-15 [1] CRAN (R 4.0.3)
+#>    pkgconfig        2.0.3    2019-09-22 [1] CRAN (R 4.0.2)
+#>    pkgload          1.2.0    2021-02-23 [1] CRAN (R 4.0.3)
+#>    prettyunits      1.1.1    2020-01-24 [1] CRAN (R 4.0.2)
+#>    processx         3.4.5    2020-11-30 [1] CRAN (R 4.0.3)
+#>    ps               1.6.0    2021-02-28 [1] CRAN (R 4.0.3)
+#>    purrr            0.3.4    2020-04-17 [1] CRAN (R 4.0.2)
+#>    R6               2.5.0    2020-10-28 [1] CRAN (R 4.0.2)
+#>    Rcpp             1.0.6    2021-01-15 [1] CRAN (R 4.0.2)
+#>    rlang            0.4.10   2020-12-30 [1] CRAN (R 4.0.2)
+#>    rmarkdown        2.7      2021-02-19 [1] CRAN (R 4.0.3)
+#>    rprojroot        2.0.2    2020-11-15 [1] CRAN (R 4.0.2)
+#>    rstudioapi       0.13     2020-11-12 [1] CRAN (R 4.0.2)
+#>    scales           1.1.1    2020-05-11 [1] CRAN (R 4.0.2)
+#>    sessioninfo      1.1.1    2018-11-05 [1] CRAN (R 4.0.2)
+#>    stringi          1.5.3    2020-09-09 [1] CRAN (R 4.0.2)
+#>    stringr          1.4.0    2019-02-10 [1] CRAN (R 4.0.2)
+#>    testthat       * 3.0.2    2021-02-14 [1] CRAN (R 4.0.3)
+#>    tibble           3.1.0    2021-02-25 [1] CRAN (R 4.0.3)
+#>    tictoc           1.0      2014-06-17 [1] CRAN (R 4.0.2)
+#>    tidyselect       1.1.0    2020-05-11 [1] CRAN (R 4.0.2)
+#>    utf8             1.2.1    2021-03-12 [1] CRAN (R 4.0.2)
+#>    vctrs            0.3.6    2020-12-17 [1] CRAN (R 4.0.3)
+#>    vegan            2.5-7    2020-11-28 [1] CRAN (R 4.0.2)
+#>    withr            2.4.1    2021-01-26 [1] CRAN (R 4.0.3)
+#>    xfun             0.22     2021-03-11 [1] CRAN (R 4.0.2)
+#>    yaml             2.2.1    2020-02-01 [1] CRAN (R 4.0.2)
+#> 
+#> [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
+#> 
+#>  P ── Loaded and on-disk path mismatch.
+```
+
+</details>
