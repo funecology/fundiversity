@@ -95,23 +95,18 @@ For example with a dataset 5000 times bigger:
 ```{r bench-5000-times}
 bigger_site <- make_more_sites(5000)
 
-future::plan(future::sequential)
-non_parallel_bench <- microbenchmark::microbenchmark(
-  non_parallel = {
-    fd_fric(traits_birds, bigger_site)
-  },
-  times = 5
+microbenchmark::microbenchmark(
+  { 
+    future::plan(future::sequential) 
+    fd_fric(traits_birds, bigger_site) 
+  }, { 
+    future::plan(future::multisession, workers = 4)
+    fd_fric(traits_birds, bigger_site) 
+  }, { 
+    future::plan(future::multicore, workers = 4) 
+    fd_fric(traits_birds, bigger_site) 
+  }, times = 5
 )
-
-future::plan(future::multisession, workers = 5)
-parallel_bench <- microbenchmark::microbenchmark(
-  parallel = {
-    fd_fric(traits_birds, bigger_site)
-  },
-  times = 5
-)
-
-rbind(non_parallel_bench, parallel_bench)
 ```
 
 <details>
