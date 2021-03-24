@@ -87,11 +87,11 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
       second_row    <- sp_com[site_comb[[2]],, drop = TRUE]
       second_traits <- traits[second_row > 0,, drop = FALSE]
 
-      fd_chull_intersect(first_traits, second_traits)$vol
+      fd_chull_intersect_memoised(first_traits, second_traits)$vol
     } else {
       # Self-intersection (equivalent to regular convex hulls)
       # way more efficient that compute with fd_chull_inters
-      fd_chull(first_traits)$vol
+      fd_chull_memoised(first_traits)$vol
     }
   })
 
