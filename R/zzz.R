@@ -5,7 +5,7 @@
   if (requireNamespace("memoise", quietly = TRUE) &
       getOption("fundiversity.memoise", TRUE)) {
     fd_chull_memoised <<- memoise::memoise(fd_chull)
-    fd_chull_intersect_memoised <<-  memoise::memoise(fd_chull_intersect)
+    fd_chull_intersect_memoised <<- memoise::memoise(fd_chull_intersect)
   } else {
     fd_chull_memoised <<- fd_chull
     fd_chull_intersect_memoised <<- fd_chull_intersect
