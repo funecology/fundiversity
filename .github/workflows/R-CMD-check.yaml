@@ -71,7 +71,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_deps(dependencies = Sys.getenv("DEPS"))
+          remotes::install_deps(dependencies = ifelse(Sys.getenv("DEPS") == "soft", TRUE, NA))
           # 'Manually' install knitr even when we only want hard deps because
           # R CMD check complains when it sees it in the VignetteBuilder field
           if (identical(Sys.getenv("DEPS"), "hard") && "VignetteBuilder: knitr" %in% readLines("DESCRIPTION")) {
