@@ -8,6 +8,8 @@
 #'
 #' @inheritParams fd_fric
 #'
+#' @inheritSection fd_fric Parallelization
+#'
 #' @return a data.frame with three columns:
 #' * `first_site` the names of the first site used in the pair `sp_com`,
 #' * `second_site` the names of the first site used in the pair,

@@ -2,6 +2,8 @@
 #'
 #' @inheritParams fd_raoq
 #'
+#' @inheritSection fd_fric Parallelization
+#'
 #' @examples
 #' data(traits_birds)
 #' fd_feve(traits_birds)

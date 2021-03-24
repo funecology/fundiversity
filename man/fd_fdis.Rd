@@ -24,6 +24,14 @@ a data.frame with two columns:
 \description{
 Compute Functional Dispersion (FDis)
 }
+\section{Parallelization}{
+
+The computation of this function can be parallelized thanks to
+\code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
+computation please refer to the parallelization vignette with:
+\code{vignette("parallel", package = "fundiversity")}
+}
+
 \examples{
 data(traits_birds)
 data(site_sp_birds)

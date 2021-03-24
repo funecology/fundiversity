@@ -16,6 +16,12 @@
 #'               If you want to consider species that are absent
 #'               in the site-species matrix, add corresponding columns of 0s.
 #'
+#' @section Parallelization:
+#' The computation of this function can be parallelized thanks to
+#' [future::plan()]. To get more information on how to parallelize your
+#' computation please refer to the parallelization vignette with:
+#' `vignette("parallel", package = "fundiversity")`
+#'
 #' @examples
 #' data(traits_birds)
 #' fd_fric(traits_birds)

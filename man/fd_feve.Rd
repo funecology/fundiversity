@@ -30,6 +30,14 @@ row names,
 \description{
 Compute Functional Evenness (FEve)
 }
+\section{Parallelization}{
+
+The computation of this function can be parallelized thanks to
+\code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
+computation please refer to the parallelization vignette with:
+\code{vignette("parallel", package = "fundiversity")}
+}
+
 \examples{
 data(traits_birds)
 fd_feve(traits_birds)
