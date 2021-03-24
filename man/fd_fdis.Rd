@@ -12,8 +12,7 @@ fd_fdis(traits, sp_com)
 \item{sp_com}{Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
 abundance in a single site. This can be either a \code{matrix},
-a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}} object.
-package.}
+a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}} object.}
 }
 \value{
 a data.frame with two columns:
