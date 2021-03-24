@@ -96,13 +96,15 @@ For example with a dataset 5000 times bigger:
 bigger_site <- make_more_sites(5000)
 
 microbenchmark::microbenchmark(
-  { 
+  seq = { 
     future::plan(future::sequential) 
     fd_fric(traits_birds, bigger_site) 
-  }, { 
+  },
+  multisession = { 
     future::plan(future::multisession, workers = 4)
     fd_fric(traits_birds, bigger_site) 
-  }, { 
+  },
+  multicore = { 
     future::plan(future::multicore, workers = 4) 
     fd_fric(traits_birds, bigger_site) 
   }, times = 5
