@@ -27,7 +27,7 @@ jobs:
           - {os: ubuntu-20.04, r: 'oldrel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft}
           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft}
           - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: hard}
-          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft}
+          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft, http-user-agent: "R/4.0.0 (ubuntu-20.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions"}
           - {os: ubuntu-20.04, r: '3.4', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft}
 
     env:
@@ -35,6 +35,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       DEPS: ${{ matrix.config.deps }}
       _R_CHECK_FORCE_SUGGESTS_: false
+      R_COMPILE_AND_INSTALL_PACKAGES: never
 
     steps:
       - uses: actions/checkout@v2
@@ -70,7 +71,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_deps(dependencies = Sys.getenv("DEPS"))
+          remotes::install_deps(dependencies = ifelse(Sys.getenv("DEPS") == "soft", TRUE, NA))
           # 'Manually' install knitr even when we only want hard deps because
           # R CMD check complains when it sees it in the VignetteBuilder field
           if (identical(Sys.getenv("DEPS"), "hard") && "VignetteBuilder: knitr" %in% readLines("DESCRIPTION")) {
