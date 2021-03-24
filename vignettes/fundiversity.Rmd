@@ -129,6 +129,8 @@ fd_fric(traits_birds, site_sp_birds, stand = TRUE)
 
 Each row gives the standardized FRic values of each site.
 
+The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
 
 # Functional volume intersect (FRic_intersect) - `fd_fric_intersect()`
 
@@ -157,6 +159,9 @@ fd_fric_intersect(traits_birds, site_sp_birds[1:2,], stand = TRUE)
 
 Note that when standardizing the volumes, the behavior is similar to that of `fd_fric()` which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.
 
+The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
+
 # Functional Divergence (FDiv) - `fd_fdiv()`
 
 Functional Divergence (FDiv) represents how abundance is spread along the different traits [@Villeger_New_2008]. When a species with extreme trait values has the highest abundance, then functional divergence is high.
@@ -178,6 +183,8 @@ fd_fdiv(traits_birds, site_sp_birds)
 ```
 
 Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_fdiv()` will take the common subset of species.
+
+The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
 
 # Functional Evenness (FEve) - `fd_feve()`
 
@@ -201,6 +208,8 @@ fd_feve(traits_birds, site_sp_birds)
 
 Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_feve()` will take the common subset of species.
 
+The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
 
 # Functional Dispersion (FDis) - `fd_fdis()`
 
@@ -218,6 +227,9 @@ You can also provide a site-species matrix to compute FDis at different sites:
 ```{r fdis-sites}
 fd_fdis(traits_birds, site_sp_birds)
 ```
+
+The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
 
 # Rao's Quadratic Entropy (Q) - `fd_raoq()`
 
