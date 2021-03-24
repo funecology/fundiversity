@@ -6,6 +6,6 @@
       getOption("fundiversity.memoise", TRUE)) {
     fd_chull_memoised <<- memoise::memoise(fd_chull)
   } else {
-    fd_chull_memoised <- fd_chull
+    fd_chull_memoised <<- fd_chull
   }
 }

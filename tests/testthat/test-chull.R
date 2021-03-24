@@ -17,8 +17,6 @@ test_that("memoised fd_chull works", {
 
   ch2 <- fd_chull_memoised(traits_birds[2:5,])
 
-  expect_false(memoise::has_cache(fd_chull_memoised)(traits_birds[2:5,]))
-
   # Reset the option to TRUE
   options(fundiversity.memoise = TRUE)
   expect_true(getOption("fundiversity.memoise", TRUE))
