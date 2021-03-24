@@ -35,6 +35,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       DEPS: ${{ matrix.config.deps }}
       _R_CHECK_FORCE_SUGGESTS_: false
+      R_COMPILE_AND_INSTALL_PACKAGES: never
 
     steps:
       - uses: actions/checkout@v2
@@ -70,7 +71,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          remotes::install_deps(dependencies = Sys.getenv("DEPS"), type = "binary")
+          remotes::install_deps(dependencies = Sys.getenv("DEPS"))
           # 'Manually' install knitr even when we only want hard deps because
           # R CMD check complains when it sees it in the VignetteBuilder field
           if (identical(Sys.getenv("DEPS"), "hard") && "VignetteBuilder: knitr" %in% readLines("DESCRIPTION")) {
