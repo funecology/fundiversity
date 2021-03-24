@@ -6,3 +6,12 @@ authors:
   Matthias Grenié:
     href: https://rekyt.github.io/
 
+navbar:
+  components:
+    articles:
+      text: Articles
+      menu:
+      - text: Design Principles
+        href: articles/design-principles.html
+      - text: Performance Comparison
+        href: articles/performance.html
