@@ -37,9 +37,10 @@ install.packages("fundiversity", repos = "https://bisaloo.r-universe.dev")
 
 ## Example
 
-`fundiversity` lets you compute four classical functional diversity
-indices: Functional Richness with `fd_fric()`, Functional Divergence
-with `fd_fdiv()`, Rao’s Quadratic Entropy with `fd_raoq()`, Functional
+`fundiversity` lets you compute six functional diversity indices:
+Functional Richness with `fd_fric()`, intersection with between convex
+hulls with `fd_fric_intersect()`, Functional Divergence with
+`fd_fdiv()`, Rao’s Quadratic Entropy with `fd_raoq()`, Functional
 Dispersion with `fd_fdis()` and Functional Evenness with `fd_feve()`.
 You can have a brief overview of the indices in the [introductory
 vignette](https://bisaloo.github.io/fundiversity/articles/fundiversity.html).
@@ -107,7 +108,7 @@ fd_fdiv(traits_birds)
 ## Available functional diversity indices
 
 According to Pavoine & Bonsall (2011) classification, functional
-diversity indices can be classified in three “domains” that asses
+diversity indices can be classified in three “domains” that assess
 different properties of the functional space: richness, divergence, and
 regularity. `fundiversity` provides function to compute indices that
 assess this three facets at the site scale:
