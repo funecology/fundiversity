@@ -275,6 +275,7 @@
 <span class="co">#&gt; 7 elev_3000 0.07590087</span>
 <span class="co">#&gt; 8 elev_3500 0.01605737</span></code></pre></div>
 <p>Each row gives the standardized FRic values of each site.</p>
+<p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
 </div>
 <div id="functional-volume-intersect-fric_intersect---fd_fric_intersect" class="section level1">
 <h1 class="hasAnchor">
