@@ -74,11 +74,11 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
   max_range <- 1
 
   if (stand) {
-    max_range <- fd_chull_memoised(traits)$vol
+    max_range <- fd_chull(traits)$vol
   }
 
   fric_site <- apply(sp_com, 1, function(site_row) {
-    fd_chull_memoised(traits[site_row > 0,, drop = FALSE])$vol
+    fd_chull(traits[site_row > 0,, drop = FALSE])$vol
   })
 
   data.frame(site = rownames(sp_com), FRic = fric_site/max_range,
