@@ -105,6 +105,10 @@ fd_fdiv(traits_birds)
 #> 1   s1 0.7282172
 ```
 
+For more details please refer to the [parallization
+vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html)
+or use `vignette("parallel", package = "fundiversity")` within R.
+
 ## Available functional diversity indices
 
 According to Pavoine & Bonsall (2011) classification, functional
