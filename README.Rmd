@@ -103,6 +103,8 @@ future::plan(future::multisession)
 fd_fdiv(traits_birds)
 ```
 
+For more details please refer to the [parallization vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html) or use `vignette("parallel", package = "fundiversity")` within R.
+
 ## Available functional diversity indices
 
 According to Pavoine & Bonsall (2011) classification, functional diversity indices can be classified in three "domains" that assess different properties of the functional space: richness, divergence, and regularity.
