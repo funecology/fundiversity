@@ -3,6 +3,7 @@
 #' @inheritParams fd_fric
 #'
 #' @inheritSection fd_fric Parallelization
+#' @inherit fd_fric details
 #'
 #' @examples
 #' data(traits_birds)
