@@ -35,7 +35,7 @@ Alternatively, you can install the development version with:
 install.packages("fundiversity", repos = "https://bisaloo.r-universe.dev")
 ```
 
-## Example
+## Examples
 
 `fundiversity` lets you compute six functional diversity indices:
 Functional Richness with `fd_fric()`, intersection with between convex
@@ -91,7 +91,7 @@ fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 #> 1   s1 170.0519
 ```
 
-## Paralellization
+## Parallelization
 
 Thanks to the `future.apply` package, all functions (except `fd_raoq()`)
 within `fundiversity` support parallelization through the `future`
@@ -105,7 +105,7 @@ fd_fdiv(traits_birds)
 #> 1   s1 0.7282172
 ```
 
-For more details please refer to the [parallization
+For more details please refer to the [parallelization
 vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html)
 or use `vignette("parallel", package = "fundiversity")` within R.
 
