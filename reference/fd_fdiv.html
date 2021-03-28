@@ -166,6 +166,15 @@ a <code>data.frame</code>, or a <code><a href='https://rdrr.io/pkg/Matrix/man/Ma
 <li><p><code>FDiv</code> the values of functional divergence at each site.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>By default, when loading <code>fundiversity</code>, the functions to compute
+convex hulls are <a href='https://en.wikipedia.org/wiki/Memoization'>memoised</a>
+through the <code>memoise</code> package if it is installed. To deactivate this behavior
+you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the
+following line: <code><a href='https://rdrr.io/r/base/options.html'>options(fundiversity.memoise = FALSE)</a></code>.
+If you use it interactively it will only affect your current session.
+Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
     <h2 class="hasAnchor" id="parallelization"><a class="anchor" href="#parallelization"></a>Parallelization</h2>
 
     
