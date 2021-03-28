@@ -333,4 +333,18 @@ If you want to use data with missing values you can use dissimilarity metrics th
 Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of `fundiversity` but you can find some details on how to proceed reviewed by @Penone_Imputation_2014.
 
 
+# Functions summary table
+
+|     Function Name     |   Index Name   | Parallizable^1 | Memoizable^2 |
+|:---------------------:|:---------------|:--------------:|:------------:|
+| `fd_fric()`           | FRic           | ✅             |  ✅         |
+| `fd_fric_intersect()` | FRic_intersect | ✅             |  ✅         |
+| `fd_fdiv()`           | FDiv           | ✅             |  ❌         |
+| `fd_feve()`           | FEve           | ✅             |  ❌         |
+| `fd_fdis()`           | FDis           | ✅             |  ❌         |
+| `fd_raoq()`           | Rao's Q        | ❌             |  ❌         |
+
+[1]: parallelization through the `future` backend please refer to the [parallelization vignette](./parallel.html) for details.
+[2]: memoization means that the results of the functions calls are cached and not recomputed when recalled, to toggle it off see the [fundiversity::fd_fric()] [Details section](https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details).
+
 # References
