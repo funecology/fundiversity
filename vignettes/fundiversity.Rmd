@@ -129,7 +129,9 @@ fd_fric(traits_birds, site_sp_birds, stand = TRUE)
 
 Each row gives the standardized FRic values of each site.
 
-The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+**Parallelization**. The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
+**Memoization**. By default, when loading `fundiversity`, the functions to compute convex hulls are [memoised](https://en.wikipedia.org/wiki/Memoization) through the `memoise` package if it is installed. It means that repeated calls to `fd_fric()` with similar arguments won't be recomputed each time but recovered from memory. To deactivate this behavior you can set the option `fundiversity.memoise` to `FALSE` by running the following line: `options(fundiversity.memoise = FALSE)`. If you use it interactively it will only affect your current session. Add it to your script(s) or `.Rprofile` file to avoid toggling it each time.
 
 
 # Functional volume intersect (FRic_intersect) - `fd_fric_intersect()`
@@ -159,7 +161,9 @@ fd_fric_intersect(traits_birds, site_sp_birds[1:2,], stand = TRUE)
 
 Note that when standardizing the volumes, the behavior is similar to that of `fd_fric()` which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.
 
-The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+**Parallelization**. The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
+**Memoization**. By default, when loading `fundiversity`, the functions to compute convex hulls are [memoised](https://en.wikipedia.org/wiki/Memoization) through the `memoise` package if it is installed. It means that repeated calls to `fd_fric()` with similar arguments won't be recomputed each time but recovered from memory. To deactivate this behavior you can set the option `fundiversity.memoise` to `FALSE` by running the following line: `options(fundiversity.memoise = FALSE)`. If you use it interactively it will only affect your current session. Add it to your script(s) or `.Rprofile` file to avoid toggling it each time.
 
 
 # Functional Divergence (FDiv) - `fd_fdiv()`
