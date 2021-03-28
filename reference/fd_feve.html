@@ -103,6 +103,9 @@
     <li>
       <a href="../articles/performance.html">Performance Comparison</a>
     </li>
+    <li>
+      <a href="../articles/parallel.html">Parallelization</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -171,6 +174,14 @@ row names,</p></li>
 <li><p><code>FEve</code> numeric column that contains FEve values corresponding to each site.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="parallelization"><a class="anchor" href="#parallelization"></a>Parallelization</h2>
+
+    
+
+<p>The computation of this function can be parallelized thanks to
+<code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code>. To get more information on how to parallelize your
+computation please refer to the parallelization vignette with:
+<code><a href='../articles/parallel.html'>vignette("parallel", package = "fundiversity")</a></code></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Villéger, S., Mason, N.W.H., Mouillot, D., 2008. New Multidimensional
