@@ -1,0 +1,122 @@
+---
+title: "Parallelization"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Parallelization}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r vignette-setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+tictoc::tic()
+```
+
+```{r setup}
+library("fundiversity")
+
+data("traits_birds", package = "fundiversity")
+data("site_sp_birds", package = "fundiversity")
+```
+
+Within `fundiversity` the computation of most indices can be parallelized using the `future` package. The indices that currently support parallelization are: **FRic**, **FDis**, **FDiv**, and **FEve**. The goal of this vignette is to explain how to toggle and use parallelization in `fundiversity`.
+
+The `future` package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The [first vignette of `future`](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html) gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. `fundiversity` can thus run on all these different backends following the user's choice.
+
+
+# Running code in parallel
+
+By default the `fundiversity` code will run sequentially on a single core. To trigger parallelization the user needs to define a `future::plan()` object with a parallel backend such as `future::multisession` to split the execution across multiple R sessions.
+
+```{r future-plan}
+# Sequential execution
+fric1 <- fd_fric(traits_birds)
+
+# Parallel execution
+future::plan(future::multisession)  # Plan definition
+fric2 <- fd_fric(traits_birds)  # The code resolve in similar fashion
+
+identical(fric1, fric2)
+```
+
+Within the `future::multisession` backend you can specify the number of cores on which the function should be parallelized over through the argument `workers`, you can change it in the `future::plan()` call:
+
+```{r future-plan-workers, options}
+future::plan(future::multisession, workers = 2)  # Only 2 cores are used
+fric3 <- fd_fric(traits_birds)
+
+identitical(fric3, fric2)
+```
+
+To learn more about the different backends available and the related arguments needed, please refer to the documentation of `future::plan()` and the [overview vignette](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html).
+
+
+# Performance comparison
+
+We can now compare the difference in performance to see the performance gain thanks to parallelization:
+
+```{r perf-comp}
+future::plan(future::sequential)
+non_parallel_bench <- microbenchmark::microbenchmark(
+  non_parallel = {
+    fd_fric(traits_birds)
+  },
+  times = 3
+)
+
+future::plan(future::multisession)
+parallel_bench <- microbenchmark::microbenchmark(
+  parallel = {
+    fd_fric(traits_birds)
+  },
+  times = 3
+)
+
+rbind(non_parallel_bench, parallel_bench)
+```
+
+The non parallelized code runs faster than the parallelized one! Indeed, the parallelization in `fundiversity` parallelize the computation across different sites. So parallelization should be used when you have many sites on which you want to compute similar indices.
+
+```{r make-more-sp}
+# Function to make a bigger site-sp dataset
+make_more_sites <- function(n) {
+  site_sp <- do.call(rbind, replicate(n, site_sp_birds, simplify = FALSE))
+  rownames(site_sp) <- paste0("s", seq_len(nrow(site_sp)))
+
+  site_sp
+}
+```
+
+For example with a dataset 5000 times bigger:
+
+```{r bench-5000-times}
+bigger_site <- make_more_sites(5000)
+
+microbenchmark::microbenchmark(
+  seq = { 
+    future::plan(future::sequential) 
+    fd_fric(traits_birds, bigger_site) 
+  },
+  multisession = { 
+    future::plan(future::multisession, workers = 4)
+    fd_fric(traits_birds, bigger_site) 
+  },
+  multicore = { 
+    future::plan(future::multicore, workers = 4) 
+    fd_fric(traits_birds, bigger_site) 
+  }, times = 5
+)
+```
+
+<details>
+<summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
+
+```{r sessioninfo, echo = FALSE}
+tictoc::toc(func.toc = function(x, y, msg) tictoc::toc.outmsg(x, y, paste0(msg, " seconds needed to generate this document")))
+sessioninfo::session_info()
+```
+
+</details>

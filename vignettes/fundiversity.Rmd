@@ -129,6 +129,8 @@ fd_fric(traits_birds, site_sp_birds, stand = TRUE)
 
 Each row gives the standardized FRic values of each site.
 
+**Parallelization**. The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
 **Memoization**. By default, when loading `fundiversity`, the functions to compute convex hulls are [memoised](https://en.wikipedia.org/wiki/Memoization) through the `memoise` package if it is installed. It means that repeated calls to `fd_fric()` with similar arguments won't be recomputed each time but recovered from memory. To deactivate this behavior you can set the option `fundiversity.memoise` to `FALSE` by running the following line: `options(fundiversity.memoise = FALSE)`. If you use it interactively it will only affect your current session. Add it to your script(s) or `.Rprofile` file to avoid toggling it each time.
 
 
@@ -159,6 +161,8 @@ fd_fric_intersect(traits_birds, site_sp_birds[1:2,], stand = TRUE)
 
 Note that when standardizing the volumes, the behavior is similar to that of `fd_fric()` which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.
 
+**Parallelization**. The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
 **Memoization**. By default, when loading `fundiversity`, the functions to compute convex hulls are [memoised](https://en.wikipedia.org/wiki/Memoization) through the `memoise` package if it is installed. It means that repeated calls to `fd_fric()` with similar arguments won't be recomputed each time but recovered from memory. To deactivate this behavior you can set the option `fundiversity.memoise` to `FALSE` by running the following line: `options(fundiversity.memoise = FALSE)`. If you use it interactively it will only affect your current session. Add it to your script(s) or `.Rprofile` file to avoid toggling it each time.
 
 
@@ -184,6 +188,8 @@ fd_fdiv(traits_birds, site_sp_birds)
 
 Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_fdiv()` will take the common subset of species.
 
+The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
 # Functional Evenness (FEve) - `fd_feve()`
 
 Functional Evenness (FEve) describes the regularity of the distribution of species (and their abundances) in trait space [@Villeger_New_2008]. FEve is bounded between 0 and 1. FEve is close to 0 when most species (and abundances) are tightly packed in a portion of the trait space while it is close to 1 if species are regularly spread (with even abundances) along the trait space.
@@ -206,6 +212,8 @@ fd_feve(traits_birds, site_sp_birds)
 
 Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, `fd_feve()` will take the common subset of species.
 
+The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
 
 # Functional Dispersion (FDis) - `fd_fdis()`
 
@@ -223,6 +231,9 @@ You can also provide a site-species matrix to compute FDis at different sites:
 ```{r fdis-sites}
 fd_fdis(traits_birds, site_sp_birds)
 ```
+
+The computation of this function can be parallized thanks to the `future` package. Refer to the [parallelization vignette](./parallel.html) to get more information about how to do so.
+
 
 # Rao's Quadratic Entropy (Q) - `fd_raoq()`
 
@@ -321,5 +332,19 @@ If you want to use data with missing values you can use dissimilarity metrics th
 
 Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of `fundiversity` but you can find some details on how to proceed reviewed by @Penone_Imputation_2014.
 
+
+# Functions summary table
+
+|     Function Name     |   Index Name   | Parallizable^1 | Memoizable^2 |
+|:---------------------:|:---------------|:--------------:|:------------:|
+| `fd_fric()`           | FRic           | ✅             |  ✅         |
+| `fd_fric_intersect()` | FRic_intersect | ✅             |  ✅         |
+| `fd_fdiv()`           | FDiv           | ✅             |  ❌         |
+| `fd_feve()`           | FEve           | ✅             |  ❌         |
+| `fd_fdis()`           | FDis           | ✅             |  ❌         |
+| `fd_raoq()`           | Rao's Q        | ❌             |  ❌         |
+
+[1]: parallelization through the `future` backend please refer to the [parallelization vignette](./parallel.html) for details.
+[2]: memoization means that the results of the functions calls are cached and not recomputed when recalled, to toggle it off see the [fundiversity::fd_fric()] [Details section](https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details).
 
 # References

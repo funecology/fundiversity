@@ -2,6 +2,8 @@
 #'
 #' @inheritParams fd_fdiv
 #'
+#' @inheritSection fd_fric Parallelization
+#'
 #' @examples
 #' data(traits_birds)
 #' data(site_sp_birds)
@@ -16,6 +18,7 @@
 #' measuring functional diversity from multiple traits. Ecology, 91(1),
 #' 299–305. \doi{10.1890/08-2244.1}
 #'
+#' @importFrom future.apply future_apply
 #' @export
 fd_fdis <- function(traits, sp_com) {
 
@@ -48,7 +51,7 @@ fd_fdis <- function(traits, sp_com) {
 
   centros <- sp_com %*% traits
 
-  dists_centro <- apply(centros, 1, function(centro) {
+  dists_centro <- future_apply(centros, 1, function(centro) {
 
     sqrt(colSums(t(traits) - centro)^2)
 

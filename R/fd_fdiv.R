@@ -2,6 +2,8 @@
 #'
 #' @inheritParams fd_fric
 #'
+#' @inheritSection fd_fric Parallelization
+#'
 #' @examples
 #' data(traits_birds)
 #' fd_fdiv(traits_birds)
@@ -15,6 +17,7 @@
 #' functional diversity indices for a multifaceted framework in functional
 #' ecology, Ecology 89(8), \doi{10.1890/07-1206.1}
 #'
+#' @importFrom future.apply future_apply
 #' @export
 fd_fdiv <- function(traits, sp_com) {
 
@@ -46,7 +49,7 @@ fd_fdiv <- function(traits, sp_com) {
   sp_com <- sp_com / rowSums(sp_com)
 
   # Compute Functional Divergence
-  fdiv_site <- apply(sp_com, 1, function(sp_site) {
+  fdiv_site <- future_apply(sp_com, 1, function(sp_site) {
 
     # Select only species that are in site
     sub_site <- sp_site[sp_site > 0]

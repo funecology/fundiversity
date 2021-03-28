@@ -8,6 +8,7 @@
 #'
 #' @inheritParams fd_fric
 #'
+#' @inheritSection fd_fric Parallelization
 #' @inherit fd_fric details
 #'
 #' @return a data.frame with three columns:
@@ -19,6 +20,7 @@
 #' @seealso [fd_fric()], [geometry::intersectn()], [geometry::convhulln()]
 #'
 #' @importFrom utils combn
+#' @importFrom future.apply future_apply
 #'
 #' @examples
 #' data(traits_birds)
@@ -77,7 +79,7 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
   all_site_comb <- rbind(all_site_comb, self_intersection)
 
 
-  fric_intersect <- apply(all_site_comb, 1, function(site_comb) {
+  fric_intersect <- future_apply(all_site_comb, 1, function(site_comb) {
 
     first_row     <- sp_com[site_comb[[1]],, drop = TRUE]
     first_traits  <- traits[first_row > 0,,  drop = FALSE]

@@ -15,3 +15,5 @@ navbar:
         href: articles/design-principles.html
       - text: Performance Comparison
         href: articles/performance.html
+      - text: Parallelization
+        href: articles/parallel.html

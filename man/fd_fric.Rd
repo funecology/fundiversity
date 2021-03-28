@@ -42,6 +42,14 @@ following line: \code{options(fundiversity.memoise = FALSE)}.
 If you use it interactively it will only affect your current session.
 Add it to your script(s) or \code{.Rprofile} file to avoid toggling it each time.
 }
+\section{Parallelization}{
+
+The computation of this function can be parallelized thanks to
+\code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
+computation please refer to the parallelization vignette with:
+\code{vignette("parallel", package = "fundiversity")}
+}
+
 \examples{
 data(traits_birds)
 fd_fric(traits_birds)
