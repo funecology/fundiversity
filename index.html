@@ -153,6 +153,58 @@
 <span class="co">#&gt;   site        Q</span>
 <span class="co">#&gt; 1   s1 170.0519</span></code></pre></div>
 </div>
+<div id="function-summary" class="section level2">
+<h2 class="hasAnchor">
+<a href="#function-summary" class="anchor"></a>Function Summary</h2>
+<table class="table">
+<thead><tr class="header">
+<th align="left">Function Name</th>
+<th align="left">Index Name</th>
+<th align="center">Parallelizable<br><span class="math display">1</span><br>
+</th>
+<th align="center">Memoizable<br><span class="math display">2</span><br>
+</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code><a href="reference/fd_fric.html">fd_fric()</a></code></td>
+<td align="left">FRic</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+</tr>
+<tr class="even">
+<td align="left"><code><a href="reference/fd_fric_intersect.html">fd_fric_intersect()</a></code></td>
+<td align="left">FRic_intersect</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+</tr>
+<tr class="odd">
+<td align="left"><code><a href="reference/fd_fdiv.html">fd_fdiv()</a></code></td>
+<td align="left">FDiv</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+</tr>
+<tr class="even">
+<td align="left"><code><a href="reference/fd_feve.html">fd_feve()</a></code></td>
+<td align="left">FEve</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+</tr>
+<tr class="odd">
+<td align="left"><code><a href="reference/fd_fdis.html">fd_fdis()</a></code></td>
+<td align="left">FDis</td>
+<td align="center">✅</td>
+<td align="center">❌</td>
+</tr>
+<tr class="even">
+<td align="left"><code><a href="reference/fd_raoq.html">fd_raoq()</a></code></td>
+<td align="left">Rao’s Q</td>
+<td align="center">❌</td>
+<td align="center">❌</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div id="parallelization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parallelization" class="anchor"></a>Parallelization</h2>
@@ -299,6 +351,10 @@
 </tr>
 </tbody>
 </table>
+<ol>
+<li><p>parallelization through the <code>future</code> backend please refer to the <a href="https://bisaloo.github.io/fundiversity/articles/parallel.html">parallelization vignette</a> for details.</p></li>
+<li><p>memoization means that the results of the functions calls are cached and not recomputed when recalled, to toggle it off see the <code><a href="reference/fd_fric.html">fundiversity::fd_fric()</a></code> <a href="https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details">Details section</a>.</p></li>
+</ol>
 </div>
 </div>
   </div>
