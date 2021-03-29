@@ -110,9 +110,9 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"fundiversity"</span>, repos <span class="op">=</span> <span class="st">"https://bisaloo.r-universe.dev"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="example" class="section level2">
+<div id="examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<a href="#examples" class="anchor"></a>Examples</h2>
 <p><code>fundiversity</code> lets you compute six functional diversity indices: Functional Richness with <code><a href="reference/fd_fric.html">fd_fric()</a></code>, intersection with between convex hulls with <code><a href="reference/fd_fric_intersect.html">fd_fric_intersect()</a></code>, Functional Divergence with <code><a href="reference/fd_fdiv.html">fd_fdiv()</a></code>, Rao’s Quadratic Entropy with <code><a href="reference/fd_raoq.html">fd_raoq()</a></code>, Functional Dispersion with <code><a href="reference/fd_fdis.html">fd_fdis()</a></code> and Functional Evenness with <code><a href="reference/fd_feve.html">fd_feve()</a></code>. You can have a brief overview of the indices in the <a href="https://bisaloo.github.io/fundiversity/articles/fundiversity.html">introductory vignette</a>.</p>
 <p>All indices can be computed either using global trait data or at the site-level:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -153,16 +153,16 @@
 <span class="co">#&gt;   site        Q</span>
 <span class="co">#&gt; 1   s1 170.0519</span></code></pre></div>
 </div>
-<div id="paralellization" class="section level2">
+<div id="parallelization" class="section level2">
 <h2 class="hasAnchor">
-<a href="#paralellization" class="anchor"></a>Paralellization</h2>
+<a href="#parallelization" class="anchor"></a>Parallelization</h2>
 <p>Thanks to the <code>future.apply</code> package, all functions (except <code><a href="reference/fd_raoq.html">fd_raoq()</a></code>) within <code>fundiversity</code> support parallelization through the <code>future</code> backend. To toggle parallelization follow the <a href="https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html"><code>future</code> syntax</a>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/multisession.html">multisession</a></span><span class="op">)</span>
 <span class="fu"><a href="reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site      FDiv</span>
 <span class="co">#&gt; 1   s1 0.7282172</span></code></pre></div>
-<p>For more details please refer to the <a href="https://bisaloo.github.io/fundiversity/articles/parallel.html">parallization vignette</a> or use <code><a href="articles/parallel.html">vignette("parallel", package = "fundiversity")</a></code> within R.</p>
+<p>For more details please refer to the <a href="https://bisaloo.github.io/fundiversity/articles/parallel.html">parallelization vignette</a> or use <code><a href="articles/parallel.html">vignette("parallel", package = "fundiversity")</a></code> within R.</p>
 </div>
 <div id="available-functional-diversity-indices" class="section level2">
 <h2 class="hasAnchor">
