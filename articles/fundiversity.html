@@ -57,13 +57,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/design-principles.html">Design Principles</a>
-    </li>
-    <li>
       <a href="../articles/performance.html">Performance Comparison</a>
     </li>
     <li>
       <a href="../articles/parallel.html">Parallelization</a>
+    </li>
+    <li>
+      <a href="../articles/design-principles.html">Design Principles</a>
     </li>
   </ul>
 </li>
@@ -278,7 +278,7 @@
 <span class="co">#&gt; 7 elev_3000 0.07590087</span>
 <span class="co">#&gt; 8 elev_3500 0.01605737</span></code></pre></div>
 <p>Each row gives the standardized FRic values of each site.</p>
-<p><strong>Parallelization</strong>. The computation of this function can be parallized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
+<p><strong>Parallelization</strong>. The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 <p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
 </div>
 <div id="functional-volume-intersect-fric_intersect---fd_fric_intersect" class="section level1">
@@ -307,7 +307,7 @@
 <span class="co">#&gt; 2   elev_250    elev_250      0.7427173</span>
 <span class="co">#&gt; 3   elev_500    elev_500      0.8036298</span></code></pre></div>
 <p>Note that when standardizing the volumes, the behavior is similar to that of <code><a href="../reference/fd_fric.html">fd_fric()</a></code> which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.</p>
-<p><strong>Parallelization</strong>. The computation of this function can be parallized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
+<p><strong>Parallelization</strong>. The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 <p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
 </div>
 <div id="functional-divergence-fdiv---fd_fdiv" class="section level1">
@@ -339,7 +339,7 @@
 <span class="co">#&gt; 7 elev_3000 0.6627204</span>
 <span class="co">#&gt; 8 elev_3500 0.6422068</span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> will take the common subset of species.</p>
-<p>The computation of this function can be parallized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
+<p>The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 </div>
 <div id="functional-evenness-feve---fd_feve" class="section level1">
 <h1 class="hasAnchor">
@@ -370,7 +370,7 @@
 <span class="co">#&gt; 7 elev_3000 0.3492529</span>
 <span class="co">#&gt; 8 elev_3500 0.4222442</span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_feve.html">fd_feve()</a></code> will take the common subset of species.</p>
-<p>The computation of this function can be parallized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
+<p>The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 <p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> with similar arguments won’t be entirely recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
 </div>
 <div id="functional-dispersion-fdis---fd_fdis" class="section level1">
@@ -395,7 +395,7 @@
 <span class="co">#&gt; 6 elev_2500  88.28895</span>
 <span class="co">#&gt; 7 elev_3000  97.11743</span>
 <span class="co">#&gt; 8 elev_3500  80.70000</span></code></pre></div>
-<p>The computation of this function can be parallized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
+<p>The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 </div>
 <div id="raos-quadratic-entropy-q---fd_raoq" class="section level1">
 <h1 class="hasAnchor">
@@ -524,46 +524,46 @@
 <a href="#functions-summary-table" class="anchor"></a>Functions summary table</h1>
 <table class="table">
 <thead><tr class="header">
-<th align="center">Function Name</th>
+<th align="left">Function Name</th>
 <th align="left">Index Name</th>
-<th align="center">Parallizable<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+<th align="center">Parallelizable<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
 </th>
 <th align="center">Memoizable<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>
 </th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="center"><code><a href="../reference/fd_fric.html">fd_fric()</a></code></td>
+<td align="left"><code><a href="../reference/fd_fric.html">fd_fric()</a></code></td>
 <td align="left">FRic</td>
 <td align="center">✅</td>
 <td align="center">✅</td>
 </tr>
 <tr class="even">
-<td align="center"><code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code></td>
+<td align="left"><code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code></td>
 <td align="left">FRic_intersect</td>
 <td align="center">✅</td>
 <td align="center">✅</td>
 </tr>
 <tr class="odd">
-<td align="center"><code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code></td>
+<td align="left"><code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code></td>
 <td align="left">FDiv</td>
 <td align="center">✅</td>
 <td align="center">✅</td>
 </tr>
 <tr class="even">
-<td align="center"><code><a href="../reference/fd_feve.html">fd_feve()</a></code></td>
+<td align="left"><code><a href="../reference/fd_feve.html">fd_feve()</a></code></td>
 <td align="left">FEve</td>
 <td align="center">✅</td>
 <td align="center">❌</td>
 </tr>
 <tr class="odd">
-<td align="center"><code><a href="../reference/fd_fdis.html">fd_fdis()</a></code></td>
+<td align="left"><code><a href="../reference/fd_fdis.html">fd_fdis()</a></code></td>
 <td align="left">FDis</td>
 <td align="center">✅</td>
 <td align="center">❌</td>
 </tr>
 <tr class="even">
-<td align="center"><code><a href="../reference/fd_raoq.html">fd_raoq()</a></code></td>
+<td align="left"><code><a href="../reference/fd_raoq.html">fd_raoq()</a></code></td>
 <td align="left">Rao’s Q</td>
 <td align="center">❌</td>
 <td align="center">❌</td>
