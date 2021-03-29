@@ -337,7 +337,7 @@ Another solution, would be to impute the missing trait value to fill it. Many im
 
 # Functions summary table
 
-```{r child="_fundiversity_functions.Rmd"}
+```{r child="../man/rmdchunks/_fundiversity_functions.Rmd"}
 ```
 
 # References
