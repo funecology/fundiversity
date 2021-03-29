@@ -37,7 +37,6 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       DEPS: ${{ matrix.config.deps }}
       _R_CHECK_FORCE_SUGGESTS_: false
-      R_COMPILE_AND_INSTALL_PACKAGES: never
 
     steps:
       - uses: actions/checkout@v2
