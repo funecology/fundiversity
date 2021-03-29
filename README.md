@@ -153,6 +153,8 @@ wrappers around these packages):
 | [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure functional diversity (\~FRic)           | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
 | [`BAT`](https://github.com/cardosopmb/BAT)             | β-, Richness, divergence, and evenness with hypervolumes    | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
 
+-----
+
 1.  parallelization through the `future` backend please refer to the
     [parallelization
     vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html)
