@@ -91,6 +91,17 @@ fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 #> 1   s1 170.0519
 ```
 
+## Function Summary
+
+| Function Name         | Index Name      | Parallelizable\[1\] | Memoizable\[2\] |
+| :-------------------- | :-------------- | :-----------------: | :-------------: |
+| `fd_fric()`           | FRic            |          ✅          |        ✅        |
+| `fd_fric_intersect()` | FRic\_intersect |          ✅          |        ✅        |
+| `fd_fdiv()`           | FDiv            |          ✅          |        ✅        |
+| `fd_feve()`           | FEve            |          ✅          |        ❌        |
+| `fd_fdis()`           | FDis            |          ✅          |        ❌        |
+| `fd_raoq()`           | Rao’s Q         |          ❌          |        ❌        |
+
 ## Parallelization
 
 Thanks to the `future.apply` package, all functions (except `fd_raoq()`)
@@ -141,3 +152,13 @@ wrappers around these packages):
 | [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions          | ✅             | ❌         | :x:       | ![](https://www.r-pkg.org/badges/last-release/TPD)         |
 | [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure functional diversity (\~FRic)           | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
 | [`BAT`](https://github.com/cardosopmb/BAT)             | β-, Richness, divergence, and evenness with hypervolumes    | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
+
+1.  parallelization through the `future` backend please refer to the
+    [parallelization
+    vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html)
+    for details.
+
+2.  memoization means that the results of the functions calls are cached
+    and not recomputed when recalled, to toggle it off see the
+    `fundiversity::fd_fric()` [Details
+    section](https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details).
