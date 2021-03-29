@@ -21,9 +21,9 @@ navbar:
     articles:
       text: Articles
       menu:
-      - text: Design Principles
-        href: articles/design-principles.html
       - text: Performance Comparison
         href: articles/performance.html
       - text: Parallelization
         href: articles/parallel.html
+      - text: Design Principles
+        href: articles/design-principles.html

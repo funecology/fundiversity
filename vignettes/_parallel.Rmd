@@ -48,7 +48,7 @@ Within the `future::multisession` backend you can specify the number of cores on
 future::plan(future::multisession, workers = 2)  # Only 2 cores are used
 fric3 <- fd_fric(traits_birds)
 
-identitical(fric3, fric2)
+identical(fric3, fric2)
 ```
 
 To learn more about the different backends available and the related arguments needed, please refer to the documentation of `future::plan()` and the [overview vignette](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html).
