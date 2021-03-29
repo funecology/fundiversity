@@ -7,6 +7,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<!-- 
+# Pre-render with 
+knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
+-->
+
 
 
 
@@ -64,7 +69,7 @@ non_parallel_bench <- microbenchmark::microbenchmark(
   non_parallel = {
     fd_fric(traits_birds)
   },
-  times = 3
+  times = 20
 )
 
 future::plan(future::multisession)
@@ -72,14 +77,14 @@ parallel_bench <- microbenchmark::microbenchmark(
   parallel = {
     fd_fric(traits_birds)
   },
-  times = 3
+  times = 20
 )
 
 rbind(non_parallel_bench, parallel_bench)
 #> Unit: milliseconds
-#>          expr    min      lq     mean median      uq    max neval
-#>  non_parallel 3.1762 3.19645 3.413767 3.2167 3.53255 3.8484     3
-#>      parallel 3.1636 3.21395 3.497667 3.2643 3.66470 4.0651     3
+#>          expr      min        lq       mean    median        uq       max neval
+#>  non_parallel  6.55758  7.346051   9.129399  8.219221  9.987028  20.40285    20
+#>      parallel 23.15623 68.821647 125.393390 80.212432 89.877259 954.14642    20
 ```
 
 The non parallelized code runs faster than the parallelized one! Indeed, the parallelization in `fundiversity` parallelize the computation across different sites. So parallelization should be used when you have many sites on which you want to compute similar indices.
@@ -113,13 +118,13 @@ microbenchmark::microbenchmark(
   multicore = { 
     future::plan(future::multicore, workers = 4) 
     fd_fric(traits_birds, bigger_site) 
-  }, times = 5
+  }, times = 20
 )
 #> Unit: seconds
 #>          expr      min       lq     mean   median       uq      max neval
-#>           seq 150.5665 167.6974 168.2997 173.5401 174.1762 175.5183     5
-#>  multisession 163.9886 170.6480 173.5358 172.7164 177.8478 182.4784     5
-#>     multicore 138.7841 143.5831 163.1669 176.1212 177.9025 179.4439     5
+#>           seq 2.755638 2.853930 2.937962 2.919476 3.006296 3.259218    20
+#>  multisession 7.511999 7.614863 7.836488 7.706448 7.918431 8.737131    20
+#>     multicore 1.299580 1.412478 1.507019 1.464670 1.615233 1.974329    20
 ```
 
 <details>
@@ -127,76 +132,57 @@ microbenchmark::microbenchmark(
 
 
 ```
-#>  seconds needed to generate this document: 2529.57 sec elapsed
-#> - Session info ----------------------------------------------------------------------------------------------
+#>  seconds needed to generate this document: 255.918 sec elapsed
+#> ─ Session info ───────────────────────────────────────────────────────────────
 #>  setting  value                       
-#>  version  R version 4.0.2 (2020-06-22)
-#>  os       Windows 10 x64              
-#>  system   x86_64, mingw32             
-#>  ui       RStudio                     
-#>  language (EN)                        
-#>  collate  French_France.1252          
-#>  ctype    French_France.1252          
-#>  tz       Europe/Berlin               
+#>  version  R version 4.0.4 (2021-02-15)
+#>  os       Ubuntu 20.04.2 LTS          
+#>  system   x86_64, linux-gnu           
+#>  ui       X11                         
+#>  language en_US                       
+#>  collate  en_US.UTF-8                 
+#>  ctype    en_US.UTF-8                 
+#>  tz       Europe/Paris                
 #>  date     2021-03-29                  
 #> 
-#> - Packages --------------------------------------------------------------------------------------------------
-#>  package        * version date       lib source        
-#>  abind            1.4-5   2016-07-21 [1] CRAN (R 4.0.3)
-#>  assertthat       0.2.1   2019-03-21 [1] CRAN (R 4.0.3)
-#>  audio            0.1-7   2020-03-09 [1] CRAN (R 4.0.3)
-#>  beepr            1.3     2018-06-04 [1] CRAN (R 4.0.3)
-#>  cli              2.3.1   2021-02-23 [1] CRAN (R 4.0.2)
-#>  codetools        0.2-18  2020-11-04 [1] CRAN (R 4.0.3)
-#>  colorspace       2.0-0   2020-11-11 [1] CRAN (R 4.0.3)
-#>  crayon           1.4.1   2021-02-08 [1] CRAN (R 4.0.2)
-#>  DBI              1.1.1   2021-01-15 [1] CRAN (R 4.0.3)
-#>  digest           0.6.27  2020-10-24 [1] CRAN (R 4.0.3)
-#>  dplyr            1.0.5   2021-03-05 [1] CRAN (R 4.0.4)
-#>  ellipsis         0.3.1   2020-05-15 [1] CRAN (R 4.0.3)
-#>  evaluate         0.14    2019-05-28 [1] CRAN (R 4.0.3)
-#>  fansi            0.4.2   2021-01-15 [1] CRAN (R 4.0.3)
-#>  fundiversity   * 0.0.1   2021-02-15 [1] CRAN (R 4.0.2)
-#>  future           1.21.0  2020-12-10 [1] CRAN (R 4.0.2)
-#>  generics         0.1.0   2020-10-31 [1] CRAN (R 4.0.3)
-#>  geometry         0.4.5   2019-12-04 [1] CRAN (R 4.0.3)
-#>  ggplot2          3.3.3   2020-12-30 [1] CRAN (R 4.0.3)
-#>  globals          0.14.0  2020-11-22 [1] CRAN (R 4.0.3)
-#>  glue             1.4.2   2020-08-27 [1] CRAN (R 4.0.3)
-#>  gtable           0.3.0   2019-03-25 [1] CRAN (R 4.0.3)
-#>  htmltools        0.5.1.1 2021-01-22 [1] CRAN (R 4.0.3)
-#>  knitr            1.31    2021-01-27 [1] CRAN (R 4.0.3)
-#>  lattice          0.20-41 2020-04-02 [2] CRAN (R 4.0.2)
-#>  lifecycle        1.0.0   2021-02-15 [1] CRAN (R 4.0.4)
-#>  listenv          0.8.0   2019-12-05 [1] CRAN (R 4.0.3)
-#>  magic            1.5-9   2018-09-17 [1] CRAN (R 4.0.3)
-#>  magrittr         2.0.1   2020-11-17 [1] CRAN (R 4.0.3)
-#>  Matrix           1.2-18  2019-11-27 [1] CRAN (R 4.0.3)
-#>  microbenchmark   1.4-7   2019-09-24 [1] CRAN (R 4.0.3)
-#>  munsell          0.5.0   2018-06-12 [1] CRAN (R 4.0.3)
-#>  parallelly       1.24.0  2021-03-14 [1] CRAN (R 4.0.4)
-#>  pillar           1.5.1   2021-03-05 [1] CRAN (R 4.0.4)
-#>  pkgconfig        2.0.3   2019-09-22 [1] CRAN (R 4.0.3)
-#>  purrr            0.3.4   2020-04-17 [1] CRAN (R 4.0.3)
-#>  R6               2.5.0   2020-10-28 [1] CRAN (R 4.0.3)
-#>  Rcpp             1.0.6   2021-01-15 [1] CRAN (R 4.0.3)
-#>  rlang            0.4.10  2020-12-30 [1] CRAN (R 4.0.3)
-#>  rmarkdown        2.7     2021-02-19 [1] CRAN (R 4.0.2)
-#>  scales           1.1.1   2020-05-11 [1] CRAN (R 4.0.3)
-#>  sessioninfo      1.1.1   2018-11-05 [1] CRAN (R 4.0.3)
-#>  stringi          1.5.3   2020-09-09 [1] CRAN (R 4.0.3)
-#>  stringr          1.4.0   2019-02-10 [1] CRAN (R 4.0.3)
-#>  tibble           3.1.0   2021-02-25 [1] CRAN (R 4.0.4)
-#>  tictoc           1.0     2014-06-17 [1] CRAN (R 4.0.3)
-#>  tidyselect       1.1.0   2020-05-11 [1] CRAN (R 4.0.3)
-#>  utf8             1.2.1   2021-03-12 [1] CRAN (R 4.0.4)
-#>  vctrs            0.3.6   2020-12-17 [1] CRAN (R 4.0.3)
-#>  withr            2.4.1   2021-01-26 [1] CRAN (R 4.0.2)
-#>  xfun             0.22    2021-03-11 [1] CRAN (R 4.0.4)
-#>  yaml             2.2.1   2020-02-01 [1] CRAN (R 4.0.3)
+#> ─ Packages ───────────────────────────────────────────────────────────────────
+#>  package        * version     date       lib source                      
+#>  abind            1.4-5       2016-07-21 [1] CRAN (R 4.0.2)              
+#>  assertthat       0.2.1       2019-03-21 [1] CRAN (R 4.0.2)              
+#>  cachem           1.0.4.9000  2021-03-02 [1] local                       
+#>  cli              2.3.1.9000  2021-03-02 [1] local                       
+#>  codetools        0.2-18      2020-11-04 [4] CRAN (R 4.0.3)              
+#>  digest           0.6.27      2020-10-24 [1] CRAN (R 4.0.3)              
+#>  evaluate         0.14.1      2021-02-18 [1] local                       
+#>  fastmap          1.1.0       2021-01-25 [1] CRAN (R 4.0.3)              
+#>  fundiversity   * 0.2.0       2021-03-29 [1] local                       
+#>  future           1.21.0-9000 2021-03-22 [1] local                       
+#>  future.apply     1.7.0-9000  2021-03-22 [1] local                       
+#>  geometry         0.4.5       2019-12-04 [1] CRAN (R 4.0.2)              
+#>  globals          0.14.0-9000 2021-03-22 [1] local                       
+#>  glue             1.4.2       2020-08-27 [1] CRAN (R 4.0.2)              
+#>  knitr            1.31.6      2021-03-20 [1] Github (yihui/knitr@3237add)
+#>  lattice          0.20-41     2020-04-02 [4] CRAN (R 4.0.0)              
+#>  listenv          0.8.0-9000  2021-03-22 [1] local                       
+#>  magic            1.5-9       2018-09-17 [1] CRAN (R 4.0.2)              
+#>  magrittr         2.0.1.9000  2021-02-18 [1] local                       
+#>  Matrix           1.3-2       2021-01-06 [4] CRAN (R 4.0.3)              
+#>  memoise          2.0.0.9000  2021-02-18 [1] local                       
+#>  microbenchmark   1.4-7       2019-09-24 [1] CRAN (R 4.0.2)              
+#>  parallelly       1.24.0-9000 2021-03-22 [1] local                       
+#>  Rcpp             1.0.6       2021-01-15 [1] CRAN (R 4.0.3)              
+#>  rlang            0.4.10.9000 2021-02-18 [1] local                       
+#>  sessioninfo      1.1.1.9000  2021-02-18 [1] local                       
+#>  stringi          1.5.3       2020-09-09 [1] CRAN (R 4.0.2)              
+#>  stringr          1.4.0.9000  2021-02-18 [1] local                       
+#>  tictoc           1.0         2014-06-17 [1] CRAN (R 4.0.3)              
+#>  withr            2.4.1.9000  2021-02-18 [1] local                       
+#>  xfun             0.22        2021-03-11 [1] CRAN (R 4.0.4)              
 #> 
-#> [1] C:/Users/ke76dimu/R/win-library/4.0
-#> [2] C:/Program Files/R/R-4.0.2/library
+#> [1] /home/hugo/.local/share/R/x86_64-pc-linux-gnu-library/4.0
+#> [2] /usr/local/lib/R/site-library
+#> [3] /usr/lib/R/site-library
+#> [4] /usr/lib/R/library
 ```
 
 </details>
