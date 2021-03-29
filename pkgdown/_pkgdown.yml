@@ -6,6 +6,16 @@ authors:
   Matthias Grenié:
     href: https://rekyt.github.io/
 
+reference:
+  - title: Functional Diversity Computation
+    contents:
+    - starts_with("fd_")
+  - title: Data
+    desc: Datasets used in examples and tests
+    contents:
+    - starts_with("traits_")
+    - starts_with("site_sp_")
+
 navbar:
   components:
     articles:
