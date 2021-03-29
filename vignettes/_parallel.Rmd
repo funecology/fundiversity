@@ -7,6 +7,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<!-- 
+# Pre-render with 
+knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
+-->
+
 ```{r vignette-setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
