@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fundiversity</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -135,10 +135,21 @@
       <small>Source: <a href='https://github.com/Bisaloo/fundiversity/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="fundiversity-002" class="section level1">
-<h1 class="page-header" data-toc-text="0.0.2">
-<a href="#fundiversity-002" class="anchor"></a>fundiversity 0.0.2<small> Unreleased </small>
+    <div id="fundiversity-020" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0">
+<a href="#fundiversity-020" class="anchor"></a>fundiversity 0.2.0<small> Unreleased </small>
 </h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h2>
+<ul>
+<li>There is a new function <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> to compute the intersection of convex hulls across pairs of sites.</li>
+<li>There is a new function <code>fd_fdis</code> to compute Functional Dispersion FDis.</li>
+<li>
+<code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code>, <code><a href="../reference/fd_feve.html">fd_feve()</a></code>, <code><a href="../reference/fd_fdis.html">fd_fdis()</a></code>, <code><a href="../reference/fd_fric.html">fd_fric()</a></code> can now be computed in parallel with the <a href="https://cran.r-project.org/package=future">future</a> framework. Please refer to the <a href="https://bisaloo.github.io/fundiversity/articles/parallel.html">parallelization vignette for more information</a>.</li>
+<li>The convex hull computation in <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code>, <code><a href="../reference/fd_fric.html">fd_fric()</a></code>, and <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> is now cached thanks to the <a href="https://memoise.r-lib.org/">memoise</a> package to speed up repeated runs. This behaviour can be disabled by running <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code> at the start of your R session.</li>
+</ul>
+</div>
 </div>
     <div id="fundiversity-001" class="section level1">
 <h1 class="page-header" data-toc-text="0.0.1">

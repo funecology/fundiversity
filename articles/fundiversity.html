@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fundiversity</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -517,7 +517,7 @@
 <a href="#missing-values-in-traits" class="anchor"></a>Missing values in traits?</h1>
 <p>Sometimes, some of the trait values can be missing for some species in your dataset. Because <code>fundiversity</code> does not want to make assumptions without telling you, by default it <strong>drops</strong> the species data for which the trait is missing.</p>
 <p>If you want to use data with missing values you can use dissimilarity metrics that accept missing trait values such as some of the methods specified in <code><a href="https://rdrr.io/pkg/vegan/man/vegdist.html">vegan::vegdist()</a></code>.</p>
-<p>Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of <code>fundiversity</code> but you can find some details on how to proceed reviewed by <span class="citation">Penone et al. (2014)</span>.</p>
+<p>Another solution, would be to impute the missing trait value to fill it. Many imputation methods exists and trait imputation is out of the scope of <code>fundiversity</code> but you can find some details on how to proceed in the review by <span class="citation">Penone et al. (2014)</span>.</p>
 </div>
 <div id="functions-summary-table" class="section level1">
 <h1 class="hasAnchor">
@@ -526,8 +526,10 @@
 <thead><tr class="header">
 <th align="center">Function Name</th>
 <th align="left">Index Name</th>
-<th align="center">Parallizable^1</th>
-<th align="center">Memoizable^2</th>
+<th align="center">Parallizable<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>
+</th>
+<th align="center">Memoizable<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>
+</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -568,7 +570,6 @@
 </tr>
 </tbody>
 </table>
-<p>[1]: parallelization through the <code>future</code> backend please refer to the <a href="./parallel.html">parallelization vignette</a> for details. [2]: memoization means that the results of the functions calls are cached and not recomputed when recalled, to toggle it off see the [fundiversity::fd_fric()] <a href="https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details">Details section</a>.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1 class="hasAnchor">
@@ -605,6 +606,13 @@
 <p>Villéger, Sébastien, Norman W. H. Mason, and David Mouillot. 2008. “New Multidimensional Functional Diversity Indices for a Multifaceted Framework in Functional Ecology.” <em>Ecology</em> 89 (8): 2290–2301. <a href="https://doi.org/10.1890/07-1206.1">https://doi.org/10.1890/07-1206.1</a>.</p>
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>parallelization through the <code>future</code> backend please refer to the <a href="./parallel.html">parallelization vignette</a> for details.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn2"><p>memoization means that the results of the functions calls are cached and not recomputed when recalled, to toggle it off see the <code><a href="../reference/fd_fric.html">fundiversity::fd_fric()</a></code> <a href="https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details">Details section</a>.<a href="#fnref2" class="footnote-back">↩︎</a></p></li>
+</ol>
 </div>
   </div>
 
