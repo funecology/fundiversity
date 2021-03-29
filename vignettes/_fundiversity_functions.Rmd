@@ -1,0 +1,11 @@
+|     Function Name     |   Index Name   | Parallelizable[^1] | Memoizable[^2] |
+|:----------------------|:---------------|:------------------:|:--------------:|
+| `fd_fric()`           | FRic           | ✅                 |  ✅            |
+| `fd_fric_intersect()` | FRic_intersect | ✅                 |  ✅            |
+| `fd_fdiv()`           | FDiv           | ✅                 |  ✅            |
+| `fd_feve()`           | FEve           | ✅                 |  ❌            |
+| `fd_fdis()`           | FDis           | ✅                 |  ❌            |
+| `fd_raoq()`           | Rao's Q        | ❌                 |  ❌            |
+
+[^1]: parallelization through the `future` backend please refer to the [parallelization vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html) for details.
+[^2]: memoization means that the results of the functions calls are cached and not recomputed when recalled, to toggle it off see the `fundiversity::fd_fric()` [Details section](https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details).

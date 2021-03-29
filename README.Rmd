@@ -94,6 +94,11 @@ dist_traits_birds = as.matrix(dist(traits_birds))
 fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 ```
 
+## Function Summary
+
+```{r child="vignettes/_fundiversity_functions.Rmd"}
+```
+
 ## Parallelization
 
 Thanks to the `future.apply` package, all functions (except `fd_raoq()`) within `fundiversity` support parallelization through the `future` backend. To toggle parallelization follow the [`future` syntax](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html):
