@@ -24,7 +24,7 @@ data("site_sp_birds", package = "fundiversity")
 
 Within `fundiversity` the computation of most indices can be parallelized using the `future` package. The indices that currently support parallelization are: **FRic**, **FDis**, **FDiv**, and **FEve**. The goal of this vignette is to explain how to toggle and use parallelization in `fundiversity`.
 
-The `future` package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The [first vignette of `future`](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html) gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. `fundiversity` can thus run on all these different backends following the user's choice.
+The `future` package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The [first vignette of `future`](https://cran.r-project.org/package=future) gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. `fundiversity` can thus run on all these different backends following the user's choice.
 
 
 # Running code in parallel
@@ -82,9 +82,9 @@ parallel_bench <- microbenchmark::microbenchmark(
 
 rbind(non_parallel_bench, parallel_bench)
 #> Unit: microseconds
-#>          expr     min       lq     mean   median       uq      max neval
-#>  non_parallel 502.019 544.2185 690.7872 604.1480 844.9915 1041.427    20
-#>      parallel 505.006 516.6440 595.1198 531.4905 611.9925 1075.549    20
+#>          expr     min       lq     mean   median       uq     max neval
+#>  non_parallel 514.915 539.2130 623.7170 563.7615 633.5185 975.669    20
+#>      parallel 472.501 476.6675 504.0272 482.8980 493.9275 817.955    20
 ```
 
 The non parallelized code runs faster than the parallelized one! Indeed, the parallelization in `fundiversity` parallelize the computation across different sites. So parallelization should be used when you have many sites on which you want to compute similar indices.
@@ -122,9 +122,9 @@ microbenchmark::microbenchmark(
 )
 #> Unit: seconds
 #>          expr      min       lq     mean   median       uq      max neval
-#>           seq 5.045201 5.148824 5.481975 5.384242 5.641814 6.734760    20
-#>  multisession 6.317335 6.484210 6.851881 6.912190 7.026779 7.863897    20
-#>     multicore 4.968669 5.091542 5.384559 5.363500 5.545535 6.302802    20
+#>           seq 4.954230 5.070038 5.142720 5.173176 5.198141 5.311713    20
+#>  multisession 6.300440 6.487385 6.549981 6.563890 6.607202 6.739610    20
+#>     multicore 4.880869 5.025615 5.111846 5.101368 5.202465 5.489126    20
 ```
 
 <details>
@@ -132,7 +132,7 @@ microbenchmark::microbenchmark(
 
 
 ```
-#>  seconds needed to generate this document: 362.731 sec elapsed
+#>  seconds needed to generate this document: 343.203 sec elapsed
 #> ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────────────────────
 #>  setting  value                       
 #>  version  R version 4.0.3 (2020-10-10)
