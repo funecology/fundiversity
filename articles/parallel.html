@@ -111,7 +111,7 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></code></pre></div>
 <p>Within <code>fundiversity</code> the computation of most indices can be parallelized using the <code>future</code> package. The indices that currently support parallelization are: <strong>FRic</strong>, <strong>FDis</strong>, <strong>FDiv</strong>, and <strong>FEve</strong>. The goal of this vignette is to explain how to toggle and use parallelization in <code>fundiversity</code>.</p>
-<p>The <code>future</code> package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The <a href="https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html">first vignette of <code>future</code></a> gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. <code>fundiversity</code> can thus run on all these different backends following the user’s choice.</p>
+<p>The <code>future</code> package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The <a href="https://cran.r-project.org/package=future">first vignette of <code>future</code></a> gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. <code>fundiversity</code> can thus run on all these different backends following the user’s choice.</p>
 <div id="running-code-in-parallel" class="section level1">
 <h1 class="hasAnchor">
 <a href="#running-code-in-parallel" class="anchor"></a>Running code in parallel</h1>
@@ -158,9 +158,9 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 
 <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">non_parallel_bench</span>, <span class="va">parallel_bench</span><span class="op">)</span>
 <span class="co">#&gt; Unit: microseconds</span>
-<span class="co">#&gt;          expr     min       lq     mean   median       uq      max neval</span>
-<span class="co">#&gt;  non_parallel 502.019 544.2185 690.7872 604.1480 844.9915 1041.427    20</span>
-<span class="co">#&gt;      parallel 505.006 516.6440 595.1198 531.4905 611.9925 1075.549    20</span></code></pre></div>
+<span class="co">#&gt;          expr     min       lq     mean   median       uq     max neval</span>
+<span class="co">#&gt;  non_parallel 514.915 539.2130 623.7170 563.7615 633.5185 975.669    20</span>
+<span class="co">#&gt;      parallel 472.501 476.6675 504.0272 482.8980 493.9275 817.955    20</span></code></pre></div>
 <p>The non parallelized code runs faster than the parallelized one! Indeed, the parallelization in <code>fundiversity</code> parallelize the computation across different sites. So parallelization should be used when you have many sites on which you want to compute similar indices.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Function to make a bigger site-sp dataset</span>
@@ -190,11 +190,11 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 <span class="op">)</span>
 <span class="co">#&gt; Unit: seconds</span>
 <span class="co">#&gt;          expr      min       lq     mean   median       uq      max neval</span>
-<span class="co">#&gt;           seq 5.045201 5.148824 5.481975 5.384242 5.641814 6.734760    20</span>
-<span class="co">#&gt;  multisession 6.317335 6.484210 6.851881 6.912190 7.026779 7.863897    20</span>
-<span class="co">#&gt;     multicore 4.968669 5.091542 5.384559 5.363500 5.545535 6.302802    20</span></code></pre></div>
+<span class="co">#&gt;           seq 4.954230 5.070038 5.142720 5.173176 5.198141 5.311713    20</span>
+<span class="co">#&gt;  multisession 6.300440 6.487385 6.549981 6.563890 6.607202 6.739610    20</span>
+<span class="co">#&gt;     multicore 4.880869 5.025615 5.111846 5.101368 5.202465 5.489126    20</span></code></pre></div>
 <details><p><summary>Session info of the machine on which the benchmark was ran and time it took to run</summary></p>
-<pre><code>#&gt;  seconds needed to generate this document: 362.731 sec elapsed
+<pre><code>#&gt;  seconds needed to generate this document: 343.203 sec elapsed
 #&gt; ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────────────────────
 #&gt;  setting  value                       
 #&gt;  version  R version 4.0.3 (2020-10-10)
