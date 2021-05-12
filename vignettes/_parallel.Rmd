@@ -56,7 +56,7 @@ fric3 <- fd_fric(traits_birds)
 identical(fric3, fric2)
 ```
 
-To learn more about the different backends available and the related arguments needed, please refer to the documentation of `future::plan()` and the [overview vignette](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html).
+To learn more about the different backends available and the related arguments needed, please refer to the documentation of `future::plan()` and the [overview vignette of `future`](https://cran.r-project.org/package=future).
 
 
 # Performance comparison
