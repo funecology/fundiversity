@@ -107,7 +107,7 @@ fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 Thanks to the `future.apply` package, all functions (except `fd_raoq()`)
 within `fundiversity` support parallelization through the `future`
 backend. To toggle parallelization follow the [`future`
-syntax](https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html):
+syntax](https://cran.r-project.org/package=future):
 
 ``` r
 future::plan(future::multisession)
