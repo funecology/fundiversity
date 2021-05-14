@@ -1,3 +1,7 @@
+## General Comments
+
+Fixed CRAN link in README.md 
+
 ## Test environments
 
 * Mac OS High Sierra 10.13.6 (local), R 4.0.3
