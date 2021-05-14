@@ -208,7 +208,7 @@
 <div id="parallelization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#parallelization" class="anchor"></a>Parallelization</h2>
-<p>Thanks to the <code>future.apply</code> package, all functions (except <code><a href="reference/fd_raoq.html">fd_raoq()</a></code>) within <code>fundiversity</code> support parallelization through the <code>future</code> backend. To toggle parallelization follow the <a href="https://cran.r-project.org/web/packages/future/vignettes/future-1-overview.html"><code>future</code> syntax</a>:</p>
+<p>Thanks to the <code>future.apply</code> package, all functions (except <code><a href="reference/fd_raoq.html">fd_raoq()</a></code>) within <code>fundiversity</code> support parallelization through the <code>future</code> backend. To toggle parallelization follow the <a href="https://cran.r-project.org/package=future"><code>future</code> syntax</a>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/multisession.html">multisession</a></span><span class="op">)</span>
 <span class="fu"><a href="reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
