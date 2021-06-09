@@ -95,14 +95,14 @@ fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 
 ## Function Summary
 
-| Function Name         | Index Name      | Parallelizable[1] | Memoizable[2] |
-|:----------------------|:----------------|:-----------------:|:-------------:|
-| `fd_fric()`           | FRic            |         ✅         |       ✅       |
-| `fd_fric_intersect()` | FRic\_intersect |         ✅         |       ✅       |
-| `fd_fdiv()`           | FDiv            |         ✅         |       ✅       |
-| `fd_feve()`           | FEve            |         ✅         |       ❌       |
-| `fd_fdis()`           | FDis            |         ✅         |       ❌       |
-| `fd_raoq()`           | Rao’s Q         |         ❌         |       ❌       |
+| Function Name         | Index Name      | Parallelizable\[1\] | Memoizable\[2\] |
+| :-------------------- | :-------------- | :-----------------: | :-------------: |
+| `fd_fric()`           | FRic            |          ✅          |        ✅        |
+| `fd_fric_intersect()` | FRic\_intersect |          ✅          |        ✅        |
+| `fd_fdiv()`           | FDiv            |          ✅          |        ✅        |
+| `fd_feve()`           | FEve            |          ✅          |        ❌        |
+| `fd_fdis()`           | FDis            |          ✅          |        ❌        |
+| `fd_raoq()`           | Rao’s Q         |          ❌          |        ❌        |
 
 ## Parallelization
 
@@ -131,7 +131,7 @@ regularity. `fundiversity` provides function to compute indices that
 assess this three facets at the site scale:
 
 | Scale                              | Richness                                                                                                                                                                   | Divergence                                                                                                                                                                                                                                                                         | Evenness                                                                               |
-|------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | α-diversity<br />(= among sites)   | FRic with [`fd_fric()`](https://bisaloo.github.io/fundiversity/reference/fd_fric.html)                                                                                     | FDiv with [`fd_fdiv()`](https://bisaloo.github.io/fundiversity/reference/fd_fdiv.html)<br />Rao’s QE with [`fd_raoq()`](https://bisaloo.github.io/fundiversity/reference/fd_raoq.html)<br />FDis with [`fd_fdis()`](https://bisaloo.github.io/fundiversity/reference/fd_fdis.html) | FEve with [`fd_feve()`](https://bisaloo.github.io/fundiversity/reference/fd_feve.html) |
 | β-diversity<br />(= between sites) | FRic pairwise intersection with [`fd_fric_intersect()`](https://bisaloo.github.io/fundiversity/reference/fd_fric_intersect.html)<br />alternatives available in `betapart` | available in `entropart`, `betapart` or `hillR`                                                                                                                                                                                                                                    | available in `BAT`                                                                     |
 
@@ -144,7 +144,7 @@ between packages. We here mention some of them (but do not mention the
 wrappers around these packages):
 
 | Package Name                                           | Indices included                                            | Has vignettes | Has tests | On GitHub | On CRAN (last updated)                                     |
-|--------------------------------------------------------|-------------------------------------------------------------|---------------|-----------|-----------|------------------------------------------------------------|
+| ------------------------------------------------------ | ----------------------------------------------------------- | ------------- | --------- | --------- | ---------------------------------------------------------- |
 | [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness | ❌             | ❌         | :x:       | ![](https://www.r-pkg.org/badges/last-release/FD)          |
 | [`adiv`](https://github.com/cran/adiv)                 | Functional Entropy, Functional Redundancy                   | ✅             | ❌         | :x:       | ![](https://www.r-pkg.org/badges/last-release/adiv)        |
 | [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                      | ❌             | ❌         | :x:       | ![](https://www.r-pkg.org/badges/last-release/betapart)    |
@@ -155,14 +155,14 @@ wrappers around these packages):
 | [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure functional diversity (\~FRic)           | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
 | [`BAT`](https://github.com/cardosopmb/BAT)             | β-, Richness, divergence, and evenness with hypervolumes    | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
 
-------------------------------------------------------------------------
+-----
 
-[1] parallelization through the `future` backend please refer to the
-[parallelization
-vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html)
-for details.
+1.  parallelization through the `future` backend please refer to the
+    [parallelization
+    vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html)
+    for details.
 
-[2] memoization means that the results of the functions calls are cached
-and not recomputed when recalled, to toggle it off see the
-`fundiversity::fd_fric()` [Details
-section](https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details).
+2.  memoization means that the results of the functions calls are cached
+    and not recomputed when recalled, to toggle it off see the
+    `fundiversity::fd_fric()` [Details
+    section](https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details).
