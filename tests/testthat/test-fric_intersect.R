@@ -77,11 +77,11 @@ test_that("Functional Richness Intersection edge cases", {
     NA_real_
   )
 
-  expect_setequal(
-    expect_message(
-      fd_fric_intersect(traits_birds[1:4, ], site_sp_birds)[["FRic_intersect"]]
-    ),
-    NA_real_
+  expect_message(
+    expect_setequal(
+      fd_fric_intersect(traits_birds[1:4, ], site_sp_birds)[["FRic_intersect"]],
+      NA_real_
+    )
   )
 
   # Several species with similar trait values -> not enought species for FRic
