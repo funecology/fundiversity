@@ -35,6 +35,7 @@ pkg_has_vignettes_and_test = function(pkg_name, pkg_dir = temp_dir) {
 [![R build status](https://github.com/Bisaloo/fundiversity/workflows/R-CMD-check/badge.svg)](https://github.com/Bisaloo/fundiversity/actions)
 [![Coverage Status](https://codecov.io/gh/Bisaloo/fundiversity/branch/master/graph/badge.svg?token=HR4YH118VT)](https://codecov.io/gh/Bisaloo/fundiversity)
 [![CRAN status](https://www.r-pkg.org/badges/version-ago/fundiversity)](https://CRAN.R-project.org/package=fundiversity)
+[![DOI](https://zenodo.org/badge/300231216.svg)](https://zenodo.org/badge/latestdoi/300231216)
 <!-- badges: end -->
 
 `fundiversity` provides a lightweight package to compute common functional
