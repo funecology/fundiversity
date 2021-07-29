@@ -139,23 +139,23 @@ assess this three facets at the site scale:
 ## Related Packages
 
 Several other packages exist that compute functional diversity indices.
-We have performed a [performance
+We did a [performance
 comparison](https://bisaloo.github.io/fundiversity/articles/performance.html)
-between packages. We here mention some of them (but do not mention the
-wrappers around these packages):
+between related packages. We here mention some of them (but do not
+mention the numerous wrappers around these packages):
 
-| Package Name                                           | Indices included                                                                                | Has vignettes | Has tests | On GitHub | On CRAN (last updated)                                     |
-| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ------------- | --------- | --------- | ---------------------------------------------------------- |
-| [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness                                     | ❌             | ❌         | :x:       | ![](https://www.r-pkg.org/badges/last-release/FD)          |
-| [`adiv`](https://github.com/cran/adiv)                 | Functional Entropy, Functional Redundancy                                                       | ✅             | ❌         | :x:       | ![](https://www.r-pkg.org/badges/last-release/adiv)        |
-| [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                                                          | ❌             | ❌         | :x:       | ![](https://www.r-pkg.org/badges/last-release/betapart)    |
-| [`entropart`](https://github.com/EricMarcon/entropart) | Functional Entropy                                                                              | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/entropart)   |
-| [`hillR`](https://github.com/daijiang/hillR)           | Functional Diversity Hill Number                                                                | ❌             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hillR)       |
-| [`vegan`](https://github.com/vegandevs/vegan)          | Only dendrogram-based FD (`treedive()`)                                                         | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/vegan)       |
-| [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions                                              | ✅             | ❌         | :x:       | ![](https://www.r-pkg.org/badges/last-release/TPD)         |
-| [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure functional diversity (\~FRic)                                               | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
-| [`BAT`](https://github.com/cardosopmb/BAT)             | β-, Richness, divergence, and evenness with hypervolumes                                        | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
-| [`mFD`](https://github.com/CmlMagneville/mFD)          | Functional α- and β-diversity FRic, FDiv, FDis, FEve, FIde FMPD, FNND, FOri, FSpe, Hill Numbers | ✅             | :x:       | ✅         | ![](https://www.r-pkg.org/badges/last-release/mFD)         |
+| Package Name                                           | Indices included                                                                                                    | Has vignettes | Has tests | On GitHub | On CRAN (last updated)                                     |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | ------------- | --------- | --------- | ---------------------------------------------------------- |
+| [`adiv`](https://github.com/cran/adiv)                 | Functional Entropy, Functional Redundancy                                                                           | ✅             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/adiv)        |
+| [`BAT`](https://github.com/cardosopmb/BAT)             | β-diversity indices, Richness, divergence, and evenness with hypervolumes                                           | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
+| [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                                                                              | ❌             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/betapart)    |
+| [`entropart`](https://github.com/EricMarcon/entropart) | Functional Entropy                                                                                                  | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/entropart)   |
+| [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness                                                         | ❌             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/FD)          |
+| [`hillR`](https://github.com/daijiang/hillR)           | Functional Diversity Hill Number                                                                                    | ❌             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hillR)       |
+| [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure of functional diversity (\~FRic)                                                                | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
+| [`mFD`](https://github.com/CmlMagneville/mFD)          | Functional α- and β-diversity indices, including FRic, FDiv, FDis, FEve, FIde, FMPD, FNND, FOri, FSpe, Hill Numbers | ✅             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/mFD)         |
+| [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions                                                                  | ✅             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/TPD)         |
+| [`vegan`](https://github.com/vegandevs/vegan)          | Only dendrogram-based FD (`treedive()`)                                                                             | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/vegan)       |
 
 -----
 
