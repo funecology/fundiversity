@@ -8,6 +8,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<!-- 
+# Pre-render with 
+knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
+-->
+
 
 
 This vignette presents some performance tests ran between `fundiversity` and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is [**pre-computed**](https://ropensci.org/technotes/2019/12/08/precompute-vignettes/).
@@ -23,6 +28,8 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 **`adiv::QE()`** comes from the `adiv` package which proposes a toolkit to analyze biodiversity [@Pavoine_adiv_2020]. This function computes Rao's quadratic entropy.
 
 **`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
+
+**`mFD::alpha.fd.hill()`** comes from the `mFD` package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indiceS.
 
 ## Benchmark between packages
 
@@ -64,6 +71,10 @@ pkg_bench <- microbenchmark::microbenchmark(
                calc.FGR = FALSE, m = "max", stand.FRic = FALSE,
                messages = FALSE))
   },
+  mFD = {
+    mFD::alpha.fd.hill(site_sp_birds, dist_traits_birds, q = 2, tau = "max",
+                       details_returned = FALSE)
+  },
   times = 30
 )
 
@@ -75,12 +86,13 @@ ggplot2::autoplot(pkg_bench)
 ```r
 pkg_bench
 #> Unit: milliseconds
-#>          expr        min          lq        mean     median          uq         max neval cld
-#>  fundiversity    2.10149    2.407032    2.772199    2.58316    3.180594    4.188936    30 a  
-#>          adiv   14.14454   14.526534   18.580014   15.58279   19.739028   41.526147    30 a  
-#>         hillR   20.08181   20.486426   24.078429   21.26945   27.074169   37.166011    30 a  
-#>        SYNCSA   97.95745  104.834362  127.459092  112.78063  152.813453  173.017482    30  b 
-#>            FD 3461.85925 3546.031242 3660.392313 3611.61166 3799.379164 3983.139659    30   c
+#>          expr         min         lq        mean      median          uq        max neval cld
+#>  fundiversity    2.224010    2.37701    4.781452    2.576993    2.733911   36.54022    30  a 
+#>          adiv   14.405726   15.76062  334.895718   37.288465   42.246072 9110.68939    30  a 
+#>         hillR   20.631983   21.97200   30.867960   24.890381   35.688186   75.83383    30  a 
+#>        SYNCSA   99.990214  104.69245  183.905136  115.724078  138.383360 1984.58615    30  a 
+#>            FD 3771.813313 3828.84571 3956.682356 3864.328405 3927.204354 4747.20277    30   b
+#>           mFD    4.329188    4.54392   30.262538    4.814327    8.580099  608.34751    30  a
 ```
 
 
@@ -127,11 +139,11 @@ ggplot2::autoplot(bench_sp_fric)
 ```r
 bench_sp_fric
 #> Unit: milliseconds
-#>            expr        min         lq       mean     median         uq         max neval cld
-#>     species_200   7.272143   7.411224   7.658876   7.540434   7.753756    9.735028    30 a  
-#>    species_1000  12.590664  12.676594  13.410967  12.867334  13.337207   22.803020    30 ab 
-#>   species_10000  60.990697  61.555851  63.188452  62.458161  63.446947   69.778430    30  b 
-#>  species_100000 558.459636 567.359063 630.938174 587.045995 594.408122 1106.065389    30   c
+#>            expr        min         lq       mean     median          uq        max neval cld
+#>     species_200   7.650253   7.781204   8.277942   7.927151    8.090287   17.68536    30  a 
+#>    species_1000  12.855771  13.019348  13.497166  13.169401   13.308256   21.94092    30  a 
+#>   species_10000  60.428101  61.053870  69.668975  61.367838   70.020126  100.16642    30  a 
+#>  species_100000 605.250427 634.867698 859.636411 640.672487 1238.436013 1274.49016    30   b
 ```
 
 ### Functional Divergence
@@ -154,11 +166,11 @@ ggplot2::autoplot(bench_sp_fdiv)
 ```r
 bench_sp_fdiv
 #> Unit: milliseconds
-#>            expr        min         lq       mean     median         uq        max neval cld
-#>     species_200   1.308150   1.366275   1.514663   1.475043   1.585562   2.020659    30  a 
-#>    species_1000   2.311057   2.390231   3.481409   2.543436   2.674460  29.508233    30  a 
-#>   species_10000  13.854787  14.041624  19.600057  14.401898  17.039658  92.884507    30  a 
-#>  species_100000 153.926721 168.931658 203.582522 189.018758 193.780627 796.773948    30   b
+#>            expr        min         lq       mean     median         uq         max neval cld
+#>     species_200   1.378985   1.449586   1.520754   1.476270   1.540299    1.997587    30  a 
+#>    species_1000   2.371657   2.442248   7.857682   2.504424   2.592663  106.266946    30  a 
+#>   species_10000  14.350122  14.528894  20.562872  14.759380  15.654314   43.841307    30  a 
+#>  species_100000 235.021974 242.491736 404.008230 274.714110 312.833904 1002.580793    30   b
 ```
 
 ### Rao's Quadratric Entropy
@@ -180,10 +192,10 @@ ggplot2::autoplot(bench_sp_raoq)
 ```r
 bench_sp_raoq
 #> Unit: milliseconds
-#>           expr          min           lq         mean       median           uq         max neval cld
-#>    species_200     2.506085     2.957308     5.552542     3.029693     3.099884    78.00615    30  a 
-#>   species_1000    72.190369    73.178624    86.020321    77.906959   100.639918   105.29714    30  a 
-#>  species_10000 14971.569058 15232.768228 15619.310519 15310.934087 15680.391170 19845.49740    30   b
+#>           expr          min         lq         mean       median           uq         max neval cld
+#>    species_200     2.584048     2.6802     4.937107     2.847961     2.911515    64.91719    30  a 
+#>   species_1000   124.567673   125.2026   127.076021   127.049932   129.071798   131.60577    30  a 
+#>  species_10000 24237.048920 24368.7150 24706.156198 24456.227126 24825.978723 28198.97838    30   b
 ```
 
 ### Functional Evenness
@@ -206,9 +218,9 @@ ggplot2::autoplot(bench_sp_feve)
 bench_sp_feve
 #> Unit: milliseconds
 #>           expr         min          lq        mean      median          uq         max neval cld
-#>    species_200    11.19328    11.88348    14.84363    12.06712    12.36027    89.65001    30  a 
-#>   species_1000   184.66731   220.70915   226.49291   231.81374   242.28208   260.33686    30  a 
-#>  species_10000 37904.84293 38804.31548 40420.87227 40281.46665 41471.36177 43307.46388    30   b
+#>    species_200    11.17215    11.44301    12.33728    11.79237    12.24989    20.59761    30  a 
+#>   species_1000   197.85067   279.95442   280.47473   289.50154   297.68343   336.33779    30  a 
+#>  species_10000 58136.53352 60618.48446 60999.92341 61352.07935 61751.75521 62372.93708    30   b
 ```
 
 ### Comparing between indices
@@ -278,11 +290,11 @@ ggplot2::autoplot(bench_sites_fric)
 ```r
 bench_sites_fric
 #> Unit: milliseconds
-#>         expr         min          lq        mean      median          uq         max neval  cld
-#>     sites_10    7.305447    7.445469    7.549598    7.533808    7.647921    7.860385    30 a   
-#>    sites_100   80.210260   81.066842   92.257676   82.121457   84.696237  361.829400    30  b  
-#>   sites_1000  809.925861  823.238119  854.610355  830.041438  836.439195 1121.243669    30   c 
-#>  sites_10000 8367.482831 8663.878974 8758.820707 8735.375594 8845.360245 9507.021444    30    d
+#>         expr         min          lq       mean      median          uq         max neval cld
+#>     sites_10    7.607112    7.708243    7.91207    7.838421    7.979479    8.717983    30 a  
+#>    sites_100   84.306860   85.384449   88.56248   86.235620   89.808674  103.375883    30 a  
+#>   sites_1000  861.504150  869.061084  963.01446  879.534198 1027.562927 1781.083451    30  b 
+#>  sites_10000 8957.169818 9128.823757 9301.94825 9289.273103 9469.840746 9618.792008    30   c
 ```
 
 ### Functional Divergence
@@ -305,11 +317,11 @@ ggplot2::autoplot(bench_sites_fdiv)
 ```r
 bench_sites_fdiv
 #> Unit: milliseconds
-#>         expr        min         lq       mean     median         uq        max neval cld
-#>     sites_10   1.250922   1.326626   1.369076   1.353131   1.405422    1.58647    30 a  
-#>    sites_100   8.599306   8.736499  12.063633   8.875529   9.553400   92.76261    30 a  
-#>   sites_1000  82.157591  83.767686  88.820837  84.738417  93.188557  106.82917    30  b 
-#>  sites_10000 847.098025 857.706245 916.569146 937.506656 946.714497 1030.69874    30   c
+#>         expr        min          lq       mean      median          uq         max neval cld
+#>     sites_10   1.349320    1.436685    1.52522    1.488984    1.564456    2.287361    30 a  
+#>    sites_100   9.250358    9.399126   10.12482    9.554886   10.497096   17.668815    30 a  
+#>   sites_1000  87.895239   89.193585   97.83039   89.972217   92.344964  223.390052    30  b 
+#>  sites_10000 984.327901 1003.257170 1031.25032 1019.222113 1028.779555 1326.922434    30   c
 ```
 
 ### Rao's Quadratic Entropy
@@ -332,11 +344,11 @@ ggplot2::autoplot(bench_sites_raoq)
 ```r
 bench_sites_raoq
 #> Unit: milliseconds
-#>         expr        min         lq       mean     median         uq         max neval cld
-#>     sites_10   2.268343   2.345637   5.103336   2.494283   2.660158   77.342800    30  a 
-#>    sites_100   2.684232   2.845342   3.101127   2.944907   3.095696    6.122854    30  a 
-#>   sites_1000   9.130793   9.426069  10.816771   9.710192  10.687696   18.381225    30  a 
-#>  sites_10000 311.269798 385.830844 654.603178 476.463111 996.386282 1154.563048    30   b
+#>         expr        min         lq       mean     median          uq         max neval cld
+#>     sites_10   2.373697   2.459257   2.755239   2.746818    2.863676    3.827474    30  a 
+#>    sites_100   2.923065   3.267814   8.039443   3.610872   12.317832   21.612761    30  a 
+#>   sites_1000  10.372173  11.424059  19.431384  12.926801   19.512558  133.624070    30  a 
+#>  sites_10000 370.950321 486.812037 809.989892 623.394065 1152.882870 1305.509859    30   b
 ```
 
 ### Functional Evenness
@@ -359,11 +371,11 @@ ggplot2::autoplot(bench_sites_feve)
 ```r
 bench_sites_feve
 #> Unit: milliseconds
-#>         expr         min          lq       mean      median          uq         max neval cld
-#>     sites_10    10.10186    10.93081    13.5463    11.16931    11.31644    45.76879    30 a  
-#>    sites_100   101.64932   104.51565   113.6527   106.91265   109.81663   158.13017    30 a  
-#>   sites_1000  1130.58600  1150.79428  1347.9058  1195.57099  1619.52820  1817.18369    30  b 
-#>  sites_10000 11351.16595 12265.51630 12830.9226 12674.06901 13241.87966 16210.35681    30   c
+#>         expr         min         lq        mean      median          uq         max neval cld
+#>     sites_10    10.80843    10.9630    11.37922    11.25525    11.50652    12.92798    30 a  
+#>    sites_100   106.43742   110.3452   127.06238   114.31121   155.53173   178.59674    30 a  
+#>   sites_1000  1140.43441  1162.3704  1238.24333  1199.50446  1237.75353  1828.14702    30  b 
+#>  sites_10000 11485.65712 11673.7873 12425.01912 11894.73131 12839.05688 16022.25103    30   c
 ```
 
 
@@ -402,7 +414,7 @@ all_bench_sites %>%
 
 
 ```
-#>  seconds needed to generate this document: 2620.549 sec elapsed
+#>  seconds needed to generate this document: 3564.614 sec elapsed
 #> ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────
 #>  setting  value                       
 #>  version  R version 3.6.3 (2020-02-29)
@@ -413,157 +425,158 @@ all_bench_sites %>%
 #>  collate  en_US.UTF-8                 
 #>  ctype    en_US.UTF-8                 
 #>  tz       Europe/Berlin               
-#>  date     2021-02-02                  
+#>  date     2021-07-29                  
 #> 
 #> ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
-#>  !  package           * version    date       lib source        
-#>     abind               1.4-5      2016-07-21 [3] CRAN (R 3.5.0)
-#>     ade4                1.7-16     2020-10-28 [3] CRAN (R 3.6.3)
-#>     adegenet            2.1.3      2020-05-10 [1] CRAN (R 3.6.3)
-#>     adegraphics         1.0-15     2018-12-18 [1] CRAN (R 3.6.3)
-#>     adephylo            1.1-11     2017-12-18 [3] CRAN (R 3.5.0)
-#>     adiv                2.0.1      2020-08-26 [1] CRAN (R 3.6.3)
-#>     ape                 5.4-1      2020-08-13 [3] CRAN (R 3.6.3)
-#>     assertthat          0.2.1      2019-03-21 [3] CRAN (R 3.5.3)
-#>     boot                1.3-26     2021-01-25 [4] CRAN (R 3.6.3)
-#>     class               7.3-18     2021-01-24 [4] CRAN (R 3.6.3)
-#>     classInt            0.4-3      2020-04-07 [3] CRAN (R 3.6.3)
-#>     cli                 2.2.0      2020-11-20 [3] CRAN (R 3.6.3)
-#>     cluster             2.1.0      2019-06-19 [4] CRAN (R 3.6.1)
-#>     clusterGeneration   1.3.7      2020-12-15 [3] CRAN (R 3.6.3)
-#>     coda                0.19-4     2020-09-30 [3] CRAN (R 3.6.3)
-#>     codetools           0.2-18     2020-11-04 [4] CRAN (R 3.6.3)
-#>     colorspace          2.0-0      2020-11-11 [3] CRAN (R 3.6.3)
-#>     combinat            0.0-8      2010-08-05 [3] CRAN (R 3.5.0)
-#>     crayon              1.3.4      2017-09-16 [3] CRAN (R 3.5.0)
-#>     crosstalk           1.1.1      2021-01-12 [3] CRAN (R 3.6.3)
-#>     DBI                 1.1.1      2021-01-15 [3] CRAN (R 3.6.3)
-#>     deldir              0.2-9      2021-01-16 [3] CRAN (R 3.6.3)
-#>     desc                1.2.0      2018-05-01 [3] CRAN (R 3.5.0)
-#>     digest              0.6.27     2020-10-24 [3] CRAN (R 3.6.3)
-#>     dplyr             * 1.0.3      2021-01-15 [3] CRAN (R 3.6.3)
-#>     DT                  0.17       2021-01-06 [3] CRAN (R 3.6.3)
-#>     e1071               1.7-4      2020-10-14 [3] CRAN (R 3.6.3)
-#>     ellipsis            0.3.1      2020-05-15 [3] CRAN (R 3.6.3)
-#>     evaluate            0.14       2019-05-28 [3] CRAN (R 3.6.0)
-#>     expm                0.999-6    2021-01-13 [3] CRAN (R 3.6.3)
-#>     FactoMineR          2.4        2020-12-11 [3] CRAN (R 3.6.3)
-#>     fansi               0.4.2      2021-01-15 [3] CRAN (R 3.6.3)
-#>     farver              2.0.3      2020-01-16 [3] CRAN (R 3.6.2)
-#>     fastmap             1.1.0      2021-01-25 [3] CRAN (R 3.6.3)
-#>     fastmatch           1.1-0      2017-01-28 [3] CRAN (R 3.5.0)
-#>     FD                  1.0-12     2014-08-19 [1] CRAN (R 3.6.3)
-#>     flashClust          1.01-2     2012-08-21 [3] CRAN (R 3.5.0)
-#>     fundiversity      * 0.0.0.9000 2021-01-22 [1] local         
-#>     future              1.21.0     2020-12-10 [3] CRAN (R 3.6.3)
-#>     gdata               2.18.0     2017-06-06 [3] CRAN (R 3.5.0)
-#>     generics            0.1.0      2020-10-31 [3] CRAN (R 3.6.3)
-#>     geometry            0.4.5      2019-12-04 [3] CRAN (R 3.6.1)
-#>     ggplot2           * 3.3.3      2020-12-30 [3] CRAN (R 3.6.3)
-#>     ggrepel             0.9.1      2021-01-15 [3] CRAN (R 3.6.3)
-#>     globals             0.14.0     2020-11-22 [3] CRAN (R 3.6.3)
-#>     glue                1.4.2      2020-08-27 [3] CRAN (R 3.6.3)
-#>     gmodels             2.18.1     2018-06-25 [3] CRAN (R 3.5.0)
-#>     gtable              0.3.0      2019-03-25 [3] CRAN (R 3.5.3)
-#>     gtools              3.8.2      2020-03-31 [3] CRAN (R 3.6.3)
-#>     highr               0.8        2019-03-20 [3] CRAN (R 3.5.3)
-#>     hillR               0.5.0      2020-07-07 [1] CRAN (R 3.6.3)
-#>     hms                 1.0.0      2021-01-13 [3] CRAN (R 3.6.3)
-#>     htmltools           0.5.1.1    2021-01-22 [3] CRAN (R 3.6.3)
-#>     htmlwidgets         1.5.3      2020-12-10 [3] CRAN (R 3.6.3)
-#>     httpuv              1.5.5      2021-01-13 [3] CRAN (R 3.6.3)
-#>     httr                1.4.2      2020-07-20 [3] CRAN (R 3.6.3)
-#>     igraph              1.2.6      2020-10-06 [3] CRAN (R 3.6.3)
-#>     jpeg                0.1-8.1    2019-10-24 [3] CRAN (R 3.6.1)
-#>     jsonlite            1.7.2      2020-12-09 [3] CRAN (R 3.6.3)
-#>     KernSmooth          2.23-18    2020-10-29 [4] CRAN (R 3.6.3)
-#>     knitr               1.31       2021-01-27 [3] CRAN (R 3.6.3)
-#>     later               1.1.0.1    2020-06-05 [3] CRAN (R 3.6.3)
-#>     lattice             0.20-41    2020-04-02 [4] CRAN (R 3.6.3)
-#>     latticeExtra        0.6-29     2019-12-19 [3] CRAN (R 3.6.2)
-#>     lazyeval            0.2.2      2019-03-15 [3] CRAN (R 3.5.3)
-#>     leaps               3.1        2020-01-16 [3] CRAN (R 3.6.2)
-#>     LearnBayes          2.15.1     2018-03-18 [3] CRAN (R 3.5.0)
-#>     lifecycle           0.2.0      2020-03-06 [3] CRAN (R 3.6.3)
-#>     listenv             0.8.0      2019-12-05 [3] CRAN (R 3.6.1)
-#>     magic               1.5-9      2018-09-17 [3] CRAN (R 3.5.1)
-#>     magrittr            2.0.1      2020-11-17 [3] CRAN (R 3.6.3)
-#>     manipulateWidget    0.10.1     2020-02-24 [3] CRAN (R 3.6.3)
-#>     maps                3.3.0      2018-04-03 [3] CRAN (R 3.5.0)
-#>     MASS                7.3-53     2020-09-09 [4] CRAN (R 3.6.3)
-#>     Matrix              1.3-2      2021-01-06 [4] CRAN (R 3.6.3)
-#>     mgcv                1.8-33     2020-08-27 [4] CRAN (R 3.6.3)
-#>     microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 3.6.3)
-#>     mime                0.9        2020-02-04 [3] CRAN (R 3.6.2)
-#>     miniUI              0.1.1.1    2018-05-18 [3] CRAN (R 3.5.0)
-#>     mnormt              2.0.2      2020-09-01 [3] CRAN (R 3.6.3)
-#>     multcomp            1.4-15     2020-11-14 [3] CRAN (R 3.6.3)
-#>     munsell             0.5.0      2018-06-12 [3] CRAN (R 3.5.0)
-#>     mvtnorm             1.1-1      2020-06-09 [3] CRAN (R 3.6.3)
-#>     nlme                3.1-151    2020-12-10 [4] CRAN (R 3.6.3)
-#>     numDeriv            2016.8-1.1 2019-06-06 [3] CRAN (R 3.6.0)
-#>     parallelly          1.23.0     2021-01-04 [3] CRAN (R 3.6.3)
-#>     permute             0.9-5      2019-03-12 [3] CRAN (R 3.5.3)
-#>     phangorn            2.5.5      2019-06-19 [3] CRAN (R 3.6.0)
-#>     phylobase           0.8.10     2020-03-01 [3] CRAN (R 3.6.3)
-#>     phytools            0.7-70     2020-09-19 [3] CRAN (R 3.6.3)
-#>     pillar              1.4.7      2020-11-20 [3] CRAN (R 3.6.3)
-#>  VP pkgconfig           2.0.2      2019-09-22 [3] CRAN (R 3.6.3)
-#>     pkgload             1.1.0      2020-05-29 [3] CRAN (R 3.6.3)
-#>     plotrix             3.8-1      2021-01-21 [1] CRAN (R 3.6.3)
-#>     plyr                1.8.6      2020-03-03 [3] CRAN (R 3.6.3)
-#>     png                 0.1-7      2013-12-03 [3] CRAN (R 3.5.0)
-#>     prettyunits         1.1.1      2020-01-24 [3] CRAN (R 3.6.2)
-#>     progress            1.2.2      2019-05-16 [3] CRAN (R 3.6.0)
-#>     promises            1.1.1      2020-06-09 [3] CRAN (R 3.6.3)
-#>     purrr               0.3.4      2020-04-17 [3] CRAN (R 3.6.3)
-#>     quadprog            1.5-8      2019-11-20 [3] CRAN (R 3.6.1)
-#>     R6                  2.5.0      2020-10-28 [3] CRAN (R 3.6.3)
-#>     raster              3.4-5      2020-11-14 [3] CRAN (R 3.6.3)
-#>     RColorBrewer        1.1-2      2014-12-07 [3] CRAN (R 3.5.0)
-#>     Rcpp                1.0.6      2021-01-15 [1] CRAN (R 3.6.3)
-#>     RcppArmadillo       0.10.1.2.2 2021-01-10 [3] CRAN (R 3.6.3)
-#>     reshape2            1.4.4      2020-04-09 [3] CRAN (R 3.6.3)
-#>     rgl                 0.104.16   2021-01-10 [1] CRAN (R 3.6.3)
-#>     rlang               0.4.10     2020-12-30 [3] CRAN (R 3.6.3)
-#>     rmarkdown           2.6        2020-12-14 [3] CRAN (R 3.6.3)
-#>     rncl                0.8.4      2020-02-10 [3] CRAN (R 3.6.2)
-#>     RNeXML              2.4.5      2020-06-18 [3] CRAN (R 3.6.3)
-#>     rprojroot           2.0.2      2020-11-15 [3] CRAN (R 3.6.3)
-#>     rstudioapi          0.13       2020-11-12 [3] CRAN (R 3.6.3)
-#>     sandwich            3.0-0      2020-10-02 [3] CRAN (R 3.6.3)
-#>     scales              1.1.1      2020-05-11 [3] CRAN (R 3.6.3)
-#>     scatterplot3d       0.3-41     2018-03-14 [3] CRAN (R 3.5.0)
-#>     seqinr              4.2-5      2020-12-17 [3] CRAN (R 3.6.3)
-#>     sessioninfo         1.1.1      2018-11-05 [3] CRAN (R 3.5.1)
-#>     sf                  0.9-7      2021-01-06 [3] CRAN (R 3.6.3)
-#>     shiny               1.6.0      2021-01-25 [3] CRAN (R 3.6.3)
-#>     sp                  1.4-5      2021-01-10 [3] CRAN (R 3.6.3)
-#>     spData              0.3.8      2020-07-03 [3] CRAN (R 3.6.3)
-#>     spdep               1.1-5      2020-06-29 [3] CRAN (R 3.6.3)
-#>     stringi             1.5.3      2020-09-09 [3] CRAN (R 3.6.3)
-#>     stringr             1.4.0      2019-02-10 [3] CRAN (R 3.5.2)
-#>     survival            3.2-7      2020-09-28 [4] CRAN (R 3.6.3)
-#>     SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 3.6.3)
-#>     testthat            3.0.1      2020-12-17 [3] CRAN (R 3.6.3)
-#>     TH.data             1.0-10     2019-01-21 [3] CRAN (R 3.5.2)
-#>     tibble              3.0.6      2021-01-29 [3] CRAN (R 3.6.3)
-#>     tictoc              1.0        2014-06-17 [3] CRAN (R 3.5.0)
-#>     tidyr               1.1.2      2020-08-27 [3] CRAN (R 3.6.3)
-#>     tidyselect          1.1.0      2020-05-11 [3] CRAN (R 3.6.3)
-#>     tmvnsim             1.0-2      2016-12-15 [3] CRAN (R 3.6.3)
-#>     units               0.6-7      2020-06-13 [3] CRAN (R 3.6.3)
-#>     uuid                0.1-4      2020-02-26 [3] CRAN (R 3.6.3)
-#>     vctrs               0.3.6      2020-12-17 [3] CRAN (R 3.6.3)
-#>     vegan               2.5-7      2020-11-28 [3] CRAN (R 3.6.3)
-#>     webshot             0.5.2      2019-11-22 [3] CRAN (R 3.6.1)
-#>     withr               2.4.1      2021-01-26 [3] CRAN (R 3.6.3)
-#>     xfun                0.20       2021-01-06 [3] CRAN (R 3.6.3)
-#>     XML                 3.99-0.3   2020-01-20 [3] CRAN (R 3.6.3)
-#>     xml2                1.3.2      2020-04-23 [3] CRAN (R 3.6.3)
-#>     xtable              1.8-4      2019-04-21 [1] CRAN (R 3.6.3)
-#>     yaml                2.2.1      2020-02-01 [3] CRAN (R 3.6.2)
-#>     zoo                 1.8-8      2020-05-02 [3] CRAN (R 3.6.3)
+#>  !  package           * version    date       lib source                            
+#>     abind               1.4-5      2016-07-21 [3] CRAN (R 3.5.0)                    
+#>     ade4                1.7-17     2021-06-17 [1] CRAN (R 3.6.3)                    
+#>     adegenet            2.1.3      2020-05-10 [1] CRAN (R 3.6.3)                    
+#>     adegraphics         1.0-15     2018-12-18 [1] CRAN (R 3.6.3)                    
+#>     adephylo            1.1-11     2017-12-18 [3] CRAN (R 3.5.0)                    
+#>     adiv                2.0.1      2020-08-26 [1] CRAN (R 3.6.3)                    
+#>     ape                 5.5        2021-04-25 [3] CRAN (R 3.6.3)                    
+#>     assertthat          0.2.1      2019-03-21 [3] CRAN (R 3.5.3)                    
+#>     boot                1.3-28     2021-05-03 [4] CRAN (R 3.6.3)                    
+#>     callr               3.7.0      2021-04-20 [3] CRAN (R 3.6.3)                    
+#>     class               7.3-19     2021-05-03 [4] CRAN (R 3.6.3)                    
+#>     classInt            0.4-3      2020-04-07 [3] CRAN (R 3.6.3)                    
+#>  VP cli                 2.5.0      2021-07-17 [3] CRAN (R 3.6.3)                    
+#>     cluster             2.1.2      2021-04-17 [4] CRAN (R 3.6.3)                    
+#>     clusterGeneration   1.3.7      2020-12-15 [3] CRAN (R 3.6.3)                    
+#>     coda                0.19-4     2020-09-30 [3] CRAN (R 3.6.3)                    
+#>     codetools           0.2-18     2020-11-04 [4] CRAN (R 3.6.3)                    
+#>  VP colorspace          2.0-1      2021-06-24 [3] CRAN (R 3.6.3)                    
+#>     combinat            0.0-8      2010-08-05 [3] CRAN (R 3.5.0)                    
+#>     crayon              1.4.1      2021-02-08 [3] CRAN (R 3.6.3)                    
+#>     crosstalk           1.1.1      2021-01-12 [3] CRAN (R 3.6.3)                    
+#>  VP curl                4.3.1      2021-06-23 [3] CRAN (R 3.6.3)                    
+#>     DBI                 1.1.1      2021-01-15 [3] CRAN (R 3.6.3)                    
+#>     deldir              0.2-10     2021-02-16 [3] CRAN (R 3.6.3)                    
+#>     digest              0.6.27     2020-10-24 [3] CRAN (R 3.6.3)                    
+#>     dplyr             * 1.0.7      2021-06-18 [1] CRAN (R 3.6.3)                    
+#>     DT                  0.18       2021-04-14 [3] CRAN (R 3.6.3)                    
+#>     e1071               1.7-7      2021-05-23 [3] CRAN (R 3.6.3)                    
+#>     ellipsis            0.3.2      2021-04-29 [3] CRAN (R 3.6.3)                    
+#>     evaluate            0.14       2019-05-28 [3] CRAN (R 3.6.0)                    
+#>     expm                0.999-6    2021-01-13 [3] CRAN (R 3.6.3)                    
+#>     FactoMineR          2.4        2020-12-11 [3] CRAN (R 3.6.3)                    
+#>     fansi               0.5.0      2021-05-25 [3] CRAN (R 3.6.3)                    
+#>     farver              2.1.0      2021-02-28 [3] CRAN (R 3.6.3)                    
+#>     fastmap             1.1.0      2021-01-25 [3] CRAN (R 3.6.3)                    
+#>     fastmatch           1.1-3      2021-07-23 [1] CRAN (R 3.6.3)                    
+#>     FD                  1.0-12     2014-08-19 [1] CRAN (R 3.6.3)                    
+#>     flashClust          1.01-2     2012-08-21 [3] CRAN (R 3.5.0)                    
+#>     fundiversity      * 0.0.0.9000 2021-01-22 [1] local                             
+#>     gdata               2.18.0     2017-06-06 [3] CRAN (R 3.5.0)                    
+#>     generics            0.1.0      2020-10-31 [3] CRAN (R 3.6.3)                    
+#>     geometry            0.4.5      2019-12-04 [3] CRAN (R 3.6.1)                    
+#>     ggplot2           * 3.3.5      2021-06-25 [1] CRAN (R 3.6.3)                    
+#>     ggrepel             0.9.1      2021-01-15 [3] CRAN (R 3.6.3)                    
+#>     glue                1.4.2      2020-08-27 [3] CRAN (R 3.6.3)                    
+#>     gmodels             2.18.1     2018-06-25 [3] CRAN (R 3.5.0)                    
+#>     gtable              0.3.0      2019-03-25 [3] CRAN (R 3.5.3)                    
+#>     gtools              3.9.2      2021-06-06 [3] CRAN (R 3.6.3)                    
+#>     highr               0.9        2021-04-16 [3] CRAN (R 3.6.3)                    
+#>     hillR               0.5.0      2020-07-07 [1] CRAN (R 3.6.3)                    
+#>     hms                 1.1.0      2021-05-17 [3] CRAN (R 3.6.3)                    
+#>     htmltools           0.5.1.1    2021-01-22 [3] CRAN (R 3.6.3)                    
+#>     htmlwidgets         1.5.3      2020-12-10 [3] CRAN (R 3.6.3)                    
+#>     httpuv              1.6.1      2021-05-07 [3] CRAN (R 3.6.3)                    
+#>     httr                1.4.2      2020-07-20 [3] CRAN (R 3.6.3)                    
+#>     igraph              1.2.6      2020-10-06 [3] CRAN (R 3.6.3)                    
+#>     jpeg                0.1-9      2021-07-24 [1] CRAN (R 3.6.3)                    
+#>     jsonlite            1.7.2      2020-12-09 [3] CRAN (R 3.6.3)                    
+#>     KernSmooth          2.23-20    2021-05-03 [4] CRAN (R 3.6.3)                    
+#>     knitr               1.33       2021-04-24 [3] CRAN (R 3.6.3)                    
+#>     later               1.2.0      2021-04-23 [3] CRAN (R 3.6.3)                    
+#>     lattice             0.20-44    2021-05-02 [4] CRAN (R 3.6.3)                    
+#>     latticeExtra        0.6-29     2019-12-19 [3] CRAN (R 3.6.2)                    
+#>     lazyeval            0.2.2      2019-03-15 [3] CRAN (R 3.5.3)                    
+#>     leaps               3.1        2020-01-16 [3] CRAN (R 3.6.2)                    
+#>     LearnBayes          2.15.1     2018-03-18 [3] CRAN (R 3.5.0)                    
+#>     lifecycle           1.0.0      2021-02-15 [3] CRAN (R 3.6.3)                    
+#>     magic               1.5-9      2018-09-17 [3] CRAN (R 3.5.1)                    
+#>     magrittr            2.0.1      2020-11-17 [3] CRAN (R 3.6.3)                    
+#>     manipulateWidget    0.11.0     2021-05-31 [3] CRAN (R 3.6.3)                    
+#>     maps                3.3.0      2018-04-03 [3] CRAN (R 3.5.0)                    
+#>     MASS                7.3-54     2021-05-03 [4] CRAN (R 3.6.3)                    
+#>     Matrix              1.3-4      2021-06-01 [4] CRAN (R 3.6.3)                    
+#>     mFD                 1.0.0      2021-07-29 [1] Github (CmlMagneville/mFD@a6af567)
+#>     mgcv                1.8-36     2021-06-01 [4] CRAN (R 3.6.3)                    
+#>     microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 3.6.3)                    
+#>     mime                0.11       2021-06-23 [1] CRAN (R 3.6.3)                    
+#>     miniUI              0.1.1.1    2018-05-18 [3] CRAN (R 3.5.0)                    
+#>     mnormt              2.0.2      2020-09-01 [3] CRAN (R 3.6.3)                    
+#>     multcomp            1.4-17     2021-04-29 [3] CRAN (R 3.6.3)                    
+#>     munsell             0.5.0      2018-06-12 [3] CRAN (R 3.5.0)                    
+#>     mvtnorm             1.1-2      2021-06-07 [3] CRAN (R 3.6.3)                    
+#>     nlme                3.1-152    2021-02-04 [4] CRAN (R 3.6.3)                    
+#>     numDeriv            2016.8-1.1 2019-06-06 [3] CRAN (R 3.6.0)                    
+#>     patchwork           1.1.1      2020-12-17 [1] CRAN (R 3.6.3)                    
+#>     permute             0.9-5      2019-03-12 [3] CRAN (R 3.5.3)                    
+#>     phangorn            2.7.0      2021-05-03 [3] CRAN (R 3.6.3)                    
+#>     phylobase           0.8.10     2020-03-01 [3] CRAN (R 3.6.3)                    
+#>     phytools            0.7-80     2021-06-03 [3] CRAN (R 3.6.3)                    
+#>  VP pillar              1.6.1      2021-07-29 [3] CRAN (R 3.6.3)                    
+#>     pkgbuild            1.2.0      2020-12-15 [3] CRAN (R 3.6.3)                    
+#>     pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 3.6.3)                    
+#>     plotrix             3.8-1      2021-01-21 [1] CRAN (R 3.6.3)                    
+#>     plyr                1.8.6      2020-03-03 [3] CRAN (R 3.6.3)                    
+#>     png                 0.1-7      2013-12-03 [3] CRAN (R 3.5.0)                    
+#>     prettyunits         1.1.1      2020-01-24 [3] CRAN (R 3.6.2)                    
+#>     processx            3.5.2      2021-04-30 [3] CRAN (R 3.6.3)                    
+#>     progress            1.2.2      2019-05-16 [3] CRAN (R 3.6.0)                    
+#>     promises            1.2.0.1    2021-02-11 [3] CRAN (R 3.6.3)                    
+#>     proxy               0.4-26     2021-06-07 [3] CRAN (R 3.6.3)                    
+#>     ps                  1.6.0      2021-02-28 [3] CRAN (R 3.6.3)                    
+#>     purrr               0.3.4      2020-04-17 [3] CRAN (R 3.6.3)                    
+#>     quadprog            1.5-8      2019-11-20 [3] CRAN (R 3.6.1)                    
+#>     R6                  2.5.0      2020-10-28 [3] CRAN (R 3.6.3)                    
+#>     raster              3.4-10     2021-05-03 [3] CRAN (R 3.6.3)                    
+#>     RColorBrewer        1.1-2      2014-12-07 [3] CRAN (R 3.5.0)                    
+#>     Rcpp                1.0.7      2021-07-07 [1] CRAN (R 3.6.3)                    
+#>     RcppArmadillo       0.10.6.0.0 2021-07-16 [1] CRAN (R 3.6.3)                    
+#>     remotes             2.4.0      2021-06-02 [3] CRAN (R 3.6.3)                    
+#>     reshape2            1.4.4      2020-04-09 [3] CRAN (R 3.6.3)                    
+#>     rgl                 0.104.16   2021-01-10 [1] CRAN (R 3.6.3)                    
+#>     rlang               0.4.11     2021-04-30 [3] CRAN (R 3.6.3)                    
+#>     rncl                0.8.4      2020-02-10 [3] CRAN (R 3.6.2)                    
+#>     RNeXML              2.4.5      2020-06-18 [3] CRAN (R 3.6.3)                    
+#>     rprojroot           2.0.2      2020-11-15 [3] CRAN (R 3.6.3)                    
+#>     rstudioapi          0.13       2020-11-12 [3] CRAN (R 3.6.3)                    
+#>     sandwich            3.0-1      2021-05-18 [3] CRAN (R 3.6.3)                    
+#>     scales              1.1.1      2020-05-11 [3] CRAN (R 3.6.3)                    
+#>     scatterplot3d       0.3-41     2018-03-14 [3] CRAN (R 3.5.0)                    
+#>     seqinr              4.2-8      2021-06-09 [3] CRAN (R 3.6.3)                    
+#>     sessioninfo         1.1.1      2018-11-05 [3] CRAN (R 3.5.1)                    
+#>     sf                  1.0-0      2021-06-09 [3] CRAN (R 3.6.3)                    
+#>     shiny               1.6.0      2021-01-25 [3] CRAN (R 3.6.3)                    
+#>     sp                  1.4-5      2021-01-10 [3] CRAN (R 3.6.3)                    
+#>     spData              0.3.8      2020-07-03 [3] CRAN (R 3.6.3)                    
+#>     spdep               1.1-8      2021-05-23 [3] CRAN (R 3.6.3)                    
+#>     stringi             1.7.3      2021-07-16 [1] CRAN (R 3.6.3)                    
+#>     stringr             1.4.0      2019-02-10 [3] CRAN (R 3.5.2)                    
+#>     survival            3.2-11     2021-04-26 [4] CRAN (R 3.6.3)                    
+#>     SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 3.6.3)                    
+#>     TH.data             1.0-10     2019-01-21 [3] CRAN (R 3.5.2)                    
+#>  VP tibble              3.1.2      2021-07-23 [3] CRAN (R 3.6.3)                    
+#>     tictoc              1.0.1      2021-04-19 [3] CRAN (R 3.6.3)                    
+#>     tidyr               1.1.3      2021-03-03 [3] CRAN (R 3.6.3)                    
+#>     tidyselect          1.1.1      2021-04-30 [3] CRAN (R 3.6.3)                    
+#>     tmvnsim             1.0-2      2016-12-15 [3] CRAN (R 3.6.3)                    
+#>     units               0.7-2      2021-06-08 [3] CRAN (R 3.6.3)                    
+#>  VP utf8                1.2.1      2021-07-24 [3] CRAN (R 3.6.3)                    
+#>     uuid                0.1-4      2020-02-26 [3] CRAN (R 3.6.3)                    
+#>     vctrs               0.3.8      2021-04-29 [3] CRAN (R 3.6.3)                    
+#>     vegan               2.5-7      2020-11-28 [3] CRAN (R 3.6.3)                    
+#>     withr               2.4.2      2021-04-18 [3] CRAN (R 3.6.3)                    
+#>     xfun                0.24       2021-06-15 [1] CRAN (R 3.6.3)                    
+#>     XML                 3.99-0.3   2020-01-20 [3] CRAN (R 3.6.3)                    
+#>     xml2                1.3.2      2020-04-23 [3] CRAN (R 3.6.3)                    
+#>     xtable              1.8-4      2019-04-21 [1] CRAN (R 3.6.3)                    
+#>     yaml                2.2.1      2020-02-01 [3] CRAN (R 3.6.2)                    
+#>     zoo                 1.8-9      2021-03-09 [3] CRAN (R 3.6.3)                    
 #> 
 #> [1] /homes/ke76dimu/R/x86_64-pc-linux-gnu-library/3.6
 #> [2] /usr/local/lib/R/site-library
