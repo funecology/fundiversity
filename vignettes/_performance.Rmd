@@ -45,6 +45,8 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 
 **`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
 
+**`mFD::alpha.fd.hill()`** comes from the `mFD` package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indiceS.
+
 ## Benchmark between packages
 
 We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function.
@@ -82,6 +84,10 @@ pkg_bench <- microbenchmark::microbenchmark(
                calc.FRic = TRUE, calc.CWM = FALSE, calc.FDiv = FALSE,
                calc.FGR = FALSE, m = "max", stand.FRic = FALSE,
                messages = FALSE))
+  },
+  mFD = {
+    mFD::alpha.fd.hill(site_sp_birds, dist_traits_birds, q = 2, tau = "max",
+                       details_returned = FALSE)
   },
   times = 30
 )
