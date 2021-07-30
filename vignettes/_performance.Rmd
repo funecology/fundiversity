@@ -89,7 +89,7 @@ pkg_bench <- microbenchmark::microbenchmark(
     mFD::alpha.fd.hill(site_sp_birds, dist_traits_birds, q = 2, tau = "max",
                        details_returned = FALSE)
   },
-  times = 30
+  times = 500
 )
 
 ggplot2::autoplot(pkg_bench)
