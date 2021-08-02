@@ -1,0 +1,150 @@
+---
+title: 'fundiversity: a modular R package to compute functional diversity indices'
+author:
+  - name: Matthias Grenié
+    email: matthias.grenie@idiv.de
+    orcid_id: 0000-0002-4659-7522
+    affiliation: idiv,cefe
+    footnote: 1
+  - name: Hugo Gruson
+    email: hugo.gruson@normalsup.org
+    orcid_id: 0000-0002-4094-1476
+    affiliation: cefe,london
+    footnote: 2
+
+footnote:
+  - code: 1
+    text: "Corresponding Author"
+  - code: 2
+    text: "ORCID-ID <0000-0002-4659-7522> ORCID-ID <0000-0002-4094-1476>"
+
+date: "`r Sys.Date()`"
+  
+address:
+  - code: idiv
+    address: |
+      German Centre for Integrative Biodiversity Research (iDiv) Halle-Jena-Leipzig,
+      Puschstraße 4,
+      04103 Leipzig, Germany
+  - code: cefe
+    address: CEFE Univ Montpellier ...
+  - code: london
+    address: Tropical Medecine London
+
+abstract: |
+  (max 350 words)
+  
+  1. set the context for and purpose of the work;
+  
+  2. indicate the approach and methods;
+  
+  3. outline the main results;
+  
+  4. identify the conclusions and the wider implications.
+
+keywords:
+  - biodiversity;
+  - diversity facet;
+  - R package;
+  - functional biogeography;
+  - functional ecology;
+  - community ecology
+
+
+header-includes:
+  - \linenumbers
+  - \usepackage{endfloat}
+  
+
+csl: methods-in-ecology-and-evolution.csl
+
+bibliography: references.bib
+
+layout: 3p
+
+output: 
+  rticles::elsevier_article:
+    latex_engine: xelatex
+    keep_tex: FALSE
+  
+journal: Methods in Ecology and Evolution
+---
+
+Running title (max 45 char.): fundiversity: functional diversity in R
+
+Word count (3000-4000 incl. refs & captions): `r wordcountaddin::word_count()`
+
+## Introduction
+
+Functional diversity, the diversity of traits across scales, is a major facet of biodiversity [@Pavoine_Measuring_2011]. It has been shown to relate to ecosystem functioning [@Diaz_Vive_2001; @Leps_Quantifying_2006]. Since its definition it has been widely used across ecological contexts [@Cadotte_species_2011]. Many indices exist to characterize it across its three dimensions: richness, evenness, divergence [@Pavoine_Measuring_2011]. To compute these indices in a standardized ways ecologists rely on computational tools able to crunch the numbers for thousands of species and thousands of sites. In the last few years, R has been the programming language of choice for ecologists [@Lai_Evaluating_2019; @RCoreTeam_language_2021]. The main tool available to compute functional diversity indices has been the `FD` package which has now accumulated more than 1200 citations [@Laliberte_FD_2014]. The `FD` package has not been updated since 2015 and it does not offer the flexibility needed by some users. Ecology increasingly use larger datasets which require more efficient computations [@Farley_Situating_2018; @Wuest_Macroecology_2020]. The tools to compute functional diversity indices are thus in great need of improvement.
+
+**Need for modularity in computation**. The main function of the `FD` package `dbFD()` lets the users compute a dozen functional diversity indices in a single call from raw trait data [@Laliberte_FD_2014]. While great for exploratory analyses this can increase computation time when only a single index is needed. Furthermore, it does not enforce good practice in choosing beforehand the appropriate functional diversity index for the question(s) asked [@Legras_Functional_2018; @Mason_guide_2013; @Schleuter_user_2010]. It encourages the user to fish the functional diversity index that matches their predicted relationships. This can lead the users to report all computed functional diversity indices even when there no clear expectations on different functional diversity facets and/or to report correlated indices [@Legras_Functional_2018; @Mason_guide_2013; @McPherson_simulation_2018; @Schleuter_user_2010]. Building the tool so that indices can be computed independently of one another has the added benefit to make maintenance and the addition of new indices easier.
+
+**Need for faster computation (with three solutions: algorithmic efficiency, parallelization, memoization)**. The average size of datasets analyzed in ecology increased several folds in the last years [@Wuest_Macroecology_2020]. Considering that most analyses on functional diversity rely on null models that increase the data size by two or three orders of magnitude [@Gotelli_Null_1996], the need for efficient computation is paramount. First, any improvement of the algorithmic efficiency to compute functional diversity indices could save sensible amount of time as its repeated  many times. For example we noted that many R packages that compute functional diversity indices do not leverage on matrix algebra with its libraries available that can cut the number of operations by orders of magnitude. Second, functional diversity indices are generally computed over many mathematically independent sites. With the rise of multi-core computers, parallelization, i.e. splitting independent computations between independent Computing Processor Units (CPUs), is becoming the norm. Very few functional diversity R packages propose parallelization which leaves the burden of implementing it to the user. Furthermore, when they do, they do not rely on recently released `future` framework [@Bengtsson_unifying_2020] that allows the user to seamlessly parallelize her computations on multiple cores on a single machine, or across several machine, or even on a remote cluster. Third, computation on exact same input can be cached through a process called memoization [@Wickham_memoise_2021]. This avoid wasting computing power on previously seen inputs. Several functional diversity indices rely on the computation of convex hulls across a multi-dimensional space [@Cornwell_TraitBased_2006; @Villeger_New_2008]. Caching the results of this costly computation could save time and computing power when measuring the diversity across a similar sets, such as sites across a given region.
+
+**Need for reliable software**. Increasing discussion are held regarding scientific software robustness and reliability in ecology [@Mislan_Elevating_2016a; @Poisot_Best_2015; @White_thoughts_2015; @Wilson_Good_2017]. Mainly because most ecologists are self-trained in programming, these virtuous practices are rarely applied in ecology [@Barraquand_Lack_2014]. For example, unit tests use predefined inputs to compare the software’s outputs to expectations [@Poisot_Best_2015]. To our knowledge very few R functional diversity packages provide unit tests to assess that the functions behave in the expected manner. Automatic tests of one’s code are crucial when developing a tool for the wider audience as it may be used in many different contexts. 
+
+**What we do here**. We here propose a modern alternative to `FD` called `fundiversity` that benefit from modern development practices, needed features for large sized dataset (modularity, parallelization, and memoization), and greater flexibility. The package can be easily extended to accommodate additional diversity indices not covered by following a clear design pattern detailed in the next section.
+
+
+## Main features of `fundiversity`
+
+`fundiversity` follows clear design princples.
+
+**Modular**. For a maximum flexibility for the users, we tried to make `fundiversity` as modular as possible. All functions in `fundiversity` are prefixed with `fd_` to avoid conflict with similar named functions in other packages, its becoming standard practice as the number of R package is quickly increasing. Each function in `fundiversity` computes a single functional diversity index. As such functions can be used independently of one another. Do one job but do it well.
+
+**Parallelization**. By default `fundiversity` functions work sequentially but can easily be parallelized. `fundiversity` provides native parallelization for all indices through the `future` backend [@Bengtsson_unifying_2020]. Parallelization is toggled through a single function call. It can be use to parallelize on several cores on a single computer on whatever operating system, across multiple computers, across clusters through change in the single function call.
+
+**Memoization**. Avoid recomputing what has already been computed. fundiversity uses this for complex computations such as convex hulls. With a limit if it is too memory intensive. This default behavior can be overridden through a change in the option `fundiversity.memoise`.
+
+**Minimal External Dependencies**. To ease the risk of breaking in the long term it is important to minimize the number of dependencies in the package. Identified as a major risk in software and especially scientific software development (REF). Not a real issue for FD but some packages that wrap around FD actual depends on many other package which render them quite brittle for the users after years of not being actively developed.
+
+**Tractable input/outputs**. To minimize the load of learning to use many functions most of them accept common arguments: to match dbFD() the first argument is always the trait table, the second is always the site-species dataset. Additional arguments are provided after these two first ones.
+
+**Main indices**. Because both hillR and betapart packages are great tools to compute hill indices and functional beta-diversity indices, respectively. To avoid reinventing the wheel when it works well, fundiversity mostly contains indices that are not provided by these two packages. fundiversity contains mostly indices of functional alpha diversity (and 1 index of functional beta-diversity). We focused on indices available through the `dbFD()` function in the FD package and on indices that could leverage on faster implementation. fundiversity contains the following alpha functional diversity indices: FRic functional richness, FDis functional dispersion, FDiv functional divergence,  FEve functional evenness, and Q Rao’s quadratic entropy. Fundiversity also contains a beta-diversity index as it can be quite used to compare functional richness between sites, and no implementation was available at the time it was developed (but see `betapart` newest function).
+
+
+## Case Study
+
+How would fundiversity sit in your analyses?
+Classical functional diversity workflow:
+
+1. Get traits for your sampling units (individuals, species, communities, etc.)
+1. Compute dissimilarity for this. (fundiversity computes euclidean distance by default if all traits are continuous but there are more approriate dissimilarity metrics that can combine both continuous and categorical traits) cite Gower et al. 1981 and Pavoine et al. 2007
+1. Actually use fundiversity functions to compute functional diversity indices
+4. Analyze results which are always in similar format → tidy format
+
+Show case study with data in fundiversity? Through default data available in the package.
+
+
+## Performance Comparison
+
+In order to track to what extent the additional functionalities provided fundiversity actually helped in cutting the computation time we compared computation time on standardized datasets across similar functions in other packages. We only compared to "original" packages that provide actual functions and not wrappers that depends on other packages to provide computation of functional diversity indices. We identified Y similar packages. Most indices are included `FD::dbFD()` function but the comparison would be unfair as the function computes many indices in a single call while functions in fundiversity only compute single indices. An updated version of this section can be found through the performance comparison vignette within the fundiversity package with the `vignette("performance", package = "fundiversity")`. Only for Rao’s quadratic entropy (and for beta functional richness intersection?).
+
+For test purposes we used datasets of increasing complexity (increasing number of species, increasing number of traits, increasing number of sites, draw performance in a 3D space?).
+
+Plots of comparison between packages
+
+Note on the efficiency of different functions (within fundiversity) with dataset of increasing complexity.
+
+Note on the effect of parallelization on computing speed.
+
+Note on the effect of memoization on computing speed.
+
+
+## Acknowledgements
+
+MG gratefully acknowledges the support of iDiv funded by the German Research Foundation (DFG–FZT 118, 202548816).
+
+
+## Authors' Contributions
+
+MG and HG both conceived the package. MG led the writing of the manuscript. Both authors contributed critically to the drafts and gave final approval for publication.
+
+
+## Data Availability
+
+fundiversity is available on CRAN through `install.packages("fundiversity")` as well as on GitHub at https://github.com/Bisaloo/fundiversity, for archival all releases are available on Zenodo at https://doi.org/10.5281/zenodo.4761754. The data used in this article are available from the package, through `data(package = "fundiversity")` call.
+
+
+## References
