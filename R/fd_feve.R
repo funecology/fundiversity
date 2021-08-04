@@ -71,6 +71,10 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 # Hide gory details of computing single FEve values
 fd_feve_single <- function(site_row, dist_matrix) {
 
+  if (all(is.na(site_row))) {
+    return(NA_real_)
+  }
+
   species <- site_row > 0
 
   if (sum(species) < 3) {

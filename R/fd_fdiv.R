@@ -52,27 +52,33 @@ fd_fdiv <- function(traits, sp_com) {
   # Compute Functional Divergence
   fdiv_site <- future_apply(sp_com, 1, function(sp_site) {
 
-    # Select only species that are in site
-    sub_site <- sp_site[sp_site > 0]
+    if (all(is.na(sp_site))) {
+      return(NA_real_)
+    } else {
+      # Select only species that are in site
+      sub_site <- sp_site[sp_site > 0]
 
-    # Select traits for species actually in site
-    sub_traits <- traits[names(sub_site),, drop = FALSE]
+      # Select traits for species actually in site
+      sub_traits <- traits[names(sub_site),, drop = FALSE]
 
-    ch <- fd_chull(sub_traits)
+      ch <- fd_chull(sub_traits)
 
-    verts <- ch$p[unique(c(ch$hull)),, drop = FALSE]
+      verts <- ch$p[unique(c(ch$hull)),, drop = FALSE]
 
-    G <- colMeans(verts)
+      G <- colMeans(verts)
 
-    dG <- sqrt(colSums((t(sub_traits) - G)^2))
+      dG <- sqrt(colSums((t(sub_traits) - G)^2))
 
-    mean_dG <- mean(dG)
+      mean_dG <- mean(dG)
 
-    deltaD <- sum(sub_site*(dG - mean_dG))
+      deltaD <- sum(sub_site*(dG - mean_dG))
 
-    deltaD_abs <- sum(sub_site*abs(dG - mean_dG))
+      deltaD_abs <- sum(sub_site*abs(dG - mean_dG))
 
-    FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
+      FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
+
+      return(FDiv)
+    }
   })
 
   data.frame(site = rownames(sp_com), FDiv = fdiv_site,
