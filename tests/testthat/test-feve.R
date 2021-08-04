@@ -23,6 +23,13 @@ test_that("Functional Evenness output format", {
 
 })
 
+test_that("Functional Evenness works even on sites with no species", {
+  data("traits_plants")
+  data("site_sp_plants")
+
+  fdiv <- expect_silent(fd_feve(traits_plants, site_sp_plants))
+})
+
 test_that("Functional Evenness computation are in line with other packages", {
 
   # With internal dataset
