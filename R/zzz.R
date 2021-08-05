@@ -8,3 +8,5 @@
     fd_chull_intersect <<- memoise::memoise(fd_chull_intersect)
   }
 }
+
+.pkgenv <- new.env(parent = emptyenv())

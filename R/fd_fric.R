@@ -84,9 +84,29 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     max_range <- fd_chull(traits)$vol
   }
 
-  fric_site <- future_apply(sp_com, 1, function(site_row) {
-    fd_chull(traits[site_row > 0,, drop = FALSE])$vol
-  })
+  # Capture all qhull warnings in a specific global variable to be able to print
+  # them after, à la warnings
+  qhull.warning <- NULL
+
+  fric_site <- withCallingHandlers(
+    tryCatch(
+      future_apply(sp_com, 1, function(site_row) {
+        fd_chull(traits[site_row > 0,, drop = FALSE])$vol
+      }),
+      warning = function(w) {
+        qhull.warning <<- c(qhull.warning, list(w))
+        tryInvokeRestart("muffleWarning")
+      }
+    )
+  )
+
+  if (!is.null(qhull.warning)) {
+    .pkgenv[["qhull.warning"]] <- qhull.warning
+    warning(
+      "qhull produced ", length(qhull.warning), "warning(s). Use ",
+      "qhull_warnings() to see them", call. = FALSE
+    )
+  }
 
   data.frame(site = rownames(sp_com), FRic = fric_site/max_range,
              row.names = NULL)
