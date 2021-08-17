@@ -52,6 +52,17 @@ test_that("Rao's Quadratic Entropy works on subset of site/species", {
                         "and site-species matrix\nTaking subset of species"))
 })
 
+test_that("Functional Richness Intersection works for site with no species", {
+  data("traits_plants")
+  data("site_sp_plants")
+
+  raoq <- expect_silent(
+    fd_raoq(traits_plants, site_sp_plants[10,, drop = FALSE])
+  )
+
+  expect_equal(raoq$Q[[1]], 0)
+})
+
 test_that("Rao's Quadratic Entropy works on sparse matrices", {
 
   skip_if_not_installed("Matrix")

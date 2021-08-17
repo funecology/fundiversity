@@ -43,6 +43,16 @@ test_that("Function Richness works on subset of site/species", {
                         "and site-species matrix\nTaking subset of species"))
 })
 
+test_that("Functional Richness works for sites with no species", {
+  data("traits_plants")
+  data("site_sp_plants")
+
+  fric <- expect_silent(
+    fd_fric(traits_plants, site_sp_plants[10,, drop = FALSE])
+  )
+
+  expect_equal(fric$FRic[[1]], NA_real_)
+})
 
 test_that("Functional Richness can standardize its values", {
 

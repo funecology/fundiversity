@@ -48,6 +48,16 @@ test_that("Function Richness Intersection works on subset of site/species", {
   )
 })
 
+test_that("Functional Richness Intersection works for sites with no species", {
+  data("traits_plants")
+  data("site_sp_plants")
+
+  fric_inter <- expect_silent(
+    fd_fric_intersect(traits_plants, site_sp_plants[10,, drop = FALSE])
+  )
+
+  expect_equal(fric_inter$FRic_intersect[[1]], NA_real_)
+})
 
 test_that("Functional Richness Intersection can standardize its values", {
 
