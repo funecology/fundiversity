@@ -47,7 +47,9 @@ fd_fdis <- function(traits, sp_com) {
   }
 
   # Standardize abundance per site
-  sp_com <- sp_com / rowSums(sp_com)
+  site_abundances <- rowSums(sp_com)
+  site_abundances[site_abundances == 0] <- 1  # Account for site with no species
+  sp_com <- sp_com / site_abundances
 
   centros <- sp_com %*% traits
 
@@ -61,5 +63,4 @@ fd_fdis <- function(traits, sp_com) {
 
   data.frame(site = rownames(sp_com), FDis = fdis_site,
              row.names = NULL)
-
 }

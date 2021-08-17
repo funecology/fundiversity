@@ -23,7 +23,7 @@
 #' @export
 fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   if ((!is.null(traits) & !is.null(dist_matrix)) |
-    (is.null(traits) & is.null(dist_matrix))) {
+      (is.null(traits) & is.null(dist_matrix))) {
     stop(
       "Please provide either a trait dataset or a dissimilarity matrix",
       call. = FALSE
@@ -49,13 +49,15 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
     sp_com <- sp_com[, common_species, drop = FALSE]
   } else {
     sp_com <- matrix(1,
-      ncol = nrow(dist_matrix),
-      dimnames = list("s1", rownames(dist_matrix))
+                     ncol = nrow(dist_matrix),
+                     dimnames = list("s1", rownames(dist_matrix))
     )
   }
 
   # Standardize abundance per site
-  sp_com <- sp_com / rowSums(sp_com)
+  site_abundances <- rowSums(sp_com)
+  site_abundances[site_abundances == 0] <- 1  # Account for site with no species
+  sp_com <- sp_com / site_abundances
 
   feve_site <- future_apply(sp_com, 1, function(site_row) {
     fd_feve_single(site_row, dist_matrix)
@@ -70,10 +72,6 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
 # Hide gory details of computing single FEve values
 fd_feve_single <- function(site_row, dist_matrix) {
-
-  if (all(is.na(site_row))) {
-    return(NA_real_)
-  }
 
   species <- site_row > 0
 

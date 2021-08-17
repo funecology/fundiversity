@@ -47,13 +47,15 @@ fd_fdiv <- function(traits, sp_com) {
   }
 
   # Standardize abundance per site
-  sp_com <- sp_com / rowSums(sp_com)
+  site_abundances <- rowSums(sp_com)
+  site_abundances[site_abundances == 0] <- 1  # Account for site with no species
+  sp_com <- sp_com / site_abundances
 
   # Compute Functional Divergence
   fdiv_site <- future_apply(sp_com, 1, function(sp_site) {
 
-    if (all(is.na(sp_site))) {
-      return(NA_real_)
+    if (all(is.na(sp_site)) | all(sp_site == 0)) {
+      return(0)
     } else {
       # Select only species that are in site
       sub_site <- sp_site[sp_site > 0]
@@ -83,5 +85,4 @@ fd_fdiv <- function(traits, sp_com) {
 
   data.frame(site = rownames(sp_com), FDiv = fdiv_site,
              row.names = NULL)
-
 }
