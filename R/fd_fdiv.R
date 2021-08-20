@@ -49,7 +49,7 @@ fd_fdiv <- function(traits, sp_com) {
   }
 
   # Standardize abundance per site
-  site_abundances <- rowSums(sp_com)
+  site_abundances <- rowSums(sp_com, na.rm = TRUE)
   site_abundances[site_abundances == 0] <- 1  # Account for site with no species
   sp_com <- sp_com / site_abundances
 

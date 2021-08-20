@@ -63,7 +63,7 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   }
 
   # Standardize abundance per site
-  site_abundances <- rowSums(sp_com)
+  site_abundances <- rowSums(sp_com, na.rm = TRUE)
   site_abundances[site_abundances == 0] <- 1  # Account for site with no species
   sp_com <- sp_com / site_abundances
 
