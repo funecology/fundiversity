@@ -23,17 +23,6 @@ test_that("Functional Evenness output format", {
 
 })
 
-test_that("Functional Evenness works even on sites with no species", {
-  data("traits_plants")
-  data("site_sp_plants")
-
-  feve <- expect_silent(
-    fd_feve(traits_plants, site_sp_plants[10,, drop = FALSE])
-  )
-
-  expect_equal(feve$FEve[[1]], NA_real_)
-})
-
 test_that("Functional Evenness computation are in line with other packages", {
 
   # With internal dataset
@@ -78,9 +67,22 @@ test_that("Functional Evenness works on subset of site/species", {
 })
 
 test_that("Functional Evenness edge cases", {
+
+  # n_species = 2 < 3 so not possible to compute FEve
   expect_equal(fd_feve(traits_birds[1:2,],
                        simple_site_sp[, 1:2, drop = FALSE])[["FEve"]],
                NA_real_)
+
+
+  # n_species = 0, so no definition of FEve
+  data("traits_plants")
+  data("site_sp_plants")
+
+  feve <- expect_silent(
+    fd_feve(traits_plants, site_sp_plants[10,, drop = FALSE])
+  )
+
+  expect_equal(feve$FEve[[1]], NA_real_)
 })
 
 test_that("Functional Evenness works on sparse matrices", {

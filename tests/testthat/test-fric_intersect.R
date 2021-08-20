@@ -26,7 +26,8 @@ test_that("Functional Richness Intersection works in 1D", {
 
   expect_identical(
     fd_fric_intersect(traits_birds[, 1], site_sp_birds, stand = TRUE),
-    fd_fric_intersect(traits_birds[, 1, drop = FALSE], site_sp_birds, stand = TRUE)
+    fd_fric_intersect(traits_birds[, 1, drop = FALSE], site_sp_birds,
+                      stand = TRUE)
   )
 
 })
@@ -46,17 +47,6 @@ test_that("Function Richness Intersection works on subset of site/species", {
     paste0("Differing number of species between trait dataset ",
            "and site-species matrix\nTaking subset of species")
   )
-})
-
-test_that("Functional Richness Intersection works for sites with no species", {
-  data("traits_plants")
-  data("site_sp_plants")
-
-  fric_inter <- expect_silent(
-    fd_fric_intersect(traits_plants, site_sp_plants[10,, drop = FALSE])
-  )
-
-  expect_equal(fric_inter$FRic_intersect[[1]], NA_real_)
 })
 
 test_that("Functional Richness Intersection can standardize its values", {
@@ -81,7 +71,7 @@ test_that("Functional Richness Intersection can standardize its values", {
 
 test_that("Functional Richness Intersection edge cases", {
 
-  # Not enough species compared to the number of traits to be computed
+  # n_species < n_traits
   expect_identical(
     fd_fric_intersect(traits_birds[1:4, ])[["FRic_intersect"]],
     NA_real_
@@ -91,16 +81,23 @@ test_that("Functional Richness Intersection edge cases", {
     expect_setequal(
       fd_fric_intersect(traits_birds[1:4, ], site_sp_birds)[["FRic_intersect"]],
       NA_real_
-    )
+    ),
+    paste0(
+    "Differing number of species between trait dataset and site-species matrix",
+    "\nTaking subset of species"
+    ),
+    fixed = TRUE
   )
 
-  # Several species with similar trait values -> not enought species for FRic
+
+  # Duplicate trait values -> n_species < n_traits
   dup_traits <- lapply(1:5, function(x) traits_birds[1,, drop = FALSE])
   dup_traits <- do.call(rbind, dup_traits)
 
   expect_identical(fd_fric_intersect(dup_traits)[["FRic_intersect"]], NA_real_)
 
-  # Trying to compute FRic with >16 traits
+
+  # n_traits > 16 (computational limit)
   many_traits <- cbind(traits_birds, traits_birds, traits_birds, traits_birds,
                        traits_birds)
   expect_error(
@@ -112,7 +109,8 @@ test_that("Functional Richness Intersection edge cases", {
     fixed = TRUE
   )
 
-  # Compute FRic for site with a single species
+
+  # n_species = 1 < n_traits
   site_sp <- matrix(0, ncol = nrow(traits_birds), nrow = 1,
                     dimnames = list("s1", rownames(traits_birds)))
   site_sp[1,1] <- 1
@@ -122,6 +120,16 @@ test_that("Functional Richness Intersection edge cases", {
   expect_identical(fd_fric_intersect(traits_birds, site_sp)[["FRic_intersect"]],
                    NA_real_)
 
+
+  # n_species = 0 < n_traits
+  data("traits_plants")
+  data("site_sp_plants")
+
+  fric_inter <- expect_silent(
+    fd_fric_intersect(traits_plants, site_sp_plants[10,, drop = FALSE])
+  )
+
+  expect_equal(fric_inter$FRic_intersect[[1]], NA_real_)
 })
 
 test_that("Functional Richness Intersection works on sparse matrices", {

@@ -52,7 +52,7 @@ test_that("Rao's Quadratic Entropy works on subset of site/species", {
                         "and site-species matrix\nTaking subset of species"))
 })
 
-test_that("Functional Richness Intersection works for site with no species", {
+test_that("Rao's quadratric entropy works for sites with no species", {
   data("traits_plants")
   data("site_sp_plants")
 
