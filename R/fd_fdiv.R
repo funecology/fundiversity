@@ -56,31 +56,31 @@ fd_fdiv <- function(traits, sp_com) {
 
     if (all(is.na(sp_site)) | all(sp_site == 0)) {
       return(0)
-    } else {
-      # Select only species that are in site
-      sub_site <- sp_site[sp_site > 0]
-
-      # Select traits for species actually in site
-      sub_traits <- traits[names(sub_site),, drop = FALSE]
-
-      ch <- fd_chull(sub_traits)
-
-      verts <- ch$p[unique(c(ch$hull)),, drop = FALSE]
-
-      G <- colMeans(verts)
-
-      dG <- sqrt(colSums((t(sub_traits) - G)^2))
-
-      mean_dG <- mean(dG)
-
-      deltaD <- sum(sub_site*(dG - mean_dG))
-
-      deltaD_abs <- sum(sub_site*abs(dG - mean_dG))
-
-      FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
-
-      return(FDiv)
     }
+
+    # Select only species that are in site
+    sub_site <- sp_site[sp_site > 0]
+
+    # Select traits for species actually in site
+    sub_traits <- traits[names(sub_site),, drop = FALSE]
+
+    ch <- fd_chull(sub_traits)
+
+    verts <- ch$p[unique(c(ch$hull)),, drop = FALSE]
+
+    G <- colMeans(verts)
+
+    dG <- sqrt(colSums((t(sub_traits) - G)^2))
+
+    mean_dG <- mean(dG)
+
+    deltaD <- sum(sub_site*(dG - mean_dG))
+
+    deltaD_abs <- sum(sub_site*abs(dG - mean_dG))
+
+    FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
+
+    return(FDiv)
   })
 
   data.frame(site = rownames(sp_com), FDiv = fdiv_site,
