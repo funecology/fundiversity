@@ -14,6 +14,8 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `Q` the values of Rao's quadratic entropy at each site.
 #'
+#' NB: Rao's quadratic entropy is 0 when there are no species in the site.
+#'
 #' @references
 #' Pavoine S., Dolédec S. (2005). The apportionment of quadratic entropy: a
 #' useful alternative for partitioning diversity in ecological data.

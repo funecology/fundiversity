@@ -30,6 +30,9 @@ a data.frame with three columns:
 \item \code{FRic_intersect} the volume of the convex hulls intersection of each
 pair of site.
 }
+
+NB: FRic_intersect is equal to \code{NA} when there are strictly less species in
+one of the sites than the number of provided traits.
 }
 \description{
 Compute volume of the intersection of the convex hulls of all pairs

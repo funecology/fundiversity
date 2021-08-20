@@ -13,6 +13,8 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FDiv` the values of functional divergence at each site.
 #'
+#' NB: when a site contains no species FDiv is equal to 0.
+#'
 #' @references
 #' Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional
 #' functional diversity indices for a multifaceted framework in functional

@@ -13,6 +13,8 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FDis` the values of functional dispersion at each site.
 #'
+#' NB: when a site contains no species FDis is equal to 0.
+#'
 #' @references
 #' Laliberté, E., & Legendre, P. (2010). A distance-based framework for
 #' measuring functional diversity from multiple traits. Ecology, 91(1),

@@ -7,10 +7,14 @@
 #' @examples
 #' data(traits_birds)
 #' fd_feve(traits_birds)
+#'
 #' @return a data.frame with two columns:
 #' * `site` character column that contains site names based on input `sp_com`
 #' row names,
 #' * `FEve` numeric column that contains FEve values corresponding to each site.
+#'
+#' NB: By definition FEve is equal to `NA` when the number of species per site
+#' is strictly lower than 3.
 #'
 #' @references
 #' Villéger, S., Mason, N.W.H., Mouillot, D., 2008. New Multidimensional
