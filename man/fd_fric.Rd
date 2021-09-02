@@ -28,6 +28,9 @@ a data.frame with two columns:
 \item \code{site} the names of the sites as the row names of the input \code{sp_com},
 \item \code{FRic} the values of functional richness at each site.
 }
+
+NB: FRic is equal to \code{NA} when there are strictly less species in a site
+than the number of provided traits.
 }
 \description{
 Functional Richness is computed as the volume of the convex hull from all

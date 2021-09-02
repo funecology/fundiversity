@@ -30,6 +30,17 @@ test_that("Function Dispersion works on subset of site/species", {
                         "and site-species matrix\nTaking subset of species"))
 })
 
+test_that("Functional Dispersion works for site with no species", {
+  data("traits_plants")
+  data("site_sp_plants")
+
+  fdis <- expect_silent(
+    fd_fdis(traits_plants, site_sp_plants[10,, drop = FALSE])
+  )
+
+  expect_equal(fdis$FDis[[1]], 0)
+})
+
 test_that("Functional Dispersion works in 1D", {
   expect_identical(
     fd_fdis(traits_birds[, 1]),

@@ -25,6 +25,8 @@ a data.frame with two columns:
 \item \code{site} the names of the sites as the row names of the input \code{sp_com},
 \item \code{Q} the values of Rao's quadratic entropy at each site.
 }
+
+NB: Rao's quadratic entropy is 0 when there are no species in the site.
 }
 \description{
 Compute Rao's entropy index (Rao's Q)

@@ -26,6 +26,9 @@ a data.frame with two columns:
 row names,
 \item \code{FEve} numeric column that contains FEve values corresponding to each site.
 }
+
+NB: By definition FEve is equal to \code{NA} when the number of species per site
+is strictly lower than 3.
 }
 \description{
 Compute Functional Evenness (FEve)
@@ -41,6 +44,7 @@ computation please refer to the parallelization vignette with:
 \examples{
 data(traits_birds)
 fd_feve(traits_birds)
+
 }
 \references{
 Villéger, S., Mason, N.W.H., Mouillot, D., 2008. New Multidimensional

@@ -13,6 +13,8 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FDiv` the values of functional divergence at each site.
 #'
+#' NB: when a site contains no species FDiv is equal to 0.
+#'
 #' @references
 #' Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional
 #' functional diversity indices for a multifaceted framework in functional
@@ -47,10 +49,16 @@ fd_fdiv <- function(traits, sp_com) {
   }
 
   # Standardize abundance per site
-  sp_com <- sp_com / rowSums(sp_com)
+  site_abundances <- rowSums(sp_com, na.rm = TRUE)
+  site_abundances[site_abundances == 0] <- 1  # Account for site with no species
+  sp_com <- sp_com / site_abundances
 
   # Compute Functional Divergence
   fdiv_site <- future_apply(sp_com, 1, function(sp_site) {
+
+    if (all(is.na(sp_site)) | all(sp_site == 0)) {
+      return(0)
+    }
 
     # Select only species that are in site
     sub_site <- sp_site[sp_site > 0]
@@ -73,9 +81,10 @@ fd_fdiv <- function(traits, sp_com) {
     deltaD_abs <- sum(sub_site*abs(dG - mean_dG))
 
     FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
+
+    return(FDiv)
   })
 
   data.frame(site = rownames(sp_com), FDiv = fdiv_site,
              row.names = NULL)
-
 }
