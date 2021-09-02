@@ -74,7 +74,8 @@ Running title (max 45 char.): fundiversity: functional diversity in R
 
 Word count (3000-4000 incl. refs & captions): `r wordcountaddin::word_count()`
 
-## Introduction
+
+# Introduction
 
 Functional diversity, the diversity of traits across scales, is a major facet of biodiversity [@Pavoine_Measuring_2011]. It has been shown to relate to ecosystem functioning [@Diaz_Vive_2001; @Leps_Quantifying_2006]. Since its definition it has been widely used across ecological contexts [@Cadotte_species_2011]. Many indices exist to characterize it across its three dimensions: richness, evenness, divergence [@Pavoine_Measuring_2011]. To compute these indices in a standardized ways ecologists rely on computational tools able to crunch the numbers for thousands of species and thousands of sites. In the last few years, R has been the programming language of choice for ecologists [@Lai_Evaluating_2019; @RCoreTeam_language_2021]. The main tool available to compute functional diversity indices has been the `FD` package which has now accumulated more than 1200 citations [@Laliberte_FD_2014]. The `FD` package has not been updated since 2015 and it does not offer the flexibility needed by some users. Ecology increasingly use larger datasets which require more efficient computations [@Farley_Situating_2018; @Wuest_Macroecology_2020]. The tools to compute functional diversity indices are thus in great need of improvement.
 
@@ -87,7 +88,7 @@ Functional diversity, the diversity of traits across scales, is a major facet of
 **What we do here**. We here propose a modern alternative to `FD` called `fundiversity` that benefit from modern development practices, needed features for large sized dataset (modularity, parallelization, and memoization), and greater flexibility. The package can be easily extended to accommodate additional diversity indices not covered by following a clear design pattern detailed in the next section.
 
 
-## Main features of `fundiversity`
+# Main features of `fundiversity`
 
 To ensure the consistency of its functions and to make it easy to use `fundiversity` follows clear design principles. We expose its distinctive features and principles in this section.
 
@@ -104,7 +105,7 @@ To ensure the consistency of its functions and to make it easy to use `fundivers
 **Main indices**. Because both hillR and betapart packages are great tools to compute hill indices and functional beta-diversity indices, respectively. To avoid reinventing the wheel when it works well, fundiversity mostly contains indices that are not provided by these two packages. fundiversity contains mostly indices of functional alpha diversity (and 1 index of functional beta-diversity). We focused on indices available through the `dbFD()` function in the FD package and on indices that could leverage on faster implementation. fundiversity contains the following alpha functional diversity indices: FRic functional richness, FDis functional dispersion, FDiv functional divergence,  FEve functional evenness, and Q Rao’s quadratic entropy. Fundiversity also contains a beta-diversity index as it can be quite used to compare functional richness between sites, and no implementation was available at the time it was developed (but see `betapart` newest function).
 
 
-## Case Study
+# Case Study
 
 How would fundiversity sit in your analyses?
 Classical functional diversity workflow:
@@ -117,7 +118,7 @@ Classical functional diversity workflow:
 Show case study with data in fundiversity? Through default data available in the package.
 
 
-## Performance Comparison
+# Performance Comparison
 
 In order to track to what extent the additional functionalities provided fundiversity actually helped in cutting the computation time we compared computation time on standardized datasets across similar functions in other packages. We only compared to "original" packages that provide actual functions and not wrappers that depends on other packages to provide computation of functional diversity indices. We identified Y similar packages. Most indices are included `FD::dbFD()` function but the comparison would be unfair as the function computes many indices in a single call while functions in fundiversity only compute single indices. An updated version of this section can be found through the performance comparison vignette within the fundiversity package with the `vignette("performance", package = "fundiversity")`. Only for Rao’s quadratic entropy (and for beta functional richness intersection?).
 
@@ -132,19 +133,19 @@ Note on the effect of parallelization on computing speed.
 Note on the effect of memoization on computing speed.
 
 
-## Acknowledgements
+# Acknowledgements
 
 MG gratefully acknowledges the support of iDiv funded by the German Research Foundation (DFG–FZT 118, 202548816).
 
 
-## Authors' Contributions
+# Authors' Contributions
 
 MG and HG both conceived the package. MG led the writing of the manuscript. Both authors contributed critically to the drafts and gave final approval for publication.
 
 
-## Data Availability
+# Data Availability
 
 fundiversity is available on CRAN through `install.packages("fundiversity")` as well as on GitHub at https://github.com/Bisaloo/fundiversity, for archival all releases are available on Zenodo at https://doi.org/10.5281/zenodo.4761754. The data used in this article are available from the package, through `data(package = "fundiversity")` call.
 
 
-## References
+# References
