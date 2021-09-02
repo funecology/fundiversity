@@ -166,12 +166,13 @@ a <code>data.frame</code>, or a <code><a href='https://rdrr.io/pkg/Matrix/man/Ma
 <li><p><code>FDis</code> the values of functional dispersion at each site.</p></li>
 </ul>
 
+<p>NB: when a site contains no species FDis is equal to 0.</p>
     <h2 class="hasAnchor" id="parallelization"><a class="anchor" href="#parallelization"></a>Parallelization</h2>
 
     
 
 <p>The computation of this function can be parallelized thanks to
-<code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code>. To get more information on how to parallelize your
+<code><a href='https://future.futureverse.org/reference/plan.html'>future::plan()</a></code>. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
 <code><a href='../articles/parallel.html'>vignette("parallel", package = "fundiversity")</a></code></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

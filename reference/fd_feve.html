@@ -174,12 +174,14 @@ row names,</p></li>
 <li><p><code>FEve</code> numeric column that contains FEve values corresponding to each site.</p></li>
 </ul>
 
+<p>NB: By definition FEve is equal to <code>NA</code> when the number of species per site
+is strictly lower than 3.</p>
     <h2 class="hasAnchor" id="parallelization"><a class="anchor" href="#parallelization"></a>Parallelization</h2>
 
     
 
 <p>The computation of this function can be parallelized thanks to
-<code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code>. To get more information on how to parallelize your
+<code><a href='https://future.futureverse.org/reference/plan.html'>future::plan()</a></code>. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
 <code><a href='../articles/parallel.html'>vignette("parallel", package = "fundiversity")</a></code></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -192,7 +194,8 @@ Ecology. Ecology 89, 2290–2301. doi: <a href='https://doi.org/10.1890/07-1206.
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
 <span class='fu'>fd_feve</span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   site      FEve
-#&gt; 1   s1 0.3743341</div></pre>
+#&gt; 1   s1 0.3743341</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

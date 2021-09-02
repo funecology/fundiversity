@@ -186,6 +186,8 @@ in the site-species matrix, add corresponding columns of 0s.</p></td>
 pair of site.</p></li>
 </ul>
 
+<p>NB: FRic_intersect is equal to <code>NA</code> when there are strictly less species in
+one of the sites than the number of provided traits.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>By default, when loading <code>fundiversity</code>, the functions to compute
@@ -200,7 +202,7 @@ Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it eac
     
 
 <p>The computation of this function can be parallelized thanks to
-<code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code>. To get more information on how to parallelize your
+<code><a href='https://future.futureverse.org/reference/plan.html'>future::plan()</a></code>. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
 <code><a href='../articles/parallel.html'>vignette("parallel", package = "fundiversity")</a></code></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

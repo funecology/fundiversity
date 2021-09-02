@@ -115,32 +115,32 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 <div id="running-code-in-parallel" class="section level1">
 <h1 class="hasAnchor">
 <a href="#running-code-in-parallel" class="anchor"></a>Running code in parallel</h1>
-<p>By default the <code>fundiversity</code> code will run sequentially on a single core. To trigger parallelization the user needs to define a <code><a href="https://rdrr.io/pkg/future/man/plan.html">future::plan()</a></code> object with a parallel backend such as <code><a href="https://rdrr.io/pkg/future/man/multisession.html">future::multisession</a></code> to split the execution across multiple R sessions.</p>
+<p>By default the <code>fundiversity</code> code will run sequentially on a single core. To trigger parallelization the user needs to define a <code><a href="https://future.futureverse.org/reference/plan.html">future::plan()</a></code> object with a parallel backend such as <code><a href="https://future.futureverse.org/reference/multisession.html">future::multisession</a></code> to split the execution across multiple R sessions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Sequential execution</span>
 <span class="va">fric1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 
 <span class="co"># Parallel execution</span>
-<span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/multisession.html">multisession</a></span><span class="op">)</span>  <span class="co"># Plan definition</span>
+<span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html">multisession</a></span><span class="op">)</span>  <span class="co"># Plan definition</span>
 <span class="va">fric2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>  <span class="co"># The code resolve in similar fashion</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">fric1</span>, <span class="va">fric2</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
-<p>Within the <code><a href="https://rdrr.io/pkg/future/man/multisession.html">future::multisession</a></code> backend you can specify the number of cores on which the function should be parallelized over through the argument <code>workers</code>, you can change it in the <code><a href="https://rdrr.io/pkg/future/man/plan.html">future::plan()</a></code> call:</p>
+<p>Within the <code><a href="https://future.futureverse.org/reference/multisession.html">future::multisession</a></code> backend you can specify the number of cores on which the function should be parallelized over through the argument <code>workers</code>, you can change it in the <code><a href="https://future.futureverse.org/reference/plan.html">future::plan()</a></code> call:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/multisession.html">multisession</a></span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>  <span class="co"># Only 2 cores are used</span>
+<code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html">multisession</a></span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>  <span class="co"># Only 2 cores are used</span>
 <span class="va">fric3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/identical.html">identical</a></span><span class="op">(</span><span class="va">fric3</span>, <span class="va">fric2</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
-<p>To learn more about the different backends available and the related arguments needed, please refer to the documentation of <code><a href="https://rdrr.io/pkg/future/man/plan.html">future::plan()</a></code> and the <a href="https://cran.r-project.org/package=future">overview vignette of <code>future</code></a>.</p>
+<p>To learn more about the different backends available and the related arguments needed, please refer to the documentation of <code><a href="https://future.futureverse.org/reference/plan.html">future::plan()</a></code> and the <a href="https://cran.r-project.org/package=future">overview vignette of <code>future</code></a>.</p>
 </div>
 <div id="performance-comparison" class="section level1">
 <h1 class="hasAnchor">
 <a href="#performance-comparison" class="anchor"></a>Performance comparison</h1>
 <p>We can now compare the difference in performance to see the performance gain thanks to parallelization:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/sequential.html">sequential</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html">sequential</a></span><span class="op">)</span>
 <span class="va">non_parallel_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   non_parallel <span class="op">=</span> <span class="op">{</span>
     <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
@@ -148,7 +148,7 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
   times <span class="op">=</span> <span class="fl">20</span>
 <span class="op">)</span>
 
-<span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/multisession.html">multisession</a></span><span class="op">)</span>
+<span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html">multisession</a></span><span class="op">)</span>
 <span class="va">parallel_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   parallel <span class="op">=</span> <span class="op">{</span>
     <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
@@ -176,15 +176,15 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 
 <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   seq <span class="op">=</span> <span class="op">{</span> 
-    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/sequential.html">sequential</a></span><span class="op">)</span> 
+    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html">sequential</a></span><span class="op">)</span> 
     <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> 
   <span class="op">}</span>,
   multisession <span class="op">=</span> <span class="op">{</span> 
-    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/multisession.html">multisession</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
+    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html">multisession</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
     <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> 
   <span class="op">}</span>,
   multicore <span class="op">=</span> <span class="op">{</span> 
-    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/future/man/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/future/man/multicore.html">multicore</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> 
+    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multicore.html">multicore</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> 
     <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> 
   <span class="op">}</span>, times <span class="op">=</span> <span class="fl">20</span>
 <span class="op">)</span>
