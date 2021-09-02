@@ -54,7 +54,6 @@ keywords:
 header-includes:
   - \linenumbers
   - \usepackage{endfloat}
-  
 
 csl: methods-in-ecology-and-evolution.csl
 
@@ -106,10 +105,12 @@ To ensure the consistency of its functions and to make it user-friendly, `fundiv
 
 **Main indices**. `fundiversity` only computes alpha functional diversity indices, because other packages exist to compute other types of functional diversity indices (CITE BETAPART AND HILLR). We focused on indices available through the `dbFD()` function in the `FD` package and on indices that could leverage on faster implementation. fundiversity contains the following alpha functional diversity indices: functional richness (FRic), functional dispersion (FDis), functional divergence (FDiv),  functional evenness (FEVE), and Rao’s quadratic entropy (Q). `fundiversity` also contains a beta-diversity index as it can be useful to compare functional richness between sites, and no implementation was available at the time it was developed (but see `betapart` newest functions).
 
-```{r child="man/rmdchunks/_fundiversity_functions.Rmd", fig.cap="Table of available functions in fundiversity. Each column indicates which ones are parallelizable and which ones are memoizable."}
+```{r child=here::here("man", "rmdchunks", "_fundiversity_functions.Rmd"), fig.cap="Table of available functions in fundiversity. Each column indicates which ones are parallelizable and which ones are memoizable."}
 ```
 
 [This table should probably include the name in full of the computed index? What additional info would we like to display there?]
+
+[Should we include the comparative table of packages?]
 
 # Case Study
 
@@ -158,7 +159,11 @@ Note on the effect of parallelization on computing speed.
 
 Note on the effect of memoization on computing speed.
 
+[Realistic trait and site-species data? compare across packages like Rao's between packages, FRic between packages + with/without parallelization & memoization.]
+
 # Conclusion
+
+We proposed a modernized alternative R package to compute functional diversity indices. This package leverages on modern functionalities like parallelization and memoization to increase its performance. It tries to follow best software development practices. By no means we are willing to point fingers at other packages but rather we decided to build it from scratch following clear design principles from the ground up. We hope to be a useful contribution in the field of packages that allow to compute functional diversity indices. This package is always a work in progress and we welcome contributions from interested users and developers.
 
 # Acknowledgements
 
@@ -172,7 +177,7 @@ MG and HG both conceived the package. MG led the writing of the manuscript. Both
 
 # Data Availability
 
-fundiversity is available on CRAN through `install.packages("fundiversity")` as well as on GitHub at https://github.com/Bisaloo/fundiversity, for archival all releases are available on Zenodo at https://doi.org/10.5281/zenodo.4761754. The data used in this article are available from the package, through `data(package = "fundiversity")` call.
+`fundiversity` is available on CRAN through `install.packages("fundiversity")` as well as on GitHub at https://github.com/Bisaloo/fundiversity, for archival all releases are available on Zenodo at https://doi.org/10.5281/zenodo.4761754. The data used in this article are available from the package, through `data(package = "fundiversity")` call.
 
 
 # References
