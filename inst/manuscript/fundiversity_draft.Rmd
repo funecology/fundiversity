@@ -34,13 +34,13 @@ address:
 abstract: |
   (max 350 words)
   
-  1. set the context for and purpose of the work;
+  1. Functional diversity is widely used and widespread. However the main package used to compute functional diversity indices `FD` is not flexible and not adapted to the volume of data used in modern ecological analyses;
   
-  2. indicate the approach and methods;
+  2. We here present `fundiversity`, an R package that ease the computation of classical functional diversity indices. It is modular, leverage on parallelization and memoization (storing some results in memory) to maximize efficiency with data with thousands of columns and rows.;
   
-  3. outline the main results;
+  3. In addition of being more flexible we did a performance comparison with packages that provide analog functions. `fundiversity` was always at an order of magnitude quicker. DEVELOP THE INFLUENCE OF DATASET SIZE ON COMPUTATION SPEED (+ MEMORY CONSUMPTION?);
   
-  4. identify the conclusions and the wider implications.
+  4. `fundiversity` aims to be an efficient tool to compute functional diversity indices, in order to be used in a variety of context. Because it has been designed following clear principles, it is easy to extend. We hope the wider community will adopt it and we welcome all contributions.
 
 keywords:
   - biodiversity;
