@@ -116,7 +116,7 @@ To ensure the consistency of its functions and to make it user-friendly, `fundiv
 
 Now that we described the main features of fundiversity, we are going to show how to use in practice when computing functional diversity indices. As an example dataset we included in `fundiversity` site-species and trait data from @Nowak_Data_2019. It is accessible through the use of the `data(..., package = "fundiversity")` function. This dataset describes the presence of bird species in South America at different elevations and four morphological traits. We are interested in knowing how different aspects of functional diversity of birds vary with elevation.
 
-`fundiversity` only focuses on computing functional diversity indices, so the rest of the analysis has to be performed with other packages.
+The trait values show species in rows (species are specified as row names) and traits in columns with trait names as columns names. Similarly site-species matrix contains sites as rows (site names are row names) and species as columns (species names are column names).
 
 ```{r load_data}
 data("traits_birds",  package = "fundiversity")
@@ -134,7 +134,7 @@ z_traits = scale(traits_birds, center = TRUE, scale = TRUE)
 trait_distance = as.matrix(dist(z_traits))
 ```
 
-We can then compute the functional richness of each indices at each location. To do so we are using the `fd_fric()` function. It expects quantitative trait values as first argument and a site-species matrix as a second argument.
+We can then compute the functional richness of each indices at each location. To do so we are using the `fd_fric()` function. It expects quantitative trait values as first argument and a site-species matrix as a second argument. 
 
 ```{r fric}
 library("fundiversity")
@@ -143,6 +143,21 @@ birds_fric = fd_fric(z_traits, site_sp_birds)
 
 head(birds_fric)
 ```
+
+All other functions in `fundiversity` use a similar structure, the first input is trait data the second one is a site-species matrix. For Rao's quadratic entropy computed through `fd_raoq()` functional dissimilarities can be specified as the third argument:
+
+```{r raoq}
+# With functional dissimilarity
+birds_raoq = fd_raoq(traits = NULL, site_sp_birds, dist_matrix = trait_distance)
+
+# With trait values
+birds_raoq_2 = fd_raoq(z_traits, site_sp_birds)
+
+# Both options give the same results
+identical(birds_raoq, birds_raoq_2)
+```
+
+If all traits are not quantitative it is possible to transform them back into independent traits through the use of Gower's distance [@Gower_general_1971; and its extensions: @Podani_Extending_1999, @Pavoine_challenge_2009;] then applying a multivariate analysis to obtain orthogonal dimensions [@Maire_How_2015].
 
 
 # Performance Comparison
