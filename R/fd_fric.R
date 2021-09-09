@@ -26,13 +26,14 @@
 #' data(traits_birds)
 #' fd_fric(traits_birds)
 #'
-#' @details By default, when loading \pkg{fundiversity}, the functions to compute
-#' convex hulls are [memoised](https://en.wikipedia.org/wiki/Memoization)
-#' through the `memoise` package if it is installed. To deactivate this behavior
-#' you can set the option `fundiversity.memoise` to `FALSE` by running the
-#' following line: `options(fundiversity.memoise = FALSE)`.
-#' If you use it interactively it will only affect your current session.
-#' Add it to your script(s) or `.Rprofile` file to avoid toggling it each time.
+#' @details By default, when loading \pkg{fundiversity}, the functions to
+#' compute convex hulls are
+#' [memoised](https://en.wikipedia.org/wiki/Memoization) through the `memoise`
+#' package if it is installed. To deactivate this behavior you can set the
+#' option `fundiversity.memoise` to `FALSE` by running the following line:
+#' `options(fundiversity.memoise = FALSE)`. If you use it interactively it will
+#' only affect your current session. Add it to your script(s) or `.Rprofile`
+#' file to avoid toggling it each time.
 #'
 #' @return a data.frame with two columns:
 #' * `site` the names of the sites as the row names of the input `sp_com`,
