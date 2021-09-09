@@ -26,7 +26,7 @@
 #' data(traits_birds)
 #' fd_fric(traits_birds)
 #'
-#' @details By default, when loading `fundiversity`, the functions to compute
+#' @details By default, when loading \pkg{fundiversity}, the functions to compute
 #' convex hulls are [memoised](https://en.wikipedia.org/wiki/Memoization)
 #' through the `memoise` package if it is installed. To deactivate this behavior
 #' you can set the option `fundiversity.memoise` to `FALSE` by running the
