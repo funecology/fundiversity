@@ -27,9 +27,15 @@ address:
       Puschstraße 4,
       04103 Leipzig, Germany
   - code: cefe
-    address: CEFE Univ Montpellier ...
+    address: |
+      CEFE, 
+      Université de Montpellier, CNRS, EPHE, IRD, Université Paul Valéry Montpellier 3, 
+      Montpellier, France
   - code: london
-    address: Tropical Medecine London
+    address: |
+      Centre for Mathematical Modelling of Infectious Diseases, 
+      London School of Hygiene & Tropical Medicine, 
+      London, UK
 
 abstract: |
   (max 350 words)
