@@ -4,7 +4,7 @@ author:
   - name: Matthias Grenié
     email: matthias.grenie@idiv.de
     orcid_id: 0000-0002-4659-7522
-    affiliation: idiv,cefe
+    affiliation: idiv,uleipzig,cefe
     footnote: 1
   - name: Hugo Gruson
     email: hugo.gruson@normalsup.org
@@ -16,7 +16,7 @@ footnote:
   - code: 1
     text: "Corresponding Author"
   - code: 2
-    text: "ORCID-ID <0000-0002-4659-7522> ORCID-ID <0000-0002-4094-1476>"
+    text: "ORCID-ID <0000-0002-4659-7522>; ORCID-ID <0000-0002-4094-1476>"
 
 date: "`r Sys.Date()`"
   
@@ -26,6 +26,9 @@ address:
       German Centre for Integrative Biodiversity Research (iDiv) Halle-Jena-Leipzig,
       Puschstraße 4,
       04103 Leipzig, Germany
+  - code: uleipzig
+    address: |
+      Leipzig University, Ritterstraße 26, 04109 Leipzig, Germany
   - code: cefe
     address: |
       CEFE, 
