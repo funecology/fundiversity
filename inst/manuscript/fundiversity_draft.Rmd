@@ -123,7 +123,7 @@ As we underlined in introduction, automatic software testing, while not 100% foo
 
 # Case Study
 
-Now that we described the main features of fundiversity, we are going to show how to use in practice when computing functional diversity indices. As an example dataset we included in `fundiversity` site-species and trait data from @Nowak_Data_2019. It is accessible through the use of the `data(..., package = "fundiversity")` function. This dataset describes the presence of bird species in South America at different elevations and four morphological traits. We are interested in knowing how different aspects of functional diversity of birds vary with elevation.
+Now that we described the main features of fundiversity, we are going to show how to use in practice when computing functional diversity indices. As an example dataset we included in `fundiversity` site-species and trait data from @Nowak_Data_2019. It is accessible through the use of the `data(..., package = "fundiversity")` function. This dataset describes the presence of bird species in South America at different elevations and four morphological traits.
 
 The trait values show species in rows (species are specified as row names) and traits in columns with trait names as columns names. Similarly site-species matrix contains sites as rows (site names are row names) and species as columns (species names are column names).
 
@@ -188,7 +188,7 @@ Note on the effect of memoization on computing speed.
 
 # Conclusion
 
-We proposed a modern alternative R package to compute functional diversity indices. This package leverages modern functionalities like parallelization and memoization to increase its performance. It tries to follow best software development practices. By no means we are willing to point fingers at other packages but rather we decided to build it from scratch following clear design principles from the ground up. We hope to be a useful contribution in the field of packages that allow to compute functional diversity indices. This package is always a work in progress and we welcome contributions from interested users and developers.
+We proposed a modern alternative R package to compute functional diversity indices. This package leverages modern features like parallelization and memoization to increase its performance. It tries to follow best software development practices. By no means we are willing to point fingers at other packages but rather we decided to build it from scratch following clear design principles from the ground up. We hope to be a useful contribution in the field of packages that allow to compute functional diversity indices. This package is always a work in progress and we welcome contributions from interested users and developers.
 
 
 # Acknowledgements
