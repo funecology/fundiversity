@@ -199,7 +199,7 @@ MG gratefully acknowledges the support of iDiv funded by the German Research Fou
 
 # Authors' Contributions
 
-MG and HG both conceived the package. MG led the writing of the manuscript. Both authors contributed critically to the drafts and gave final approval for publication.
+Our authors' statement follows the Contributor Roles Taxonomy (CRediT, https://casrai.org/credit/). **Matthias Grenié**: Conceptualization, Methodology, Software, Resources, Writing - Original Draft, Writing - Review & Editing, Supervision. **Hugo Gruson**: Conceptualization, Methodology, Software, Writing - Review & Editing.
 
 
 # Data Availability
