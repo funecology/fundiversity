@@ -1,5 +1,6 @@
 # A wrapper around geometry::intersectn() to properly handle errors and specific
 # cases
+#' @importFrom geometry intersectn
 fd_chull_intersect <- function(traits1, traits2) {
 
   traits1 <- traits1[!duplicated(traits1),, drop = FALSE]
@@ -32,5 +33,5 @@ fd_chull_intersect <- function(traits1, traits2) {
     )
   }
 
-  return(geometry::intersectn(traits1, traits2, options = "FA")[["ch"]])
+  return(intersectn(traits1, traits2, options = "FA")[["ch"]])
 }

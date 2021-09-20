@@ -1,5 +1,6 @@
 # A wrapper around geometry::convhulln() to properly handle errors and specific
 # cases
+#' @importFrom geometry convhulln
 fd_chull <- function(traits) {
 
   traits <- traits[!duplicated(traits),, drop = FALSE]
@@ -22,6 +23,6 @@ fd_chull <- function(traits) {
     ))
   }
 
-  return(geometry::convhulln(traits, "FA"))
+  return(convhulln(traits, "FA"))
 
 }
