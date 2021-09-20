@@ -1,3 +1,9 @@
+# fundiversity 0.2.1
+
+## Internal changes
+
+* Unit tests have been updated to work with testthat 3.1.0
+
 # fundiversity 0.2.0
 
 ## Major changes
