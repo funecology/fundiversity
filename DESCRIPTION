@@ -1,6 +1,6 @@
 Package: fundiversity
 Title: Easy Computation of Alpha Functional Diversity Indices
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: 
     c(
       person("Matthias", "Grenié",
