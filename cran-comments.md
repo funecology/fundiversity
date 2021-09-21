@@ -1,7 +1,5 @@
 ## General Comments
 
-Fixed CRAN link in README.md 
-
 ## Test environments
 
 * Mac OS High Sierra 10.13.6 (local), R 4.0.3
@@ -28,7 +26,15 @@ Fixed CRAN link in README.md
 * checking CRAN incoming feasibility ... NOTE
 Maintainer: ‘Matthias Grenié <matthias.grenie@gmail.com>’
 
-Possibly mis-spelled words in DESCRIPTION:
-  FDis (16:26)
-  FEve (15:41)
+Possibly misspelled words in DESCRIPTION:
+  FDis (17:26)
+  FDiv (16:15)
+  FEve (16:41)
+  FRic (16:69)
+  Indices (2:55)
+  Rao's (17:36)
+  Vill�ger (17:67)
+  al (18:6)
+  et (18:3)
+  indices (15:52, 19:35)
 
