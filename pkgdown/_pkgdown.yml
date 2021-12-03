@@ -1,5 +1,8 @@
 url: https://bisaloo.github.io/fundiversity/
 
+template:
+  bootstrap: 5
+
 authors:
   Hugo Gruson:
     href: https://www.normalesup.org/~hgruson/
