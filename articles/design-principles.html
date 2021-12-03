@@ -4,142 +4,122 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="fundiversity">
 <title>Design Principles • fundiversity</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Design Principles">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Design Principles">
 <meta property="og:description" content="fundiversity">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">fundiversity</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1.9000</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">fundiversity</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1.9000</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-2">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../articles/fundiversity.html">Get started</a>
 </li>
-<li>
-  <a href="../articles/fundiversity.html">Get started</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/performance.html">Performance Comparison</a>
-    </li>
-    <li>
-      <a href="../articles/parallel.html">Parallelization</a>
-    </li>
-    <li>
-      <a href="../articles/design-principles.html">Design Principles</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/Bisaloo/fundiversity/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/performance.html">Performance Comparison</a>
+    <a class="dropdown-item" href="../articles/parallel.html">Parallelization</a>
+    <a class="dropdown-item" href="../articles/design-principles.html">Design Principles</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/Bisaloo/fundiversity/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
-
-      </header><script src="design-principles_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Design Principles</h1>
+    
+  </div>
+</nav><div class="container template-article">
+<script src="design-principles_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+  <main id="main"><div class="page-header">
+      <img src="" class="logo" alt=""><h1>Design Principles</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Bisaloo/fundiversity/blob/master/vignettes/design-principles.Rmd"><code>vignettes/design-principles.Rmd</code></a></small>
-      <div class="hidden name"><code>design-principles.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/Bisaloo/fundiversity/blob/HEAD/vignettes/design-principles.Rmd" class="external-link"><code>vignettes/design-principles.Rmd</code></a></small>
+      <div class="d-none name"><code>design-principles.Rmd</code></div>
     </div>
 
     
     
 <p>This package is built with a clear set of design principles based on current best practices. These design principles have been established before writing any code to make sure obstacles along the way would not lower our expectations.</p>
-<div id="scope" class="section level2">
-<h2 class="hasAnchor">
-<a href="#scope" class="anchor"></a>Scope</h2>
+<div class="section level2">
+<h2 id="scope">Scope<a class="anchor" aria-label="anchor" href="#scope"></a>
+</h2>
 <p>fundiversity aims to provide a reliable tool to compute functional diversity indices. As some of the most used functional diversity indices are defined in Villéger et al. (2008), fundiversity adopts this framework. Rao’s Quadratic Entropy is quite popular as an additional functional diversity index, which makes it a good addition to the panel of indices computable with fundiversity.</p>
 </div>
-<div id="dependencies" class="section level2">
-<h2 class="hasAnchor">
-<a href="#dependencies" class="anchor"></a>Dependencies</h2>
+<div class="section level2">
+<h2 id="dependencies">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies"></a>
+</h2>
 <p>We aim at having as few as dependencies as possible, unless they remain relatively lightweight <strong>and</strong> provide a large speed boost.</p>
 <p>As CRAN packages are now automatically archived at the same time of any of their strong dependencies, dependencies for fundiversity should be well established, have a good track record at remaining on CRAN, and ideally already have a large number of reverse-dependencies.</p>
 <p>Based on these guidelines, some acceptable dependencies are:</p>
 <ul>
-<li><a href="https://cran.r-project.org/package=Rcpp">Rccp</a></li>
-<li><a href="https://davidcsterratt.github.io/geometry/">geometry</a></li>
+<li><a href="https://cran.r-project.org/package=Rcpp" class="external-link">Rccp</a></li>
+<li><a href="https://davidcsterratt.github.io/geometry/" class="external-link">geometry</a></li>
 </ul>
-<p>Additionally, special care is taken with packages that rely on external libraries, as <a href="https://twitter.com/groundwalkergmb/status/1350336844022521857">their installation might be an issue on shared computing platforms where users don’t have super-user privileges</a>.</p>
-<p>fundiversity does however depend on <a href="https://cran.r-project.org/package=vegan">vegan</a> which brings quite a number of other dependencies. vegan is still heavy developed and as such shouldn’t be archived by CRAN without notice. fundiversity users probably already have vegan installed as they are probably also interested in other community ecology analyses provided by vegan. Thus depending on vegan is not a dependency nor an installation burden.</p>
+<p>Additionally, special care is taken with packages that rely on external libraries, as <a href="https://twitter.com/groundwalkergmb/status/1350336844022521857" class="external-link">their installation might be an issue on shared computing platforms where users don’t have super-user privileges</a>.</p>
+<p>fundiversity does however depend on <a href="https://cran.r-project.org/package=vegan" class="external-link">vegan</a> which brings quite a number of other dependencies. vegan is still heavy developed and as such shouldn’t be archived by CRAN without notice. fundiversity users probably already have vegan installed as they are probably also interested in other community ecology analyses provided by vegan. Thus depending on vegan is not a dependency nor an installation burden.</p>
 </div>
-<div id="functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#functions" class="anchor"></a>Functions</h2>
-<div id="each-index-should-be-computed-in-its-own-separate-function" class="section level3">
-<h3 class="hasAnchor">
-<a href="#each-index-should-be-computed-in-its-own-separate-function" class="anchor"></a>Each index should be computed in its own separate function</h3>
+<div class="section level2">
+<h2 id="functions">Functions<a class="anchor" aria-label="anchor" href="#functions"></a>
+</h2>
+<div class="section level3">
+<h3 id="each-index-should-be-computed-in-its-own-separate-function">Each index should be computed in its own separate function<a class="anchor" aria-label="anchor" href="#each-index-should-be-computed-in-its-own-separate-function"></a>
+</h3>
 <p>Putting each index in its own function improves maintainability by having shorter, more easily readable functions, with less control-flow.</p>
 <p>Additionally, it speeds up computation (versus the case where all indices would be computed each time) and keep the number of columns in the output constant (as opposed to the case where an argument would control which index is returned by a single function with all indices).</p>
 </div>
-<div id="input-data-should-not-be-transformed-without-any-explicit-action-from-the-user" class="section level3">
-<h3 class="hasAnchor">
-<a href="#input-data-should-not-be-transformed-without-any-explicit-action-from-the-user" class="anchor"></a>Input data should not be transformed without any explicit action from the user</h3>
+<div class="section level3">
+<h3 id="input-data-should-not-be-transformed-without-any-explicit-action-from-the-user">Input data should not be transformed without any explicit action from the user<a class="anchor" aria-label="anchor" href="#input-data-should-not-be-transformed-without-any-explicit-action-from-the-user"></a>
+</h3>
 <p>Some packages in functional ecology transform the data before processing it. One common such transformation is the use of dimensionality reduction techniques.</p>
 <p>Such transformations should only be done by the user if they wish to do so but never by the package itself. Even when documented in the function help, it is easily overlooked by users and may lead to misinterpreted results.</p>
 <p>One acceptable exception is when function need dissimilarity matrix as input, such as for the computation of FEve or Rao’s Quadratic Entropy. Because other functions in fundiversity accept raw trait data, for the sake of coherence the functions that need dissimilarity matrix as input should also accept raw trait data and compute dissimlilarity internally. To do so, they should still make minimal assumptions regarding the input dataset that all traits are quantitative. If it’s not the case, then it’s the user’s responsability to choose the adapted dissimilarity metric she wants to use.</p>
 </div>
 </div>
-<div id="inputs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#inputs" class="anchor"></a>Inputs</h2>
+<div class="section level2">
+<h2 id="inputs">Inputs<a class="anchor" aria-label="anchor" href="#inputs"></a>
+</h2>
 <p>Two inputs are acceptable in fundiversity functions:</p>
 <ul>
 <li>tabular data (such as a <code>matrix</code>, or a <code>tibble</code>, but with a preference for <code>data.frame</code>s) with individuals as rows and characteristics as columns.</li>
@@ -148,12 +128,12 @@
 <p>The rationale is that providing <code>data.frame</code>s with characteristics is more user-friendly, as they are a common format in functional ecology, and <code>data.frame</code>s are a familiar object in R.</p>
 <p>However, only allowing <code>data.frame</code>s doesn’t provide enough flexibility. In particular, advanced users may want to compute distances with a custom function (instead of Euclidean distances).</p>
 </div>
-<div id="outputs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#outputs" class="anchor"></a>Outputs</h2>
-<div id="functions-should-output-data-frames" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functions-should-output-data-frames" class="anchor"></a>Functions should output <code>data.frame</code>s</h3>
+<div class="section level2">
+<h2 id="outputs">Outputs<a class="anchor" aria-label="anchor" href="#outputs"></a>
+</h2>
+<div class="section level3">
+<h3 id="functions-should-output-data-frames">Functions should output <code>data.frame</code>s<a class="anchor" aria-label="anchor" href="#functions-should-output-data-frames"></a>
+</h3>
 <p>The functions should return <code>data.frame</code>s whenever possible for several reasons:</p>
 <ul>
 <li>
@@ -162,9 +142,9 @@
 <code>data.frame</code>s enable a pipe-able workflow, which is important it is already prevalent in the tidyverse and will be part of base R 4.1</li>
 </ul>
 </div>
-<div id="the-outputs-of-functions-should-be-similar-in-structure" class="section level3">
-<h3 class="hasAnchor">
-<a href="#the-outputs-of-functions-should-be-similar-in-structure" class="anchor"></a>The outputs of functions should be similar in structure</h3>
+<div class="section level3">
+<h3 id="the-outputs-of-functions-should-be-similar-in-structure">The outputs of functions should be similar in structure<a class="anchor" aria-label="anchor" href="#the-outputs-of-functions-should-be-similar-in-structure"></a>
+</h3>
 <p>To avoid further steps of data wrangling after running analyses, all functions should output similar structured data. When computing functional diversity indices most users want to compute site-level metric. To make our functions easy to use and flexible, they should only output the absolutely necessary data:</p>
 <ul>
 <li>a column named <code>site</code> containing the site names as given by the user (guessed from the row names in the input site-species matrix),</li>
@@ -173,31 +153,28 @@
 <p>That way our functions only outputs unambiguous data that can easily be reused and merged with other data at the site-level.</p>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by <a href="https://rekyt.github.io/">Matthias Grenié</a>, <a href="https://www.normalesup.org/~hgruson/">Hugo Gruson</a>.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by <a href="https://rekyt.github.io/" class="external-link">Matthias Grenié</a>, <a href="https://www.normalesup.org/~hgruson/" class="external-link">Hugo Gruson</a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>

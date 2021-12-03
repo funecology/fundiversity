@@ -1,48 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//index.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/404.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/fd_fdis.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/fd_fdiv.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/articles/design-principles.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/fd_feve.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/articles/fundiversity.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/fd_fric.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/fd_fric_intersect.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/articles/parallel.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/fd_raoq.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/articles/performance.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/site_sp_birds.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/authors.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/site_sp_plants.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/index.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/traits_birds.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/news/index.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//reference/traits_plants.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/reference/fd_fdis.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//articles/design-principles.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/reference/fd_fdiv.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//articles/fundiversity.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/reference/fd_feve.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//articles/parallel.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/reference/fd_fric.html</loc>
   </url>
   <url>
-    <loc>https://bisaloo.github.io/fundiversity//articles/performance.html</loc>
+    <loc>https://bisaloo.github.io/fundiversity/reference/fd_fric_intersect.html</loc>
+  </url>
+  <url>
+    <loc>https://bisaloo.github.io/fundiversity/reference/fd_raoq.html</loc>
+  </url>
+  <url>
+    <loc>https://bisaloo.github.io/fundiversity/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://bisaloo.github.io/fundiversity/reference/site_sp_birds.html</loc>
+  </url>
+  <url>
+    <loc>https://bisaloo.github.io/fundiversity/reference/site_sp_plants.html</loc>
+  </url>
+  <url>
+    <loc>https://bisaloo.github.io/fundiversity/reference/traits_birds.html</loc>
+  </url>
+  <url>
+    <loc>https://bisaloo.github.io/fundiversity/reference/traits_plants.html</loc>
   </url>
 </urlset>

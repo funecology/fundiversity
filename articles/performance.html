@@ -4,99 +4,79 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="fundiversity">
 <title>Performance comparison with other functional diversity packages • fundiversity</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Performance comparison with other functional diversity packages">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Performance comparison with other functional diversity packages">
 <meta property="og:description" content="fundiversity">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body data-spy="scroll" data-target="#toc">
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">fundiversity</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.1.9000</span>
-      </span>
-    </div>
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
+    
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">fundiversity</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1.9000</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-2">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../articles/fundiversity.html">Get started</a>
 </li>
-<li>
-  <a href="../articles/fundiversity.html">Get started</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/performance.html">Performance Comparison</a>
-    </li>
-    <li>
-      <a href="../articles/parallel.html">Parallelization</a>
-    </li>
-    <li>
-      <a href="../articles/design-principles.html">Design Principles</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="../news/index.html">Changelog</a>
-</li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/Bisaloo/fundiversity/">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/performance.html">Performance Comparison</a>
+    <a class="dropdown-item" href="../articles/parallel.html">Parallelization</a>
+    <a class="dropdown-item" href="../articles/design-principles.html">Design Principles</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/Bisaloo/fundiversity/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
-
-      </header><script src="performance_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Performance comparison with other functional diversity packages</h1>
+    
+  </div>
+</nav><div class="container template-article">
+<script src="performance_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+  <main id="main"><div class="page-header">
+      <img src="" class="logo" alt=""><h1>Performance comparison with other functional diversity packages</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/Bisaloo/fundiversity/blob/master/vignettes/performance.Rmd"><code>vignettes/performance.Rmd</code></a></small>
-      <div class="hidden name"><code>performance.Rmd</code></div>
-
+      <small class="dont-index">Source: <a href="https://github.com/Bisaloo/fundiversity/blob/HEAD/vignettes/performance.Rmd" class="external-link"><code>vignettes/performance.Rmd</code></a></small>
+      <div class="d-none name"><code>performance.Rmd</code></div>
     </div>
 
     
@@ -105,30 +85,30 @@
 # Pre-render with 
 knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 -->
-<p>This vignette presents some performance tests ran between <code>fundiversity</code> and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is <a href="https://ropensci.org/technotes/2019/12/08/precompute-vignettes/"><strong>pre-computed</strong></a>.</p>
-<div id="other-packages-to-compute-fd-indices" class="section level1">
-<h1 class="hasAnchor">
-<a href="#other-packages-to-compute-fd-indices" class="anchor"></a>Other packages to compute FD indices</h1>
-<div id="main-functions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#main-functions" class="anchor"></a>Main functions</h2>
+<p>This vignette presents some performance tests ran between <code>fundiversity</code> and other functional diversity packages. Note that to avoid the dependency on other packages, this vignette is <a href="https://ropensci.org/technotes/2019/12/08/precompute-vignettes/" class="external-link"><strong>pre-computed</strong></a>.</p>
+<div class="section level1">
+<h1 id="other-packages-to-compute-fd-indices">Other packages to compute FD indices<a class="anchor" aria-label="anchor" href="#other-packages-to-compute-fd-indices"></a>
+</h1>
+<div class="section level2">
+<h2 id="main-functions">Main functions<a class="anchor" aria-label="anchor" href="#main-functions"></a>
+</h2>
 <p><strong><code>FD::dbFD()</code></strong> is probably the most known function to compute functional diversity indices. It comes from the <code>FD</code> package proposed by <span class="citation">Laliberté, Legendre, and Shipley (2014)</span>. It can compute many indices: functional richness, Rao’s quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.</p>
 <p><strong><code>hillR::hill_func()</code></strong> comes from the <code>hillR</code> package that computes Hill numbers for taxonomic, functional, and functional diversity <span class="citation">(Li 2018)</span>. It implements indices proposed by <span class="citation">Chao, Chiu, and Jost (2014)</span>. It computes Rao’s quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.</p>
 <p><strong><code>adiv::QE()</code></strong> comes from the <code>adiv</code> package which proposes a toolkit to analyze biodiversity <span class="citation">(Pavoine 2020)</span>. This function computes Rao’s quadratic entropy.</p>
 <p><strong><code>SYNCSA::rao.diversity()</code></strong> comes from <code>SYNCSA</code> package which proposes a simulation framework for meta-communities <span class="citation">(Debastiani and Pillar 2012)</span>. The function computes Rao’s quadratic entropy as well as functional redundancy.</p>
 <p><strong><code>mFD::alpha.fd.hill()</code></strong> comes from the <code>mFD</code> package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indiceS.</p>
 </div>
-<div id="benchmark-between-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#benchmark-between-packages" class="anchor"></a>Benchmark between packages</h2>
+<div class="section level2">
+<h2 id="benchmark-between-packages">Benchmark between packages<a class="anchor" aria-label="anchor" href="#benchmark-between-packages"></a>
+</h2>
 <p>We will now benchmark the functions included in <code>fundiversity</code> with the corresponding function in other packages using the <code>microbenchmark::microbenchmark()</code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tictoc</span><span class="fu">::</span><span class="fu">tic</span><span class="op">(</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://bisaloo.github.io/fundiversity/">fundiversity</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bisaloo.github.io/fundiversity/">fundiversity</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
 
-<span class="va">dist_traits_birds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></code></pre></div>
+<span class="va">dist_traits_birds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></code></pre></div>
 <p>With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in <code>fundiversity</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pkg_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
@@ -143,11 +123,11 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
   <span class="op">}</span>,
   SYNCSA <span class="op">=</span> <span class="op">{</span>
     <span class="fu">SYNCSA</span><span class="fu">::</span><span class="fu">rao.diversity</span><span class="op">(</span><span class="va">site_sp_birds</span>,
-                          phylodist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">dist_traits_birds</span><span class="op">)</span>,
+                          phylodist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dist_traits_birds</span><span class="op">)</span>,
                           standardize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">PhyRao</span>
   <span class="op">}</span>,
   FD <span class="op">=</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span>
       <span class="fu">FD</span><span class="fu">::</span><span class="fu">dbFD</span><span class="op">(</span>x <span class="op">=</span> <span class="va">dist_traits_birds</span>, a <span class="op">=</span> <span class="va">site_sp_birds</span>, stand.x <span class="op">=</span> <span class="cn">FALSE</span>,
                calc.FRic <span class="op">=</span> <span class="cn">TRUE</span>, calc.CWM <span class="op">=</span> <span class="cn">FALSE</span>, calc.FDiv <span class="op">=</span> <span class="cn">FALSE</span>,
                calc.FGR <span class="op">=</span> <span class="cn">FALSE</span>, m <span class="op">=</span> <span class="st">"max"</span>, stand.FRic <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -176,31 +156,30 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;           mFD    4.251853    4.609947   11.588040    4.842196    5.545768  665.1295   500 a</span></code></pre></div>
 </div>
 </div>
-<div id="benchmark-within-fundiversity" class="section level1">
-<h1 class="hasAnchor">
-<a href="#benchmark-within-fundiversity" class="anchor"></a>Benchmark within <code>fundiversity</code>
+<div class="section level1">
+<h1 id="benchmark-within-fundiversity">Benchmark within <code>fundiversity</code><a class="anchor" aria-label="anchor" href="#benchmark-within-fundiversity"></a>
 </h1>
 <p>We now proceed to the performance evaluation of functions within <code>fundiversity</code> with datasets of increasing sizes.</p>
-<div id="increasing-the-number-of-species" class="section level2">
-<h2 class="hasAnchor">
-<a href="#increasing-the-number-of-species" class="anchor"></a>Increasing the number of species</h2>
+<div class="section level2">
+<h2 id="increasing-the-number-of-species">Increasing the number of species<a class="anchor" aria-label="anchor" href="#increasing-the-number-of-species"></a>
+</h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">make_more_sp</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">traits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">traits_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">traits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">traits_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>tr <span class="op">=</span> <span class="va">traits</span>, si <span class="op">=</span> <span class="va">site_sp</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>tr <span class="op">=</span> <span class="va">traits</span>, si <span class="op">=</span> <span class="va">site_sp</span><span class="op">)</span>
 <span class="op">}</span>
 
 <span class="va">null_sp_1000</span>   <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
 <span class="va">null_sp_10000</span>  <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
 <span class="va">null_sp_100000</span> <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">500</span><span class="op">)</span></code></pre></div>
-<div id="functional-richness" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functional-richness" class="anchor"></a>Functional Richness</h3>
+<div class="section level3">
+<h3 id="functional-richness">Functional Richness<a class="anchor" aria-label="anchor" href="#functional-richness"></a>
+</h3>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bench_sp_fric</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
@@ -223,9 +202,9 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;   species_10000  28.16377  28.72545  58.63922  29.44426  37.00387  662.93365    30  a </span>
 <span class="co">#&gt;  species_100000 148.85628 172.34064 313.60939 180.87062 212.01963 2071.42395    30   b</span></code></pre></div>
 </div>
-<div id="functional-divergence" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functional-divergence" class="anchor"></a>Functional Divergence</h3>
+<div class="section level3">
+<h3 id="functional-divergence">Functional Divergence<a class="anchor" aria-label="anchor" href="#functional-divergence"></a>
+</h3>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bench_sp_fdiv</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
@@ -248,9 +227,9 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;   species_10000  64.80198  65.77591 106.63771  66.45525  96.01833 822.19062    30  a </span>
 <span class="co">#&gt;  species_100000 284.15498 316.50850 448.10526 328.81308 358.02843 956.35379    30   b</span></code></pre></div>
 </div>
-<div id="raos-quadratric-entropy" class="section level3">
-<h3 class="hasAnchor">
-<a href="#raos-quadratric-entropy" class="anchor"></a>Rao’s Quadratric Entropy</h3>
+<div class="section level3">
+<h3 id="raos-quadratric-entropy">Rao’s Quadratric Entropy<a class="anchor" aria-label="anchor" href="#raos-quadratric-entropy"></a>
+</h3>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bench_sp_raoq</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
@@ -271,9 +250,9 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;   species_1000    91.829330    92.648495   104.365654    94.808870   116.528429   126.52938    30  a </span>
 <span class="co">#&gt;  species_10000 24088.575237 24965.084344 25589.177876 25347.518500 26110.519379 28657.24666    30   b</span></code></pre></div>
 </div>
-<div id="functional-evenness" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functional-evenness" class="anchor"></a>Functional Evenness</h3>
+<div class="section level3">
+<h3 id="functional-evenness">Functional Evenness<a class="anchor" aria-label="anchor" href="#functional-evenness"></a>
+</h3>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bench_sp_feve</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
@@ -295,17 +274,17 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;   species_1000   197.85067   279.95442   280.47473   289.50154   297.68343   336.33779    30  a </span>
 <span class="co">#&gt;  species_10000 58136.53352 60618.48446 60999.92341 61352.07935 61751.75521 62372.93708    30   b</span></code></pre></div>
 </div>
-<div id="comparing-between-indices" class="section level3">
-<h3 class="hasAnchor">
-<a href="#comparing-between-indices" class="anchor"></a>Comparing between indices</h3>
+<div class="section level3">
+<h3 id="comparing-between-indices">Comparing between indices<a class="anchor" aria-label="anchor" href="#comparing-between-indices"></a>
+</h3>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">all_bench_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="va">bench_sp_fric</span>,
+<code class="sourceCode R"><span class="va">all_bench_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="va">bench_sp_fric</span>,
                      fdiv <span class="op">=</span> <span class="va">bench_sp_fdiv</span>,
                      raoq <span class="op">=</span> <span class="va">bench_sp_raoq</span>,
                      feve <span class="op">=</span> <span class="va">bench_sp_feve</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">bind_rows</span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"fd_index"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>n_sp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"species_"</span>, <span class="st">""</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">%&gt;%</span>
-           <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu">mutate</span><span class="op">(</span>n_sp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"species_"</span>, <span class="st">""</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">%&gt;%</span>
+           <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">all_bench_sp</span> <span class="op">%&gt;%</span>
   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">n_sp</span>, <span class="va">time</span> <span class="op">*</span> <span class="fl">1e-9</span>, color <span class="op">=</span> <span class="va">fd_index</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -314,7 +293,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
   <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_color_brewer</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>,
-                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="st">"FRic"</span>, fdiv <span class="op">=</span> <span class="st">"FDiv"</span>, raoq <span class="op">=</span> <span class="st">"Rao's Q"</span>,
+                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="st">"FRic"</span>, fdiv <span class="op">=</span> <span class="st">"FDiv"</span>, raoq <span class="op">=</span> <span class="st">"Rao's Q"</span>,
                                 feve <span class="op">=</span> <span class="st">"FEve"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Performance comparison between indices"</span>,
        x <span class="op">=</span> <span class="st">"# of species"</span>, y <span class="op">=</span> <span class="st">"Time (in seconds)"</span>,
@@ -326,13 +305,13 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 </div>
 </div>
 </div>
-<div id="increasing-the-number-of-sites" class="section level2">
-<h2 class="hasAnchor">
-<a href="#increasing-the-number-of-sites" class="anchor"></a>Increasing the number of sites</h2>
+<div class="section level2">
+<h2 id="increasing-the-number-of-sites">Increasing the number of sites<a class="anchor" aria-label="anchor" href="#increasing-the-number-of-sites"></a>
+</h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">make_more_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
   <span class="va">site_sp</span>
 <span class="op">}</span>
@@ -340,9 +319,9 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="va">site_sp_100</span>   <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>
 <span class="va">site_sp_1000</span>  <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">120</span><span class="op">)</span>
 <span class="va">site_sp_10000</span> <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">1200</span><span class="op">)</span></code></pre></div>
-<div id="functional-richness-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functional-richness-1" class="anchor"></a>Functional Richness</h3>
+<div class="section level3">
+<h3 id="functional-richness-1">Functional Richness<a class="anchor" aria-label="anchor" href="#functional-richness-1"></a>
+</h3>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bench_sites_fric</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
@@ -365,9 +344,9 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;   sites_1000  178.65317  181.95299  221.38235  186.83763  191.94836 1102.60246    30  b </span>
 <span class="co">#&gt;  sites_10000 1754.78248 1785.23758 1857.44765 1846.69689 1890.84202 2232.53853    30   c</span></code></pre></div>
 </div>
-<div id="functional-divergence-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functional-divergence-1" class="anchor"></a>Functional Divergence</h3>
+<div class="section level3">
+<h3 id="functional-divergence-1">Functional Divergence<a class="anchor" aria-label="anchor" href="#functional-divergence-1"></a>
+</h3>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bench_sites_fdiv</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
@@ -390,9 +369,9 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;   sites_1000  386.55725  402.17618  429.92229  413.10485  469.88815  509.0017    30   c </span>
 <span class="co">#&gt;  sites_10000 3603.94346 3757.78241 3813.13545 3800.30931 3866.23993 4042.1464    30    d</span></code></pre></div>
 </div>
-<div id="raos-quadratic-entropy" class="section level3">
-<h3 class="hasAnchor">
-<a href="#raos-quadratic-entropy" class="anchor"></a>Rao’s Quadratic Entropy</h3>
+<div class="section level3">
+<h3 id="raos-quadratic-entropy">Rao’s Quadratic Entropy<a class="anchor" aria-label="anchor" href="#raos-quadratic-entropy"></a>
+</h3>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bench_sites_raoq</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,
@@ -415,9 +394,9 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;   sites_1000  10.89814   11.346314   23.568799   12.680631   24.267842  161.626134    30  a </span>
 <span class="co">#&gt;  sites_10000 408.95982 1106.958572 1084.559002 1157.547212 1230.670102 1490.536708    30   b</span></code></pre></div>
 </div>
-<div id="functional-evenness-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#functional-evenness-1" class="anchor"></a>Functional Evenness</h3>
+<div class="section level3">
+<h3 id="functional-evenness-1">Functional Evenness<a class="anchor" aria-label="anchor" href="#functional-evenness-1"></a>
+</h3>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bench_sites_feve</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
   sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,
@@ -440,17 +419,17 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span class="co">#&gt;   sites_1000  1195.25759  1268.52395  1432.1127  1287.19147  1839.7692  1916.8058    30  b </span>
 <span class="co">#&gt;  sites_10000 12192.27871 13661.60213 14675.2386 14058.28719 14820.7077 28405.1799    30   c</span></code></pre></div>
 </div>
-<div id="comparing-between-indices-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#comparing-between-indices-1" class="anchor"></a>Comparing between indices</h3>
+<div class="section level3">
+<h3 id="comparing-between-indices-1">Comparing between indices<a class="anchor" aria-label="anchor" href="#comparing-between-indices-1"></a>
+</h3>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">all_bench_sites</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="va">bench_sites_fric</span>,
+<code class="sourceCode R"><span class="va">all_bench_sites</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="va">bench_sites_fric</span>,
                         fdiv <span class="op">=</span> <span class="va">bench_sites_fdiv</span>,
                         raoq <span class="op">=</span> <span class="va">bench_sites_raoq</span>,
                         feve <span class="op">=</span> <span class="va">bench_sites_feve</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">bind_rows</span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"fd_index"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>n_sites <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"sites"</span>, <span class="st">""</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">%&gt;%</span>
-           <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+  <span class="fu">mutate</span><span class="op">(</span>n_sites <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"sites"</span>, <span class="st">""</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">%&gt;%</span>
+           <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">all_bench_sites</span> <span class="op">%&gt;%</span>
   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">n_sites</span>, <span class="va">time</span> <span class="op">*</span> <span class="fl">1e-9</span>, color <span class="op">=</span> <span class="va">fd_index</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -459,7 +438,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
   <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">scale_color_brewer</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>,
-                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="st">"FRic"</span>, fdiv <span class="op">=</span> <span class="st">"FDiv"</span>, raoq <span class="op">=</span> <span class="st">"Rao's Q"</span>,
+                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="st">"FRic"</span>, fdiv <span class="op">=</span> <span class="st">"FDiv"</span>, raoq <span class="op">=</span> <span class="st">"Rao's Q"</span>,
                                 feve <span class="op">=</span> <span class="st">"FEve"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Performance comparison between indices"</span>,
        x <span class="op">=</span> <span class="st">"# of sites"</span>, y <span class="op">=</span> <span class="st">"Time (in seconds)"</span>,
@@ -470,232 +449,229 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <img src="fd-bench-sites-compare-1.png" alt=""><p class="caption">Performance comparison between functions for distinct indices in <code>fundiversity</code> with increasing number of sites. Smoothed trend lines and standard error enveloppes ares shown.</p>
 </div>
 <details><p><summary>Session info of the machine on which the benchmark was ran and time it took to run</summary></p>
-<pre><code>#&gt;  seconds needed to generate this document: 3694.109 sec elapsed
-#&gt; ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-#&gt;  setting  value                       
-#&gt;  version  R version 3.6.3 (2020-02-29)
-#&gt;  os       Ubuntu 16.04.7 LTS          
-#&gt;  system   x86_64, linux-gnu           
-#&gt;  ui       RStudio                     
-#&gt;  language (EN)                        
-#&gt;  collate  en_US.UTF-8                 
-#&gt;  ctype    en_US.UTF-8                 
-#&gt;  tz       Europe/Berlin               
-#&gt;  date     2021-07-30                  
-#&gt; 
-#&gt; ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
-#&gt;  !  package           * version    date       lib source                            
-#&gt;     abind               1.4-5      2016-07-21 [3] CRAN (R 3.5.0)                    
-#&gt;     ade4                1.7-17     2021-06-17 [1] CRAN (R 3.6.3)                    
-#&gt;     adegenet            2.1.3      2020-05-10 [1] CRAN (R 3.6.3)                    
-#&gt;     adegraphics         1.0-15     2018-12-18 [1] CRAN (R 3.6.3)                    
-#&gt;     adephylo            1.1-11     2017-12-18 [3] CRAN (R 3.5.0)                    
-#&gt;     adiv                2.0.1      2020-08-26 [1] CRAN (R 3.6.3)                    
-#&gt;     ape                 5.5        2021-04-25 [3] CRAN (R 3.6.3)                    
-#&gt;     assertthat          0.2.1      2019-03-21 [3] CRAN (R 3.5.3)                    
-#&gt;     boot                1.3-28     2021-05-03 [4] CRAN (R 3.6.3)                    
-#&gt;     cachem              1.0.5      2021-05-15 [3] CRAN (R 3.6.3)                    
-#&gt;     class               7.3-19     2021-05-03 [4] CRAN (R 3.6.3)                    
-#&gt;     classInt            0.4-3      2020-04-07 [3] CRAN (R 3.6.3)                    
-#&gt;     cli                 3.0.1      2021-07-17 [1] CRAN (R 3.6.3)                    
-#&gt;     cluster             2.1.2      2021-04-17 [4] CRAN (R 3.6.3)                    
-#&gt;     clusterGeneration   1.3.7      2020-12-15 [3] CRAN (R 3.6.3)                    
-#&gt;     coda                0.19-4     2020-09-30 [3] CRAN (R 3.6.3)                    
-#&gt;     codetools           0.2-18     2020-11-04 [4] CRAN (R 3.6.3)                    
-#&gt;     colorspace          2.0-2      2021-06-24 [1] CRAN (R 3.6.3)                    
-#&gt;     combinat            0.0-8      2010-08-05 [3] CRAN (R 3.5.0)                    
-#&gt;     crayon              1.4.1      2021-02-08 [3] CRAN (R 3.6.3)                    
-#&gt;     crosstalk           1.1.1      2021-01-12 [3] CRAN (R 3.6.3)                    
-#&gt;     DBI                 1.1.1      2021-01-15 [3] CRAN (R 3.6.3)                    
-#&gt;     deldir              0.2-10     2021-02-16 [3] CRAN (R 3.6.3)                    
-#&gt;     desc                1.3.0      2021-03-05 [3] CRAN (R 3.6.3)                    
-#&gt;     digest              0.6.27     2020-10-24 [3] CRAN (R 3.6.3)                    
-#&gt;     dplyr             * 1.0.7      2021-06-18 [1] CRAN (R 3.6.3)                    
-#&gt;     DT                  0.18       2021-04-14 [3] CRAN (R 3.6.3)                    
-#&gt;     e1071               1.7-7      2021-05-23 [3] CRAN (R 3.6.3)                    
-#&gt;     ellipsis            0.3.2      2021-04-29 [3] CRAN (R 3.6.3)                    
-#&gt;     evaluate            0.14       2019-05-28 [3] CRAN (R 3.6.0)                    
-#&gt;     expm                0.999-6    2021-01-13 [3] CRAN (R 3.6.3)                    
-#&gt;     FactoMineR          2.4        2020-12-11 [3] CRAN (R 3.6.3)                    
-#&gt;     fansi               0.5.0      2021-05-25 [3] CRAN (R 3.6.3)                    
-#&gt;     farver              2.1.0      2021-02-28 [3] CRAN (R 3.6.3)                    
-#&gt;     fastmap             1.1.0      2021-01-25 [3] CRAN (R 3.6.3)                    
-#&gt;     fastmatch           1.1-3      2021-07-23 [1] CRAN (R 3.6.3)                    
-#&gt;     FD                  1.0-12     2014-08-19 [1] CRAN (R 3.6.3)                    
-#&gt;     flashClust          1.01-2     2012-08-21 [3] CRAN (R 3.5.0)                    
-#&gt;  VP fundiversity      * 0.2.0      2021-01-22 [?] local                             
-#&gt;     future              1.21.0     2020-12-10 [3] CRAN (R 3.6.3)                    
-#&gt;     future.apply        1.7.0      2021-01-04 [3] CRAN (R 3.6.3)                    
-#&gt;     gdata               2.18.0     2017-06-06 [3] CRAN (R 3.5.0)                    
-#&gt;     generics            0.1.0      2020-10-31 [3] CRAN (R 3.6.3)                    
-#&gt;     geometry            0.4.5      2019-12-04 [3] CRAN (R 3.6.1)                    
-#&gt;     ggplot2           * 3.3.5      2021-06-25 [1] CRAN (R 3.6.3)                    
-#&gt;     ggrepel             0.9.1      2021-01-15 [3] CRAN (R 3.6.3)                    
-#&gt;     globals             0.14.0     2020-11-22 [3] CRAN (R 3.6.3)                    
-#&gt;     glue                1.4.2      2020-08-27 [3] CRAN (R 3.6.3)                    
-#&gt;     gmodels             2.18.1     2018-06-25 [3] CRAN (R 3.5.0)                    
-#&gt;     gtable              0.3.0      2019-03-25 [3] CRAN (R 3.5.3)                    
-#&gt;     gtools              3.9.2      2021-06-06 [3] CRAN (R 3.6.3)                    
-#&gt;     highr               0.9        2021-04-16 [3] CRAN (R 3.6.3)                    
-#&gt;     hillR               0.5.0      2020-07-07 [1] CRAN (R 3.6.3)                    
-#&gt;     hms                 1.1.0      2021-05-17 [3] CRAN (R 3.6.3)                    
-#&gt;     htmltools           0.5.1.1    2021-01-22 [3] CRAN (R 3.6.3)                    
-#&gt;     htmlwidgets         1.5.3      2020-12-10 [3] CRAN (R 3.6.3)                    
-#&gt;     httpuv              1.6.1      2021-05-07 [3] CRAN (R 3.6.3)                    
-#&gt;     httr                1.4.2      2020-07-20 [3] CRAN (R 3.6.3)                    
-#&gt;     igraph              1.2.6      2020-10-06 [3] CRAN (R 3.6.3)                    
-#&gt;     jpeg                0.1-9      2021-07-24 [1] CRAN (R 3.6.3)                    
-#&gt;     jsonlite            1.7.2      2020-12-09 [3] CRAN (R 3.6.3)                    
-#&gt;     KernSmooth          2.23-20    2021-05-03 [4] CRAN (R 3.6.3)                    
-#&gt;     knitr               1.33       2021-04-24 [3] CRAN (R 3.6.3)                    
-#&gt;     later               1.2.0      2021-04-23 [3] CRAN (R 3.6.3)                    
-#&gt;     lattice             0.20-44    2021-05-02 [4] CRAN (R 3.6.3)                    
-#&gt;     latticeExtra        0.6-29     2019-12-19 [3] CRAN (R 3.6.2)                    
-#&gt;     lazyeval            0.2.2      2019-03-15 [3] CRAN (R 3.5.3)                    
-#&gt;     leaps               3.1        2020-01-16 [3] CRAN (R 3.6.2)                    
-#&gt;     LearnBayes          2.15.1     2018-03-18 [3] CRAN (R 3.5.0)                    
-#&gt;     lifecycle           1.0.0      2021-02-15 [3] CRAN (R 3.6.3)                    
-#&gt;     listenv             0.8.0      2019-12-05 [3] CRAN (R 3.6.1)                    
-#&gt;     magic               1.5-9      2018-09-17 [3] CRAN (R 3.5.1)                    
-#&gt;     magrittr            2.0.1      2020-11-17 [3] CRAN (R 3.6.3)                    
-#&gt;     manipulateWidget    0.11.0     2021-05-31 [3] CRAN (R 3.6.3)                    
-#&gt;     maps                3.3.0      2018-04-03 [3] CRAN (R 3.5.0)                    
-#&gt;     MASS                7.3-54     2021-05-03 [4] CRAN (R 3.6.3)                    
-#&gt;     Matrix              1.3-4      2021-06-01 [4] CRAN (R 3.6.3)                    
-#&gt;     memoise             2.0.0      2021-01-26 [3] CRAN (R 3.6.3)                    
-#&gt;     mFD                 1.0.0      2021-07-29 [1] Github (CmlMagneville/mFD@a6af567)
-#&gt;     mgcv                1.8-36     2021-06-01 [4] CRAN (R 3.6.3)                    
-#&gt;     microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 3.6.3)                    
-#&gt;     mime                0.11       2021-06-23 [1] CRAN (R 3.6.3)                    
-#&gt;     miniUI              0.1.1.1    2018-05-18 [3] CRAN (R 3.5.0)                    
-#&gt;     mnormt              2.0.2      2020-09-01 [3] CRAN (R 3.6.3)                    
-#&gt;     multcomp            1.4-17     2021-04-29 [3] CRAN (R 3.6.3)                    
-#&gt;     munsell             0.5.0      2018-06-12 [3] CRAN (R 3.5.0)                    
-#&gt;     mvtnorm             1.1-2      2021-06-07 [3] CRAN (R 3.6.3)                    
-#&gt;     nlme                3.1-152    2021-02-04 [4] CRAN (R 3.6.3)                    
-#&gt;     numDeriv            2016.8-1.1 2019-06-06 [3] CRAN (R 3.6.0)                    
-#&gt;     parallelly          1.26.0     2021-06-09 [3] CRAN (R 3.6.3)                    
-#&gt;     patchwork           1.1.1      2020-12-17 [1] CRAN (R 3.6.3)                    
-#&gt;     permute             0.9-5      2019-03-12 [3] CRAN (R 3.5.3)                    
-#&gt;     phangorn            2.7.0      2021-05-03 [3] CRAN (R 3.6.3)                    
-#&gt;     phylobase           0.8.10     2020-03-01 [3] CRAN (R 3.6.3)                    
-#&gt;     phytools            0.7-80     2021-06-03 [3] CRAN (R 3.6.3)                    
-#&gt;     pillar              1.6.2      2021-07-29 [1] CRAN (R 3.6.3)                    
-#&gt;     pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 3.6.3)                    
-#&gt;     pkgload             1.2.1      2021-04-06 [3] CRAN (R 3.6.3)                    
-#&gt;     plotrix             3.8-1      2021-01-21 [1] CRAN (R 3.6.3)                    
-#&gt;     plyr                1.8.6      2020-03-03 [3] CRAN (R 3.6.3)                    
-#&gt;     png                 0.1-7      2013-12-03 [3] CRAN (R 3.5.0)                    
-#&gt;     prettyunits         1.1.1      2020-01-24 [3] CRAN (R 3.6.2)                    
-#&gt;     progress            1.2.2      2019-05-16 [3] CRAN (R 3.6.0)                    
-#&gt;     promises            1.2.0.1    2021-02-11 [3] CRAN (R 3.6.3)                    
-#&gt;     proxy               0.4-26     2021-06-07 [3] CRAN (R 3.6.3)                    
-#&gt;     purrr               0.3.4      2020-04-17 [3] CRAN (R 3.6.3)                    
-#&gt;     quadprog            1.5-8      2019-11-20 [3] CRAN (R 3.6.1)                    
-#&gt;     R6                  2.5.0      2020-10-28 [3] CRAN (R 3.6.3)                    
-#&gt;     raster              3.4-10     2021-05-03 [3] CRAN (R 3.6.3)                    
-#&gt;     RColorBrewer        1.1-2      2014-12-07 [3] CRAN (R 3.5.0)                    
-#&gt;     Rcpp                1.0.7      2021-07-07 [1] CRAN (R 3.6.3)                    
-#&gt;     RcppArmadillo       0.10.6.0.0 2021-07-16 [1] CRAN (R 3.6.3)                    
-#&gt;     reshape2            1.4.4      2020-04-09 [3] CRAN (R 3.6.3)                    
-#&gt;     rgl                 0.104.16   2021-01-10 [1] CRAN (R 3.6.3)                    
-#&gt;     rlang               0.4.11     2021-04-30 [3] CRAN (R 3.6.3)                    
-#&gt;     rmarkdown           2.8        2021-05-07 [3] CRAN (R 3.6.3)                    
-#&gt;     rncl                0.8.4      2020-02-10 [3] CRAN (R 3.6.2)                    
-#&gt;     RNeXML              2.4.5      2020-06-18 [3] CRAN (R 3.6.3)                    
-#&gt;     rprojroot           2.0.2      2020-11-15 [3] CRAN (R 3.6.3)                    
-#&gt;     rstudioapi          0.13       2020-11-12 [3] CRAN (R 3.6.3)                    
-#&gt;     sandwich            3.0-1      2021-05-18 [3] CRAN (R 3.6.3)                    
-#&gt;     scales              1.1.1      2020-05-11 [3] CRAN (R 3.6.3)                    
-#&gt;     scatterplot3d       0.3-41     2018-03-14 [3] CRAN (R 3.5.0)                    
-#&gt;     seqinr              4.2-8      2021-06-09 [3] CRAN (R 3.6.3)                    
-#&gt;     sessioninfo         1.1.1      2018-11-05 [3] CRAN (R 3.5.1)                    
-#&gt;     sf                  1.0-0      2021-06-09 [3] CRAN (R 3.6.3)                    
-#&gt;     shiny               1.6.0      2021-01-25 [3] CRAN (R 3.6.3)                    
-#&gt;     sp                  1.4-5      2021-01-10 [3] CRAN (R 3.6.3)                    
-#&gt;     spData              0.3.8      2020-07-03 [3] CRAN (R 3.6.3)                    
-#&gt;     spdep               1.1-8      2021-05-23 [3] CRAN (R 3.6.3)                    
-#&gt;     stringi             1.7.3      2021-07-16 [1] CRAN (R 3.6.3)                    
-#&gt;     stringr             1.4.0      2019-02-10 [3] CRAN (R 3.5.2)                    
-#&gt;     survival            3.2-11     2021-04-26 [4] CRAN (R 3.6.3)                    
-#&gt;     SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 3.6.3)                    
-#&gt;     testthat          * 3.0.2      2021-02-14 [3] CRAN (R 3.6.3)                    
-#&gt;     TH.data             1.0-10     2019-01-21 [3] CRAN (R 3.5.2)                    
-#&gt;     tibble              3.1.3      2021-07-23 [1] CRAN (R 3.6.3)                    
-#&gt;     tictoc              1.0.1      2021-04-19 [3] CRAN (R 3.6.3)                    
-#&gt;     tidyr               1.1.3      2021-03-03 [3] CRAN (R 3.6.3)                    
-#&gt;     tidyselect          1.1.1      2021-04-30 [3] CRAN (R 3.6.3)                    
-#&gt;     tmvnsim             1.0-2      2016-12-15 [3] CRAN (R 3.6.3)                    
-#&gt;     units               0.7-2      2021-06-08 [3] CRAN (R 3.6.3)                    
-#&gt;     utf8                1.2.2      2021-07-24 [1] CRAN (R 3.6.3)                    
-#&gt;     uuid                0.1-4      2020-02-26 [3] CRAN (R 3.6.3)                    
-#&gt;     vctrs               0.3.8      2021-04-29 [3] CRAN (R 3.6.3)                    
-#&gt;     vegan               2.5-7      2020-11-28 [3] CRAN (R 3.6.3)                    
-#&gt;     withr               2.4.2      2021-04-18 [3] CRAN (R 3.6.3)                    
-#&gt;     xfun                0.24       2021-06-15 [1] CRAN (R 3.6.3)                    
-#&gt;     XML                 3.99-0.3   2020-01-20 [3] CRAN (R 3.6.3)                    
-#&gt;     xml2                1.3.2      2020-04-23 [3] CRAN (R 3.6.3)                    
-#&gt;     xtable              1.8-4      2019-04-21 [1] CRAN (R 3.6.3)                    
-#&gt;     yaml                2.2.1      2020-02-01 [3] CRAN (R 3.6.2)                    
-#&gt;     zoo                 1.8-9      2021-03-09 [3] CRAN (R 3.6.3)                    
-#&gt; 
-#&gt; [1] /homes/ke76dimu/R/x86_64-pc-linux-gnu-library/3.6
-#&gt; [2] /usr/local/lib/R/site-library
-#&gt; [3] /usr/lib/R/site-library
-#&gt; [4] /usr/lib/R/library
-#&gt; 
-#&gt;  V ── Loaded and on-disk version mismatch.
-#&gt;  P ── Loaded and on-disk path mismatch.</code></pre>
+<pre><code><span class="co">#&gt;  seconds needed to generate this document: 3694.109 sec elapsed</span>
+<span class="co">#&gt; ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="co">#&gt;  setting  value                       </span>
+<span class="co">#&gt;  version  R version 3.6.3 (2020-02-29)</span>
+<span class="co">#&gt;  os       Ubuntu 16.04.7 LTS          </span>
+<span class="co">#&gt;  system   x86_64, linux-gnu           </span>
+<span class="co">#&gt;  ui       RStudio                     </span>
+<span class="co">#&gt;  language (EN)                        </span>
+<span class="co">#&gt;  collate  en_US.UTF-8                 </span>
+<span class="co">#&gt;  ctype    en_US.UTF-8                 </span>
+<span class="co">#&gt;  tz       Europe/Berlin               </span>
+<span class="co">#&gt;  date     2021-07-30                  </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
+<span class="co">#&gt;  !  package           * version    date       lib source                            </span>
+<span class="co">#&gt;     abind               1.4-5      2016-07-21 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     ade4                1.7-17     2021-06-17 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     adegenet            2.1.3      2020-05-10 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     adegraphics         1.0-15     2018-12-18 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     adephylo            1.1-11     2017-12-18 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     adiv                2.0.1      2020-08-26 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     ape                 5.5        2021-04-25 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     assertthat          0.2.1      2019-03-21 [3] CRAN (R 3.5.3)                    </span>
+<span class="co">#&gt;     boot                1.3-28     2021-05-03 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     cachem              1.0.5      2021-05-15 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     class               7.3-19     2021-05-03 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     classInt            0.4-3      2020-04-07 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     cli                 3.0.1      2021-07-17 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     cluster             2.1.2      2021-04-17 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     clusterGeneration   1.3.7      2020-12-15 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     coda                0.19-4     2020-09-30 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     codetools           0.2-18     2020-11-04 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     colorspace          2.0-2      2021-06-24 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     combinat            0.0-8      2010-08-05 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     crayon              1.4.1      2021-02-08 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     crosstalk           1.1.1      2021-01-12 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     DBI                 1.1.1      2021-01-15 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     deldir              0.2-10     2021-02-16 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     desc                1.3.0      2021-03-05 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     digest              0.6.27     2020-10-24 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     dplyr             * 1.0.7      2021-06-18 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     DT                  0.18       2021-04-14 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     e1071               1.7-7      2021-05-23 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     ellipsis            0.3.2      2021-04-29 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     evaluate            0.14       2019-05-28 [3] CRAN (R 3.6.0)                    </span>
+<span class="co">#&gt;     expm                0.999-6    2021-01-13 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     FactoMineR          2.4        2020-12-11 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     fansi               0.5.0      2021-05-25 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     farver              2.1.0      2021-02-28 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     fastmap             1.1.0      2021-01-25 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     fastmatch           1.1-3      2021-07-23 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     FD                  1.0-12     2014-08-19 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     flashClust          1.01-2     2012-08-21 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;  VP fundiversity      * 0.2.0      2021-01-22 [?] local                             </span>
+<span class="co">#&gt;     future              1.21.0     2020-12-10 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     future.apply        1.7.0      2021-01-04 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     gdata               2.18.0     2017-06-06 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     generics            0.1.0      2020-10-31 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     geometry            0.4.5      2019-12-04 [3] CRAN (R 3.6.1)                    </span>
+<span class="co">#&gt;     ggplot2           * 3.3.5      2021-06-25 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     ggrepel             0.9.1      2021-01-15 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     globals             0.14.0     2020-11-22 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     glue                1.4.2      2020-08-27 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     gmodels             2.18.1     2018-06-25 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     gtable              0.3.0      2019-03-25 [3] CRAN (R 3.5.3)                    </span>
+<span class="co">#&gt;     gtools              3.9.2      2021-06-06 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     highr               0.9        2021-04-16 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     hillR               0.5.0      2020-07-07 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     hms                 1.1.0      2021-05-17 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     htmltools           0.5.1.1    2021-01-22 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     htmlwidgets         1.5.3      2020-12-10 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     httpuv              1.6.1      2021-05-07 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     httr                1.4.2      2020-07-20 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     igraph              1.2.6      2020-10-06 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     jpeg                0.1-9      2021-07-24 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     jsonlite            1.7.2      2020-12-09 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     KernSmooth          2.23-20    2021-05-03 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     knitr               1.33       2021-04-24 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     later               1.2.0      2021-04-23 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     lattice             0.20-44    2021-05-02 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     latticeExtra        0.6-29     2019-12-19 [3] CRAN (R 3.6.2)                    </span>
+<span class="co">#&gt;     lazyeval            0.2.2      2019-03-15 [3] CRAN (R 3.5.3)                    </span>
+<span class="co">#&gt;     leaps               3.1        2020-01-16 [3] CRAN (R 3.6.2)                    </span>
+<span class="co">#&gt;     LearnBayes          2.15.1     2018-03-18 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     lifecycle           1.0.0      2021-02-15 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     listenv             0.8.0      2019-12-05 [3] CRAN (R 3.6.1)                    </span>
+<span class="co">#&gt;     magic               1.5-9      2018-09-17 [3] CRAN (R 3.5.1)                    </span>
+<span class="co">#&gt;     magrittr            2.0.1      2020-11-17 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     manipulateWidget    0.11.0     2021-05-31 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     maps                3.3.0      2018-04-03 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     MASS                7.3-54     2021-05-03 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     Matrix              1.3-4      2021-06-01 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     memoise             2.0.0      2021-01-26 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     mFD                 1.0.0      2021-07-29 [1] Github (CmlMagneville/mFD@a6af567)</span>
+<span class="co">#&gt;     mgcv                1.8-36     2021-06-01 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     mime                0.11       2021-06-23 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     miniUI              0.1.1.1    2018-05-18 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     mnormt              2.0.2      2020-09-01 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     multcomp            1.4-17     2021-04-29 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     munsell             0.5.0      2018-06-12 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     mvtnorm             1.1-2      2021-06-07 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     nlme                3.1-152    2021-02-04 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     numDeriv            2016.8-1.1 2019-06-06 [3] CRAN (R 3.6.0)                    </span>
+<span class="co">#&gt;     parallelly          1.26.0     2021-06-09 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     patchwork           1.1.1      2020-12-17 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     permute             0.9-5      2019-03-12 [3] CRAN (R 3.5.3)                    </span>
+<span class="co">#&gt;     phangorn            2.7.0      2021-05-03 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     phylobase           0.8.10     2020-03-01 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     phytools            0.7-80     2021-06-03 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     pillar              1.6.2      2021-07-29 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     pkgload             1.2.1      2021-04-06 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     plotrix             3.8-1      2021-01-21 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     plyr                1.8.6      2020-03-03 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     png                 0.1-7      2013-12-03 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     prettyunits         1.1.1      2020-01-24 [3] CRAN (R 3.6.2)                    </span>
+<span class="co">#&gt;     progress            1.2.2      2019-05-16 [3] CRAN (R 3.6.0)                    </span>
+<span class="co">#&gt;     promises            1.2.0.1    2021-02-11 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     proxy               0.4-26     2021-06-07 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     purrr               0.3.4      2020-04-17 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     quadprog            1.5-8      2019-11-20 [3] CRAN (R 3.6.1)                    </span>
+<span class="co">#&gt;     R6                  2.5.0      2020-10-28 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     raster              3.4-10     2021-05-03 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     RColorBrewer        1.1-2      2014-12-07 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     Rcpp                1.0.7      2021-07-07 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     RcppArmadillo       0.10.6.0.0 2021-07-16 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     reshape2            1.4.4      2020-04-09 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     rgl                 0.104.16   2021-01-10 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     rlang               0.4.11     2021-04-30 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     rmarkdown           2.8        2021-05-07 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     rncl                0.8.4      2020-02-10 [3] CRAN (R 3.6.2)                    </span>
+<span class="co">#&gt;     RNeXML              2.4.5      2020-06-18 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     rprojroot           2.0.2      2020-11-15 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     rstudioapi          0.13       2020-11-12 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     sandwich            3.0-1      2021-05-18 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     scales              1.1.1      2020-05-11 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     scatterplot3d       0.3-41     2018-03-14 [3] CRAN (R 3.5.0)                    </span>
+<span class="co">#&gt;     seqinr              4.2-8      2021-06-09 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     sessioninfo         1.1.1      2018-11-05 [3] CRAN (R 3.5.1)                    </span>
+<span class="co">#&gt;     sf                  1.0-0      2021-06-09 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     shiny               1.6.0      2021-01-25 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     sp                  1.4-5      2021-01-10 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     spData              0.3.8      2020-07-03 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     spdep               1.1-8      2021-05-23 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     stringi             1.7.3      2021-07-16 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     stringr             1.4.0      2019-02-10 [3] CRAN (R 3.5.2)                    </span>
+<span class="co">#&gt;     survival            3.2-11     2021-04-26 [4] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     testthat          * 3.0.2      2021-02-14 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     TH.data             1.0-10     2019-01-21 [3] CRAN (R 3.5.2)                    </span>
+<span class="co">#&gt;     tibble              3.1.3      2021-07-23 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     tictoc              1.0.1      2021-04-19 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     tidyr               1.1.3      2021-03-03 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     tidyselect          1.1.1      2021-04-30 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     tmvnsim             1.0-2      2016-12-15 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     units               0.7-2      2021-06-08 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     utf8                1.2.2      2021-07-24 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     uuid                0.1-4      2020-02-26 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     vctrs               0.3.8      2021-04-29 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     vegan               2.5-7      2020-11-28 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     withr               2.4.2      2021-04-18 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     xfun                0.24       2021-06-15 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     XML                 3.99-0.3   2020-01-20 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     xml2                1.3.2      2020-04-23 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     xtable              1.8-4      2019-04-21 [1] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt;     yaml                2.2.1      2020-02-01 [3] CRAN (R 3.6.2)                    </span>
+<span class="co">#&gt;     zoo                 1.8-9      2021-03-09 [3] CRAN (R 3.6.3)                    </span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; [1] /homes/ke76dimu/R/x86_64-pc-linux-gnu-library/3.6</span>
+<span class="co">#&gt; [2] /usr/local/lib/R/site-library</span>
+<span class="co">#&gt; [3] /usr/lib/R/site-library</span>
+<span class="co">#&gt; [4] /usr/lib/R/library</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;  V ── Loaded and on-disk version mismatch.</span>
+<span class="co">#&gt;  P ── Loaded and on-disk path mismatch.</span></code></pre>
 </details>
 </div>
 </div>
 </div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h1>
+<div class="section level1 unnumbered">
+<h1 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h1>
 <div id="refs" class="references">
 <div id="ref-Chao_Unifying_2014">
-<p>Chao, Anne, Chun-Huo Chiu, and Lou Jost. 2014. “Unifying Species Diversity, Phylogenetic Diversity, Functional Diversity, and Related Similarity and Differentiation Measures Through Hill Numbers.” <em>Annual Review of Ecology, Evolution, and Systematics</em> 45 (1): 297–324. <a href="https://doi.org/10.1146/annurev-ecolsys-120213-091540">https://doi.org/10.1146/annurev-ecolsys-120213-091540</a>.</p>
+<p>Chao, Anne, Chun-Huo Chiu, and Lou Jost. 2014. “Unifying Species Diversity, Phylogenetic Diversity, Functional Diversity, and Related Similarity and Differentiation Measures Through Hill Numbers.” <em>Annual Review of Ecology, Evolution, and Systematics</em> 45 (1): 297–324. <a href="https://doi.org/10.1146/annurev-ecolsys-120213-091540" class="external-link">https://doi.org/10.1146/annurev-ecolsys-120213-091540</a>.</p>
 </div>
 <div id="ref-Debastiani_SYNCSA_2012">
-<p>Debastiani, Vanderlei J., and Valério D. Pillar. 2012. “SYNCSAR Tool for Analysis of Metacommunities Based on Functional Traits and Phylogeny of the Community Components.” <em>Bioinformatics</em> 28 (15): 2067–8. <a href="https://doi.org/10.1093/bioinformatics/bts325">https://doi.org/10.1093/bioinformatics/bts325</a>.</p>
+<p>Debastiani, Vanderlei J., and Valério D. Pillar. 2012. “SYNCSAR Tool for Analysis of Metacommunities Based on Functional Traits and Phylogeny of the Community Components.” <em>Bioinformatics</em> 28 (15): 2067–8. <a href="https://doi.org/10.1093/bioinformatics/bts325" class="external-link">https://doi.org/10.1093/bioinformatics/bts325</a>.</p>
 </div>
 <div id="ref-Laliberte_FD_2014">
 <p>Laliberté, Etienne, Pierre Legendre, and Bill Shipley. 2014. <em>FD: Measuring Functional Diversity from Multiple Traits, and Other Tools for Functional Ecology</em>.</p>
 </div>
 <div id="ref-Li_hillR_2018">
-<p>Li, Daijiang. 2018. “hillR: Taxonomic, Functional, and Phylogenetic Diversity and Similarity Through Hill Numbers.” <em>Journal of Open Source Software</em> 3 (31): 1041. <a href="https://doi.org/10.21105/joss.01041">https://doi.org/10.21105/joss.01041</a>.</p>
+<p>Li, Daijiang. 2018. “hillR: Taxonomic, Functional, and Phylogenetic Diversity and Similarity Through Hill Numbers.” <em>Journal of Open Source Software</em> 3 (31): 1041. <a href="https://doi.org/10.21105/joss.01041" class="external-link">https://doi.org/10.21105/joss.01041</a>.</p>
 </div>
 <div id="ref-Pavoine_adiv_2020">
-<p>Pavoine, Sandrine. 2020. “adiv: An R Package to Analyse Biodiversity in Ecology.” <em>Methods in Ecology and Evolution</em> 11 (9): 1106–12. <a href="https://doi.org/10.1111/2041-210X.13430">https://doi.org/10.1111/2041-210X.13430</a>.</p>
+<p>Pavoine, Sandrine. 2020. “adiv: An R Package to Analyse Biodiversity in Ecology.” <em>Methods in Ecology and Evolution</em> 11 (9): 1106–12. <a href="https://doi.org/10.1111/2041-210X.13430" class="external-link">https://doi.org/10.1111/2041-210X.13430</a>.</p>
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p>Developed by <a href="https://rekyt.github.io/">Matthias Grenié</a>, <a href="https://www.normalesup.org/~hgruson/">Hugo Gruson</a>.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p></p>
+<p>Developed by <a href="https://rekyt.github.io/" class="external-link">Matthias Grenié</a>, <a href="https://www.normalesup.org/~hgruson/" class="external-link">Hugo Gruson</a>.</p>
 </div>
 
-<div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+<div class="pkgdown-footer-right">
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
   
 
+  
 
   </body>
 </html>
