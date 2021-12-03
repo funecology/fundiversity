@@ -133,6 +133,7 @@
 <span class="co">#&gt; Amazona_ochrocephala           20.17            31.40         0.26        440.0</span>
 <span class="co">#&gt; Ampelioides_tschudii           16.53            24.58         0.24         78.4</span>
 <span class="co">#&gt; Ampelion_rufaxilla             16.97            21.89         0.28         73.9</span>
+
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"traits_plants"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">traits_plants</span><span class="op">)</span>
@@ -172,6 +173,7 @@
 <span class="co">#&gt; elev_1500                    0                    0</span>
 <span class="co">#&gt; elev_2000                    0                    0</span>
 <span class="co">#&gt; elev_2500                    0                    0</span>
+
 <span class="co"># Site-species matrix for plants</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"site_sp_plants"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
 
@@ -206,6 +208,7 @@
 <span class="co">#&gt; 6 elev_2500  18301.176</span>
 <span class="co">#&gt; 7 elev_3000  17530.651</span>
 <span class="co">#&gt; 8 elev_3500   3708.735</span>
+
 <span class="co"># Fewer species in the site-species matrix than in the traits</span>
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; Differing number of species between trait dataset and site-species matrix</span>
@@ -219,6 +222,7 @@
 <span class="co">#&gt; 6 elev_2500   NA</span>
 <span class="co">#&gt; 7 elev_3000   NA</span>
 <span class="co">#&gt; 8 elev_3500   NA</span>
+
 <span class="co"># No species in common between both dataset</span>
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; Error: No species in common found between trait dataset and site-species matrix</span></code></pre></div>
@@ -233,6 +237,7 @@
 <code class="sourceCode R"><span class="co"># Range of bill width in the birds dataset</span>
 <span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="st">"Bill.width..mm."</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 33.64</span>
+
 <span class="co"># Using fundiversity::fd_fric()</span>
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site     FRic</span>
@@ -274,7 +279,7 @@
 <span class="co">#&gt; 8 elev_3500 0.01605737</span></code></pre></div>
 <p>Each row gives the standardized FRic values of each site.</p>
 <p><strong>Parallelization</strong>. The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
-<p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
+<p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code>options(fundiversity.memoise = FALSE)</code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
 </div>
 <div id="functional-volume-intersect-fric_intersect---fd_fric_intersect" class="section level1">
 <h1 class="hasAnchor">
@@ -303,7 +308,7 @@
 <span class="co">#&gt; 3   elev_500    elev_500      0.8036298</span></code></pre></div>
 <p>Note that when standardizing the volumes, the behavior is similar to that of <code><a href="../reference/fd_fric.html">fd_fric()</a></code> which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.</p>
 <p><strong>Parallelization</strong>. The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
-<p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
+<p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code>options(fundiversity.memoise = FALSE)</code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
 </div>
 <div id="functional-divergence-fdiv---fd_fdiv" class="section level1">
 <h1 class="hasAnchor">
@@ -316,6 +321,7 @@
 <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt;   site      FDiv</span>
 <span class="co">#&gt; 1   s1 0.7490732</span>
+
 <span class="co"># Multiple dimension FDiv</span>
 <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site      FDiv</span>
@@ -346,6 +352,7 @@
 <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt;   site      FEve</span>
 <span class="co">#&gt; 1   s1 0.4454885</span>
+
 <span class="co"># Multiple dimension FEve</span>
 <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site      FEve</span>
@@ -364,7 +371,7 @@
 <span class="co">#&gt; 8 elev_3500 0.4222442</span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_feve.html">fd_feve()</a></code> will take the common subset of species.</p>
 <p>The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
-<p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> with similar arguments won’t be entirely recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
+<p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> with similar arguments won’t be entirely recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code>options(fundiversity.memoise = FALSE)</code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
 </div>
 <div id="functional-dispersion-fdis---fd_fdis" class="section level1">
 <h1 class="hasAnchor">
@@ -420,6 +427,7 @@
 <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>dist_matrix <span class="op">=</span> <span class="va">trait_dissim</span><span class="op">)</span>
 <span class="co">#&gt;   site       Q</span>
 <span class="co">#&gt; 1   s1 190.589</span>
+
 <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>sp_com <span class="op">=</span> <span class="va">site_sp_birds</span>, dist_matrix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">trait_dissim</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt;        site        Q</span>
 <span class="co">#&gt; 1  elev_250 218.3636</span>
@@ -467,10 +475,12 @@
 <span class="co">#&gt;  Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000  </span>
 <span class="co">#&gt;  3rd Qu.: 0.4157   3rd Qu.: 0.09482   3rd Qu.: 0.3682   3rd Qu.:-0.03999  </span>
 <span class="co">#&gt;  Max.   : 3.9738   Max.   : 7.20531   Max.   : 3.3317   Max.   : 5.79396</span>
+
 <span class="co"># Unscaled</span>
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
 <span class="co">#&gt;   site     FRic</span>
 <span class="co">#&gt; 1   s1 230967.7</span>
+
 <span class="co"># Scaled</span>
 <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds_sc</span><span class="op">)</span>
 <span class="co">#&gt;   site    FRic</span>

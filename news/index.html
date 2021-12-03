@@ -142,7 +142,7 @@
 </div>
     <div id="fundiversity-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
-<a href="#fundiversity-021" class="anchor"></a>fundiversity 0.2.1<small> Unreleased </small>
+<a href="#fundiversity-021" class="anchor"></a>fundiversity 0.2.1<small> 2021-09-21 </small>
 </h1>
 <div id="internal-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -164,7 +164,7 @@
 <li>There is a new function <code>fd_fdis</code> to compute Functional Dispersion FDis.</li>
 <li>
 <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code>, <code><a href="../reference/fd_feve.html">fd_feve()</a></code>, <code><a href="../reference/fd_fdis.html">fd_fdis()</a></code>, <code><a href="../reference/fd_fric.html">fd_fric()</a></code> can now be computed in parallel with the <a href="https://cran.r-project.org/package=future">future</a> framework. Please refer to the <a href="https://bisaloo.github.io/fundiversity/articles/parallel.html">parallelization vignette for more information</a>.</li>
-<li>The convex hull computation in <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code>, <code><a href="../reference/fd_fric.html">fd_fric()</a></code>, and <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> is now cached thanks to the <a href="https://memoise.r-lib.org/">memoise</a> package to speed up repeated runs. This behaviour can be disabled by running <code><a href="https://rdrr.io/r/base/options.html">options(fundiversity.memoise = FALSE)</a></code> at the start of your R session.</li>
+<li>The convex hull computation in <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code>, <code><a href="../reference/fd_fric.html">fd_fric()</a></code>, and <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> is now cached thanks to the <a href="https://memoise.r-lib.org/">memoise</a> package to speed up repeated runs. This behaviour can be disabled by running <code>options(fundiversity.memoise = FALSE)</code> at the start of your R session.</li>
 </ul>
 </div>
 </div>

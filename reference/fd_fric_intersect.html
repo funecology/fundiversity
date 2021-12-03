@@ -195,7 +195,7 @@ compute convex hulls are
 <a href='https://en.wikipedia.org/wiki/Memoization'>memoised</a> through the <code>memoise</code>
 package if it is installed. To deactivate this behavior you can set the
 option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line:
-<code><a href='https://rdrr.io/r/base/options.html'>options(fundiversity.memoise = FALSE)</a></code>. If you use it interactively it will
+<code>options(fundiversity.memoise = FALSE)</code>. If you use it interactively it will
 only affect your current session. Add it to your script(s) or <code>.Rprofile</code>
 file to avoid toggling it each time.</p>
     <h2 class="hasAnchor" id="parallelization"><a class="anchor" href="#parallelization"></a>Parallelization</h2>
@@ -211,11 +211,12 @@ computation please refer to the parallelization vignette with:
     <div class='dont-index'><p><code><a href='fd_fric.html'>fd_fric()</a></code>, <code><a href='https://rdrr.io/pkg/geometry/man/intersectn.html'>geometry::intersectn()</a></code>, <code><a href='https://rdrr.io/pkg/geometry/man/convhulln.html'>geometry::convhulln()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
-<span class='fu'>fd_fric_intersect</span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   first_site second_site FRic_intersect
-#&gt; 1         s1          s1       230967.7</div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>fd_fric_intersect</span><span class='op'>(</span><span class='va'>traits_birds</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   first_site second_site FRic_intersect</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         s1          s1       230967.7</span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
