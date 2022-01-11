@@ -11,7 +11,7 @@ plot_benchmark_plot = function(df, title_string) {
       fct_name = sub("_", "::", attr(fd_fct, "description"), fixed = TRUE) %>%
         paste0("()")
     ) %>%
-    ggplot(aes(n_sites, as.numeric(median), color = as.factor(n_species),
+    ggplot(aes(n_sites, median, color = as.factor(n_species),
                shape = as.factor(n_traits), linetype = as.factor(n_traits))) +
     geom_point() +
     geom_line() +
