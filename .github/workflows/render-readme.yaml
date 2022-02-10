@@ -8,6 +8,7 @@ name: Render README
 jobs:
   render:
     name: Render README
+    runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
