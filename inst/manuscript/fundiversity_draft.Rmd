@@ -114,7 +114,7 @@ As we underlined in introduction, automatic software testing, while not 100% foo
 
 `fundiversity` only computes alpha functional diversity indices, because other packages exist to compute other types of functional diversity indices [Hill numbers, @Li_hillR_2018; beta-diversity indices, Baselga_betapart_2012]. We focused on indices available through the `dbFD()` function in the `FD` package and on indices that could benefit from faster implementation. fundiversity contains the following alpha functional diversity indices: functional richness (FRic), functional dispersion (FDis), functional divergence (FDiv),  functional evenness (FEVE), and Rao’s quadratic entropy (Q). `fundiversity` also contains a beta-diversity index as it can be useful to compare functional richness between sites, and no implementation was available at the time it was developed (but see `betapart` newest functions).
 
-```{r child=here::here("man", "rmdchunks", "_fundiversity_functions.Rmd"), fig.cap="Table of available functions in fundiversity. Each column indicates which ones are parallelizable and which ones are memoizable."}
+```{r tab-functions, child=here::here("man", "rmdchunks", "_fundiversity_functions.Rmd"), fig.cap="Table of available functions in fundiversity. Each column indicates which ones are parallelizable and which ones are memoizable."}
 ```
 
 [This table should probably include the name in full of the computed index? What additional info would we like to display there?]
