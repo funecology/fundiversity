@@ -29,6 +29,7 @@ Imports:
     Matrix,
     vegan
 Suggests:
+    autotest,
     testthat (>= 3.0.0),
     knitr,
     rmarkdown,
