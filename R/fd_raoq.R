@@ -13,6 +13,11 @@
 #' data(site_sp_birds)
 #' fd_raoq(traits_birds, site_sp_birds)
 #'
+#' # You can also use a dist_matrix as input, which allows you to use a custom
+#' # dist function
+#' d <- dist(traits_birds, "maximum")
+#' fd_raoq(dist_matrix = d, sp_com = site_sp_birds)
+#'
 #' @return a data.frame with two columns:
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `Q` the values of Rao's quadratic entropy at each site.

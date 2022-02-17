@@ -48,6 +48,11 @@ fd_feve(traits_birds)
 data(site_sp_birds)
 fd_feve(traits_birds, site_sp_birds)
 
+# You can also use a dist_matrix as input, which allows you to use a custom
+# dist function
+d <- dist(traits_birds, "maximum")
+fd_feve(dist_matrix = d, sp_com = site_sp_birds)
+
 }
 \references{
 Villéger, S., Mason, N.W.H., Mouillot, D., 2008. New Multidimensional

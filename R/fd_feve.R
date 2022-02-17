@@ -11,6 +11,11 @@
 #' data(site_sp_birds)
 #' fd_feve(traits_birds, site_sp_birds)
 #'
+#' # You can also use a dist_matrix as input, which allows you to use a custom
+#' # dist function
+#' d <- dist(traits_birds, "maximum")
+#' fd_feve(dist_matrix = d, sp_com = site_sp_birds)
+#'
 #' @return a data.frame with two columns:
 #' * `site` character column that contains site names based on input `sp_com`
 #' row names,

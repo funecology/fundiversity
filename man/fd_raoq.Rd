@@ -38,6 +38,11 @@ fd_raoq(traits_birds)
 data(site_sp_birds)
 fd_raoq(traits_birds, site_sp_birds)
 
+# You can also use a dist_matrix as input, which allows you to use a custom
+# dist function
+d <- dist(traits_birds, "maximum")
+fd_raoq(dist_matrix = d, sp_com = site_sp_birds)
+
 }
 \references{
 Pavoine S., Dolédec S. (2005). The apportionment of quadratic entropy: a
