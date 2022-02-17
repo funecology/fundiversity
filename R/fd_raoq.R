@@ -1,8 +1,9 @@
 #' Compute Rao's entropy index (Rao's Q)
 #'
 #' @inheritParams fd_fric
-#' @param dist_matrix A dissimilarity matrix that can be provided instead of a
-#'                    trait data.frame (default: `NULL`).
+#' @param dist_matrix A dissimilarity matrix (possibly a `dist` object) that
+#'                    can be provided instead of a trait data.frame
+#'                    (default: `NULL`).
 #'                    This can be either a `matrix`, a `data.frame`,
 #'                    or a [Matrix::Matrix()] object.
 #'

@@ -14,8 +14,9 @@ if not provided, the function considers all species with equal
 abundance in a single site. This can be either a \code{matrix},
 a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}} object.}
 
-\item{dist_matrix}{A dissimilarity matrix that can be provided instead of a
-trait data.frame (default: \code{NULL}).
+\item{dist_matrix}{A dissimilarity matrix (possibly a \code{dist} object) that
+can be provided instead of a trait data.frame
+(default: \code{NULL}).
 This can be either a \code{matrix}, a \code{data.frame},
 or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}} object.}
 }
