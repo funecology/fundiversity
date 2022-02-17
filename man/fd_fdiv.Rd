@@ -48,6 +48,9 @@ computation please refer to the parallelization vignette with:
 data(traits_birds)
 fd_fdiv(traits_birds)
 
+data(site_sp_birds)
+fd_fdiv(traits_birds, site_sp_birds)
+
 }
 \references{
 Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional

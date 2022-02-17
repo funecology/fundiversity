@@ -36,6 +36,8 @@ computation please refer to the parallelization vignette with:
 
 \examples{
 data(traits_birds)
+fd_fdis(traits_birds)
+
 data(site_sp_birds)
 fd_fdis(traits_birds, site_sp_birds)
 

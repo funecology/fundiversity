@@ -35,6 +35,9 @@ Compute Rao's entropy index (Rao's Q)
 data(traits_birds)
 fd_raoq(traits_birds)
 
+data(site_sp_birds)
+fd_raoq(traits_birds, site_sp_birds)
+
 }
 \references{
 Pavoine S., Dolédec S. (2005). The apportionment of quadratic entropy: a

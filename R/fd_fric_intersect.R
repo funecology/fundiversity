@@ -29,6 +29,9 @@
 #' data(traits_birds)
 #' fd_fric_intersect(traits_birds)
 #'
+#' data(site_sp_birds)
+#' fd_fric_intersect(traits_birds, site_sp_birds)
+#'
 #' @export
 fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
 

@@ -10,6 +10,9 @@
 #' data(traits_birds)
 #' fd_raoq(traits_birds)
 #'
+#' data(site_sp_birds)
+#' fd_raoq(traits_birds, site_sp_birds)
+#'
 #' @return a data.frame with two columns:
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `Q` the values of Rao's quadratic entropy at each site.

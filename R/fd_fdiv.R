@@ -9,6 +9,9 @@
 #' data(traits_birds)
 #' fd_fdiv(traits_birds)
 #'
+#' data(site_sp_birds)
+#' fd_fdiv(traits_birds, site_sp_birds)
+#'
 #' @return a data.frame with two columns:
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FDiv` the values of functional divergence at each site.

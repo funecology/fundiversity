@@ -63,6 +63,9 @@ computation please refer to the parallelization vignette with:
 data(traits_birds)
 fd_fric_intersect(traits_birds)
 
+data(site_sp_birds)
+fd_fric_intersect(traits_birds, site_sp_birds)
+
 }
 \seealso{
 \code{\link[=fd_fric]{fd_fric()}}, \code{\link[geometry:intersectn]{geometry::intersectn()}}, \code{\link[geometry:convhulln]{geometry::convhulln()}}

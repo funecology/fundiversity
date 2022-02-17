@@ -8,6 +8,9 @@
 #' data(traits_birds)
 #' fd_feve(traits_birds)
 #'
+#' data(site_sp_birds)
+#' fd_feve(traits_birds, site_sp_birds)
+#'
 #' @return a data.frame with two columns:
 #' * `site` character column that contains site names based on input `sp_com`
 #' row names,

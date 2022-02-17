@@ -26,6 +26,9 @@
 #' data(traits_birds)
 #' fd_fric(traits_birds)
 #'
+#' data(site_sp_birds)
+#' fd_fric(traits_birds, site_sp_birds)
+#'
 #' @details By default, when loading \pkg{fundiversity}, the functions to
 #' compute convex hulls are
 #' [memoised](https://en.wikipedia.org/wiki/Memoization) through the `memoise`

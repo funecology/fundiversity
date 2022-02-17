@@ -58,6 +58,9 @@ computation please refer to the parallelization vignette with:
 data(traits_birds)
 fd_fric(traits_birds)
 
+data(site_sp_birds)
+fd_fric(traits_birds, site_sp_birds)
+
 }
 \references{
 Cornwell W. K., Schwilk D. W., Ackerly D. D. (2006), A trait-based test for
