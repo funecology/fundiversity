@@ -38,3 +38,4 @@ URL: https://bisaloo.github.io/fundiversity/, https://github.com/bisaloo/fundive
 BugReports: https://github.com/Bisaloo/fundiversity/issues
 Config/testthat/edition: 3
 VignetteBuilder: knitr
+Additional_repositories: https://ropensci-review-tools.r-universe.dev
