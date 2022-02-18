@@ -35,6 +35,10 @@
 #' @export
 fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
 
+  if (!is.logical(stand)) {
+    stop("`stand` argument must be either `TRUE` or `FALSE`", .call = FALSE)
+  }
+
   if (missing(traits) | is.null(traits)) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
