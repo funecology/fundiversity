@@ -1,14 +1,10 @@
-# For help debugging build failures open an issue on the RStudio community with the 'github-actions' tag.
-# https://community.rstudio.com/new-topic?category=Package%20development&tags=github-actions
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
 
 name: R-CMD-check
 
@@ -16,85 +12,40 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }}, deps=${{ matrix.config.deps }}, memoise=${{ matrix.config.memoise }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}, memoise=${{ matrix.config.memoise }})
 
     strategy:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release', deps: soft, memoise: TRUE}
-          - {os: macOS-latest, r: 'release', deps: soft, memoise: TRUE}
-          - {os: ubuntu-20.04, r: 'oldrel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft, memoise: TRUE}
-          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft, memoise: TRUE}
-          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft, memoise: FALSE}
-          - {os: ubuntu-20.04, r: 'release', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: hard, memoise: TRUE}
-          - {os: ubuntu-20.04, r: 'devel', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft, memoise: TRUE, http-user-agent: "R/4.0.0 (ubuntu-20.04) R (4.0.0 x86_64-pc-linux-gnu x86_64 linux-gnu) on GitHub Actions"}
-          - {os: ubuntu-20.04, r: '3.4', rspm: "https://packagemanager.rstudio.com/cran/__linux__/focal/latest", deps: soft, memoise: TRUE}
+          - {os: macOS-latest,   r: 'release', memoise: TRUE}
+          - {os: windows-latest, r: 'release', memoise: TRUE}
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release', memoise: TRUE}
+          - {os: ubuntu-latest,   r: 'release', memoise: TRUE}
+          - {os: ubuntu-latest,   r: 'release', memoise: FALSE}
+          - {os: ubuntu-latest,   r: 'oldrel-1', memoise: TRUE}
 
     env:
       fundiversity.memoise: ${{ matrix.config.memoise }}
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
-      DEPS: ${{ matrix.config.deps }}
-      _R_CHECK_FORCE_SUGGESTS_: false
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      R_KEEP_PKG_SOURCE: yes
 
     steps:
       - uses: actions/checkout@v2
 
-      - uses: r-lib/actions/setup-r@v1
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
 
-      - uses: r-lib/actions/setup-pandoc@v1
-
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = Sys.getenv("DEPS")), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
-
-      - name: Cache R packages
-        if: runner.os != 'Windows'
-        uses: actions/cache@v2
+      - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          extra-packages: any::rcmdcheck
+          needs: check
 
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        run: |
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
-
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = ifelse(Sys.getenv("DEPS") == "soft", TRUE, NA))
-          # 'Manually' install rmarkdown even when we only want hard deps because
-          # R CMD check complains when it sees it in the VignetteBuilder field
-          if (identical(Sys.getenv("DEPS"), "hard") && "VignetteBuilder: knitr" %in% readLines("DESCRIPTION")) {
-            remotes::install_cran("rmarkdown")
-          }
-          # 'Manually' install testthat even when we only want hard deps because
-          # we still want to run tests
-          if (any(identical(Sys.getenv("DEPS"), "hard"), grepl("^Config/testthat", readLines("DESCRIPTION")))) {
-            remotes::install_cran("testthat")
-          }
-          remotes::install_cran("rcmdcheck")
-        shell: Rscript {0}
-
-      - name: Check
-        env:
-          _R_CHECK_CRAN_INCOMING_REMOTE_: false
-        run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
-        shell: Rscript {0}
-
-      - name: Upload check results
-        if: failure()
-        uses: actions/upload-artifact@main
+      - uses: r-lib/actions/check-r-package@v2
         with:
-          name: ${{ runner.os }}-r${{ matrix.config.r }}-results
-          path: check
+          upload-snapshots: true
