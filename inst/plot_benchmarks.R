@@ -50,15 +50,28 @@ all_bench %>%
     aes(n_sites, time, color = factor(n_species), shape = factor(n_traits),
         linetype = factor(n_traits))
   ) +
-  stat_smooth(method = "lm", alpha = 1/5) +
+  stat_smooth(formula = y ~ x, method = "lm", alpha = 1/5, size = 1/2) +
   geom_point() +
-  facet_wrap(vars(fundiversity_index, fd_fct), ncol = 7) +
+  facet_wrap(
+    vars(fundiversity_index, fd_fct), ncol = 7,
+    labeller = labeller(
+      fundiversity_index = c(
+        fdis           = "Functional\nDispersion",
+        fdiv           = "Functional\nDivergence",
+        feve           = "Functional\nEvenness",
+        fric           = "Functional\nRichness",
+        fric_intersect = "Functional\nRichness\nintersect",
+        raoq           = "Rao's\nQuadratic\nEntropy"
+      ),
+      fd_fct = label_value)
+  ) +
   labs(x = "Number of sites", y = "Execution Time",
        color = "Number of species", shape = "Number of traits",
        linetype = "Number of traits", caption = "30 iterations") +
   scale_color_viridis_d() +
   scale_x_log10() +
   bench::scale_y_bench_time() +
+  guides(linetype = guide_legend(override.aes = list(color = "black"))) +
   theme_bw() +
   theme(aspect.ratio = 1,
         panel.grid = element_blank(),
