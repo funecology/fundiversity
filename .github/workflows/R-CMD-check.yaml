@@ -18,17 +18,19 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macOS-latest,   r: 'release', memoise: TRUE}
-          - {os: windows-latest, r: 'release', memoise: TRUE}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release', memoise: TRUE}
-          - {os: ubuntu-latest,   r: 'release', memoise: TRUE}
-          - {os: ubuntu-latest,   r: 'release', memoise: FALSE}
-          - {os: ubuntu-latest,   r: 'oldrel-1', memoise: TRUE}
+          - {os: macOS-latest,   r: 'release', memoise: TRUE, depends_only: FALSE}
+          - {os: windows-latest, r: 'release', memoise: TRUE, depends_only: FALSE}
+          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release', memoise: TRUE, depends_only: FALSE}
+          - {os: ubuntu-latest,   r: 'release', memoise: TRUE, depends_only: FALSE}
+          - {os: ubuntu-latest,   r: 'release', memoise: FALSE, depends_only: FALSE}
+          - {os: ubuntu-latest,   r: 'release', memoise: FALSE, depends_only: TRUE}
+          - {os: ubuntu-latest,   r: 'oldrel-1', memoise: TRUE, depends_only: FALSE}
 
     env:
       fundiversity.memoise: ${{ matrix.config.memoise }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      _R_CHECK_DEPENDS_ONLY_: ${{ matrix.config.depends_only }}
 
     steps:
       - uses: actions/checkout@v2
