@@ -30,7 +30,7 @@ jobs:
       fundiversity.memoise: ${{ matrix.config.memoise }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      _R_CHECK_DEPENDS_ONLY_: ${{ matrix.config.depends_only }}
+      _R_CHECK_DEPENDS_ONLY_TESTS_: ${{ matrix.config.depends_only }}
 
     steps:
       - uses: actions/checkout@v2
