@@ -43,19 +43,10 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
-      - name: Determine dependency type
-        uses: haya14busa/action-cond@v1
-        id: deptype
-        with:
-          cond: ${{ matrix.config.depends_only }}
-          if_true: '"hard"'
-          if_false: '"all"' # string value
-
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::rcmdcheck
           needs: check
-          dependencies: ${{ steps.deptype.outputs.value }}
 
       - uses: r-lib/actions/check-r-package@v2
         with:
