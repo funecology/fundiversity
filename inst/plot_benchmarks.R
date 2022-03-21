@@ -73,7 +73,9 @@ all_bench %>%
   bench::scale_y_bench_time() +
   guides(linetype = guide_legend(override.aes = list(color = "black"))) +
   theme_bw() +
-  theme(aspect.ratio = 1,
-        panel.grid = element_blank(),
-        strip.background = element_blank(),
-        strip.text = element_text(size = 6.5, family = "mono", face = "bold"))
+  theme(
+    aspect.ratio = 1,
+    panel.grid = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(size = 7)
+  )
