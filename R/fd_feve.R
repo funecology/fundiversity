@@ -26,12 +26,21 @@
 #'
 #' @export
 fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
+
   if ((!is.null(traits) & !is.null(dist_matrix)) |
       (is.null(traits) & is.null(dist_matrix))) {
     stop(
       "Please provide either a trait dataset or a dissimilarity matrix",
       call. = FALSE
     )
+  }
+
+  if (!is.null(traits) &
+        ((is.matrix(traits) & !is.numeric(traits)) |
+        (is.data.frame(traits) &
+        any(vapply(traits, function(x) !is.numeric(x), TRUE))))) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
   }
 
   if (is.data.frame(traits) | is.vector(traits)) {

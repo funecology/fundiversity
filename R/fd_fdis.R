@@ -28,6 +28,13 @@ fd_fdis <- function(traits, sp_com) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
+  if ((is.matrix(traits) & !is.numeric(traits)) |
+      (is.data.frame(traits) &
+       any(vapply(traits, function(x) !is.numeric(x), TRUE)))) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
+  }
+
   if (is.data.frame(traits) | is.vector(traits)) {
     traits <- as.matrix(traits)
   }
