@@ -35,16 +35,13 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
     )
   }
 
-  if (!is.null(traits) &
-        ((is.matrix(traits) & !is.numeric(traits)) |
-        (is.data.frame(traits) &
-        any(vapply(traits, function(x) !is.numeric(x), TRUE))))) {
-    stop("Non-continuous trait data found in input traits. ",
-         "Please provide only continuous trait data", call. = FALSE)
-  }
-
   if (is.data.frame(traits) | is.vector(traits)) {
     traits <- as.matrix(traits)
+  }
+
+  if (!is.null(traits) & !is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
   }
 
   if (is.null(dist_matrix)) {

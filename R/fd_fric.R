@@ -55,15 +55,13 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if ((is.matrix(traits) & !is.numeric(traits)) |
-      (is.data.frame(traits) &
-       any(vapply(traits, function(x) !is.numeric(x), TRUE)))) {
-    stop("Non-continuous trait data found in input traits. ",
-         "Please provide only continuous trait data", call. = FALSE)
-  }
-
   if (is.data.frame(traits) | is.vector(traits)) {
     traits <- as.matrix(traits)
+  }
+
+  if (!is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
   }
 
   if (ncol(traits) > 16) {
