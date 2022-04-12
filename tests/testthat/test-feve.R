@@ -4,7 +4,7 @@ simple_site_sp <- matrix(1, nrow = 1, ncol = nrow(traits_birds),
                         dimnames = list("s1", row.names(traits_birds)))
 
 # Add non-continuous traits
-traits_birds_cat <- as.data.frame(traits_birds_sc)
+traits_birds_cat <- as.data.frame(traits_birds)
 traits_birds_cat$cat_trait <- "a"
 
 
