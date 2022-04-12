@@ -101,7 +101,7 @@ test_that("Functional Divergence fails gracefully", {
   # Categorical trait data
   expect_error(
     fd_fdiv(traits_birds_cat, site_sp_birds),
-    paste0("Non-continuous trait data found in input traits.",
+    paste0("Non-continuous trait data found in input traits. ",
            "Please provide only continuous trait data"),
     fixed = TRUE
   )

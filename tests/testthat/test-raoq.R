@@ -129,7 +129,7 @@ test_that("Rao's entropy fails gracefully", {
 
   expect_error(
     fd_raoq(traits_birds_cat, site_sp_birds),
-    paste0("Non-continuous trait data found in input traits.",
+    paste0("Non-continuous trait data found in input traits. ",
            "Please provide only continuous trait data"),
     fixed = TRUE
   )

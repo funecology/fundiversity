@@ -177,7 +177,7 @@ test_that("Functional Richness Intersection fails gracefully", {
   # Categorical trait data
   expect_error(
     fd_fric_intersect(traits_birds_cat, site_sp_birds),
-    paste0("Non-continuous trait data found in input traits.",
+    paste0("Non-continuous trait data found in input traits. ",
            "Please provide only continuous trait data"),
     fixed = TRUE
   )
