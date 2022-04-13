@@ -28,7 +28,7 @@ pkg_has_vignettes_and_test = function(pkg_name, pkg_dir = temp_dir) {
 }
 ```
 
-# fundiversity <img src="man/figures/logo.png" align="right" alt="" width="120" />
+# fundiversity <img src="man/figures/logo.png" align="right" alt="fundiversity logo" width="120" />
 
 
 <!-- badges: start -->
