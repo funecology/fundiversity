@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# fundiversity
+# fundiversity <img src="inst/hexlogo/fundiversity-hexlogo.png" align="right" style="float:right; height:120px;"/>
 
 <!-- badges: start -->
 
@@ -151,8 +151,9 @@ mention the numerous wrappers around these packages):
 | [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                                                                              | ❌             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/betapart)    |
 | [`entropart`](https://github.com/EricMarcon/entropart) | Functional Entropy                                                                                                  | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/entropart)   |
 | [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness                                                         | ❌             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/FD)          |
-| [`hillR`](https://github.com/daijiang/hillR)           | Functional Diversity Hill Number                                                                                    | ❌             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hillR)       |
-| [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure of functional diversity (\~FRic)                                                                | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
+| [`hilldiv`](https://github.com/anttonalberdi/hilldiv)  | Dendrogram-based Hill numbers for functional diversity                                                              | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hilldiv)     |
+| [`hillR`](https://github.com/daijiang/hillR)           | Functional Diversity Hill Numbers                                                                                   | ❌             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hillR)       |
+| [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure of functional diversity (\~FRic)                                                                | ✅             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
 | [`mFD`](https://github.com/CmlMagneville/mFD)          | Functional α- and β-diversity indices, including FRic, FDiv, FDis, FEve, FIde, FMPD, FNND, FOri, FSpe, Hill Numbers | ✅             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/mFD)         |
 | [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions                                                                  | ✅             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/TPD)         |
 | [`vegan`](https://github.com/vegandevs/vegan)          | Only dendrogram-based FD (`treedive()`)                                                                             | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/vegan)       |
