@@ -40,6 +40,11 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
     traits <- as.matrix(traits)
   }
 
+  if (!is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
+  }
+
   if (ncol(traits) > 16) {
     stop("Due to computational limits FRic intersect can only be computed ",
          "with n <= 16 traits\nConsider dimension reduction techniques ",

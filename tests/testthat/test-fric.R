@@ -1,7 +1,9 @@
-# Preamble code
+# Preamble code ----------------------------------------------------------------
 data("traits_birds")
 
-# Actual tests
+
+# Tests for valid inputs -------------------------------------------------------
+
 test_that("Functional Richness output format", {
 
   fric <- expect_silent(fd_fric(traits_birds))
@@ -125,6 +127,9 @@ test_that("Functional Richness works on sparse matrices", {
                tolerance = 1e-6)
 })
 
+
+# Tests for invalid inputs -----------------------------------------------------
+
 test_that("Functional Richness fails gracefully", {
 
   # No traits
@@ -138,6 +143,18 @@ test_that("Functional Richness fails gracefully", {
     fd_fric(data.frame(a = 1, row.names = "sp1"), matrix(1)),
     paste0("No species in common found between trait dataset ",
            "and site-species matrix"),
+    fixed = TRUE
+  )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds)
+  traits_birds_cat$cat_trait <- "a"
+
+  expect_error(
+    fd_fric(traits_birds_cat, site_sp_birds),
+    paste0("Non-continuous trait data found in input traits. ",
+           "Please provide only continuous trait data"),
     fixed = TRUE
   )
 })

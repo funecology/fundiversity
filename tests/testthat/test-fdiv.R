@@ -1,8 +1,10 @@
-# Preamble code
+# Preamble code ----------------------------------------------------------------
 data("traits_birds")
 traits_birds_sc <- scale(traits_birds)
 
-# Actual tests
+
+# Tests for valid inputs -------------------------------------------------------
+
 test_that("Functional Divergence output format", {
 
   fdiv <- expect_silent(fd_fdiv(traits_birds))
@@ -73,6 +75,9 @@ test_that("Functional Divergence works with sparse matrices", {
 
 })
 
+
+# Tests for invalid inputs -----------------------------------------------------
+
 test_that("Functional Divergence fails gracefully", {
 
   # No traits
@@ -86,6 +91,18 @@ test_that("Functional Divergence fails gracefully", {
     fd_fdiv(data.frame(a = 1, row.names = "sp1"), matrix(1)),
     paste0("No species in common found between trait dataset ",
            "and site-species matrix"),
+    fixed = TRUE
+  )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds_sc)
+  traits_birds_cat$cat_trait <- "a"
+
+  expect_error(
+    fd_fdiv(traits_birds_cat, site_sp_birds),
+    paste0("Non-continuous trait data found in input traits. ",
+           "Please provide only continuous trait data"),
     fixed = TRUE
   )
 })

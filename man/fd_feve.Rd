@@ -7,7 +7,10 @@
 fd_feve(traits = NULL, sp_com, dist_matrix = NULL)
 }
 \arguments{
-\item{traits}{The matrix dataset for which you want to compute the index}
+\item{traits}{Trait matrix with species as rows and traits as columns.
+It has to contain exclusively numerical values. This can be
+either a \code{matrix}, a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}}
+object.}
 
 \item{sp_com}{Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal

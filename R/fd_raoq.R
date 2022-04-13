@@ -40,6 +40,11 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
     traits <- as.matrix(traits)
   }
 
+  if (!is.null(traits) & !is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
+  }
+
   if (is.null(dist_matrix)) {
     traits <- remove_species_without_trait(traits)
 

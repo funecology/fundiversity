@@ -32,6 +32,11 @@ fd_fdiv <- function(traits, sp_com) {
     traits <- as.matrix(traits)
   }
 
+  if (!is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
+  }
+
   traits <- remove_species_without_trait(traits)
 
   if (!missing(sp_com)) {

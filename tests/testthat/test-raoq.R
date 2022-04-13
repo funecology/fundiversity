@@ -1,9 +1,11 @@
-# Preamble code
+# Preamble code ----------------------------------------------------------------
 data("traits_birds")
 simple_site_sp <- matrix(1, nrow = 1, ncol = nrow(traits_birds),
                         dimnames = list("s1", row.names(traits_birds)))
 
-# Actual tests
+
+# Tests for valid inputs -------------------------------------------------------
+
 test_that("Rao's entropy output format", {
 
   rq <- expect_silent(fd_raoq(traits_birds, sp_com = simple_site_sp))
@@ -96,6 +98,9 @@ test_that("Rao's Quadratic Entropy works on sparse matrices", {
 
 })
 
+
+# Tests for invalid inputs -----------------------------------------------------
+
 test_that("Rao's entropy fails gracefully", {
   # No traits and no dissimilarity
   expect_error(
@@ -116,6 +121,18 @@ test_that("Rao's entropy fails gracefully", {
     fd_raoq(data.frame(a = 1, row.names = "sp1"), matrix(1)),
     paste0("No species in common found between trait dataset ",
            "and site-species matrix"),
+    fixed = TRUE
+  )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds)
+  traits_birds_cat$cat_trait <- "a"
+
+  expect_error(
+    fd_raoq(traits_birds_cat, site_sp_birds),
+    paste0("Non-continuous trait data found in input traits. ",
+           "Please provide only continuous trait data"),
     fixed = TRUE
   )
 })

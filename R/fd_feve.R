@@ -26,6 +26,7 @@
 #'
 #' @export
 fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
+
   if ((!is.null(traits) & !is.null(dist_matrix)) |
       (is.null(traits) & is.null(dist_matrix))) {
     stop(
@@ -36,6 +37,11 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   if (is.data.frame(traits) | is.vector(traits)) {
     traits <- as.matrix(traits)
+  }
+
+  if (!is.null(traits) & !is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
   }
 
   if (is.null(dist_matrix)) {
