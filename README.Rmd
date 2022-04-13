@@ -28,7 +28,8 @@ pkg_has_vignettes_and_test = function(pkg_name, pkg_dir = temp_dir) {
 }
 ```
 
-# fundiversity
+# fundiversity <img src="inst/hexlogo/fundiversity-hexlogo.png" align="right" style="float:right; height:120px;"/>
+
 
 <!-- badges: start -->
 [![Lifecycle: maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
