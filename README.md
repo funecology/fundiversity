@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# fundiversity <img src="inst/hexlogo/fundiversity-hexlogo.png" align="right" style="float:right; height:120px;"/>
+# fundiversity <img src="man/figures/logo.png" align="right" style="float:right; height:120px;"/>
 
 <!-- badges: start -->
 
@@ -98,12 +98,12 @@ fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 
 | Function Name         | Index Name      | Parallelizable\[1\] | Memoizable\[2\] |
 | :-------------------- | :-------------- | :-----------------: | :-------------: |
-| `fd_fric()`           | FRic            |          ✅          |        ✅        |
+| `fd_fric()`           | FRic           |         ✅         |       ✅       |
 | `fd_fric_intersect()` | FRic\_intersect |          ✅          |        ✅        |
-| `fd_fdiv()`           | FDiv            |          ✅          |        ✅        |
-| `fd_feve()`           | FEve            |          ✅          |        ❌        |
-| `fd_fdis()`           | FDis            |          ✅          |        ❌        |
-| `fd_raoq()`           | Rao’s Q         |          ❌          |        ❌        |
+| `fd_fdiv()`           | FDiv           |         ✅         |       ✅       |
+| `fd_feve()`           | FEve           |         ✅         |       ❌       |
+| `fd_fdis()`           | FDis           |         ✅         |       ❌       |
+| `fd_raoq()`           | Rao’s Q        |         ❌         |       ❌       |
 
 ## Parallelization
 
@@ -146,17 +146,17 @@ mention the numerous wrappers around these packages):
 
 | Package Name                                           | Indices included                                                                                                    | Has vignettes | Has tests | On GitHub | On CRAN (last updated)                                     |
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------- | ------------- | --------- | --------- | ---------------------------------------------------------- |
-| [`adiv`](https://github.com/cran/adiv)                 | Functional Entropy, Functional Redundancy                                                                           | ✅             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/adiv)        |
-| [`BAT`](https://github.com/cardosopmb/BAT)             | β-diversity indices, Richness, divergence, and evenness with hypervolumes                                           | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
-| [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                                                                              | ❌             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/betapart)    |
-| [`entropart`](https://github.com/EricMarcon/entropart) | Functional Entropy                                                                                                  | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/entropart)   |
-| [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness                                                         | ❌             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/FD)          |
-| [`hilldiv`](https://github.com/anttonalberdi/hilldiv)  | Dendrogram-based Hill numbers for functional diversity                                                              | ❌             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hilldiv)     |
-| [`hillR`](https://github.com/daijiang/hillR)           | Functional Diversity Hill Numbers                                                                                   | ❌             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hillR)       |
-| [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure of functional diversity (\~FRic)                                                                | ✅             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
-| [`mFD`](https://github.com/CmlMagneville/mFD)          | Functional α- and β-diversity indices, including FRic, FDiv, FDis, FEve, FIde, FMPD, FNND, FOri, FSpe, Hill Numbers | ✅             | ❌         | ✅         | ![](https://www.r-pkg.org/badges/last-release/mFD)         |
-| [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions                                                                  | ✅             | ❌         | ❌         | ![](https://www.r-pkg.org/badges/last-release/TPD)         |
-| [`vegan`](https://github.com/vegandevs/vegan)          | Only dendrogram-based FD (`treedive()`)                                                                             | ✅             | ✅         | ✅         | ![](https://www.r-pkg.org/badges/last-release/vegan)       |
+| [`adiv`](https://github.com/cran/adiv)                 | Functional Entropy, Functional Redundancy                                                                           | ✅            | ❌        | ❌        | ![](https://www.r-pkg.org/badges/last-release/adiv)        |
+| [`BAT`](https://github.com/cardosopmb/BAT)             | β-diversity indices, Richness, divergence, and evenness with hypervolumes                                           | ❌            | ❌        | ✅        | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
+| [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                                                                              | ❌            | ❌        | ❌        | ![](https://www.r-pkg.org/badges/last-release/betapart)    |
+| [`entropart`](https://github.com/EricMarcon/entropart) | Functional Entropy                                                                                                  | ✅            | ✅        | ✅        | ![](https://www.r-pkg.org/badges/last-release/entropart)   |
+| [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness                                                         | ❌            | ❌        | ❌        | ![](https://www.r-pkg.org/badges/last-release/FD)          |
+| [`hilldiv`](https://github.com/anttonalberdi/hilldiv)  | Dendrogram-based Hill numbers for functional diversity                                                              | ❌            | ❌        | ✅        | ![](https://www.r-pkg.org/badges/last-release/hilldiv)     |
+| [`hillR`](https://github.com/daijiang/hillR)           | Functional Diversity Hill Numbers                                                                                   | ❌            | ✅        | ✅        | ![](https://www.r-pkg.org/badges/last-release/hillR)       |
+| [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure of functional diversity (\~FRic)                                                                | ✅            | ❌        | ✅        | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
+| [`mFD`](https://github.com/CmlMagneville/mFD)          | Functional α- and β-diversity indices, including FRic, FDiv, FDis, FEve, FIde, FMPD, FNND, FOri, FSpe, Hill Numbers | ✅            | ❌        | ✅        | ![](https://www.r-pkg.org/badges/last-release/mFD)         |
+| [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions                                                                  | ✅            | ❌        | ❌        | ![](https://www.r-pkg.org/badges/last-release/TPD)         |
+| [`vegan`](https://github.com/vegandevs/vegan)          | Only dendrogram-based FD (`treedive()`)                                                                             | ✅            | ✅        | ✅        | ![](https://www.r-pkg.org/badges/last-release/vegan)       |
 
 -----
 

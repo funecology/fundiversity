@@ -64,7 +64,7 @@ hexSticker::sticker(
 
   subplot   = p,
   package   = "fundiversity",
-  filename  = here::here("inst", "hexlogo", "fundiversity-hexlogo.png"),
+  filename  = here::here("man", "figures", "logo.png"),
   dpi       = 300,
 
   p_size    = 13,         # Title
