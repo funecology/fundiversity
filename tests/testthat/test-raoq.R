@@ -2,9 +2,6 @@
 data("traits_birds")
 simple_site_sp <- matrix(1, nrow = 1, ncol = nrow(traits_birds),
                         dimnames = list("s1", row.names(traits_birds)))
-# Add non-continuous traits
-traits_birds_cat <- as.data.frame(traits_birds)
-traits_birds_cat$cat_trait <- "a"
 
 
 # Tests for valid inputs -------------------------------------------------------
@@ -126,6 +123,11 @@ test_that("Rao's entropy fails gracefully", {
            "and site-species matrix"),
     fixed = TRUE
   )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds)
+  traits_birds_cat$cat_trait <- "a"
 
   expect_error(
     fd_raoq(traits_birds_cat, site_sp_birds),

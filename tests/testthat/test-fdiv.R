@@ -2,10 +2,6 @@
 data("traits_birds")
 traits_birds_sc <- scale(traits_birds)
 
-# Add non-continuous traits
-traits_birds_cat <- as.data.frame(traits_birds_sc)
-traits_birds_cat$cat_trait <- "a"
-
 
 # Tests for valid inputs -------------------------------------------------------
 
@@ -98,7 +94,11 @@ test_that("Functional Divergence fails gracefully", {
     fixed = TRUE
   )
 
-  # Categorical trait data
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds_sc)
+  traits_birds_cat$cat_trait <- "a"
+
   expect_error(
     fd_fdiv(traits_birds_cat, site_sp_birds),
     paste0("Non-continuous trait data found in input traits. ",

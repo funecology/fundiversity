@@ -1,10 +1,6 @@
 # Preamble code ----------------------------------------------------------------
 data("traits_birds")
 
-# Add non-continuous traits
-traits_birds_cat <- as.data.frame(traits_birds)
-traits_birds_cat$cat_trait <- "a"
-
 
 # Tests for valid inputs -------------------------------------------------------
 
@@ -149,6 +145,11 @@ test_that("Functional Richness fails gracefully", {
            "and site-species matrix"),
     fixed = TRUE
   )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds)
+  traits_birds_cat$cat_trait <- "a"
 
   expect_error(
     fd_fric(traits_birds_cat, site_sp_birds),
