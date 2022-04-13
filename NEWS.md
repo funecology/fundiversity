@@ -1,5 +1,13 @@
 # fundiversity (development version)
 
+## Internal changes
+
+* Unit tests for non-continuous traits for all functions
+
+## Minor changes
+
+* fundiversity functions now error when used with non-continuous trait data 
+
 # fundiversity 0.2.1
 
 ## Internal changes
