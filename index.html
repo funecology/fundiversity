@@ -11,6 +11,12 @@
   et al. 2008 &lt;doi:10.1890/07-1206.1&gt;). Provides efficient and modular functions
   to compute functional diversity indices.">
 <title>Easy Computation of Alpha Functional Diversity Indices • fundiversity</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
@@ -21,6 +27,7 @@
   Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger
   et al. 2008 &lt;doi:10.1890/07-1206.1&gt;). Provides efficient and modular functions
   to compute functional diversity indices.">
+<meta property="og:image" content="https://bisaloo.github.io/fundiversity/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -80,8 +87,10 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="fundiversity">fundiversity<a class="anchor" aria-label="anchor" href="#fundiversity"></a>
-</h1></div>
+<div class="page-header">
+<img src="logo.png" class="logo" alt=""><h1 id="fundiversity-">fundiversity <a class="anchor" aria-label="anchor" href="#fundiversity-"></a>
+</h1>
+</div>
 <!-- badges: start -->
 
 <p><code>fundiversity</code> provides a lightweight package to compute common functional diversity indices. To a get a glimpse of what <code>fundiversity</code> can do refer to the <a href="https://bisaloo.github.io/fundiversity/articles/fundiversity.html">introductory vignette</a>. The package is built using clear, public <a href="https://bisaloo.github.io/fundiversity/articles/design-principles.html">design principles</a> inspired from our own experience and user feedback.</p>
@@ -301,22 +310,30 @@
 <td><img src="https://www.r-pkg.org/badges/last-release/FD"></td>
 </tr>
 <tr class="even">
+<td><a href="https://github.com/anttonalberdi/hilldiv" class="external-link"><code>hilldiv</code></a></td>
+<td>Dendrogram-based Hill numbers for functional diversity</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td><img src="https://www.r-pkg.org/badges/last-release/hilldiv"></td>
+</tr>
+<tr class="odd">
 <td><a href="https://github.com/daijiang/hillR" class="external-link"><code>hillR</code></a></td>
-<td>Functional Diversity Hill Number</td>
+<td>Functional Diversity Hill Numbers</td>
 <td>❌</td>
 <td>✅</td>
 <td>✅</td>
 <td><img src="https://www.r-pkg.org/badges/last-release/hillR"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="https://github.com/cran/hypervolume" class="external-link"><code>hypervolume</code></a></td>
 <td>Hypervolume measure of functional diversity (~FRic)</td>
-<td>❌</td>
+<td>✅</td>
 <td>❌</td>
 <td>✅</td>
 <td><img src="https://www.r-pkg.org/badges/last-release/hypervolume"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="https://github.com/CmlMagneville/mFD" class="external-link"><code>mFD</code></a></td>
 <td>Functional α- and β-diversity indices, including FRic, FDiv, FDis, FEve, FIde, FMPD, FNND, FOri, FSpe, Hill Numbers</td>
 <td>✅</td>
@@ -324,7 +341,7 @@
 <td>✅</td>
 <td><img src="https://www.r-pkg.org/badges/last-release/mFD"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="https://github.com/cran/TPD" class="external-link"><code>TPD</code></a></td>
 <td>FRic, FDiv, FEve but for probability distributions</td>
 <td>✅</td>
@@ -332,7 +349,7 @@
 <td>❌</td>
 <td><img src="https://www.r-pkg.org/badges/last-release/TPD"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="https://github.com/vegandevs/vegan" class="external-link"><code>vegan</code></a></td>
 <td>Only dendrogram-based FD (<code>treedive()</code>)</td>
 <td>✅</td>
