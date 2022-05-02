@@ -139,7 +139,52 @@ simpler_benchmark %>%
   bench::scale_x_bench_time() +
   theme_bw() +
   theme(
-      aspect.ratio = 1,
-      strip.background = element_blank(),
-      axis.text.y = element_text(family = "mono")
+    aspect.ratio = 1,
+    strip.background = element_blank(),
+    axis.text.y = element_text(family = "mono")
+  )
+
+# Other possiblity
+all_bench_plots = simpler_benchmark %>%
+  mutate(
+    package = factor(
+      package,
+      level = c("fundiversity", "adiv", "BAT", "betapart", "FD", "hillR", "mFD") %>%
+        rev()
     )
+  ) %>%
+  tidyr::nest(bench_df = !fundiversity_index) %>%
+  mutate(bench_df = lapply(bench_df, function(x) {
+    x %>%
+      mutate(package = forcats::fct_drop(package))
+  }),
+  index_title = case_when(
+    fundiversity_index == "fdis"           ~ "Functional Dispersion",
+    fundiversity_index == "fdiv"           ~ "Functional Divergence",
+    fundiversity_index == "feve"           ~ "Functional Evenness",
+    fundiversity_index == "fric"           ~ "Functional Richness",
+    fundiversity_index == "fric_intersect" ~ "Functional Richness\nintersect",
+    fundiversity_index == "raoq"           ~ "Rao's Quadratic Entropy"
+  ),
+  bench_plot = purrr::map2(
+    bench_df, index_title,
+    ~.x %>%
+      ggplot(aes(x = mean_time, y = package)) +
+      geom_point() +
+      geom_errorbarh(
+        aes(xmin = mean_time - sd_time, xmax = mean_time + sd_time), height = 0.4
+      ) +
+      bench::scale_x_bench_time(name = "Time") +
+      labs(y = NULL,
+           title = .y) +
+      theme_bw() +
+      theme(
+        aspect.ratio = 1,
+        strip.background = element_blank(),
+        axis.text.y = element_text(family = "mono")
+      plot.title = element_text(size = rel(0.5))
+      )
+  )
+  )
+
+patchwork::wrap_plots(all_bench_plots$bench_plot, ncol = 3)
