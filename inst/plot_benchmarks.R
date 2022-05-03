@@ -29,8 +29,8 @@ all_bench = bind_rows(list(single_bench, multi_bench))
 # Simpler Figure
 bench_df = all_bench %>%
   filter(
-    (!(fundiversity_index %in% c("fric", "fric_intersect")) & n_traits == 4) |
-      (fundiversity_index %in% c("fric", "fric_intersect") & n_traits == 3),
+    (fundiversity_index != "fric_intersect" & n_traits == 4) |
+      (fundiversity_index == "fric_intersect" & n_traits == 3),
     n_species == 500, n_sites == 100) %>%
   rename(fd_fct = expression) %>%
   mutate(
@@ -57,14 +57,17 @@ bench_df = all_bench %>%
     parallel = ifelse(
       grepl("multicore", fd_fct, fixed = TRUE) & package == "fundiversity", TRUE, FALSE
     ),
-    package = ifelse(
-      package == "fundiversity" & parallel, "fundiversity_parallel", package)
+    package = case_when(
+      package == "fundiversity" & parallel ~ "fundiversity_parallel",
+      package == "BAT" & grepl("hull", fd_fct) ~ "BAT_hull",
+      package == "BAT" & grepl("tree", fd_fct) ~ "BAT_tree",
+      TRUE ~ package)
   ) %>%
   mutate(
     package = factor(
       package,
       level = c("fundiversity", "fundiversity_parallel", "adiv", "BAT",
-                "betapart", "FD", "hillR", "mFD") %>%
+                "BAT_hull", "BAT_tree", "betapart", "FD", "hillR", "mFD") %>%
         rev()
     ),
 
@@ -94,8 +97,10 @@ single_index_comparison = bench_df %>%
       scale_y_discrete(
         labels = function(x) {
           x = case_when(
-            x == "fundiversity" ~ "fundiversity<br />(sequential)",
+            x == "fundiversity"          ~ "fundiversity<br />(sequential)",
             x == "fundiversity_parallel" ~ "fundiversity<br />(parallel)",
+            x == "BAT_hull"              ~ "BAT (hull)",
+            x == "BAT_tree"              ~ "BAT (tree)",
             TRUE ~ x
           )
           bold   = ifelse(
@@ -121,8 +126,10 @@ single_index_comparison = bench_df %>%
   )
   )
 
-fig_all_indices = patchwork::wrap_plots(single_index_comparison$bench_plot)
+fig_all_indices = patchwork::wrap_plots(single_index_comparison$bench_plot,
+                                        ncol = 2)
 
+saveRDS(fig_all_indices, here::here("inst", "fig1_simplified_benchmark.Rds"))
 
 # Figure S1: Full comparison between all parameters and packages ---------------
 
