@@ -132,13 +132,6 @@ simpler_benchmark = bench_df %>%
   ungroup()
 
 simpler_benchmark %>%
-  mutate(
-    package = factor(
-      package,
-      level = c("fundiversity", "adiv", "BAT", "betapart", "FD", "hillR", "mFD") %>%
-        rev()
-    )
-  ) %>%
   ggplot(aes(x = mean_time, y = package)) +
   geom_point() +
   geom_errorbarh(
@@ -226,6 +219,11 @@ ko = bench_df %>%
       bench::scale_x_bench_time(name = "Time") +
       scale_y_discrete(
         labels = function(x) {
+          x = case_when(
+            x == "fundiversity" ~ "fundiversity<br />(sequential)",
+            x == "fundiversity_parallel" ~ "fundiversity<br />(parallel)",
+            TRUE ~ x
+          )
           bold   = ifelse(
             grepl("fundiversity", levels(.x$package)), "**", ""
           )
@@ -242,7 +240,9 @@ ko = bench_df %>%
         aspect.ratio = 1,
         strip.background = element_blank(),
         axis.text.y = ggtext::element_markdown(),
-        plot.title = element_text(size = rel(1))
+        plot.title = element_text(size = rel(1)),
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x = element_blank()
       )
   )
   )
