@@ -74,6 +74,7 @@ output:
   rticles::elsevier_article:
     latex_engine: xelatex
     keep_tex: FALSE
+    citation_package: default
   
 journal: Methods in Ecology and Evolution
 ---
