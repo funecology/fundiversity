@@ -113,14 +113,14 @@ As we underlined in introduction, automatic software testing, while not 100% foo
 
 `fundiversity` only computes alpha functional diversity indices, because other packages exist to compute other types of functional diversity indices [Hill numbers, @Li_hillR_2018; beta-diversity indices, Baselga_betapart_2012]. We focused on indices available through the `dbFD()` function in the `FD` package and on indices that could benefit from faster implementation. fundiversity contains the following alpha functional diversity indices: functional richness (FRic), functional dispersion (FDis), functional divergence (FDiv), functional evenness (FEVE), and Rao's quadratic entropy (Q). `fundiversity` also contains a beta-diversity index as it can be useful to compare functional richness between sites, and no implementation was available at the time it was developed (but see `betapart` newest functions).
 
-| Function Name         | Index Name                                     | Source | Parallelizable | Memoizable |
-|:----------------------|:-----------------------------------------------|:--------------------------------|:--------------:|:----------:|
-| `fd_fdiv()`           | Functional Divergence (FDiv)                   | [@Villeger_New_2008]            | Yes            | Yes        |
-| `fd_fdis()`           | Functional Dispersion (FDis)                   | [@Laliberte_distancebased_2010] | Yes            | No         |
-| `fd_feve()`           | Functional Evenness (FEve)                     | [@Villeger_New_2008]            | Yes            | No         |
-| `fd_fric()`           | Functional Richness (FRic)                     | [@Villeger_New_2008]            | Yes            | Yes        |
-| `fd_fric_intersect()` | Functional Richness Intersect (FRic_intersect) | [@Villeger_Decomposing_2013]    | Yes            | Yes        |
-| `fd_raoq()`           | Rao's Quadratic Entropy (Q)                    | [@Rao_Diversity_1982]           | No             | No         |
+| Function Name         | Index Name                                     | Source                        | Parallelizable | Memoizable |
+|:----------------------|:-----------------------------------------------|:------------------------------|:--------------:|:----------:|
+| `fd_fdiv()`           | Functional Divergence (FDiv)                   | @Villeger_New_2008            | Yes            | Yes        |
+| `fd_fdis()`           | Functional Dispersion (FDis)                   | @Laliberte_distancebased_2010 | Yes            | No         |
+| `fd_feve()`           | Functional Evenness (FEve)                     | @Villeger_New_2008            | Yes            | No         |
+| `fd_fric()`           | Functional Richness (FRic)                     | @Villeger_New_2008            | Yes            | Yes        |
+| `fd_fric_intersect()` | Functional Richness Intersect (FRic_intersect) | @Villeger_Decomposing_2013    | Yes            | Yes        |
+| `fd_raoq()`           | Rao's Quadratic Entropy (Q)                    | @Rao_Diversity_1982           | No             | No         |
 
 Table: List of function available in `fundiversity` to compute functional diversity indices. The two last columns specify which functions are parallelizable and memoizable.
 
