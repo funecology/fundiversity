@@ -226,13 +226,13 @@ ko = bench_df %>%
       bench::scale_x_bench_time(name = "Time") +
       scale_y_discrete(
         labels = function(x) {
-          faces   = ifelse(
-            grepl("fundiversity", levels(.x$package)), "bold", "normal"
+          bold   = ifelse(
+            grepl("fundiversity", levels(.x$package)), "**", ""
           )
           colours = ifelse(
             grepl("fundiversity", levels(.x$package)), "black", "grey35"
           )
-          glue::glue("<span style='color:{colours}; font-weight:{faces}; font-family:mono'>{x}</span>")
+          glue::glue("<span style='color:{colours}; font-family:mono'>{bold}{x}{bold}</span>")
         }
       ) +
       labs(y = NULL,
