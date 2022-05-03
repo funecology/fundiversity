@@ -82,7 +82,7 @@ all_bench %>%
 
 
 # Simpler Figure
-simpler_benchmark = all_bench %>%
+bench_df = all_bench %>%
   filter(
     (!(fundiversity_index %in% c("fric", "fric_intersect")) & n_traits == 4) |
       (fundiversity_index %in% c("fric", "fric_intersect") & n_traits == 3),
@@ -105,7 +105,27 @@ simpler_benchmark = all_bench %>%
   ) %>%
   mutate(package = stringr::str_extract(fd_fct, "^\\w+")) %>%
   tidyr::unnest(c(time, gc)) %>%
-  select(fundiversity_index, package, fd_fct, n_sites, n_traits, n_species, time) %>%
+  select(
+    fundiversity_index, package, fd_fct, n_sites, n_traits, n_species, time
+  ) %>%
+  mutate(
+    parallel = ifelse(
+      grepl("multicore", fd_fct, fixed = TRUE) & package == "fundiversity", TRUE, FALSE
+    ),
+    package = ifelse(
+      package == "fundiversity" & parallel, "fundiversity_parallel", package)
+  ) %>%
+  mutate(
+    package = factor(
+      package,
+      level = c("fundiversity", "fundiversity_parallel", "adiv", "BAT",
+                "betapart", "FD", "hillR", "mFD") %>%
+        rev()
+    ),
+
+  )
+
+simpler_benchmark = bench_df %>%
   group_by(fundiversity_index, package, fd_fct, n_sites, n_traits, n_species) %>%
   summarise(mean_time = mean(time, na.rm = TRUE),
             sd_time = sd(time, na.rm = TRUE)) %>%
@@ -146,13 +166,6 @@ simpler_benchmark %>%
 
 # Other possiblity
 all_bench_plots = simpler_benchmark %>%
-  mutate(
-    package = factor(
-      package,
-      level = c("fundiversity", "adiv", "BAT", "betapart", "FD", "hillR", "mFD") %>%
-        rev()
-    )
-  ) %>%
   tidyr::nest(bench_df = !fundiversity_index) %>%
   mutate(bench_df = lapply(bench_df, function(x) {
     x %>%
@@ -181,10 +194,50 @@ all_bench_plots = simpler_benchmark %>%
       theme(
         aspect.ratio = 1,
         strip.background = element_blank(),
-        axis.text.y = element_text(family = "mono")
-      plot.title = element_text(size = rel(0.5))
+        axis.text.y = element_text(family = "mono"),
+      plot.title = element_text(size = rel(1))
       )
   )
   )
 
 patchwork::wrap_plots(all_bench_plots$bench_plot, ncol = 3)
+
+# Other possibility
+
+ko = bench_df %>%
+  tidyr::nest(bench_df = !fundiversity_index) %>%
+  mutate(bench_df = lapply(bench_df, function(x) {
+    x %>%
+      mutate(package = forcats::fct_drop(package))
+  }),
+  index_title = case_when(
+    fundiversity_index == "fdis"           ~ "Functional Dispersion",
+    fundiversity_index == "fdiv"           ~ "Functional Divergence",
+    fundiversity_index == "feve"           ~ "Functional Evenness",
+    fundiversity_index == "fric"           ~ "Functional Richness",
+    fundiversity_index == "fric_intersect" ~ "Functional Richness intersect",
+    fundiversity_index == "raoq"           ~ "Rao's Quadratic Entropy"
+  ),
+  bench_plot = purrr::map2(
+    bench_df, index_title,
+    ~.x %>%
+      ggplot(aes(x = time, y = package)) +
+      ggbeeswarm::geom_beeswarm(alpha = 1/3, groupOnX = FALSE) +
+      bench::scale_x_bench_time(name = "Time") +
+      labs(y = NULL,
+           title = .y) +
+      theme_bw() +
+      theme(
+        aspect.ratio = 1,
+        strip.background = element_blank(),
+        axis.text.y = element_text(
+          family = "mono",
+          face = ifelse(grepl("fundiversity", levels(.x$package)), "bold", "plain"),
+          colour =ifelse(grepl("fundiversity", levels(.x$package)), "gray10", "grey30")
+        ),
+        plot.title = element_text(size = rel(1))
+      )
+  )
+  )
+
+patchwork::wrap_plots(ko$bench_plot)
