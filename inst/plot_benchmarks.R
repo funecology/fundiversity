@@ -224,17 +224,24 @@ ko = bench_df %>%
       ggplot(aes(x = time, y = package)) +
       ggbeeswarm::geom_beeswarm(alpha = 1/3, groupOnX = FALSE) +
       bench::scale_x_bench_time(name = "Time") +
+      scale_y_discrete(
+        labels = function(x) {
+          faces   = ifelse(
+            grepl("fundiversity", levels(.x$package)), "bold", "normal"
+          )
+          colours = ifelse(
+            grepl("fundiversity", levels(.x$package)), "black", "grey35"
+          )
+          glue::glue("<span style='color:{colours}; font-weight:{faces}; font-family:mono'>{x}</span>")
+        }
+      ) +
       labs(y = NULL,
            title = .y) +
       theme_bw() +
       theme(
         aspect.ratio = 1,
         strip.background = element_blank(),
-        axis.text.y = element_text(
-          family = "mono",
-          face = ifelse(grepl("fundiversity", levels(.x$package)), "bold", "plain"),
-          colour =ifelse(grepl("fundiversity", levels(.x$package)), "gray10", "grey30")
-        ),
+        axis.text.y = ggtext::element_markdown(),
         plot.title = element_text(size = rel(1))
       )
   )
