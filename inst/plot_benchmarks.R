@@ -113,6 +113,31 @@ fig_all_indices = patchwork::wrap_plots(single_index_comparison$bench_plot,
 saveRDS(fig_all_indices, here::here("inst", "fig1_simplified_benchmark.Rds"))
 
 
+# Figure 2: Benchmark parallel vs. non parallel --------------------------------
+# Summary dataset
+fundiversity_benches = list(
+  parallel = multi_bench,
+  sequential = single_bench %>%
+    filter(grepl("fundiversity", expression, fixed = TRUE))
+) %>%
+  bind_rows(.id = "parallel") %>%
+  tidyr::unnest(c(time, gc)) %>%
+  select(parallel, fundiversity_index, expression, n_sites, n_traits,
+         n_species, time)
+
+fig_parallel_benchmarks = fundiversity_benches %>%
+  mutate(n_traits = ifelse(n_traits == 3, 4, n_traits)) %>%
+  filter(n_traits != 7) %>%
+  ggplot(
+    aes(n_sites, time, color = parallel, shape = factor(n_traits),
+        linetype = factor(n_traits))
+  ) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_wrap(vars(fundiversity_index, n_species), scales = "free_y") +
+  scale_x_log10() +
+  bench::scale_y_bench_time()
+
 # Figure S1: Full comparison between all parameters and packages ---------------
 
 fig_s1_full_comparison = all_bench %>%
