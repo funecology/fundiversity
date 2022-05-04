@@ -26,8 +26,8 @@ all_bench = bind_rows(list(single_bench, multi_bench))
 
 # Figure 1: Benchmark across packages ------------------------------------------
 
-# Simpler Figure
-bench_df = all_bench %>%
+# Preprocessing before plotting
+bench_df = single_bench %>%
   filter(
     (fundiversity_index != "fric_intersect" & n_traits == 4) |
       (fundiversity_index == "fric_intersect" & n_traits == 3),
@@ -38,42 +38,24 @@ bench_df = all_bench %>%
       paste0("()") %>%
       {sub("_unparallel", "", ., fixed = TRUE)}
   ) %>%
-  mutate(
-    fd_fct = purrr::map2_chr(
-      fundiversity_index, fd_fct,
-      ~ifelse(
-        grepl("multicore", .y),
-        gsub("multicore", paste0("fd_", .x, "()\n(multicore)"), .y, fixed = TRUE),
-        .y
-      )
-    )
-  ) %>%
   mutate(package = stringr::str_extract(fd_fct, "^\\w+")) %>%
   tidyr::unnest(c(time, gc)) %>%
   select(
     fundiversity_index, package, fd_fct, n_sites, n_traits, n_species, time
   ) %>%
   mutate(
-    parallel = ifelse(
-      grepl("multicore", fd_fct, fixed = TRUE) & package == "fundiversity", TRUE, FALSE
-    ),
     package = case_when(
-      package == "fundiversity" & parallel ~ "fundiversity_parallel",
       package == "BAT" & grepl("hull", fd_fct) ~ "BAT_hull",
       package == "BAT" & grepl("tree", fd_fct) ~ "BAT_tree",
-      TRUE ~ package)
-  ) %>%
-  mutate(
-    package = factor(
-      package,
-      level = c("fundiversity", "fundiversity_parallel", "adiv", "BAT",
-                "BAT_hull", "BAT_tree", "betapart", "FD", "hillR", "mFD") %>%
+      TRUE ~ package) %>%
+    factor(
+      level = c("fundiversity", "adiv", "BAT", "BAT_hull", "BAT_tree",
+                "betapart", "FD", "hillR", "mFD") %>%
         rev()
-    ),
-
+    )
   )
 
-# Other possibility
+# Actual figure
 single_index_comparison = bench_df %>%
   tidyr::nest(bench_df = !fundiversity_index) %>%
   mutate(bench_df = lapply(bench_df, function(x) {
@@ -85,7 +67,7 @@ single_index_comparison = bench_df %>%
     fundiversity_index == "fdiv"           ~ "Functional Divergence",
     fundiversity_index == "feve"           ~ "Functional Evenness",
     fundiversity_index == "fric"           ~ "Functional Richness",
-    fundiversity_index == "fric_intersect" ~ "Functional Richness intersect",
+    fundiversity_index == "fric_intersect" ~ "Functional beta-diversity",
     fundiversity_index == "raoq"           ~ "Rao's Quadratic Entropy"
   ),
   bench_plot = purrr::map2(
@@ -97,8 +79,7 @@ single_index_comparison = bench_df %>%
       scale_y_discrete(
         labels = function(x) {
           x = case_when(
-            x == "fundiversity"          ~ "fundiversity<br />(sequential)",
-            x == "fundiversity_parallel" ~ "fundiversity<br />(parallel)",
+            x == "fundiversity"          ~ "fundiversity",
             x == "BAT_hull"              ~ "BAT (hull)",
             x == "BAT_tree"              ~ "BAT (tree)",
             TRUE ~ x
@@ -130,6 +111,7 @@ fig_all_indices = patchwork::wrap_plots(single_index_comparison$bench_plot,
                                         ncol = 2)
 
 saveRDS(fig_all_indices, here::here("inst", "fig1_simplified_benchmark.Rds"))
+
 
 # Figure S1: Full comparison between all parameters and packages ---------------
 
