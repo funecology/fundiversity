@@ -75,7 +75,7 @@ single_index_comparison = bench_df %>%
     ~.x %>%
       ggplot(aes(x = time, y = package)) +
       ggbeeswarm::geom_beeswarm(alpha = 1/3, groupOnX = FALSE) +
-      bench::scale_x_bench_time(name = "Time") +
+      bench::scale_x_bench_time(name = "Running Time") +
       scale_y_discrete(
         labels = function(x) {
           x = case_when(
@@ -88,16 +88,16 @@ single_index_comparison = bench_df %>%
             grepl("fundiversity", levels(.x$package)), "**", ""
           )
           colours = ifelse(
-            grepl("fundiversity", levels(.x$package)), "black", "grey35"
+            grepl("fundiversity", levels(.x$package)), "black", "grey30"
           )
-          glue::glue("<span style='color:{colours}; font-family:mono'>{bold}{x}{bold}</span>")
+          glue::glue("<span style='color:{colours}; font-family:mono'>",
+                     "{bold}{x}{bold}</span>")
         }
       ) +
       labs(y = NULL,
            title = .y) +
       theme_bw() +
       theme(
-        aspect.ratio = 1,
         strip.background = element_blank(),
         axis.text.y = ggtext::element_markdown(),
         plot.title = element_text(size = rel(1)),
@@ -108,9 +108,13 @@ single_index_comparison = bench_df %>%
   )
 
 fig_all_indices = patchwork::wrap_plots(single_index_comparison$bench_plot,
-                                        ncol = 2)
+                                        ncol = 3)
 
-saveRDS(fig_all_indices, here::here("inst", "fig1_simplified_benchmark.Rds"))
+ggsave(
+  plot = fig_all_indices,
+  here::here("inst", "manuscript", "figures", "fig1_sequential_benchmark.png"),
+  width = 800, height = 400, units = "px", dpi = 300, scale = 4
+)
 
 
 # Figure 2: Benchmark parallel vs. non parallel --------------------------------

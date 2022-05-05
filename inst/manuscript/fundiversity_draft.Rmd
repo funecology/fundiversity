@@ -189,14 +189,10 @@ Table: List of function available in `fundiversity` to compute functional divers
 
 For testing purposes, we used datasets of increasing size with the number of species being 200, 500 or 1000; the number of trait 2, 4, or 10; the number of sites 50, 100, or 500. For each set of parameters, we generated a fictional site-species matrix and site-trait matrix, comprised only of continuous trait data. We used these simulated data to perform benchmarks across comparable functions among the selected packages. The benchmark ran 30 times through the `bench` package [@Hester_bench_2021]. A summary of the results of the benchmark can be seen in Fig. \ref{fig1}. Full results detailing the timings for each combination of parameters and functions are available in the Supplementary Material.
 
-```{r fig1-benchmark-results, fig.width = 7, fig.height=8, fig.align='center', fig.cap="\\label{fig1}Timing comparison across functional diversity indices between packages. Each point represents the execution time of one run using a simulated dataset, the points are transparent and jittered to avoid overplotting. We here show the performance results considering only a single set of parameters with 4 traits, 500 species, and 100 sites, repreated 30 times.", echo = FALSE, message = FALSE}
-library("dplyr")
-library("ggtext")
-library("patchwork")
-library("ggbeeswarm")
-library("bench")
-
-readRDS(here::here("inst", "fig1_simplified_benchmark.Rds"))
+```{r fig1-benchmark-results, out.width="100%", fig.align='center', fig.cap="\\label{fig1}Timing comparison across functional diversity indices between packages. Each point represents the execution time of one run using a simulated dataset, the points are transparent and jittered to avoid overplotting. We here show the performance results considering only a single set of parameters with 4 traits, 500 species, and 100 sites, repreated 30 times.", echo = FALSE, message = FALSE}
+knitr::include_graphics(
+  here::here("inst", "manuscript", "figures", "fig1_sequential_benchmark.png")
+)
 ```
 
 We see that for all the indices and function tested, `fundiversity` is at least an order of magnitude faster than alternative packages. For functional dispersion, `fundiversity` is two order of magnitudes faster compared to `BAT` and `mFD`. For functional divergence, `fundiversity` is one order of magnitude faster than `mFD`. For functional evenness, `fundiversity` is two orders of magnitude faster than `mFD` with sequential and parallelized versions having similar performances. For Rao's quadratic entropy, b`fundiversity` is one order of magnitude faster than `hillR` and `mFD`, two orders faster than `adiv`, and three orders of magnitude faster than `BAT`. For functional richness, `fundiversity` is half an order of magnitude faster than the hull version of `BAT`, as well as one and a half order of magnitude faster than its tree version and `mFD`. For functional richness intersection (beta functional diversity), `fundiversity` is two orders of magnitude faster than `betapart` and `hillR`.
