@@ -139,8 +139,16 @@ fig_parallel_benchmarks = fundiversity_benches %>%
   geom_point() +
   geom_smooth(method = "lm") +
   facet_wrap(vars(fundiversity_index, n_species), scales = "free_y") +
-  scale_x_log10() +
-  bench::scale_y_bench_time()
+  labs(color = "Version", shape = "N. Traits", linetype = "N. Traits") +
+  scale_x_log10(name = "Number of sites") +
+  bench::scale_y_bench_time(name = "Running Time")
+
+ggsave(
+  plot = fig_parallel_benchmarks,
+  here::here("inst", "manuscript", "figures", "fig2_parallel_benchmark.png"),
+  width = 850, height = 700, units = "px", dpi = 300, scale = 4
+)
+
 
 # Figure S1: Full comparison between all parameters and packages ---------------
 
