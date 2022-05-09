@@ -23,6 +23,12 @@ multi_bench = list.files(
 
 all_bench = bind_rows(list(single_bench, multi_bench))
 
+new_bench = list.files(
+  "inst/saved_benchmarks/", "new_bench_*", full.names = TRUE
+) %>%
+  setNames(c("fdis", "feve")) %>%
+  purrr::map(readRDS) %>%
+  bind_rows(.id = "fundiversity_index")
 
 # Figure 1: Benchmark across packages ------------------------------------------
 
@@ -120,9 +126,10 @@ ggsave(
 # Figure 2: Benchmark parallel vs. non parallel --------------------------------
 # Summary dataset
 fundiversity_benches = list(
-  parallel = multi_bench,
+  parallel = new_bench,
   sequential = single_bench %>%
-    filter(grepl("fundiversity", expression, fixed = TRUE))
+    filter(grepl("fundiversity", expression, fixed = TRUE)) %>%
+    filter(fundiversity_index %in% c("fdis", "feve"))
 ) %>%
   bind_rows(.id = "parallel") %>%
   tidyr::unnest(c(time, gc)) %>%
