@@ -88,7 +88,7 @@ fd_fdiv <- function(traits, sp_com) {
     FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
 
     return(FDiv)
-  })
+  }, future.globals = FALSE)
 
   data.frame(site = rownames(sp_com), FDiv = fdiv_site,
              row.names = NULL)
