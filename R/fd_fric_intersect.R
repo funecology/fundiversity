@@ -105,7 +105,7 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
       # way more efficient that compute with fd_chull_inters
       fd_chull(first_traits)$vol
     }
-  })
+  }, future.globals = FALSE)
 
   data.frame(first_site = all_site_comb[,1],
              second_site = all_site_comb[,2],

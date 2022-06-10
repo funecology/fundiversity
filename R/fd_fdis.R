@@ -64,7 +64,7 @@ fd_fdis <- function(traits, sp_com) {
 
     sqrt(colSums(t(traits) - centro)^2)
 
-  })
+  }, future.globals = FALSE)
 
   fdis_site <- diag(sp_com %*% dists_centro)
 

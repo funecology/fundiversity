@@ -71,7 +71,7 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   feve_site <- future_apply(sp_com, 1, function(site_row) {
     fd_feve_single(site_row, dist_matrix)
-  })
+  }, future.globals = FALSE)
 
   data.frame(
     site = rownames(sp_com),

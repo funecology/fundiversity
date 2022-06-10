@@ -7,6 +7,10 @@
 ## Minor changes
 
 * fundiversity functions now error when used with non-continuous trait data 
+* `future_apply()` and `future_lapply()` calls in `fd_fdis()`, `fd_fdiv()`,
+`fd_ric()`, `fd_fric_intersect()` and `fd_feve()` now use 
+`future.globals = FALSE`, thus making the internal code less error-prone and
+faster in parallel settings.
 
 # fundiversity 0.2.1
 
