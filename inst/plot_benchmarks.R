@@ -26,7 +26,7 @@ all_bench = bind_rows(list(single_bench, multi_bench))
 new_bench = list.files(
   "inst/saved_benchmarks/", "new_bench_*", full.names = TRUE
 ) %>%
-  setNames(c("fdis", "feve")) %>%
+  setNames(c("fric_intersect", "fdis", "fdiv", "feve", "fric")) %>%
   purrr::map(readRDS) %>%
   bind_rows(.id = "fundiversity_index")
 
