@@ -81,7 +81,7 @@
 
 
 <script src="fundiversity_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Computing functional diversity indices with `fundiversity`</h1>
             
       
@@ -102,119 +102,119 @@
 </ul>
 <p>This vignette will introduce you to the data needed as well as how to compute and interpret each index.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bisaloo.github.io/fundiversity/">"fundiversity"</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bisaloo.github.io/fundiversity/">"fundiversity"</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="required-data">Required data<a class="anchor" aria-label="anchor" href="#required-data"></a>
 </h2>
 <p>To compute functional diversity indices, you will need at least a dataset describing species traits, i.e. species characteristics. Note that we here talk about species but the reasoning could apply on whatever unit you’re interested in whether it’s individual organisms, ecological plots, or even entire ecosystems. The traits are the features that describe these units.</p>
 <p><code>fundiversity</code> comes with one example trait dataset. The dataset comes from <span class="citation">Nowak, Kissling, Bender, Dehling, Töpfer, Böhning-Gaese, et al. (2019)</span> and describe the traits of birds and plants along a tropical gradient <span class="citation">(Nowak, Kissling, Bender, Dehling, Töpfer, Böhning-Gaese, et al. 2019)</span>. You can see the datasets available in <code>fundiversity</code> using the <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> function:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span></code></pre></div>
 <p>To load them use their names into the <code><a href="https://rdrr.io/r/utils/data.html" class="external-link">data()</a></code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;                      Bill.width..mm. Bill.length..mm. Kipp.s.index Bodymass..g.</span>
-<span class="co">#&gt; Aburria_aburri                 18.35            35.48         0.18       1407.5</span>
-<span class="co">#&gt; Amazona_farinosa               26.50            38.81         0.29        626.0</span>
-<span class="co">#&gt; Amazona_mercenaria             17.51            26.30         0.33        340.0</span>
-<span class="co">#&gt; Amazona_ochrocephala           20.17            31.40         0.26        440.0</span>
-<span class="co">#&gt; Ampelioides_tschudii           16.53            24.58         0.24         78.4</span>
-<span class="co">#&gt; Ampelion_rufaxilla             16.97            21.89         0.28         73.9</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_plants"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">traits_plants</span><span class="op">)</span>
-<span class="co">#&gt;                        Fruit.length..mm. Fruit.width..mm. Plant.height..m.</span>
-<span class="co">#&gt; Abuta_grandifolia                  17.48             9.38             6.00</span>
-<span class="co">#&gt; Alchornea_latifolia                 6.82             8.23            11.53</span>
-<span class="co">#&gt; Alchornea_triplinervia              8.18            10.26            14.72</span>
-<span class="co">#&gt; Allophylus_punctatus               13.58            12.49             4.40</span>
-<span class="co">#&gt; Alnus_acuminata                    19.32            11.48            17.54</span>
-<span class="co">#&gt; Aniba_guianensis                   15.65            13.43             8.00</span>
-<span class="co">#&gt;                        Crop.mass..g.</span>
-<span class="co">#&gt; Abuta_grandifolia             341.25</span>
-<span class="co">#&gt; Alchornea_latifolia          1290.48</span>
-<span class="co">#&gt; Alchornea_triplinervia       1156.67</span>
-<span class="co">#&gt; Allophylus_punctatus           33.34</span>
-<span class="co">#&gt; Alnus_acuminata              5009.33</span>
-<span class="co">#&gt; Aniba_guianensis               25.50</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                      Bill.width..mm. Bill.length..mm. Kipp.s.index Bodymass..g.</span></span>
+<span><span class="co">#&gt; Aburria_aburri                 18.35            35.48         0.18       1407.5</span></span>
+<span><span class="co">#&gt; Amazona_farinosa               26.50            38.81         0.29        626.0</span></span>
+<span><span class="co">#&gt; Amazona_mercenaria             17.51            26.30         0.33        340.0</span></span>
+<span><span class="co">#&gt; Amazona_ochrocephala           20.17            31.40         0.26        440.0</span></span>
+<span><span class="co">#&gt; Ampelioides_tschudii           16.53            24.58         0.24         78.4</span></span>
+<span><span class="co">#&gt; Ampelion_rufaxilla             16.97            21.89         0.28         73.9</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_plants"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">traits_plants</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                        Fruit.length..mm. Fruit.width..mm. Plant.height..m.</span></span>
+<span><span class="co">#&gt; Abuta_grandifolia                  17.48             9.38             6.00</span></span>
+<span><span class="co">#&gt; Alchornea_latifolia                 6.82             8.23            11.53</span></span>
+<span><span class="co">#&gt; Alchornea_triplinervia              8.18            10.26            14.72</span></span>
+<span><span class="co">#&gt; Allophylus_punctatus               13.58            12.49             4.40</span></span>
+<span><span class="co">#&gt; Alnus_acuminata                    19.32            11.48            17.54</span></span>
+<span><span class="co">#&gt; Aniba_guianensis                   15.65            13.43             8.00</span></span>
+<span><span class="co">#&gt;                        Crop.mass..g.</span></span>
+<span><span class="co">#&gt; Abuta_grandifolia             341.25</span></span>
+<span><span class="co">#&gt; Alchornea_latifolia          1290.48</span></span>
+<span><span class="co">#&gt; Alchornea_triplinervia       1156.67</span></span>
+<span><span class="co">#&gt; Allophylus_punctatus           33.34</span></span>
+<span><span class="co">#&gt; Alnus_acuminata              5009.33</span></span>
+<span><span class="co">#&gt; Aniba_guianensis               25.50</span></span></code></pre></div>
 <p>Note that in these datasets the <strong>species</strong> are shown in <strong>rows</strong>, with species names as row names, and <strong>traits</strong> are in <strong>columns</strong>.</p>
 <p>Functional diversity indices are generally computed at different locations that we hereafter call sites. We thus need a description of which species is in which site in the form of a site-species matrix. Again, we’re calling it a site-species matrix but the granularity of both your “species” and “site” units can vary depending on what you want to compute functional diversity on.</p>
 <p><code>fundiversity</code> contains the corresponding site-species matrices to the above-mentioned trait dataset <span class="citation">(Nowak, Kissling, Bender, Dehling, Töpfer, Böhning-Gaese, et al. 2019)</span>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Site-species matrix for birds</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">site_sp_birds</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
-<span class="co">#&gt;           Aburria_aburri Amazona_farinosa Amazona_mercenaria</span>
-<span class="co">#&gt; elev_250               0                1                  0</span>
-<span class="co">#&gt; elev_500               0                1                  0</span>
-<span class="co">#&gt; elev_1000              1                1                  1</span>
-<span class="co">#&gt; elev_1500              1                0                  1</span>
-<span class="co">#&gt; elev_2000              0                0                  1</span>
-<span class="co">#&gt; elev_2500              0                0                  1</span>
-<span class="co">#&gt;           Amazona_ochrocephala Ampelioides_tschudii</span>
-<span class="co">#&gt; elev_250                     1                    0</span>
-<span class="co">#&gt; elev_500                     1                    0</span>
-<span class="co">#&gt; elev_1000                    0                    1</span>
-<span class="co">#&gt; elev_1500                    0                    0</span>
-<span class="co">#&gt; elev_2000                    0                    0</span>
-<span class="co">#&gt; elev_2500                    0                    0</span>
-
-<span class="co"># Site-species matrix for plants</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_plants"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">site_sp_plants</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
-<span class="co">#&gt;           Abuta_grandifolia Alchornea_latifolia Alchornea_triplinervia</span>
-<span class="co">#&gt; elev_250                  1                   1                      1</span>
-<span class="co">#&gt; elev_500                  1                   1                      1</span>
-<span class="co">#&gt; elev_1000                 0                   0                      1</span>
-<span class="co">#&gt; elev_1500                 0                   0                      1</span>
-<span class="co">#&gt; elev_2000                 0                   0                      1</span>
-<span class="co">#&gt; elev_2500                 0                   0                      1</span>
-<span class="co">#&gt;           Allophylus_punctatus Alnus_acuminata</span>
-<span class="co">#&gt; elev_250                     1               1</span>
-<span class="co">#&gt; elev_500                     1               1</span>
-<span class="co">#&gt; elev_1000                    1               1</span>
-<span class="co">#&gt; elev_1500                    1               1</span>
-<span class="co">#&gt; elev_2000                    1               1</span>
-<span class="co">#&gt; elev_2500                    1               1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Site-species matrix for birds</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">site_sp_birds</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt;           Aburria_aburri Amazona_farinosa Amazona_mercenaria</span></span>
+<span><span class="co">#&gt; elev_250               0                1                  0</span></span>
+<span><span class="co">#&gt; elev_500               0                1                  0</span></span>
+<span><span class="co">#&gt; elev_1000              1                1                  1</span></span>
+<span><span class="co">#&gt; elev_1500              1                0                  1</span></span>
+<span><span class="co">#&gt; elev_2000              0                0                  1</span></span>
+<span><span class="co">#&gt; elev_2500              0                0                  1</span></span>
+<span><span class="co">#&gt;           Amazona_ochrocephala Ampelioides_tschudii</span></span>
+<span><span class="co">#&gt; elev_250                     1                    0</span></span>
+<span><span class="co">#&gt; elev_500                     1                    0</span></span>
+<span><span class="co">#&gt; elev_1000                    0                    1</span></span>
+<span><span class="co">#&gt; elev_1500                    0                    0</span></span>
+<span><span class="co">#&gt; elev_2000                    0                    0</span></span>
+<span><span class="co">#&gt; elev_2500                    0                    0</span></span>
+<span></span>
+<span><span class="co"># Site-species matrix for plants</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_plants"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">site_sp_plants</span><span class="op">)</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span>
+<span><span class="co">#&gt;           Abuta_grandifolia Alchornea_latifolia Alchornea_triplinervia</span></span>
+<span><span class="co">#&gt; elev_250                  1                   1                      1</span></span>
+<span><span class="co">#&gt; elev_500                  1                   1                      1</span></span>
+<span><span class="co">#&gt; elev_1000                 0                   0                      1</span></span>
+<span><span class="co">#&gt; elev_1500                 0                   0                      1</span></span>
+<span><span class="co">#&gt; elev_2000                 0                   0                      1</span></span>
+<span><span class="co">#&gt; elev_2500                 0                   0                      1</span></span>
+<span><span class="co">#&gt;           Allophylus_punctatus Alnus_acuminata</span></span>
+<span><span class="co">#&gt; elev_250                     1               1</span></span>
+<span><span class="co">#&gt; elev_500                     1               1</span></span>
+<span><span class="co">#&gt; elev_1000                    1               1</span></span>
+<span><span class="co">#&gt; elev_1500                    1               1</span></span>
+<span><span class="co">#&gt; elev_2000                    1               1</span></span>
+<span><span class="co">#&gt; elev_2500                    1               1</span></span></code></pre></div>
 <p>The site species matrix represent the presence of a given <strong>species</strong> (in <strong>column</strong>) in a given <strong>site</strong> (in <strong>row</strong>), similar to the format used in the <a href="https://cran.r-project.org/package=vegan" class="external-link"><code>vegan</code></a> package. Here the site-species matrix contains only 0 (absence) and 1 (presence), but <code>fundiversity</code> can also use matrices that contain abundances for some functional diversity indices (FDiv and Q).</p>
 <p>To ensure the good computation of functional diversity indices, at least some of species names (row names) in the trait data need to be in to the column names of the site species matrix:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Fewer species in trait dataset than species in the site-species matrix</span>
-<span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">217</span>,<span class="op">]</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
-<span class="co">#&gt; Differing number of species between trait dataset and site-species matrix</span>
-<span class="co">#&gt; Taking subset of species</span>
-<span class="co">#&gt;        site       FRic</span>
-<span class="co">#&gt; 1  elev_250 171543.730</span>
-<span class="co">#&gt; 2  elev_500 185612.548</span>
-<span class="co">#&gt; 3 elev_1000 109615.330</span>
-<span class="co">#&gt; 4 elev_1500  63992.817</span>
-<span class="co">#&gt; 5 elev_2000  20065.764</span>
-<span class="co">#&gt; 6 elev_2500  18301.176</span>
-<span class="co">#&gt; 7 elev_3000  17530.651</span>
-<span class="co">#&gt; 8 elev_3500   3708.735</span>
-
-<span class="co"># Fewer species in the site-species matrix than in the traits</span>
-<span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt; Differing number of species between trait dataset and site-species matrix</span>
-<span class="co">#&gt; Taking subset of species</span>
-<span class="co">#&gt;        site FRic</span>
-<span class="co">#&gt; 1  elev_250   NA</span>
-<span class="co">#&gt; 2  elev_500   NA</span>
-<span class="co">#&gt; 3 elev_1000   NA</span>
-<span class="co">#&gt; 4 elev_1500   NA</span>
-<span class="co">#&gt; 5 elev_2000   NA</span>
-<span class="co">#&gt; 6 elev_2500   NA</span>
-<span class="co">#&gt; 7 elev_3000   NA</span>
-<span class="co">#&gt; 8 elev_3500   NA</span>
-
-<span class="co"># No species in common between both dataset</span>
-<span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt; Error: No species in common found between trait dataset and site-species matrix</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Fewer species in trait dataset than species in the site-species matrix</span></span>
+<span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">217</span>,<span class="op">]</span>, <span class="va">site_sp_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Differing number of species between trait dataset and site-species matrix</span></span>
+<span><span class="co">#&gt; Taking subset of species</span></span>
+<span><span class="co">#&gt;        site       FRic</span></span>
+<span><span class="co">#&gt; 1  elev_250 171543.730</span></span>
+<span><span class="co">#&gt; 2  elev_500 185612.548</span></span>
+<span><span class="co">#&gt; 3 elev_1000 109615.330</span></span>
+<span><span class="co">#&gt; 4 elev_1500  63992.817</span></span>
+<span><span class="co">#&gt; 5 elev_2000  20065.764</span></span>
+<span><span class="co">#&gt; 6 elev_2500  18301.176</span></span>
+<span><span class="co">#&gt; 7 elev_3000  17530.651</span></span>
+<span><span class="co">#&gt; 8 elev_3500   3708.735</span></span>
+<span></span>
+<span><span class="co"># Fewer species in the site-species matrix than in the traits</span></span>
+<span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Differing number of species between trait dataset and site-species matrix</span></span>
+<span><span class="co">#&gt; Taking subset of species</span></span>
+<span><span class="co">#&gt;        site FRic</span></span>
+<span><span class="co">#&gt; 1  elev_250   NA</span></span>
+<span><span class="co">#&gt; 2  elev_500   NA</span></span>
+<span><span class="co">#&gt; 3 elev_1000   NA</span></span>
+<span><span class="co">#&gt; 4 elev_1500   NA</span></span>
+<span><span class="co">#&gt; 5 elev_2000   NA</span></span>
+<span><span class="co">#&gt; 6 elev_2500   NA</span></span>
+<span><span class="co">#&gt; 7 elev_3000   NA</span></span>
+<span><span class="co">#&gt; 8 elev_3500   NA</span></span>
+<span></span>
+<span><span class="co"># No species in common between both dataset</span></span>
+<span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="op">]</span>, <span class="va">site_sp_birds</span><span class="op">[</span>, <span class="fl">6</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error: No species in common found between trait dataset and site-species matrix</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="functional-richness-fric---fd_fric">Functional Richness (FRic) - <code>fd_fric()</code><a class="anchor" aria-label="anchor" href="#functional-richness-fric---fd_fric"></a>
@@ -222,49 +222,49 @@
 <p>Functional Richness (FRic) represents the total amount of functional space filed by a community in a dataset <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>. You can compute FRic in <code>fundiversity</code> using the <code><a href="../reference/fd_fric.html">fd_fric()</a></code> function.</p>
 <p>For a single trait range FRic is the range of trait observed in the dataset:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Range of bill width in the birds dataset</span>
-<span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="st">"Bill.width..mm."</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 33.64</span>
-
-<span class="co"># Using fundiversity::fd_fric()</span>
-<span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;   site     FRic</span>
-<span class="co">#&gt; 1   s1 230967.7</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Range of bill width in the birds dataset</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/range.html" class="external-link">range</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="st">"Bill.width..mm."</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 33.64</span></span>
+<span></span>
+<span><span class="co"># Using fundiversity::fd_fric()</span></span>
+<span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site     FRic</span></span>
+<span><span class="co">#&gt; 1   s1 230967.7</span></span></code></pre></div>
 <p>The first column <code>site</code> describes the site on which FRic has been computed while the <code>FRic</code> column contains the computed FRic values. If no site-species matrix has been provided the site is named by default <code>s1</code>.</p>
 <p>For multiple traits, FRic can be thought as a multi-dimensional range which is computed as the convex hull volume of the considered species <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;   site     FRic</span>
-<span class="co">#&gt; 1   s1 230967.7</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site     FRic</span></span>
+<span><span class="co">#&gt; 1   s1 230967.7</span></span></code></pre></div>
 <p>If you provide only a trait dataset without specifying site-species matrix <code><a href="../reference/fd_fric.html">fd_fric()</a></code> computes FRic on the full trait dataset. You can compute FRic values for different sites by providing both a trait dataset and a site-species matrix to <code><a href="../reference/fd_fric.html">fd_fric()</a></code>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
-<span class="co">#&gt;        site       FRic</span>
-<span class="co">#&gt; 1  elev_250 171543.730</span>
-<span class="co">#&gt; 2  elev_500 185612.548</span>
-<span class="co">#&gt; 3 elev_1000 112600.176</span>
-<span class="co">#&gt; 4 elev_1500  66142.748</span>
-<span class="co">#&gt; 5 elev_2000  20065.764</span>
-<span class="co">#&gt; 6 elev_2500  18301.176</span>
-<span class="co">#&gt; 7 elev_3000  17530.651</span>
-<span class="co">#&gt; 8 elev_3500   3708.735</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site       FRic</span></span>
+<span><span class="co">#&gt; 1  elev_250 171543.730</span></span>
+<span><span class="co">#&gt; 2  elev_500 185612.548</span></span>
+<span><span class="co">#&gt; 3 elev_1000 112600.176</span></span>
+<span><span class="co">#&gt; 4 elev_1500  66142.748</span></span>
+<span><span class="co">#&gt; 5 elev_2000  20065.764</span></span>
+<span><span class="co">#&gt; 6 elev_2500  18301.176</span></span>
+<span><span class="co">#&gt; 7 elev_3000  17530.651</span></span>
+<span><span class="co">#&gt; 8 elev_3500   3708.735</span></span></code></pre></div>
 <p>Because the convex hull volume depends on the number and the units of the traits used, it is difficult to compare across datasets, that is why it has been suggested to standardize its value by the total volume comprising all species in the dataset <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt;   site FRic</span>
-<span class="co">#&gt; 1   s1    1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site FRic</span></span>
+<span><span class="co">#&gt; 1   s1    1</span></span></code></pre></div>
 <p>The newly computed FRic values will then be comprised between 0 and 1. It is especially useful when comparing different sites:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt;        site       FRic</span>
-<span class="co">#&gt; 1  elev_250 0.74271733</span>
-<span class="co">#&gt; 2  elev_500 0.80362981</span>
-<span class="co">#&gt; 3 elev_1000 0.48751477</span>
-<span class="co">#&gt; 4 elev_1500 0.28637225</span>
-<span class="co">#&gt; 5 elev_2000 0.08687692</span>
-<span class="co">#&gt; 6 elev_2500 0.07923694</span>
-<span class="co">#&gt; 7 elev_3000 0.07590087</span>
-<span class="co">#&gt; 8 elev_3500 0.01605737</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site       FRic</span></span>
+<span><span class="co">#&gt; 1  elev_250 0.74271733</span></span>
+<span><span class="co">#&gt; 2  elev_500 0.80362981</span></span>
+<span><span class="co">#&gt; 3 elev_1000 0.48751477</span></span>
+<span><span class="co">#&gt; 4 elev_1500 0.28637225</span></span>
+<span><span class="co">#&gt; 5 elev_2000 0.08687692</span></span>
+<span><span class="co">#&gt; 6 elev_2500 0.07923694</span></span>
+<span><span class="co">#&gt; 7 elev_3000 0.07590087</span></span>
+<span><span class="co">#&gt; 8 elev_3500 0.01605737</span></span></code></pre></div>
 <p>Each row gives the standardized FRic values of each site.</p>
 <p><strong>Parallelization</strong>. The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 <p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization" class="external-link">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code>options(fundiversity.memoise = FALSE)</code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
@@ -275,24 +275,24 @@
 <p>Sometimes you’re interested in the shared functional volumes between pairs of sites more than in the functional volumes of each site separately. fundiversity provides the <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> function for this exact use case.</p>
 <p>It follows the same interface as <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with similar named arguments:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;   first_site second_site FRic_intersect</span>
-<span class="co">#&gt; 1         s1          s1       230967.7</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   first_site second_site FRic_intersect</span></span>
+<span><span class="co">#&gt; 1         s1          s1       230967.7</span></span></code></pre></div>
 <p><code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> computes the shared functional volumes between each pair of sites, including self-intersection which correspond to the functional volume of each site. Similarly to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> if no site-species data is provided, <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> considers a site that contains all species from the trait dataset.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt;   first_site second_site FRic_intersect</span>
-<span class="co">#&gt; 1   elev_250    elev_500       171532.6</span>
-<span class="co">#&gt; 2   elev_250    elev_250       171543.7</span>
-<span class="co">#&gt; 3   elev_500    elev_500       185612.5</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   first_site second_site FRic_intersect</span></span>
+<span><span class="co">#&gt; 1   elev_250    elev_500       171532.6</span></span>
+<span><span class="co">#&gt; 2   elev_250    elev_250       171543.7</span></span>
+<span><span class="co">#&gt; 3   elev_500    elev_500       185612.5</span></span></code></pre></div>
 <p>The output is a data.frame where the two first columns (<code>first_site</code> and <code>second_site</code>) define the sites on which the intersection is computed, the third column (<code>FRic_intersect</code>) contains the volume of the intersection.</p>
 <p>Similarly to <code><a href="../reference/fd_fric.html">fd_fric()</a></code> the intersections volumes can be standardized:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">]</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="co">#&gt;   first_site second_site FRic_intersect</span>
-<span class="co">#&gt; 1   elev_250    elev_500      0.7426689</span>
-<span class="co">#&gt; 2   elev_250    elev_250      0.7427173</span>
-<span class="co">#&gt; 3   elev_500    elev_500      0.8036298</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric_intersect.html">fd_fric_intersect</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span>,<span class="op">]</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   first_site second_site FRic_intersect</span></span>
+<span><span class="co">#&gt; 1   elev_250    elev_500      0.7426689</span></span>
+<span><span class="co">#&gt; 2   elev_250    elev_250      0.7427173</span></span>
+<span><span class="co">#&gt; 3   elev_500    elev_500      0.8036298</span></span></code></pre></div>
 <p>Note that when standardizing the volumes, the behavior is similar to that of <code><a href="../reference/fd_fric.html">fd_fric()</a></code> which means the function considers the total volume occupied by provided trait values, even if they are absent from all sites, this can lead to standardized self-intersection volumes lower than one.</p>
 <p><strong>Parallelization</strong>. The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 <p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization" class="external-link">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fric_intersect.html">fd_fric_intersect()</a></code> with similar arguments won’t be recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code>options(fundiversity.memoise = FALSE)</code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
@@ -303,27 +303,27 @@
 <p>Functional Divergence (FDiv) represents how abundance is spread along the different traits <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>. When a species with extreme trait values has the highest abundance, then functional divergence is high.</p>
 <p>Use the <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> function to compute functional divergence:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># One-dimension FDiv</span>
-<span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt;   site      FDiv</span>
-<span class="co">#&gt; 1   s1 0.7490732</span>
-
-<span class="co"># Multiple dimension FDiv</span>
-<span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;   site      FDiv</span>
-<span class="co">#&gt; 1   s1 0.7282172</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># One-dimension FDiv</span></span>
+<span><span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site      FDiv</span></span>
+<span><span class="co">#&gt; 1   s1 0.7490732</span></span>
+<span></span>
+<span><span class="co"># Multiple dimension FDiv</span></span>
+<span><span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site      FDiv</span></span>
+<span><span class="co">#&gt; 1   s1 0.7282172</span></span></code></pre></div>
 <p>When no site-species matrix is provided, FDiv is computed by default considering all the species together. If you provide a site-species matrix, then FDiv is computed across all sites:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
-<span class="co">#&gt;        site      FDiv</span>
-<span class="co">#&gt; 1  elev_250 0.6847251</span>
-<span class="co">#&gt; 2  elev_500 0.6937866</span>
-<span class="co">#&gt; 3 elev_1000 0.7056772</span>
-<span class="co">#&gt; 4 elev_1500 0.7269801</span>
-<span class="co">#&gt; 5 elev_2000 0.7509511</span>
-<span class="co">#&gt; 6 elev_2500 0.6985280</span>
-<span class="co">#&gt; 7 elev_3000 0.6627204</span>
-<span class="co">#&gt; 8 elev_3500 0.6422068</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site      FDiv</span></span>
+<span><span class="co">#&gt; 1  elev_250 0.6847251</span></span>
+<span><span class="co">#&gt; 2  elev_500 0.6937866</span></span>
+<span><span class="co">#&gt; 3 elev_1000 0.7056772</span></span>
+<span><span class="co">#&gt; 4 elev_1500 0.7269801</span></span>
+<span><span class="co">#&gt; 5 elev_2000 0.7509511</span></span>
+<span><span class="co">#&gt; 6 elev_2500 0.6985280</span></span>
+<span><span class="co">#&gt; 7 elev_3000 0.6627204</span></span>
+<span><span class="co">#&gt; 8 elev_3500 0.6422068</span></span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> will take the common subset of species.</p>
 <p>The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 </div>
@@ -333,27 +333,27 @@
 <p>Functional Evenness (FEve) describes the regularity of the distribution of species (and their abundances) in trait space <span class="citation">(Villéger, Mason, and Mouillot 2008)</span>. FEve is bounded between 0 and 1. FEve is close to 0 when most species (and abundances) are tightly packed in a portion of the trait space while it is close to 1 if species are regularly spread (with even abundances) along the trait space.</p>
 <p>Use the <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> function to compute functional divergence:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># One-dimension FEve</span>
-<span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span>
-<span class="co">#&gt;   site      FEve</span>
-<span class="co">#&gt; 1   s1 0.4454885</span>
-
-<span class="co"># Multiple dimension FEve</span>
-<span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;   site      FEve</span>
-<span class="co">#&gt; 1   s1 0.3743341</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># One-dimension FEve</span></span>
+<span><span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site      FEve</span></span>
+<span><span class="co">#&gt; 1   s1 0.4454885</span></span>
+<span></span>
+<span><span class="co"># Multiple dimension FEve</span></span>
+<span><span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site      FEve</span></span>
+<span><span class="co">#&gt; 1   s1 0.3743341</span></span></code></pre></div>
 <p>When no site-species matrix is provided, FEve is computed by default considering all the species together. If you provide a site-species matrix, then FEve is computed across all sites:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
-<span class="co">#&gt;        site      FEve</span>
-<span class="co">#&gt; 1  elev_250 0.3841202</span>
-<span class="co">#&gt; 2  elev_500 0.3846186</span>
-<span class="co">#&gt; 3 elev_1000 0.3426688</span>
-<span class="co">#&gt; 4 elev_1500 0.2965585</span>
-<span class="co">#&gt; 5 elev_2000 0.3523994</span>
-<span class="co">#&gt; 6 elev_2500 0.3552671</span>
-<span class="co">#&gt; 7 elev_3000 0.3492529</span>
-<span class="co">#&gt; 8 elev_3500 0.4222442</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site      FEve</span></span>
+<span><span class="co">#&gt; 1  elev_250 0.3841202</span></span>
+<span><span class="co">#&gt; 2  elev_500 0.3846186</span></span>
+<span><span class="co">#&gt; 3 elev_1000 0.3426688</span></span>
+<span><span class="co">#&gt; 4 elev_1500 0.2965585</span></span>
+<span><span class="co">#&gt; 5 elev_2000 0.3523994</span></span>
+<span><span class="co">#&gt; 6 elev_2500 0.3552671</span></span>
+<span><span class="co">#&gt; 7 elev_3000 0.3492529</span></span>
+<span><span class="co">#&gt; 8 elev_3500 0.4222442</span></span></code></pre></div>
 <p>Similarly to FRic, if the included species differ between the site-species matrix and the trait dataset, <code><a href="../reference/fd_feve.html">fd_feve()</a></code> will take the common subset of species.</p>
 <p>The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 <p><strong>Memoization</strong>. By default, when loading <code>fundiversity</code>, the functions to compute convex hulls are <a href="https://en.wikipedia.org/wiki/Memoization" class="external-link">memoised</a> through the <code>memoise</code> package if it is installed. It means that repeated calls to <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> with similar arguments won’t be entirely recomputed each time but recovered from memory. To deactivate this behavior you can set the option <code>fundiversity.memoise</code> to <code>FALSE</code> by running the following line: <code>options(fundiversity.memoise = FALSE)</code>. If you use it interactively it will only affect your current session. Add it to your script(s) or <code>.Rprofile</code> file to avoid toggling it each time.</p>
@@ -364,21 +364,21 @@
 <p>Functional Dispersion reflects changes in the abundance-weighted deviation of species trait values from the center of the functional space.</p>
 <p>You can compute Functional Dispersion (FDis) using the <code><a href="../reference/fd_fdis.html">fd_fdis()</a></code> function by providing a trait dataset:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fdis.html">fd_fdis</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;   site     FDis</span>
-<span class="co">#&gt; 1   s1 146.2072</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fdis.html">fd_fdis</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site     FDis</span></span>
+<span><span class="co">#&gt; 1   s1 146.2072</span></span></code></pre></div>
 <p>If you don’t provide a site-species matrix, <code><a href="../reference/fd_fdis.html">fd_fdis()</a></code> considers all species provided in the trait dataset present at equal abundances in the same site. You can also provide a site-species matrix to compute FDis at different sites:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_fdis.html">fd_fdis</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
-<span class="co">#&gt;        site      FDis</span>
-<span class="co">#&gt; 1  elev_250 165.58561</span>
-<span class="co">#&gt; 2  elev_500 168.34567</span>
-<span class="co">#&gt; 3 elev_1000 173.92101</span>
-<span class="co">#&gt; 4 elev_1500 156.19006</span>
-<span class="co">#&gt; 5 elev_2000  86.39285</span>
-<span class="co">#&gt; 6 elev_2500  88.28895</span>
-<span class="co">#&gt; 7 elev_3000  97.11743</span>
-<span class="co">#&gt; 8 elev_3500  80.70000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fdis.html">fd_fdis</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site      FDis</span></span>
+<span><span class="co">#&gt; 1  elev_250 165.58561</span></span>
+<span><span class="co">#&gt; 2  elev_500 168.34567</span></span>
+<span><span class="co">#&gt; 3 elev_1000 173.92101</span></span>
+<span><span class="co">#&gt; 4 elev_1500 156.19006</span></span>
+<span><span class="co">#&gt; 5 elev_2000  86.39285</span></span>
+<span><span class="co">#&gt; 6 elev_2500  88.28895</span></span>
+<span><span class="co">#&gt; 7 elev_3000  97.11743</span></span>
+<span><span class="co">#&gt; 8 elev_3500  80.70000</span></span></code></pre></div>
 <p>The computation of this function can be parallelized thanks to the <code>future</code> package. Refer to the <a href="./parallel.html">parallelization vignette</a> to get more information about how to do so.</p>
 </div>
 <div class="section level2">
@@ -387,40 +387,40 @@
 <p>Rao’s Quadratic entropy assesses the multi-dimensional divergence in trait space <span class="citation">(Rao 1982)</span>. It is the abundance-weighted variance of the trait dissimilarities between all species pairs.</p>
 <p>You can compute Rao’s Quadratic entropy (Q) using the <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> function by providing a trait dataset:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;   site        Q</span>
-<span class="co">#&gt; 1   s1 170.0519</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site        Q</span></span>
+<span><span class="co">#&gt; 1   s1 170.0519</span></span></code></pre></div>
 <p>If you don’t provide a site-species matrix, <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> considers all species provided in the trait dataset present at equal abundances in the same site. You can also provide a site-species matrix to compute Q at different sites:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
-<span class="co">#&gt;        site         Q</span>
-<span class="co">#&gt; 1  elev_250 194.78095</span>
-<span class="co">#&gt; 2  elev_500 197.08184</span>
-<span class="co">#&gt; 3 elev_1000 200.52231</span>
-<span class="co">#&gt; 4 elev_1500 178.24801</span>
-<span class="co">#&gt; 5 elev_2000  97.32416</span>
-<span class="co">#&gt; 6 elev_2500 102.22461</span>
-<span class="co">#&gt; 7 elev_3000 113.22049</span>
-<span class="co">#&gt; 8 elev_3500  87.04750</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site         Q</span></span>
+<span><span class="co">#&gt; 1  elev_250 194.78095</span></span>
+<span><span class="co">#&gt; 2  elev_500 197.08184</span></span>
+<span><span class="co">#&gt; 3 elev_1000 200.52231</span></span>
+<span><span class="co">#&gt; 4 elev_1500 178.24801</span></span>
+<span><span class="co">#&gt; 5 elev_2000  97.32416</span></span>
+<span><span class="co">#&gt; 6 elev_2500 102.22461</span></span>
+<span><span class="co">#&gt; 7 elev_3000 113.22049</span></span>
+<span><span class="co">#&gt; 8 elev_3500  87.04750</span></span></code></pre></div>
 <p>Because the computation of Rao’s quadratic entropy requires dissimilarities between all pair of species in the dataset, if you provide a trait dataset <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code>, the function will compute the Euclidean distance between all pairs of species. If you wish to directly provide species dissimilarities, you can do so through the <code>dist_matrix</code> argument:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Compute dissimilarity between species with the Manhattan distance</span>
-<span class="va">trait_dissim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">traits_birds</span>, method <span class="op">=</span> <span class="st">"manhattan"</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>dist_matrix <span class="op">=</span> <span class="va">trait_dissim</span><span class="op">)</span>
-<span class="co">#&gt;   site       Q</span>
-<span class="co">#&gt; 1   s1 190.589</span>
-
-<span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>sp_com <span class="op">=</span> <span class="va">site_sp_birds</span>, dist_matrix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">trait_dissim</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;        site        Q</span>
-<span class="co">#&gt; 1  elev_250 218.3636</span>
-<span class="co">#&gt; 2  elev_500 220.8257</span>
-<span class="co">#&gt; 3 elev_1000 220.0048</span>
-<span class="co">#&gt; 4 elev_1500 196.6785</span>
-<span class="co">#&gt; 5 elev_2000 112.6211</span>
-<span class="co">#&gt; 6 elev_2500 117.6497</span>
-<span class="co">#&gt; 7 elev_3000 127.5911</span>
-<span class="co">#&gt; 8 elev_3500 104.8981</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Compute dissimilarity between species with the Manhattan distance</span></span>
+<span><span class="va">trait_dissim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">traits_birds</span>, method <span class="op">=</span> <span class="st">"manhattan"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>dist_matrix <span class="op">=</span> <span class="va">trait_dissim</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site       Q</span></span>
+<span><span class="co">#&gt; 1   s1 190.589</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>sp_com <span class="op">=</span> <span class="va">site_sp_birds</span>, dist_matrix <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">trait_dissim</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site        Q</span></span>
+<span><span class="co">#&gt; 1  elev_250 218.3636</span></span>
+<span><span class="co">#&gt; 2  elev_500 220.8257</span></span>
+<span><span class="co">#&gt; 3 elev_1000 220.0048</span></span>
+<span><span class="co">#&gt; 4 elev_1500 196.6785</span></span>
+<span><span class="co">#&gt; 5 elev_2000 112.6211</span></span>
+<span><span class="co">#&gt; 6 elev_2500 117.6497</span></span>
+<span><span class="co">#&gt; 7 elev_3000 127.5911</span></span>
+<span><span class="co">#&gt; 8 elev_3500 104.8981</span></span></code></pre></div>
 <p>NB: if you want to provide both a site-species matrix and a trait dissimilarity matrix please specify explicitly the arguments names.</p>
 </div>
 <div class="section level2">
@@ -429,19 +429,19 @@
 <p><a href="https://en.wikipedia.org/wiki/Sparse_matrix" class="external-link">Sparse matrices</a> are memory efficient ways of storing matrix object that contains many zeros. <code>fundiversity</code> is fully compatible with sparse matrices through the <a href="https://cran.r-project.org/package=Matrix" class="external-link"><code>Matrix</code> package</a>. They can be used to encode site-species information or distance matrices.</p>
 <p>Provide <code>Matrix</code> objects as inputs of the indices function <code>fundiversity</code>, they will transparently use them for efficient computation.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Convert site-species matrix to sparse matrix</span>
-<span class="va">sparse_site_sp</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html" class="external-link">Matrix</a></span><span class="op">(</span><span class="va">site_sp_birds</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>
-<span class="co">#&gt;        site         Q</span>
-<span class="co">#&gt; 1  elev_250 194.78095</span>
-<span class="co">#&gt; 2  elev_500 197.08184</span>
-<span class="co">#&gt; 3 elev_1000 200.52231</span>
-<span class="co">#&gt; 4 elev_1500 178.24801</span>
-<span class="co">#&gt; 5 elev_2000  97.32416</span>
-<span class="co">#&gt; 6 elev_2500 102.22461</span>
-<span class="co">#&gt; 7 elev_3000 113.22049</span>
-<span class="co">#&gt; 8 elev_3500  87.04750</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Convert site-species matrix to sparse matrix</span></span>
+<span><span class="va">sparse_site_sp</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html" class="external-link">Matrix</a></span><span class="op">(</span><span class="va">site_sp_birds</span>, sparse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site         Q</span></span>
+<span><span class="co">#&gt; 1  elev_250 194.78095</span></span>
+<span><span class="co">#&gt; 2  elev_500 197.08184</span></span>
+<span><span class="co">#&gt; 3 elev_1000 200.52231</span></span>
+<span><span class="co">#&gt; 4 elev_1500 178.24801</span></span>
+<span><span class="co">#&gt; 5 elev_2000  97.32416</span></span>
+<span><span class="co">#&gt; 6 elev_2500 102.22461</span></span>
+<span><span class="co">#&gt; 7 elev_3000 113.22049</span></span>
+<span><span class="co">#&gt; 8 elev_3500  87.04750</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="standardizing-trait-data">Standardizing trait data<a class="anchor" aria-label="anchor" href="#standardizing-trait-data"></a>
@@ -449,42 +449,42 @@
 <p><code>fundiversity</code> does not perform any transformation on the input trait or dissimilarity data. In <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> if you provide only continuous trait data then the function will attempt computing Euclidean distance between the species.</p>
 <p>In order to get comparable functional diversity indices you can standardize the trait data. One option would be to consider the <code><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale()</a></code> function to scale each continuous trait with a mean of zero and a standard deviation of one (z-score). Each trait will then have the same importance when computing functional diversity indices:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">traits_birds_sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">traits_birds_sc</span><span class="op">)</span>
-<span class="co">#&gt;  Bill.width..mm.   Bill.length..mm.    Kipp.s.index      Bodymass..g.     </span>
-<span class="co">#&gt;  Min.   :-1.1854   Min.   :-0.78608   Min.   :-1.8545   Min.   :-0.49301  </span>
-<span class="co">#&gt;  1st Qu.:-0.7330   1st Qu.:-0.52857   1st Qu.:-0.7432   1st Qu.:-0.44701  </span>
-<span class="co">#&gt;  Median :-0.2974   Median :-0.28257   Median :-0.2492   Median :-0.34440  </span>
-<span class="co">#&gt;  Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000  </span>
-<span class="co">#&gt;  3rd Qu.: 0.4157   3rd Qu.: 0.09482   3rd Qu.: 0.3682   3rd Qu.:-0.03999  </span>
-<span class="co">#&gt;  Max.   : 3.9738   Max.   : 7.20531   Max.   : 3.3317   Max.   : 5.79396</span>
-
-<span class="co"># Unscaled</span>
-<span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-<span class="co">#&gt;   site     FRic</span>
-<span class="co">#&gt; 1   s1 230967.7</span>
-
-<span class="co"># Scaled</span>
-<span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds_sc</span><span class="op">)</span>
-<span class="co">#&gt;   site    FRic</span>
-<span class="co">#&gt; 1   s1 88.9286</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">traits_birds_sc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">traits_birds_sc</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  Bill.width..mm.   Bill.length..mm.    Kipp.s.index      Bodymass..g.     </span></span>
+<span><span class="co">#&gt;  Min.   :-1.1854   Min.   :-0.78608   Min.   :-1.8545   Min.   :-0.49301  </span></span>
+<span><span class="co">#&gt;  1st Qu.:-0.7330   1st Qu.:-0.52857   1st Qu.:-0.7432   1st Qu.:-0.44701  </span></span>
+<span><span class="co">#&gt;  Median :-0.2974   Median :-0.28257   Median :-0.2492   Median :-0.34440  </span></span>
+<span><span class="co">#&gt;  Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000  </span></span>
+<span><span class="co">#&gt;  3rd Qu.: 0.4157   3rd Qu.: 0.09482   3rd Qu.: 0.3682   3rd Qu.:-0.03999  </span></span>
+<span><span class="co">#&gt;  Max.   : 3.9738   Max.   : 7.20531   Max.   : 3.3317   Max.   : 5.79396</span></span>
+<span></span>
+<span><span class="co"># Unscaled</span></span>
+<span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site     FRic</span></span>
+<span><span class="co">#&gt; 1   s1 230967.7</span></span>
+<span></span>
+<span><span class="co"># Scaled</span></span>
+<span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds_sc</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   site    FRic</span></span>
+<span><span class="co">#&gt; 1   s1 88.9286</span></span></code></pre></div>
 <p>Another solution to make trait comparable is to scale them between 0 and 1 by scaling each trait by its maximum and minimum values:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">min_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>, <span class="va">min</span><span class="op">)</span><span class="op">)</span>
-<span class="va">max_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">traits_birds_minmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-  <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">min_values</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="va">max_values</span> <span class="op">-</span> <span class="va">min_values</span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span>
-<span class="va">traits_birds_minmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">traits_birds_minmax</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">traits_birds_minmax</span><span class="op">)</span>
-<span class="co">#&gt;  Bill.width..mm.   Bill.length..mm.   Kipp.s.index     Bodymass..g.     </span>
-<span class="co">#&gt;  Min.   :0.00000   Min.   :0.00000   Min.   :0.0000   Min.   :0.000000  </span>
-<span class="co">#&gt;  1st Qu.:0.08769   1st Qu.:0.03222   1st Qu.:0.2143   1st Qu.:0.007317  </span>
-<span class="co">#&gt;  Median :0.17212   Median :0.06301   Median :0.3095   Median :0.023637  </span>
-<span class="co">#&gt;  Mean   :0.22977   Mean   :0.09837   Mean   :0.3576   Mean   :0.078418  </span>
-<span class="co">#&gt;  3rd Qu.:0.31034   3rd Qu.:0.11023   3rd Qu.:0.4286   3rd Qu.:0.072057  </span>
-<span class="co">#&gt;  Max.   :1.00000   Max.   :1.00000   Max.   :1.0000   Max.   :1.000000</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">min_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>, <span class="va">min</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">max_values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>, <span class="va">max</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">traits_birds_minmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="va">min_values</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="va">max_values</span> <span class="op">-</span> <span class="va">min_values</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">traits_birds_minmax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">traits_birds_minmax</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">traits_birds_minmax</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  Bill.width..mm.   Bill.length..mm.   Kipp.s.index     Bodymass..g.     </span></span>
+<span><span class="co">#&gt;  Min.   :0.00000   Min.   :0.00000   Min.   :0.0000   Min.   :0.000000  </span></span>
+<span><span class="co">#&gt;  1st Qu.:0.08769   1st Qu.:0.03222   1st Qu.:0.2143   1st Qu.:0.007317  </span></span>
+<span><span class="co">#&gt;  Median :0.17212   Median :0.06301   Median :0.3095   Median :0.023637  </span></span>
+<span><span class="co">#&gt;  Mean   :0.22977   Mean   :0.09837   Mean   :0.3576   Mean   :0.078418  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:0.31034   3rd Qu.:0.11023   3rd Qu.:0.4286   3rd Qu.:0.072057  </span></span>
+<span><span class="co">#&gt;  Max.   :1.00000   Max.   :1.00000   Max.   :1.0000   Max.   :1.000000</span></span></code></pre></div>
 <p>There are several other options available to standardize trait values, reviewed in <span class="citation">Leps et al. (2006)</span>.</p>
 <p>If not all the traits you use are continuous, refer to the next section, which suggests ways of computing functional diversity indices with non-continuous traits.</p>
 </div>
@@ -604,7 +604,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

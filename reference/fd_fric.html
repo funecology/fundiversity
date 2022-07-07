@@ -65,7 +65,7 @@ included traits.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fd_fric</span><span class="op">(</span><span class="va">traits</span>, <span class="va">sp_com</span>, stand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fd_fric</span><span class="op">(</span><span class="va">traits</span>, <span class="va">sp_com</span>, stand <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,11 +75,15 @@ included traits.</p>
 It has to contain exclusively numerical values. This can be
 either a <code>matrix</code>, a <code>data.frame</code>, or a <code><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html" class="external-link">Matrix::Matrix()</a></code>
 object.</p></dd>
+
+
 <dt>sp_com</dt>
 <dd><p>Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
 abundance in a single site. This can be either a <code>matrix</code>,
 a <code>data.frame</code>, or a <code><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html" class="external-link">Matrix::Matrix()</a></code> object.</p></dd>
+
+
 <dt>stand</dt>
 <dd><p>a boolean indicating whether to standardize FRic values over
 the observed maximum over all species (default: <code>FALSE</code>).
@@ -88,10 +92,13 @@ This scales FRic between 0 and 1.
 present in <strong>both</strong> site-species and trait matrices.
 If you want to consider species that are absent
 in the site-species matrix, add corresponding columns of 0s.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a data.frame with two columns:</p><ul><li><p><code>site</code> the names of the sites as the row names of the input <code>sp_com</code>,</p></li>
+    
+
+<p>a data.frame with two columns:</p><ul><li><p><code>site</code> the names of the sites as the row names of the input <code>sp_com</code>,</p></li>
 <li><p><code>FRic</code> the values of functional richness at each site.</p></li>
 </ul><p>NB: FRic is equal to <code>NA</code> when there are strictly less species in a site
 than the number of provided traits.</p>
@@ -125,11 +132,11 @@ habitat filtering; convex hull volume, Ecology 84(6),
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">fd_fric</span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fd_fric</span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site     FRic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   s1 230967.7</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -141,7 +148,7 @@ habitat filtering; convex hull volume, Ecology 84(6),
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

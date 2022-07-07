@@ -62,7 +62,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">fd_fdiv</span><span class="op">(</span><span class="va">traits</span>, <span class="va">sp_com</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fd_fdiv</span><span class="op">(</span><span class="va">traits</span>, <span class="va">sp_com</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -72,15 +72,20 @@
 It has to contain exclusively numerical values. This can be
 either a <code>matrix</code>, a <code>data.frame</code>, or a <code><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html" class="external-link">Matrix::Matrix()</a></code>
 object.</p></dd>
+
+
 <dt>sp_com</dt>
 <dd><p>Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
 abundance in a single site. This can be either a <code>matrix</code>,
 a <code>data.frame</code>, or a <code><a href="https://rdrr.io/pkg/Matrix/man/Matrix.html" class="external-link">Matrix::Matrix()</a></code> object.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a data.frame with two columns:</p><ul><li><p><code>site</code> the names of the sites as the row names of the input <code>sp_com</code>,</p></li>
+    
+
+<p>a data.frame with two columns:</p><ul><li><p><code>site</code> the names of the sites as the row names of the input <code>sp_com</code>,</p></li>
 <li><p><code>FDiv</code> the values of functional divergence at each site.</p></li>
 </ul><p>NB: when a site contains no species FDiv is equal to 0.</p>
     </div>
@@ -113,11 +118,11 @@ ecology, Ecology 89(8), <a href="https://doi.org/10.1890/07-1206.1" class="exter
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">fd_fdiv</span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">fd_fdiv</span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   site      FDiv</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   s1 0.7282172</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -129,7 +134,7 @@ ecology, Ecology 89(8), <a href="https://doi.org/10.1890/07-1206.1" class="exter
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

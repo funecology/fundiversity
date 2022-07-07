@@ -81,7 +81,7 @@
 
 
 <script src="performance_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Performance comparison with other functional diversity packages</h1>
             
       
@@ -113,57 +113,57 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 </h3>
 <p>We will now benchmark the functions included in <code>fundiversity</code> with the corresponding function in other packages using the <code>microbenchmark::microbenchmark()</code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">tictoc</span><span class="fu">::</span><span class="fu">tic</span><span class="op">(</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bisaloo.github.io/fundiversity/">fundiversity</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
-
-<span class="va">dist_traits_birds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">tictoc</span><span class="fu">::</span><span class="fu">tic</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bisaloo.github.io/fundiversity/">fundiversity</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">dist_traits_birds</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span></code></pre></div>
 <p>With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in <code>fundiversity</code>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkg_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  fundiversity <span class="op">=</span> <span class="op">{</span>
-    <span class="fu">fundiversity</span><span class="fu">::</span><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>
-  <span class="op">}</span>,
-  adiv <span class="op">=</span> <span class="op">{</span>
-    <span class="fu">adiv</span><span class="fu">::</span><span class="fu">QE</span><span class="op">(</span><span class="va">site_sp_birds</span>, dis <span class="op">=</span> <span class="va">dist_traits_birds</span><span class="op">)</span>
-  <span class="op">}</span>,
-  hillR <span class="op">=</span> <span class="op">{</span>
-    <span class="fu">hillR</span><span class="fu">::</span><span class="fu">hill_func</span><span class="op">(</span><span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span>, traits_as_is <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>
-  <span class="op">}</span>,
-  SYNCSA <span class="op">=</span> <span class="op">{</span>
-    <span class="fu">SYNCSA</span><span class="fu">::</span><span class="fu">rao.diversity</span><span class="op">(</span><span class="va">site_sp_birds</span>,
-                          phylodist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dist_traits_birds</span><span class="op">)</span>,
-                          standardize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">PhyRao</span>
-  <span class="op">}</span>,
-  FD <span class="op">=</span> <span class="op">{</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span>
-      <span class="fu">FD</span><span class="fu">::</span><span class="fu">dbFD</span><span class="op">(</span>x <span class="op">=</span> <span class="va">dist_traits_birds</span>, a <span class="op">=</span> <span class="va">site_sp_birds</span>, stand.x <span class="op">=</span> <span class="cn">FALSE</span>,
-               calc.FRic <span class="op">=</span> <span class="cn">TRUE</span>, calc.CWM <span class="op">=</span> <span class="cn">FALSE</span>, calc.FDiv <span class="op">=</span> <span class="cn">FALSE</span>,
-               calc.FGR <span class="op">=</span> <span class="cn">FALSE</span>, m <span class="op">=</span> <span class="st">"max"</span>, stand.FRic <span class="op">=</span> <span class="cn">FALSE</span>,
-               messages <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">}</span>,
-  mFD <span class="op">=</span> <span class="op">{</span>
-    <span class="fu">mFD</span><span class="fu">::</span><span class="fu">alpha.fd.hill</span><span class="op">(</span><span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span>, q <span class="op">=</span> <span class="fl">2</span>, tau <span class="op">=</span> <span class="st">"max"</span>,
-                       details_returned <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-  <span class="op">}</span>,
-  times <span class="op">=</span> <span class="fl">500</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">pkg_bench</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pkg_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  fundiversity <span class="op">=</span> <span class="op">{</span></span>
+<span>    <span class="fu">fundiversity</span><span class="fu">::</span><span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  adiv <span class="op">=</span> <span class="op">{</span></span>
+<span>    <span class="fu">adiv</span><span class="fu">::</span><span class="fu">QE</span><span class="op">(</span><span class="va">site_sp_birds</span>, dis <span class="op">=</span> <span class="va">dist_traits_birds</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  hillR <span class="op">=</span> <span class="op">{</span></span>
+<span>    <span class="fu">hillR</span><span class="fu">::</span><span class="fu">hill_func</span><span class="op">(</span><span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span>, traits_as_is <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  SYNCSA <span class="op">=</span> <span class="op">{</span></span>
+<span>    <span class="fu">SYNCSA</span><span class="fu">::</span><span class="fu">rao.diversity</span><span class="op">(</span><span class="va">site_sp_birds</span>,</span>
+<span>                          phylodist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>                          standardize <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">PhyRao</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  FD <span class="op">=</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span></span>
+<span>      <span class="fu">FD</span><span class="fu">::</span><span class="fu">dbFD</span><span class="op">(</span>x <span class="op">=</span> <span class="va">dist_traits_birds</span>, a <span class="op">=</span> <span class="va">site_sp_birds</span>, stand.x <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>               calc.FRic <span class="op">=</span> <span class="cn">TRUE</span>, calc.CWM <span class="op">=</span> <span class="cn">FALSE</span>, calc.FDiv <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>               calc.FGR <span class="op">=</span> <span class="cn">FALSE</span>, m <span class="op">=</span> <span class="st">"max"</span>, stand.FRic <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>               messages <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  mFD <span class="op">=</span> <span class="op">{</span></span>
+<span>    <span class="fu">mFD</span><span class="fu">::</span><span class="fu">alpha.fd.hill</span><span class="op">(</span><span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span>, q <span class="op">=</span> <span class="fl">2</span>, tau <span class="op">=</span> <span class="st">"max"</span>,</span>
+<span>                       details_returned <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">500</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">pkg_bench</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-data-rao-1.png" alt=""><p class="caption">Performance comparison in computing Rao’s quadratic entropy between <code>fundiversity</code> and other packages</p>
 </div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pkg_bench</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;          expr         min          lq        mean      median          uq       max neval  cld</span>
-<span class="co">#&gt;  fundiversity    2.287913    2.630710    3.089326    2.762887    2.891716   44.3695   500 a   </span>
-<span class="co">#&gt;          adiv   14.906173   15.719250   26.646127   16.773885   32.032801  103.7893   500  b  </span>
-<span class="co">#&gt;         hillR   20.696094   22.602998   32.499789   24.343631   33.482000  680.6541   500  b  </span>
-<span class="co">#&gt;        SYNCSA  101.301958  105.161422  129.325061  118.840921  146.598844  758.1414   500   c </span>
-<span class="co">#&gt;            FD 3849.335158 3956.290358 4053.866622 4000.860019 4050.856521 4778.5860   500    d</span>
-<span class="co">#&gt;           mFD    4.251853    4.609947   11.588040    4.842196    5.545768  665.1295   500 a</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pkg_bench</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;          expr         min          lq        mean      median          uq       max neval  cld</span></span>
+<span><span class="co">#&gt;  fundiversity    2.287913    2.630710    3.089326    2.762887    2.891716   44.3695   500 a   </span></span>
+<span><span class="co">#&gt;          adiv   14.906173   15.719250   26.646127   16.773885   32.032801  103.7893   500  b  </span></span>
+<span><span class="co">#&gt;         hillR   20.696094   22.602998   32.499789   24.343631   33.482000  680.6541   500  b  </span></span>
+<span><span class="co">#&gt;        SYNCSA  101.301958  105.161422  129.325061  118.840921  146.598844  758.1414   500   c </span></span>
+<span><span class="co">#&gt;            FD 3849.335158 3956.290358 4053.866622 4000.860019 4050.856521 4778.5860   500    d</span></span>
+<span><span class="co">#&gt;           mFD    4.251853    4.609947   11.588040    4.842196    5.545768  665.1295   500 a</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -174,142 +174,142 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <h3 id="increasing-the-number-of-species">Increasing the number of species<a class="anchor" aria-label="anchor" href="#increasing-the-number-of-species"></a>
 </h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">make_more_sp</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">traits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">traits_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>tr <span class="op">=</span> <span class="va">traits</span>, si <span class="op">=</span> <span class="va">site_sp</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="va">null_sp_1000</span>   <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
-<span class="va">null_sp_10000</span>  <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>
-<span class="va">null_sp_100000</span> <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">500</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">make_more_sp</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">traits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">traits_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">traits</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sp"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>tr <span class="op">=</span> <span class="va">traits</span>, si <span class="op">=</span> <span class="va">site_sp</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">null_sp_1000</span>   <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">null_sp_10000</span>  <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
+<span><span class="va">null_sp_100000</span> <span class="op">&lt;-</span> <span class="fu">make_more_sp</span><span class="op">(</span><span class="fl">500</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="functional-richness">Functional Richness<a class="anchor" aria-label="anchor" href="#functional-richness"></a>
 </h4>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sp_fric</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
-  species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  species_100000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">null_sp_100000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_100000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  times <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_fric</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sp_fric</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,</span>
+<span>  species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  species_100000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">null_sp_100000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_100000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_fric</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-species-fric-1.png" alt=""><p class="caption">Performance comparison of <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with increasing number of species.</p>
 </div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sp_fric</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;            expr       min        lq      mean    median        uq        max neval cld</span>
-<span class="co">#&gt;     species_200  17.43907  17.86243  19.25563  18.36463  19.43581   30.67592    30  a </span>
-<span class="co">#&gt;    species_1000  18.61623  18.95761  23.12715  19.33508  20.27961  116.57998    30  a </span>
-<span class="co">#&gt;   species_10000  28.16377  28.72545  58.63922  29.44426  37.00387  662.93365    30  a </span>
-<span class="co">#&gt;  species_100000 148.85628 172.34064 313.60939 180.87062 212.01963 2071.42395    30   b</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sp_fric</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;            expr       min        lq      mean    median        uq        max neval cld</span></span>
+<span><span class="co">#&gt;     species_200  17.43907  17.86243  19.25563  18.36463  19.43581   30.67592    30  a </span></span>
+<span><span class="co">#&gt;    species_1000  18.61623  18.95761  23.12715  19.33508  20.27961  116.57998    30  a </span></span>
+<span><span class="co">#&gt;   species_10000  28.16377  28.72545  58.63922  29.44426  37.00387  662.93365    30  a </span></span>
+<span><span class="co">#&gt;  species_100000 148.85628 172.34064 313.60939 180.87062 212.01963 2071.42395    30   b</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="functional-divergence">Functional Divergence<a class="anchor" aria-label="anchor" href="#functional-divergence"></a>
 </h4>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sp_fdiv</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
-  species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  species_100000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">null_sp_100000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_100000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  times <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_fdiv</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sp_fdiv</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,</span>
+<span>  species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  species_100000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">null_sp_100000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_100000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_fdiv</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-species-fdiv-1.png" alt=""><p class="caption">Performance comparison of <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> with increasing number of species.</p>
 </div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sp_fdiv</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;            expr       min        lq      mean    median        uq       max neval cld</span>
-<span class="co">#&gt;     species_200  48.44905  49.03244  51.10591  49.83909  50.63842  80.15223    30  a </span>
-<span class="co">#&gt;    species_1000  49.90169  50.47038  54.57637  51.34235  54.04361  81.71650    30  a </span>
-<span class="co">#&gt;   species_10000  64.80198  65.77591 106.63771  66.45525  96.01833 822.19062    30  a </span>
-<span class="co">#&gt;  species_100000 284.15498 316.50850 448.10526 328.81308 358.02843 956.35379    30   b</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sp_fdiv</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;            expr       min        lq      mean    median        uq       max neval cld</span></span>
+<span><span class="co">#&gt;     species_200  48.44905  49.03244  51.10591  49.83909  50.63842  80.15223    30  a </span></span>
+<span><span class="co">#&gt;    species_1000  49.90169  50.47038  54.57637  51.34235  54.04361  81.71650    30  a </span></span>
+<span><span class="co">#&gt;   species_10000  64.80198  65.77591 106.63771  66.45525  96.01833 822.19062    30  a </span></span>
+<span><span class="co">#&gt;  species_100000 284.15498 316.50850 448.10526 328.81308 358.02843 956.35379    30   b</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="raos-quadratric-entropy">Rao’s Quadratric Entropy<a class="anchor" aria-label="anchor" href="#raos-quadratric-entropy"></a>
 </h4>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sp_raoq</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
-  species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  times <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_raoq</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sp_raoq</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,</span>
+<span>  species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_raoq</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-species-raoq-1.png" alt=""><p class="caption">Performance comparison of <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> with increasing number of species.</p>
 </div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sp_raoq</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;           expr          min           lq         mean       median           uq         max neval cld</span>
-<span class="co">#&gt;    species_200     2.670416     2.943108     5.652929     3.171312     3.366178    77.94491    30  a </span>
-<span class="co">#&gt;   species_1000    91.829330    92.648495   104.365654    94.808870   116.528429   126.52938    30  a </span>
-<span class="co">#&gt;  species_10000 24088.575237 24965.084344 25589.177876 25347.518500 26110.519379 28657.24666    30   b</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sp_raoq</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;           expr          min           lq         mean       median           uq         max neval cld</span></span>
+<span><span class="co">#&gt;    species_200     2.670416     2.943108     5.652929     3.171312     3.366178    77.94491    30  a </span></span>
+<span><span class="co">#&gt;   species_1000    91.829330    92.648495   104.365654    94.808870   116.528429   126.52938    30  a </span></span>
+<span><span class="co">#&gt;  species_10000 24088.575237 24965.084344 25589.177876 25347.518500 26110.519379 28657.24666    30   b</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="functional-evenness">Functional Evenness<a class="anchor" aria-label="anchor" href="#functional-evenness"></a>
 </h4>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sp_feve</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
-  species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,
-  times <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-<span class="co">#&gt; Error in getGlobalsAndPackages(expr, envir = envir, globals = globals): The total size of the 2 globals that need to be exported for the future expression ('FUN(X = structure(c(0, 0, 0.000165289256198347, 0.000224719101123596,; 0, 0, 0, 0, 0.00016, 0.000158730158730159, 0.000165289256198347,; 0, 0, 0, 0, 0, 0, 0, 0.000165289256198347, 0.000224719101123596,; 0.000307692307692308, 0.000377358490566038, 0.00048780487804878,; 0, 0.00016, 0.000158730158730159, 0, 0, 0, 0, 0, 0, 0, 0, 0.000165289256198347,; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.000307692307692308, 0.000377358490566038,; ...; "sp10835", "sp10836", "sp10837", "sp10838", "sp10839", "sp10840",; "sp10841", "sp10842", "sp10843", "sp10844", "sp10845", "sp10846",; "sp10847", "sp10848", "sp10849", "sp10850"))))') is 899.49 MiB. This exceeds the maximum allowed size of 500.00 MiB (option 'future.globals.maxSize'). There are two globals: 'dist_matrix' (899.48 MiB of class 'numeric') and 'FUN' (10.75 KiB of class 'function').</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_feve</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sp_feve</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  species_200    <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>     <span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,</span>
+<span>  species_1000   <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>  <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_1000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  species_10000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span> <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">tr</span>, <span class="va">null_sp_10000</span><span class="op">$</span><span class="va">si</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error in getGlobalsAndPackages(expr, envir = envir, globals = globals): The total size of the 2 globals that need to be exported for the future expression ('FUN(X = structure(c(0, 0, 0.000165289256198347, 0.000224719101123596,; 0, 0, 0, 0, 0.00016, 0.000158730158730159, 0.000165289256198347,; 0, 0, 0, 0, 0, 0, 0, 0.000165289256198347, 0.000224719101123596,; 0.000307692307692308, 0.000377358490566038, 0.00048780487804878,; 0, 0.00016, 0.000158730158730159, 0, 0, 0, 0, 0, 0, 0, 0, 0.000165289256198347,; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.000307692307692308, 0.000377358490566038,; ...; "sp10835", "sp10836", "sp10837", "sp10838", "sp10839", "sp10840",; "sp10841", "sp10842", "sp10843", "sp10844", "sp10845", "sp10846",; "sp10847", "sp10848", "sp10849", "sp10850"))))') is 899.49 MiB. This exceeds the maximum allowed size of 500.00 MiB (option 'future.globals.maxSize'). There are two globals: 'dist_matrix' (899.48 MiB of class 'numeric') and 'FUN' (10.75 KiB of class 'function').</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sp_feve</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-species-feve-1.png" alt=""><p class="caption">Performance comparison of <code><a href="../reference/fd_feve.html">fd_feve()</a></code> with increasing number of species.</p>
 </div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sp_feve</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;           expr         min          lq        mean      median          uq         max neval cld</span>
-<span class="co">#&gt;    species_200    11.17215    11.44301    12.33728    11.79237    12.24989    20.59761    30  a </span>
-<span class="co">#&gt;   species_1000   197.85067   279.95442   280.47473   289.50154   297.68343   336.33779    30  a </span>
-<span class="co">#&gt;  species_10000 58136.53352 60618.48446 60999.92341 61352.07935 61751.75521 62372.93708    30   b</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sp_feve</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;           expr         min          lq        mean      median          uq         max neval cld</span></span>
+<span><span class="co">#&gt;    species_200    11.17215    11.44301    12.33728    11.79237    12.24989    20.59761    30  a </span></span>
+<span><span class="co">#&gt;   species_1000   197.85067   279.95442   280.47473   289.50154   297.68343   336.33779    30  a </span></span>
+<span><span class="co">#&gt;  species_10000 58136.53352 60618.48446 60999.92341 61352.07935 61751.75521 62372.93708    30   b</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="comparing-between-indices">Comparing between indices<a class="anchor" aria-label="anchor" href="#comparing-between-indices"></a>
 </h4>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">all_bench_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="va">bench_sp_fric</span>,
-                     fdiv <span class="op">=</span> <span class="va">bench_sp_fdiv</span>,
-                     raoq <span class="op">=</span> <span class="va">bench_sp_raoq</span>,
-                     feve <span class="op">=</span> <span class="va">bench_sp_feve</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">bind_rows</span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"fd_index"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>n_sp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"species_"</span>, <span class="st">""</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">%&gt;%</span>
-           <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">all_bench_sp</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">n_sp</span>, <span class="va">time</span> <span class="op">*</span> <span class="fl">1e-9</span>, color <span class="op">=</span> <span class="va">fd_index</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_color_brewer</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>,
-                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="st">"FRic"</span>, fdiv <span class="op">=</span> <span class="st">"FDiv"</span>, raoq <span class="op">=</span> <span class="st">"Rao's Q"</span>,
-                                feve <span class="op">=</span> <span class="st">"FEve"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Performance comparison between indices"</span>,
-       x <span class="op">=</span> <span class="st">"# of species"</span>, y <span class="op">=</span> <span class="st">"Time (in seconds)"</span>,
-       color <span class="op">=</span> <span class="st">"FD index"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">all_bench_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="va">bench_sp_fric</span>,</span>
+<span>                     fdiv <span class="op">=</span> <span class="va">bench_sp_fdiv</span>,</span>
+<span>                     raoq <span class="op">=</span> <span class="va">bench_sp_raoq</span>,</span>
+<span>                     feve <span class="op">=</span> <span class="va">bench_sp_feve</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">bind_rows</span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"fd_index"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>n_sp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"species_"</span>, <span class="st">""</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">all_bench_sp</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">n_sp</span>, <span class="va">time</span> <span class="op">*</span> <span class="fl">1e-9</span>, color <span class="op">=</span> <span class="va">fd_index</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_brewer</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="st">"FRic"</span>, fdiv <span class="op">=</span> <span class="st">"FDiv"</span>, raoq <span class="op">=</span> <span class="st">"Rao's Q"</span>,</span>
+<span>                                feve <span class="op">=</span> <span class="st">"FEve"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Performance comparison between indices"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"# of species"</span>, y <span class="op">=</span> <span class="st">"Time (in seconds)"</span>,</span>
+<span>       color <span class="op">=</span> <span class="st">"FD index"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-species-compare-1.png" alt=""><p class="caption">Performance comparison between functions for distinct indices in <code>fundiversity</code> with increasing number of species. Smoothed trend lines and standard error enveloppes ares shown.</p>
 </div>
@@ -319,322 +319,322 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <h3 id="increasing-the-number-of-sites">Increasing the number of sites<a class="anchor" aria-label="anchor" href="#increasing-the-number-of-sites"></a>
 </h3>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">make_more_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-  <span class="va">site_sp</span>
-<span class="op">}</span>
-
-<span class="va">site_sp_100</span>   <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>
-<span class="va">site_sp_1000</span>  <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">120</span><span class="op">)</span>
-<span class="va">site_sp_10000</span> <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">1200</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">make_more_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">site_sp</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">site_sp_100</span>   <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span></span>
+<span><span class="va">site_sp_1000</span>  <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">120</span><span class="op">)</span></span>
+<span><span class="va">site_sp_10000</span> <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">1200</span><span class="op">)</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="functional-richness-1">Functional Richness<a class="anchor" aria-label="anchor" href="#functional-richness-1"></a>
 </h4>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sites_fric</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
-  sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_100</span><span class="op">)</span>,
-  sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_1000</span><span class="op">)</span>,
-  sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_10000</span><span class="op">)</span>,
-  times <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_fric</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sites_fric</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,</span>
+<span>  sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_100</span><span class="op">)</span>,</span>
+<span>  sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_1000</span><span class="op">)</span>,</span>
+<span>  sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_10000</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_fric</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-sites-fric-1.png" alt=""><p class="caption">Performance comparison of <code><a href="../reference/fd_fric.html">fd_fric()</a></code> with increasing number of sites.</p>
 </div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sites_fric</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;         expr        min         lq       mean     median         uq        max neval cld</span>
-<span class="co">#&gt;     sites_10   17.77558   18.58610   21.18691   19.36247   19.83560   66.98525    30 a  </span>
-<span class="co">#&gt;    sites_100   32.91720   34.17783   37.24440   35.02940   35.70176   96.30081    30 a  </span>
-<span class="co">#&gt;   sites_1000  178.65317  181.95299  221.38235  186.83763  191.94836 1102.60246    30  b </span>
-<span class="co">#&gt;  sites_10000 1754.78248 1785.23758 1857.44765 1846.69689 1890.84202 2232.53853    30   c</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sites_fric</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;         expr        min         lq       mean     median         uq        max neval cld</span></span>
+<span><span class="co">#&gt;     sites_10   17.77558   18.58610   21.18691   19.36247   19.83560   66.98525    30 a  </span></span>
+<span><span class="co">#&gt;    sites_100   32.91720   34.17783   37.24440   35.02940   35.70176   96.30081    30 a  </span></span>
+<span><span class="co">#&gt;   sites_1000  178.65317  181.95299  221.38235  186.83763  191.94836 1102.60246    30  b </span></span>
+<span><span class="co">#&gt;  sites_10000 1754.78248 1785.23758 1857.44765 1846.69689 1890.84202 2232.53853    30   c</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="functional-divergence-1">Functional Divergence<a class="anchor" aria-label="anchor" href="#functional-divergence-1"></a>
 </h4>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sites_fdiv</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,
-  sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_100</span><span class="op">)</span>,
-  sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_1000</span><span class="op">)</span>,
-  sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_10000</span><span class="op">)</span>,
-  times <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_fdiv</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sites_fdiv</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span>,</span>
+<span>  sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_100</span><span class="op">)</span>,</span>
+<span>  sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_1000</span><span class="op">)</span>,</span>
+<span>  sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_10000</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_fdiv</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-sites-fdiv-1.png" alt=""><p class="caption">Performance comparison of <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> with increasing number of sites.</p>
 </div>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sites_fdiv</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;         expr        min         lq       mean     median         uq       max neval  cld</span>
-<span class="co">#&gt;     sites_10   50.17003   51.88956   58.73887   53.34411   55.25329  197.9635    30 a   </span>
-<span class="co">#&gt;    sites_100   80.40664   84.18102   97.06916   84.94270   94.98646  166.4284    30  b  </span>
-<span class="co">#&gt;   sites_1000  386.55725  402.17618  429.92229  413.10485  469.88815  509.0017    30   c </span>
-<span class="co">#&gt;  sites_10000 3603.94346 3757.78241 3813.13545 3800.30931 3866.23993 4042.1464    30    d</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sites_fdiv</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;         expr        min         lq       mean     median         uq       max neval  cld</span></span>
+<span><span class="co">#&gt;     sites_10   50.17003   51.88956   58.73887   53.34411   55.25329  197.9635    30 a   </span></span>
+<span><span class="co">#&gt;    sites_100   80.40664   84.18102   97.06916   84.94270   94.98646  166.4284    30  b  </span></span>
+<span><span class="co">#&gt;   sites_1000  386.55725  402.17618  429.92229  413.10485  469.88815  509.0017    30   c </span></span>
+<span><span class="co">#&gt;  sites_10000 3603.94346 3757.78241 3813.13545 3800.30931 3866.23993 4042.1464    30    d</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="raos-quadratic-entropy">Rao’s Quadratic Entropy<a class="anchor" aria-label="anchor" href="#raos-quadratic-entropy"></a>
 </h4>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sites_raoq</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,
-  sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_100</span>,   <span class="va">dist_traits_birds</span><span class="op">)</span>,
-  sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_1000</span>,  <span class="va">dist_traits_birds</span><span class="op">)</span>,
-  sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_10000</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,
-  times <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_raoq</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sites_raoq</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>  sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_100</span>,   <span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>  sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_1000</span>,  <span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>  sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_10000</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_raoq</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-sites-raoq-1.png" alt=""><p class="caption">Performance comparison of <code><a href="../reference/fd_raoq.html">fd_raoq()</a></code> with increasing number of sites.</p>
 </div>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sites_raoq</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;         expr       min          lq        mean      median          uq         max neval cld</span>
-<span class="co">#&gt;     sites_10   2.43763    2.618498    2.835577    2.786454    2.899721    4.214509    30  a </span>
-<span class="co">#&gt;    sites_100   3.07880    3.293774    7.170445    4.036631   11.673449   22.447060    30  a </span>
-<span class="co">#&gt;   sites_1000  10.89814   11.346314   23.568799   12.680631   24.267842  161.626134    30  a </span>
-<span class="co">#&gt;  sites_10000 408.95982 1106.958572 1084.559002 1157.547212 1230.670102 1490.536708    30   b</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sites_raoq</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;         expr       min          lq        mean      median          uq         max neval cld</span></span>
+<span><span class="co">#&gt;     sites_10   2.43763    2.618498    2.835577    2.786454    2.899721    4.214509    30  a </span></span>
+<span><span class="co">#&gt;    sites_100   3.07880    3.293774    7.170445    4.036631   11.673449   22.447060    30  a </span></span>
+<span><span class="co">#&gt;   sites_1000  10.89814   11.346314   23.568799   12.680631   24.267842  161.626134    30  a </span></span>
+<span><span class="co">#&gt;  sites_10000 408.95982 1106.958572 1084.559002 1157.547212 1230.670102 1490.536708    30   b</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="functional-evenness-1">Functional Evenness<a class="anchor" aria-label="anchor" href="#functional-evenness-1"></a>
 </h4>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sites_feve</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,
-  sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_100</span>,   <span class="va">dist_traits_birds</span><span class="op">)</span>,
-  sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_1000</span>,  <span class="va">dist_traits_birds</span><span class="op">)</span>,
-  sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_10000</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,
-  times <span class="op">=</span> <span class="fl">30</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_feve</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sites_feve</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  sites_10    <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_birds</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>  sites_100   <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_100</span>,   <span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>  sites_1000  <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_1000</span>,  <span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>  sites_10000 <span class="op">=</span> <span class="fu"><a href="../reference/fd_feve.html">fd_feve</a></span><span class="op">(</span>traits <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">site_sp_10000</span>, <span class="va">dist_traits_birds</span><span class="op">)</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">30</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu">autoplot</span><span class="op">(</span><span class="va">bench_sites_feve</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-sites-feve-1.png" alt=""><p class="caption">Performance comparison of <code><a href="../reference/fd_feve.html">fd_feve()</a></code> with increasing number of sites</p>
 </div>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bench_sites_feve</span>
-<span class="co">#&gt; Unit: milliseconds</span>
-<span class="co">#&gt;         expr         min          lq       mean      median         uq        max neval cld</span>
-<span class="co">#&gt;     sites_10    27.47611    27.95555    34.4079    28.74399    29.6761   189.6112    30 a  </span>
-<span class="co">#&gt;    sites_100   127.61540   130.15233   168.1676   132.48679   168.9531   819.7361    30 a  </span>
-<span class="co">#&gt;   sites_1000  1195.25759  1268.52395  1432.1127  1287.19147  1839.7692  1916.8058    30  b </span>
-<span class="co">#&gt;  sites_10000 12192.27871 13661.60213 14675.2386 14058.28719 14820.7077 28405.1799    30   c</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bench_sites_feve</span></span>
+<span><span class="co">#&gt; Unit: milliseconds</span></span>
+<span><span class="co">#&gt;         expr         min          lq       mean      median         uq        max neval cld</span></span>
+<span><span class="co">#&gt;     sites_10    27.47611    27.95555    34.4079    28.74399    29.6761   189.6112    30 a  </span></span>
+<span><span class="co">#&gt;    sites_100   127.61540   130.15233   168.1676   132.48679   168.9531   819.7361    30 a  </span></span>
+<span><span class="co">#&gt;   sites_1000  1195.25759  1268.52395  1432.1127  1287.19147  1839.7692  1916.8058    30  b </span></span>
+<span><span class="co">#&gt;  sites_10000 12192.27871 13661.60213 14675.2386 14058.28719 14820.7077 28405.1799    30   c</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="comparing-between-indices-1">Comparing between indices<a class="anchor" aria-label="anchor" href="#comparing-between-indices-1"></a>
 </h4>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">all_bench_sites</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="va">bench_sites_fric</span>,
-                        fdiv <span class="op">=</span> <span class="va">bench_sites_fdiv</span>,
-                        raoq <span class="op">=</span> <span class="va">bench_sites_raoq</span>,
-                        feve <span class="op">=</span> <span class="va">bench_sites_feve</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">bind_rows</span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"fd_index"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>n_sites <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"sites"</span>, <span class="st">""</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">%&gt;%</span>
-           <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-
-<span class="va">all_bench_sites</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">n_sites</span>, <span class="va">time</span> <span class="op">*</span> <span class="fl">1e-9</span>, color <span class="op">=</span> <span class="va">fd_index</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_color_brewer</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>,
-                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="st">"FRic"</span>, fdiv <span class="op">=</span> <span class="st">"FDiv"</span>, raoq <span class="op">=</span> <span class="st">"Rao's Q"</span>,
-                                feve <span class="op">=</span> <span class="st">"FEve"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Performance comparison between indices"</span>,
-       x <span class="op">=</span> <span class="st">"# of sites"</span>, y <span class="op">=</span> <span class="st">"Time (in seconds)"</span>,
-       color <span class="op">=</span> <span class="st">"FD index"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">all_bench_sites</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="va">bench_sites_fric</span>,</span>
+<span>                        fdiv <span class="op">=</span> <span class="va">bench_sites_fdiv</span>,</span>
+<span>                        raoq <span class="op">=</span> <span class="va">bench_sites_raoq</span>,</span>
+<span>                        feve <span class="op">=</span> <span class="va">bench_sites_feve</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">bind_rows</span><span class="op">(</span>.id <span class="op">=</span> <span class="st">"fd_index"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>n_sites <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"sites"</span>, <span class="st">""</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>           <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">all_bench_sites</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">n_sites</span>, <span class="va">time</span> <span class="op">*</span> <span class="fl">1e-9</span>, color <span class="op">=</span> <span class="va">fd_index</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_log10</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_brewer</span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>,</span>
+<span>                     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>fric <span class="op">=</span> <span class="st">"FRic"</span>, fdiv <span class="op">=</span> <span class="st">"FDiv"</span>, raoq <span class="op">=</span> <span class="st">"Rao's Q"</span>,</span>
+<span>                                feve <span class="op">=</span> <span class="st">"FEve"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Performance comparison between indices"</span>,</span>
+<span>       x <span class="op">=</span> <span class="st">"# of sites"</span>, y <span class="op">=</span> <span class="st">"Time (in seconds)"</span>,</span>
+<span>       color <span class="op">=</span> <span class="st">"FD index"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="fd-bench-sites-compare-1.png" alt=""><p class="caption">Performance comparison between functions for distinct indices in <code>fundiversity</code> with increasing number of sites. Smoothed trend lines and standard error enveloppes ares shown.</p>
 </div>
 <details><p><summary>Session info of the machine on which the benchmark was ran and time it took to run</summary></p>
-<pre><code><span class="co">#&gt;  seconds needed to generate this document: 3694.109 sec elapsed</span>
-<span class="co">#&gt; ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt;  setting  value                       </span>
-<span class="co">#&gt;  version  R version 3.6.3 (2020-02-29)</span>
-<span class="co">#&gt;  os       Ubuntu 16.04.7 LTS          </span>
-<span class="co">#&gt;  system   x86_64, linux-gnu           </span>
-<span class="co">#&gt;  ui       RStudio                     </span>
-<span class="co">#&gt;  language (EN)                        </span>
-<span class="co">#&gt;  collate  en_US.UTF-8                 </span>
-<span class="co">#&gt;  ctype    en_US.UTF-8                 </span>
-<span class="co">#&gt;  tz       Europe/Berlin               </span>
-<span class="co">#&gt;  date     2021-07-30                  </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt;  !  package           * version    date       lib source                            </span>
-<span class="co">#&gt;     abind               1.4-5      2016-07-21 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     ade4                1.7-17     2021-06-17 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     adegenet            2.1.3      2020-05-10 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     adegraphics         1.0-15     2018-12-18 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     adephylo            1.1-11     2017-12-18 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     adiv                2.0.1      2020-08-26 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     ape                 5.5        2021-04-25 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     assertthat          0.2.1      2019-03-21 [3] CRAN (R 3.5.3)                    </span>
-<span class="co">#&gt;     boot                1.3-28     2021-05-03 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     cachem              1.0.5      2021-05-15 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     class               7.3-19     2021-05-03 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     classInt            0.4-3      2020-04-07 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     cli                 3.0.1      2021-07-17 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     cluster             2.1.2      2021-04-17 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     clusterGeneration   1.3.7      2020-12-15 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     coda                0.19-4     2020-09-30 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     codetools           0.2-18     2020-11-04 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     colorspace          2.0-2      2021-06-24 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     combinat            0.0-8      2010-08-05 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     crayon              1.4.1      2021-02-08 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     crosstalk           1.1.1      2021-01-12 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     DBI                 1.1.1      2021-01-15 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     deldir              0.2-10     2021-02-16 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     desc                1.3.0      2021-03-05 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     digest              0.6.27     2020-10-24 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     dplyr             * 1.0.7      2021-06-18 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     DT                  0.18       2021-04-14 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     e1071               1.7-7      2021-05-23 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     ellipsis            0.3.2      2021-04-29 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     evaluate            0.14       2019-05-28 [3] CRAN (R 3.6.0)                    </span>
-<span class="co">#&gt;     expm                0.999-6    2021-01-13 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     FactoMineR          2.4        2020-12-11 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     fansi               0.5.0      2021-05-25 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     farver              2.1.0      2021-02-28 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     fastmap             1.1.0      2021-01-25 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     fastmatch           1.1-3      2021-07-23 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     FD                  1.0-12     2014-08-19 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     flashClust          1.01-2     2012-08-21 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;  VP fundiversity      * 0.2.0      2021-01-22 [?] local                             </span>
-<span class="co">#&gt;     future              1.21.0     2020-12-10 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     future.apply        1.7.0      2021-01-04 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     gdata               2.18.0     2017-06-06 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     generics            0.1.0      2020-10-31 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     geometry            0.4.5      2019-12-04 [3] CRAN (R 3.6.1)                    </span>
-<span class="co">#&gt;     ggplot2           * 3.3.5      2021-06-25 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     ggrepel             0.9.1      2021-01-15 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     globals             0.14.0     2020-11-22 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     glue                1.4.2      2020-08-27 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     gmodels             2.18.1     2018-06-25 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     gtable              0.3.0      2019-03-25 [3] CRAN (R 3.5.3)                    </span>
-<span class="co">#&gt;     gtools              3.9.2      2021-06-06 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     highr               0.9        2021-04-16 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     hillR               0.5.0      2020-07-07 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     hms                 1.1.0      2021-05-17 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     htmltools           0.5.1.1    2021-01-22 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     htmlwidgets         1.5.3      2020-12-10 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     httpuv              1.6.1      2021-05-07 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     httr                1.4.2      2020-07-20 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     igraph              1.2.6      2020-10-06 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     jpeg                0.1-9      2021-07-24 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     jsonlite            1.7.2      2020-12-09 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     KernSmooth          2.23-20    2021-05-03 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     knitr               1.33       2021-04-24 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     later               1.2.0      2021-04-23 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     lattice             0.20-44    2021-05-02 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     latticeExtra        0.6-29     2019-12-19 [3] CRAN (R 3.6.2)                    </span>
-<span class="co">#&gt;     lazyeval            0.2.2      2019-03-15 [3] CRAN (R 3.5.3)                    </span>
-<span class="co">#&gt;     leaps               3.1        2020-01-16 [3] CRAN (R 3.6.2)                    </span>
-<span class="co">#&gt;     LearnBayes          2.15.1     2018-03-18 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     lifecycle           1.0.0      2021-02-15 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     listenv             0.8.0      2019-12-05 [3] CRAN (R 3.6.1)                    </span>
-<span class="co">#&gt;     magic               1.5-9      2018-09-17 [3] CRAN (R 3.5.1)                    </span>
-<span class="co">#&gt;     magrittr            2.0.1      2020-11-17 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     manipulateWidget    0.11.0     2021-05-31 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     maps                3.3.0      2018-04-03 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     MASS                7.3-54     2021-05-03 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     Matrix              1.3-4      2021-06-01 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     memoise             2.0.0      2021-01-26 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     mFD                 1.0.0      2021-07-29 [1] Github (CmlMagneville/mFD@a6af567)</span>
-<span class="co">#&gt;     mgcv                1.8-36     2021-06-01 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     mime                0.11       2021-06-23 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     miniUI              0.1.1.1    2018-05-18 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     mnormt              2.0.2      2020-09-01 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     multcomp            1.4-17     2021-04-29 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     munsell             0.5.0      2018-06-12 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     mvtnorm             1.1-2      2021-06-07 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     nlme                3.1-152    2021-02-04 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     numDeriv            2016.8-1.1 2019-06-06 [3] CRAN (R 3.6.0)                    </span>
-<span class="co">#&gt;     parallelly          1.26.0     2021-06-09 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     patchwork           1.1.1      2020-12-17 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     permute             0.9-5      2019-03-12 [3] CRAN (R 3.5.3)                    </span>
-<span class="co">#&gt;     phangorn            2.7.0      2021-05-03 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     phylobase           0.8.10     2020-03-01 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     phytools            0.7-80     2021-06-03 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     pillar              1.6.2      2021-07-29 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     pkgload             1.2.1      2021-04-06 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     plotrix             3.8-1      2021-01-21 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     plyr                1.8.6      2020-03-03 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     png                 0.1-7      2013-12-03 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     prettyunits         1.1.1      2020-01-24 [3] CRAN (R 3.6.2)                    </span>
-<span class="co">#&gt;     progress            1.2.2      2019-05-16 [3] CRAN (R 3.6.0)                    </span>
-<span class="co">#&gt;     promises            1.2.0.1    2021-02-11 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     proxy               0.4-26     2021-06-07 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     purrr               0.3.4      2020-04-17 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     quadprog            1.5-8      2019-11-20 [3] CRAN (R 3.6.1)                    </span>
-<span class="co">#&gt;     R6                  2.5.0      2020-10-28 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     raster              3.4-10     2021-05-03 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     RColorBrewer        1.1-2      2014-12-07 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     Rcpp                1.0.7      2021-07-07 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     RcppArmadillo       0.10.6.0.0 2021-07-16 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     reshape2            1.4.4      2020-04-09 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     rgl                 0.104.16   2021-01-10 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     rlang               0.4.11     2021-04-30 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     rmarkdown           2.8        2021-05-07 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     rncl                0.8.4      2020-02-10 [3] CRAN (R 3.6.2)                    </span>
-<span class="co">#&gt;     RNeXML              2.4.5      2020-06-18 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     rprojroot           2.0.2      2020-11-15 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     rstudioapi          0.13       2020-11-12 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     sandwich            3.0-1      2021-05-18 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     scales              1.1.1      2020-05-11 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     scatterplot3d       0.3-41     2018-03-14 [3] CRAN (R 3.5.0)                    </span>
-<span class="co">#&gt;     seqinr              4.2-8      2021-06-09 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     sessioninfo         1.1.1      2018-11-05 [3] CRAN (R 3.5.1)                    </span>
-<span class="co">#&gt;     sf                  1.0-0      2021-06-09 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     shiny               1.6.0      2021-01-25 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     sp                  1.4-5      2021-01-10 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     spData              0.3.8      2020-07-03 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     spdep               1.1-8      2021-05-23 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     stringi             1.7.3      2021-07-16 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     stringr             1.4.0      2019-02-10 [3] CRAN (R 3.5.2)                    </span>
-<span class="co">#&gt;     survival            3.2-11     2021-04-26 [4] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     testthat          * 3.0.2      2021-02-14 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     TH.data             1.0-10     2019-01-21 [3] CRAN (R 3.5.2)                    </span>
-<span class="co">#&gt;     tibble              3.1.3      2021-07-23 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     tictoc              1.0.1      2021-04-19 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     tidyr               1.1.3      2021-03-03 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     tidyselect          1.1.1      2021-04-30 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     tmvnsim             1.0-2      2016-12-15 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     units               0.7-2      2021-06-08 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     utf8                1.2.2      2021-07-24 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     uuid                0.1-4      2020-02-26 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     vctrs               0.3.8      2021-04-29 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     vegan               2.5-7      2020-11-28 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     withr               2.4.2      2021-04-18 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     xfun                0.24       2021-06-15 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     XML                 3.99-0.3   2020-01-20 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     xml2                1.3.2      2020-04-23 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     xtable              1.8-4      2019-04-21 [1] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt;     yaml                2.2.1      2020-02-01 [3] CRAN (R 3.6.2)                    </span>
-<span class="co">#&gt;     zoo                 1.8-9      2021-03-09 [3] CRAN (R 3.6.3)                    </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [1] /homes/ke76dimu/R/x86_64-pc-linux-gnu-library/3.6</span>
-<span class="co">#&gt; [2] /usr/local/lib/R/site-library</span>
-<span class="co">#&gt; [3] /usr/lib/R/site-library</span>
-<span class="co">#&gt; [4] /usr/lib/R/library</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;  V ── Loaded and on-disk version mismatch.</span>
-<span class="co">#&gt;  P ── Loaded and on-disk path mismatch.</span></code></pre>
+<pre><code><span><span class="co">#&gt;  seconds needed to generate this document: 3694.109 sec elapsed</span></span>
+<span><span class="co">#&gt; ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt;  setting  value                       </span></span>
+<span><span class="co">#&gt;  version  R version 3.6.3 (2020-02-29)</span></span>
+<span><span class="co">#&gt;  os       Ubuntu 16.04.7 LTS          </span></span>
+<span><span class="co">#&gt;  system   x86_64, linux-gnu           </span></span>
+<span><span class="co">#&gt;  ui       RStudio                     </span></span>
+<span><span class="co">#&gt;  language (EN)                        </span></span>
+<span><span class="co">#&gt;  collate  en_US.UTF-8                 </span></span>
+<span><span class="co">#&gt;  ctype    en_US.UTF-8                 </span></span>
+<span><span class="co">#&gt;  tz       Europe/Berlin               </span></span>
+<span><span class="co">#&gt;  date     2021-07-30                  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt;  !  package           * version    date       lib source                            </span></span>
+<span><span class="co">#&gt;     abind               1.4-5      2016-07-21 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     ade4                1.7-17     2021-06-17 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     adegenet            2.1.3      2020-05-10 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     adegraphics         1.0-15     2018-12-18 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     adephylo            1.1-11     2017-12-18 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     adiv                2.0.1      2020-08-26 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     ape                 5.5        2021-04-25 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     assertthat          0.2.1      2019-03-21 [3] CRAN (R 3.5.3)                    </span></span>
+<span><span class="co">#&gt;     boot                1.3-28     2021-05-03 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     cachem              1.0.5      2021-05-15 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     class               7.3-19     2021-05-03 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     classInt            0.4-3      2020-04-07 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     cli                 3.0.1      2021-07-17 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     cluster             2.1.2      2021-04-17 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     clusterGeneration   1.3.7      2020-12-15 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     coda                0.19-4     2020-09-30 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     codetools           0.2-18     2020-11-04 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     colorspace          2.0-2      2021-06-24 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     combinat            0.0-8      2010-08-05 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     crayon              1.4.1      2021-02-08 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     crosstalk           1.1.1      2021-01-12 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     DBI                 1.1.1      2021-01-15 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     deldir              0.2-10     2021-02-16 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     desc                1.3.0      2021-03-05 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     digest              0.6.27     2020-10-24 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     dplyr             * 1.0.7      2021-06-18 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     DT                  0.18       2021-04-14 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     e1071               1.7-7      2021-05-23 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     ellipsis            0.3.2      2021-04-29 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     evaluate            0.14       2019-05-28 [3] CRAN (R 3.6.0)                    </span></span>
+<span><span class="co">#&gt;     expm                0.999-6    2021-01-13 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     FactoMineR          2.4        2020-12-11 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     fansi               0.5.0      2021-05-25 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     farver              2.1.0      2021-02-28 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     fastmap             1.1.0      2021-01-25 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     fastmatch           1.1-3      2021-07-23 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     FD                  1.0-12     2014-08-19 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     flashClust          1.01-2     2012-08-21 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;  VP fundiversity      * 0.2.0      2021-01-22 [?] local                             </span></span>
+<span><span class="co">#&gt;     future              1.21.0     2020-12-10 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     future.apply        1.7.0      2021-01-04 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     gdata               2.18.0     2017-06-06 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     generics            0.1.0      2020-10-31 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     geometry            0.4.5      2019-12-04 [3] CRAN (R 3.6.1)                    </span></span>
+<span><span class="co">#&gt;     ggplot2           * 3.3.5      2021-06-25 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     ggrepel             0.9.1      2021-01-15 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     globals             0.14.0     2020-11-22 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     glue                1.4.2      2020-08-27 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     gmodels             2.18.1     2018-06-25 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     gtable              0.3.0      2019-03-25 [3] CRAN (R 3.5.3)                    </span></span>
+<span><span class="co">#&gt;     gtools              3.9.2      2021-06-06 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     highr               0.9        2021-04-16 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     hillR               0.5.0      2020-07-07 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     hms                 1.1.0      2021-05-17 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     htmltools           0.5.1.1    2021-01-22 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     htmlwidgets         1.5.3      2020-12-10 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     httpuv              1.6.1      2021-05-07 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     httr                1.4.2      2020-07-20 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     igraph              1.2.6      2020-10-06 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     jpeg                0.1-9      2021-07-24 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     jsonlite            1.7.2      2020-12-09 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     KernSmooth          2.23-20    2021-05-03 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     knitr               1.33       2021-04-24 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     later               1.2.0      2021-04-23 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     lattice             0.20-44    2021-05-02 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     latticeExtra        0.6-29     2019-12-19 [3] CRAN (R 3.6.2)                    </span></span>
+<span><span class="co">#&gt;     lazyeval            0.2.2      2019-03-15 [3] CRAN (R 3.5.3)                    </span></span>
+<span><span class="co">#&gt;     leaps               3.1        2020-01-16 [3] CRAN (R 3.6.2)                    </span></span>
+<span><span class="co">#&gt;     LearnBayes          2.15.1     2018-03-18 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     lifecycle           1.0.0      2021-02-15 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     listenv             0.8.0      2019-12-05 [3] CRAN (R 3.6.1)                    </span></span>
+<span><span class="co">#&gt;     magic               1.5-9      2018-09-17 [3] CRAN (R 3.5.1)                    </span></span>
+<span><span class="co">#&gt;     magrittr            2.0.1      2020-11-17 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     manipulateWidget    0.11.0     2021-05-31 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     maps                3.3.0      2018-04-03 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     MASS                7.3-54     2021-05-03 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     Matrix              1.3-4      2021-06-01 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     memoise             2.0.0      2021-01-26 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     mFD                 1.0.0      2021-07-29 [1] Github (CmlMagneville/mFD@a6af567)</span></span>
+<span><span class="co">#&gt;     mgcv                1.8-36     2021-06-01 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     mime                0.11       2021-06-23 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     miniUI              0.1.1.1    2018-05-18 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     mnormt              2.0.2      2020-09-01 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     multcomp            1.4-17     2021-04-29 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     munsell             0.5.0      2018-06-12 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     mvtnorm             1.1-2      2021-06-07 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     nlme                3.1-152    2021-02-04 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     numDeriv            2016.8-1.1 2019-06-06 [3] CRAN (R 3.6.0)                    </span></span>
+<span><span class="co">#&gt;     parallelly          1.26.0     2021-06-09 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     patchwork           1.1.1      2020-12-17 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     permute             0.9-5      2019-03-12 [3] CRAN (R 3.5.3)                    </span></span>
+<span><span class="co">#&gt;     phangorn            2.7.0      2021-05-03 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     phylobase           0.8.10     2020-03-01 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     phytools            0.7-80     2021-06-03 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     pillar              1.6.2      2021-07-29 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     pkgload             1.2.1      2021-04-06 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     plotrix             3.8-1      2021-01-21 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     plyr                1.8.6      2020-03-03 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     png                 0.1-7      2013-12-03 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     prettyunits         1.1.1      2020-01-24 [3] CRAN (R 3.6.2)                    </span></span>
+<span><span class="co">#&gt;     progress            1.2.2      2019-05-16 [3] CRAN (R 3.6.0)                    </span></span>
+<span><span class="co">#&gt;     promises            1.2.0.1    2021-02-11 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     proxy               0.4-26     2021-06-07 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     purrr               0.3.4      2020-04-17 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     quadprog            1.5-8      2019-11-20 [3] CRAN (R 3.6.1)                    </span></span>
+<span><span class="co">#&gt;     R6                  2.5.0      2020-10-28 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     raster              3.4-10     2021-05-03 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     RColorBrewer        1.1-2      2014-12-07 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     Rcpp                1.0.7      2021-07-07 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     RcppArmadillo       0.10.6.0.0 2021-07-16 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     reshape2            1.4.4      2020-04-09 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     rgl                 0.104.16   2021-01-10 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     rlang               0.4.11     2021-04-30 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     rmarkdown           2.8        2021-05-07 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     rncl                0.8.4      2020-02-10 [3] CRAN (R 3.6.2)                    </span></span>
+<span><span class="co">#&gt;     RNeXML              2.4.5      2020-06-18 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     rprojroot           2.0.2      2020-11-15 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     rstudioapi          0.13       2020-11-12 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     sandwich            3.0-1      2021-05-18 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     scales              1.1.1      2020-05-11 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     scatterplot3d       0.3-41     2018-03-14 [3] CRAN (R 3.5.0)                    </span></span>
+<span><span class="co">#&gt;     seqinr              4.2-8      2021-06-09 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     sessioninfo         1.1.1      2018-11-05 [3] CRAN (R 3.5.1)                    </span></span>
+<span><span class="co">#&gt;     sf                  1.0-0      2021-06-09 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     shiny               1.6.0      2021-01-25 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     sp                  1.4-5      2021-01-10 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     spData              0.3.8      2020-07-03 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     spdep               1.1-8      2021-05-23 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     stringi             1.7.3      2021-07-16 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     stringr             1.4.0      2019-02-10 [3] CRAN (R 3.5.2)                    </span></span>
+<span><span class="co">#&gt;     survival            3.2-11     2021-04-26 [4] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     testthat          * 3.0.2      2021-02-14 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     TH.data             1.0-10     2019-01-21 [3] CRAN (R 3.5.2)                    </span></span>
+<span><span class="co">#&gt;     tibble              3.1.3      2021-07-23 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     tictoc              1.0.1      2021-04-19 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     tidyr               1.1.3      2021-03-03 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     tidyselect          1.1.1      2021-04-30 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     tmvnsim             1.0-2      2016-12-15 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     units               0.7-2      2021-06-08 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     utf8                1.2.2      2021-07-24 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     uuid                0.1-4      2020-02-26 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     vctrs               0.3.8      2021-04-29 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     vegan               2.5-7      2020-11-28 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     withr               2.4.2      2021-04-18 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     xfun                0.24       2021-06-15 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     XML                 3.99-0.3   2020-01-20 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     xml2                1.3.2      2020-04-23 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     xtable              1.8-4      2019-04-21 [1] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt;     yaml                2.2.1      2020-02-01 [3] CRAN (R 3.6.2)                    </span></span>
+<span><span class="co">#&gt;     zoo                 1.8-9      2021-03-09 [3] CRAN (R 3.6.3)                    </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [1] /homes/ke76dimu/R/x86_64-pc-linux-gnu-library/3.6</span></span>
+<span><span class="co">#&gt; [2] /usr/local/lib/R/site-library</span></span>
+<span><span class="co">#&gt; [3] /usr/lib/R/site-library</span></span>
+<span><span class="co">#&gt; [4] /usr/lib/R/library</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;  V ── Loaded and on-disk version mismatch.</span></span>
+<span><span class="co">#&gt;  P ── Loaded and on-disk path mismatch.</span></span></code></pre>
 </details>
 </div>
 </div>
@@ -673,7 +673,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

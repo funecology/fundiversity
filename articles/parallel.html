@@ -81,7 +81,7 @@
 
 
 <script src="parallel_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Parallelization</h1>
             
       
@@ -96,10 +96,10 @@
 knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 -->
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bisaloo.github.io/fundiversity/">"fundiversity"</a></span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://bisaloo.github.io/fundiversity/">"fundiversity"</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span></code></pre></div>
 <p>Within <code>fundiversity</code> the computation of most indices can be parallelized using the <code>future</code> package. The indices that currently support parallelization are: <strong>FRic</strong>, <strong>FDis</strong>, <strong>FDiv</strong>, and <strong>FEve</strong>. The goal of this vignette is to explain how to toggle and use parallelization in <code>fundiversity</code>.</p>
 <p>The <code>future</code> package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The <a href="https://cran.r-project.org/package=future" class="external-link">first vignette of <code>future</code></a> gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. <code>fundiversity</code> can thus run on all these different backends following the user’s choice.</p>
 <div class="section level2">
@@ -107,22 +107,22 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 </h2>
 <p>By default the <code>fundiversity</code> code will run sequentially on a single core. To trigger parallelization the user needs to define a <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> object with a parallel backend such as <code><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">future::multisession</a></code> to split the execution across multiple R sessions.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Sequential execution</span>
-<span class="va">fric1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-
-<span class="co"># Parallel execution</span>
-<span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span><span class="op">)</span>  <span class="co"># Plan definition</span>
-<span class="va">fric2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>  <span class="co"># The code resolve in similar fashion</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">fric1</span>, <span class="va">fric2</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Sequential execution</span></span>
+<span><span class="va">fric1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Parallel execution</span></span>
+<span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span><span class="op">)</span>  <span class="co"># Plan definition</span></span>
+<span><span class="va">fric2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>  <span class="co"># The code resolve in similar fashion</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">fric1</span>, <span class="va">fric2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>Within the <code><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">future::multisession</a></code> backend you can specify the number of cores on which the function should be parallelized over through the argument <code>workers</code>, you can change it in the <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> call:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>  <span class="co"># Only 2 cores are used</span>
-<span class="va">fric3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">fric3</span>, <span class="va">fric2</span><span class="op">)</span>
-<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, workers <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>  <span class="co"># Only 2 cores are used</span></span>
+<span><span class="va">fric3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">fric3</span>, <span class="va">fric2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] TRUE</span></span></code></pre></div>
 <p>To learn more about the different backends available and the related arguments needed, please refer to the documentation of <code><a href="https://future.futureverse.org/reference/plan.html" class="external-link">future::plan()</a></code> and the <a href="https://cran.r-project.org/package=future" class="external-link">overview vignette of <code>future</code></a>.</p>
 </div>
 <div class="section level2">
@@ -130,150 +130,150 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 </h2>
 <p>We can now compare the difference in performance to see the performance gain thanks to parallelization:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html" class="external-link">sequential</a></span><span class="op">)</span>
-<span class="va">non_parallel_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  non_parallel <span class="op">=</span> <span class="op">{</span>
-    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-  <span class="op">}</span>,
-  times <span class="op">=</span> <span class="fl">20</span>
-<span class="op">)</span>
-
-<span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span><span class="op">)</span>
-<span class="va">parallel_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  parallel <span class="op">=</span> <span class="op">{</span>
-    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span>
-  <span class="op">}</span>,
-  times <span class="op">=</span> <span class="fl">20</span>
-<span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">non_parallel_bench</span>, <span class="va">parallel_bench</span><span class="op">)</span>
-<span class="co">#&gt; Unit: microseconds</span>
-<span class="co">#&gt;          expr     min       lq     mean   median       uq     max neval</span>
-<span class="co">#&gt;  non_parallel 514.915 539.2130 623.7170 563.7615 633.5185 975.669    20</span>
-<span class="co">#&gt;      parallel 472.501 476.6675 504.0272 482.8980 493.9275 817.955    20</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html" class="external-link">sequential</a></span><span class="op">)</span></span>
+<span><span class="va">non_parallel_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  non_parallel <span class="op">=</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">20</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span><span class="op">)</span></span>
+<span><span class="va">parallel_bench</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  parallel <span class="op">=</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
+<span>  <span class="op">}</span>,</span>
+<span>  times <span class="op">=</span> <span class="fl">20</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">non_parallel_bench</span>, <span class="va">parallel_bench</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Unit: microseconds</span></span>
+<span><span class="co">#&gt;          expr     min       lq     mean   median       uq     max neval</span></span>
+<span><span class="co">#&gt;  non_parallel 514.915 539.2130 623.7170 563.7615 633.5185 975.669    20</span></span>
+<span><span class="co">#&gt;      parallel 472.501 476.6675 504.0272 482.8980 493.9275 817.955    20</span></span></code></pre></div>
 <p>The non parallelized code runs faster than the parallelized one! Indeed, the parallelization in <code>fundiversity</code> parallelize the computation across different sites. So parallelization should be used when you have many sites on which you want to compute similar indices.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Function to make a bigger site-sp dataset</span>
-<span class="va">make_more_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-
-  <span class="va">site_sp</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Function to make a bigger site-sp dataset</span></span>
+<span><span class="va">make_more_sites</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">n</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">site_sp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">replicate</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">site_sp_birds</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"s"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">site_sp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">site_sp</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>For example with a dataset 5000 times bigger:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bigger_site</span> <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span>
-
-<span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span>
-  seq <span class="op">=</span> <span class="op">{</span> 
-    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html" class="external-link">sequential</a></span><span class="op">)</span> 
-    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> 
-  <span class="op">}</span>,
-  multisession <span class="op">=</span> <span class="op">{</span> 
-    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
-    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> 
-  <span class="op">}</span>,
-  multicore <span class="op">=</span> <span class="op">{</span> 
-    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multicore.html" class="external-link">multicore</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> 
-    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> 
-  <span class="op">}</span>, times <span class="op">=</span> <span class="fl">20</span>
-<span class="op">)</span>
-<span class="co">#&gt; Unit: seconds</span>
-<span class="co">#&gt;          expr      min       lq     mean   median       uq      max neval</span>
-<span class="co">#&gt;           seq 4.954230 5.070038 5.142720 5.173176 5.198141 5.311713    20</span>
-<span class="co">#&gt;  multisession 6.300440 6.487385 6.549981 6.563890 6.607202 6.739610    20</span>
-<span class="co">#&gt;     multicore 4.880869 5.025615 5.111846 5.101368 5.202465 5.489126    20</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bigger_site</span> <span class="op">&lt;-</span> <span class="fu">make_more_sites</span><span class="op">(</span><span class="fl">5000</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
+<span>  seq <span class="op">=</span> <span class="op">{</span> </span>
+<span>    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/sequential.html" class="external-link">sequential</a></span><span class="op">)</span> </span>
+<span>    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> </span>
+<span>  <span class="op">}</span>,</span>
+<span>  multisession <span class="op">=</span> <span class="op">{</span> </span>
+<span>    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multisession.html" class="external-link">multisession</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> </span>
+<span>  <span class="op">}</span>,</span>
+<span>  multicore <span class="op">=</span> <span class="op">{</span> </span>
+<span>    <span class="fu">future</span><span class="fu">::</span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="fu">future</span><span class="fu">::</span><span class="va"><a href="https://future.futureverse.org/reference/multicore.html" class="external-link">multicore</a></span>, workers <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> </span>
+<span>    <span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">bigger_site</span><span class="op">)</span> </span>
+<span>  <span class="op">}</span>, times <span class="op">=</span> <span class="fl">20</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; Unit: seconds</span></span>
+<span><span class="co">#&gt;          expr      min       lq     mean   median       uq      max neval</span></span>
+<span><span class="co">#&gt;           seq 4.954230 5.070038 5.142720 5.173176 5.198141 5.311713    20</span></span>
+<span><span class="co">#&gt;  multisession 6.300440 6.487385 6.549981 6.563890 6.607202 6.739610    20</span></span>
+<span><span class="co">#&gt;     multicore 4.880869 5.025615 5.111846 5.101368 5.202465 5.489126    20</span></span></code></pre></div>
 <details><p><summary>Session info of the machine on which the benchmark was ran and time it took to run</summary></p>
-<pre><code><span class="co">#&gt;  seconds needed to generate this document: 343.203 sec elapsed</span>
-<span class="co">#&gt; ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt;  setting  value                       </span>
-<span class="co">#&gt;  version  R version 4.0.3 (2020-10-10)</span>
-<span class="co">#&gt;  os       macOS High Sierra 10.13.6   </span>
-<span class="co">#&gt;  system   x86_64, darwin17.0          </span>
-<span class="co">#&gt;  ui       RStudio                     </span>
-<span class="co">#&gt;  language (EN)                        </span>
-<span class="co">#&gt;  collate  fr_FR.UTF-8                 </span>
-<span class="co">#&gt;  ctype    fr_FR.UTF-8                 </span>
-<span class="co">#&gt;  tz       Europe/Paris                </span>
-<span class="co">#&gt;  date     2021-05-12                  </span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ─ Packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>
-<span class="co">#&gt;  package        * version date       lib source        </span>
-<span class="co">#&gt;  abind            1.4-5   2016-07-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  assertthat       0.2.1   2019-03-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  audio            0.1-7   2020-03-09 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  beepr            1.3     2018-06-04 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  cachem           1.0.4   2021-02-13 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  callr            3.7.0   2021-04-20 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  cli              2.5.0   2021-04-26 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  codetools        0.2-18  2020-11-04 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  crayon           1.4.1   2021-02-08 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  curl             4.3.1   2021-04-30 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  desc             1.3.0   2021-03-05 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  devtools         2.4.1   2021-05-05 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  digest           0.6.27  2020-10-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  ellipsis         0.3.2   2021-04-29 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  evaluate         0.14    2019-05-28 [1] CRAN (R 4.0.1)</span>
-<span class="co">#&gt;  fansi            0.4.2   2021-01-15 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  fastmap          1.1.0   2021-01-25 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  fs               1.5.0   2020-07-31 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  fundiversity   * 0.0.2   2021-02-24 [1] local         </span>
-<span class="co">#&gt;  future           1.21.0  2020-12-10 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  geometry         0.4.5   2019-12-04 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  globals          0.14.0  2020-11-22 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  glue             1.4.2   2020-08-27 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  htmltools        0.5.1.1 2021-01-22 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  httr             1.4.2   2020-07-20 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  jsonlite         1.7.2   2020-12-09 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  knitr            1.33    2021-04-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  lattice          0.20-44 2021-05-02 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  lifecycle        1.0.0   2021-02-15 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  listenv          0.8.0   2019-12-05 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  magic            1.5-9   2018-09-17 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  magrittr         2.0.1   2020-11-17 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  Matrix           1.3-3   2021-05-04 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  memoise          2.0.0   2021-01-26 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  microbenchmark   1.4-7   2019-09-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  parallelly       1.25.0  2021-04-30 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  parsedate        1.2.1   2021-04-20 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  pillar           1.6.0   2021-04-13 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  pkgbuild         1.2.0   2020-12-15 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  pkgconfig        2.0.3   2019-09-22 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  pkgload          1.2.1   2021-04-06 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  prettyunits      1.1.1   2020-01-24 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  processx         3.5.2   2021-04-30 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  ps               1.6.0   2021-02-28 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  purrr            0.3.4   2020-04-17 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  R6               2.5.0   2020-10-28 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rappdirs         0.3.3   2021-01-31 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rcmdcheck        1.3.3   2019-05-07 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  Rcpp             1.0.6   2021-01-15 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rematch          1.0.1   2016-04-21 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  remotes          2.3.0   2021-04-01 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rhub             1.1.1   2019-04-08 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rlang            0.4.11  2021-04-30 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rmarkdown        2.8     2021-05-07 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rprojroot        2.0.2   2020-11-15 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  rstudioapi       0.13    2020-11-12 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  sessioninfo      1.1.1   2018-11-05 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  stringi          1.6.1   2021-05-10 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  stringr          1.4.0   2019-02-10 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  testthat         3.0.2   2021-02-14 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  tibble           3.1.1   2021-04-18 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  tictoc           1.0.1   2021-04-19 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  urlchecker       1.0.0   2021-03-04 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  usethis          2.0.1   2021-02-10 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  utf8             1.2.1   2021-03-12 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  uuid             0.1-4   2020-02-26 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  vctrs            0.3.8   2021-04-29 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  whoami           1.3.0   2019-03-19 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  withr            2.4.2   2021-04-18 [1] CRAN (R 4.0.3)</span>
-<span class="co">#&gt;  xfun             0.22    2021-03-11 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  xml2             1.3.2   2020-04-23 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  xopen            1.0.0   2018-09-17 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt;  yaml             2.2.1   2020-02-01 [1] CRAN (R 4.0.2)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</span></code></pre>
+<pre><code><span><span class="co">#&gt;  seconds needed to generate this document: 343.203 sec elapsed</span></span>
+<span><span class="co">#&gt; ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt;  setting  value                       </span></span>
+<span><span class="co">#&gt;  version  R version 4.0.3 (2020-10-10)</span></span>
+<span><span class="co">#&gt;  os       macOS High Sierra 10.13.6   </span></span>
+<span><span class="co">#&gt;  system   x86_64, darwin17.0          </span></span>
+<span><span class="co">#&gt;  ui       RStudio                     </span></span>
+<span><span class="co">#&gt;  language (EN)                        </span></span>
+<span><span class="co">#&gt;  collate  fr_FR.UTF-8                 </span></span>
+<span><span class="co">#&gt;  ctype    fr_FR.UTF-8                 </span></span>
+<span><span class="co">#&gt;  tz       Europe/Paris                </span></span>
+<span><span class="co">#&gt;  date     2021-05-12                  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ─ Packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt;  package        * version date       lib source        </span></span>
+<span><span class="co">#&gt;  abind            1.4-5   2016-07-21 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  assertthat       0.2.1   2019-03-21 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  audio            0.1-7   2020-03-09 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  beepr            1.3     2018-06-04 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  cachem           1.0.4   2021-02-13 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  callr            3.7.0   2021-04-20 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  cli              2.5.0   2021-04-26 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  codetools        0.2-18  2020-11-04 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  crayon           1.4.1   2021-02-08 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  curl             4.3.1   2021-04-30 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  desc             1.3.0   2021-03-05 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  devtools         2.4.1   2021-05-05 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  digest           0.6.27  2020-10-24 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  ellipsis         0.3.2   2021-04-29 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  evaluate         0.14    2019-05-28 [1] CRAN (R 4.0.1)</span></span>
+<span><span class="co">#&gt;  fansi            0.4.2   2021-01-15 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  fastmap          1.1.0   2021-01-25 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  fs               1.5.0   2020-07-31 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  fundiversity   * 0.0.2   2021-02-24 [1] local         </span></span>
+<span><span class="co">#&gt;  future           1.21.0  2020-12-10 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  geometry         0.4.5   2019-12-04 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  globals          0.14.0  2020-11-22 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  glue             1.4.2   2020-08-27 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  htmltools        0.5.1.1 2021-01-22 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  httr             1.4.2   2020-07-20 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  jsonlite         1.7.2   2020-12-09 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  knitr            1.33    2021-04-24 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  lattice          0.20-44 2021-05-02 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  lifecycle        1.0.0   2021-02-15 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  listenv          0.8.0   2019-12-05 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  magic            1.5-9   2018-09-17 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  magrittr         2.0.1   2020-11-17 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  Matrix           1.3-3   2021-05-04 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  memoise          2.0.0   2021-01-26 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  microbenchmark   1.4-7   2019-09-24 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  parallelly       1.25.0  2021-04-30 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  parsedate        1.2.1   2021-04-20 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  pillar           1.6.0   2021-04-13 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  pkgbuild         1.2.0   2020-12-15 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  pkgconfig        2.0.3   2019-09-22 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  pkgload          1.2.1   2021-04-06 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  prettyunits      1.1.1   2020-01-24 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  processx         3.5.2   2021-04-30 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  ps               1.6.0   2021-02-28 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  purrr            0.3.4   2020-04-17 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  R6               2.5.0   2020-10-28 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  rappdirs         0.3.3   2021-01-31 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  rcmdcheck        1.3.3   2019-05-07 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  Rcpp             1.0.6   2021-01-15 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  rematch          1.0.1   2016-04-21 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  remotes          2.3.0   2021-04-01 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  rhub             1.1.1   2019-04-08 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  rlang            0.4.11  2021-04-30 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  rmarkdown        2.8     2021-05-07 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  rprojroot        2.0.2   2020-11-15 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  rstudioapi       0.13    2020-11-12 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  sessioninfo      1.1.1   2018-11-05 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  stringi          1.6.1   2021-05-10 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  stringr          1.4.0   2019-02-10 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  testthat         3.0.2   2021-02-14 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  tibble           3.1.1   2021-04-18 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  tictoc           1.0.1   2021-04-19 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  urlchecker       1.0.0   2021-03-04 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  usethis          2.0.1   2021-02-10 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  utf8             1.2.1   2021-03-12 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  uuid             0.1-4   2020-02-26 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  vctrs            0.3.8   2021-04-29 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  whoami           1.3.0   2019-03-19 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  withr            2.4.2   2021-04-18 [1] CRAN (R 4.0.3)</span></span>
+<span><span class="co">#&gt;  xfun             0.22    2021-03-11 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  xml2             1.3.2   2020-04-23 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  xopen            1.0.0   2018-09-17 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt;  yaml             2.2.1   2020-02-01 [1] CRAN (R 4.0.2)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library</span></span></code></pre>
 </details>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -289,7 +289,7 @@ knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>
