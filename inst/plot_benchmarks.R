@@ -13,22 +13,13 @@ single_bench = list.files(
   purrr::map(readRDS) %>%
   bind_rows(.id = "fundiversity_index")
 
-# Benchmark using multiple cores (4)
-multi_bench = list.files(
-  "inst/saved_benchmarks", "*multicore.rds", full.names = TRUE
-) %>%
-  setNames(c("fdis", "feve", "raoq")) %>%
-  purrr::map(readRDS) %>%
-  bind_rows(.id = "fundiversity_index")
+all_bench = bind_rows(list(single_bench))
 
-all_bench = bind_rows(list(single_bench, multi_bench))
 
-new_bench = list.files(
-  "inst/saved_benchmarks/", "new_bench_*", full.names = TRUE
-) %>%
-  setNames(c("fric_intersect", "fdis", "fdiv", "feve", "fric")) %>%
-  purrr::map(readRDS) %>%
-  bind_rows(.id = "fundiversity_index")
+# Benchmark using multiple cores
+para_bench = readRDS("inst/saved_benchmarks/all_multicore_bench.Rds") %>%
+  bind_rows() %>%
+  select(fd_fct, n_core, everything())
 
 # Figure 1: Benchmark across packages ------------------------------------------
 
@@ -54,11 +45,11 @@ bench_df = single_bench %>%
       package == "BAT" & grepl("hull", fd_fct) ~ "BAT_hull",
       package == "BAT" & grepl("tree", fd_fct) ~ "BAT_tree",
       TRUE ~ package) %>%
-    factor(
-      level = c("fundiversity", "adiv", "BAT", "BAT_hull", "BAT_tree",
-                "betapart", "FD", "hillR", "mFD") %>%
-        rev()
-    )
+      factor(
+        level = c("fundiversity", "adiv", "BAT", "BAT_hull", "BAT_tree",
+                  "betapart", "FD", "hillR", "mFD") %>%
+          rev()
+      )
   )
 
 # Actual figure
@@ -124,57 +115,62 @@ ggsave(
 
 
 # Figure 2: Benchmark parallel vs. non parallel --------------------------------
-# Summary dataset
-fundiversity_benches = list(
-  parallel = new_bench,
-  sequential = single_bench %>%
-    filter(grepl("fundiversity", expression, fixed = TRUE)) %>%
-    filter(fundiversity_index %in% c("fdis", "feve"))
-) %>%
-  bind_rows(.id = "parallel") %>%
-  tidyr::unnest(c(time, gc)) %>%
-  select(parallel, fundiversity_index, expression, n_sites, n_traits,
-         n_species, time)
 
-fig_parallel_benchmarks = fundiversity_benches %>%
-  mutate(n_traits = ifelse(n_traits == 3, 4, n_traits)) %>%
-  filter(n_traits != 7) %>%
-  ggplot(
-    aes(n_sites, time, color = parallel, shape = factor(n_traits),
-        linetype = factor(n_traits))
+fig_parallel_benchmarks = para_bench %>%
+  filter(
+    n_core %in% c(1, 6), n_traits == 4, n_sites == 100, n_species == 500
+  ) %>%
+  mutate(
+    parallel = ifelse(n_core == 1, "sequential", "parallel") %>%
+      factor(levels = c("sequential", "parallel"))
+  ) %>%
+  ggplot(aes(time, parallel)) +
+  ggbeeswarm::geom_beeswarm(alpha = 1/3, groupOnX = FALSE) +
+  facet_wrap(
+    vars(fd_fct),
+    labeller = labeller(
+      fd_fct = c(
+        fd_fdis = "Functional Dispersion", fd_fdiv = "Functional Divergence",
+        fd_feve = "Functional Evenness", fd_fric = "Functional Richness"
+      )
+    )
   ) +
-  geom_point() +
-  geom_smooth(method = "lm") +
-  facet_wrap(vars(fundiversity_index, n_species), scales = "free_y") +
-  labs(color = "Version", shape = "N. Traits", linetype = "N. Traits") +
-  scale_x_log10(name = "Number of sites") +
-  bench::scale_y_bench_time(name = "Running Time")
+  bench::scale_x_bench_time(name = "Running Time") +
+  scale_y_discrete(
+    NULL,
+    labels = function(x) {
+      case_when(
+        x == "sequential" ~ glue::glue("<span style='color:grey30'>{x}</span>"),
+        x == "parallel"   ~ glue::glue(
+          "<span style='color:black'>**{x}**</span>"
+        )
+      )
+    }
+  ) +
+  theme_bw() +
+  theme(
+    strip.background = element_blank(),
+    axis.text.y = ggtext::element_markdown(),
+    plot.title = element_text(size = rel(1)),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank()
+  )
 
 ggsave(
   plot = fig_parallel_benchmarks,
   here::here("inst", "manuscript", "figures", "fig2_parallel_benchmark.png"),
-  width = 850, height = 700, units = "px", dpi = 300, scale = 4
+  width = 400, height = 400, units = "px", dpi = 300, scale = 4
 )
 
 
-# Figure S1: Full comparison between all parameters and packages ---------------
+# Figure S1: External Comparison Sequential All Parameters ---------------------
 
-fig_s1_full_comparison = all_bench %>%
+fig_s1_full_comparison = single_bench %>%
   rename(fd_fct = expression) %>%
   mutate(
     fd_fct = sub("_", "::", attr(fd_fct, "description"), fixed = TRUE) %>%
       paste0("()") %>%
       {sub("_unparallel", "", ., fixed = TRUE)}
-  ) %>%
-  mutate(
-    fd_fct = purrr::map2_chr(
-      fundiversity_index, fd_fct,
-      ~ifelse(
-        grepl("multicore", .y),
-        gsub("multicore", paste0("fd_", .x, "()\n(multicore)"), .y, fixed = TRUE),
-        .y
-      )
-    )
   ) %>%
   filter(n_traits != 7) %>%
   tidyr::unnest(c(time, gc)) %>%
@@ -213,3 +209,48 @@ fig_s1_full_comparison = all_bench %>%
     strip.text = element_text(size = 7)
   )
 
+ggsave(
+  "inst/manuscript/figures/s1_external_comparison_full.png",
+  fig_s1_full_comparison,
+  width = 210, height = 148, units = "mm", scale = 1.5
+)
+
+# Figure S2: Internal Comparison all Parameters --------------------------------
+
+fig_s2_all_para_comparison = para_bench %>%
+  ggplot(
+    aes(n_sites, time, color = factor(n_species), shape = factor(n_traits),
+        linetype = factor(n_traits))
+  ) +
+  stat_smooth(formula = y ~ x, method = "lm", alpha = 1/5, size = 1/2) +
+  geom_point() +
+  facet_wrap(
+    vars(fd_fct, n_core),
+    labeller = labeller(
+      fd_fct = c(
+        fd_fdis           = "Functional\nDispersion",
+        fd_fdiv           = "Functional\nDivergence",
+        fd_feve           = "Functional\nEvenness",
+        fd_fric           = "Functional\nRichness"
+      ),
+      n_core = label_both)
+  ) +
+  labs(x = "Number of sites", y = "Execution Time",
+       color = "Number of species", shape = "Number of traits",
+       linetype = "Number of traits", caption = "20 iterations") +
+  scale_color_viridis_d() +
+  scale_x_log10() +
+  bench::scale_y_bench_time() +
+  guides(linetype = guide_legend(override.aes = list(color = "black"))) +
+  theme_bw() +
+  theme(
+    panel.grid = element_blank(),
+    strip.background = element_blank(),
+    strip.text = element_text(size = 7)
+  )
+
+ggsave(
+  "inst/manuscript/figures/s2_internal_comparison_full.png",
+  fig_s2_all_para_comparison,
+  width = 210, height = 148, units = "mm", scale = 1.5
+)
