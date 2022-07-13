@@ -200,13 +200,15 @@ knitr::include_graphics(
 
 We see that for all the indices and functions tested, `fundiversity` is at least an order of magnitude faster than alternative packages. For functional dispersion, `fundiversity` is two orders of magnitude faster compared to `BAT` and `mFD`. For functional divergence, `fundiversity` is one order of magnitude faster than `mFD`. For functional evenness, `fundiversity` is two orders of magnitude faster than `mFD` with sequential and parallelized versions having similar performances. For Rao's quadratic entropy, `fundiversity` is one order of magnitude faster than `hillR` and `mFD`, two orders faster than `adiv`, and three orders of magnitude faster than `BAT`. For functional richness, `fundiversity` is half an order of magnitude faster than the hull version of `BAT`, as well as one and a half order of magnitude faster than its tree version and `mFD`. For functional richness intersection (beta functional diversity), `fundiversity` is two orders of magnitude faster than `betapart` and `hillR`.
 
-```{r fig2-benchmark-parallel, out.width="100%", fig.align='center', fig.cap="\\label{fig2}Timing comparison between parallel and sequential version of fundiversity functions across functional diversity indices. Each point represents the execution time of one run using a simulated dataset, the points are transparent and jittered to avoid overplotting. We here show the performance results with all sets of parameters varying in number of traits, species, and sites, repeated 30 times. The parallel version ran across 8 cores.", echo = FALSE}
+```{r fig2-benchmark-parallel, out.width="100%", fig.align='center', fig.cap="\\label{fig2}Timing comparison between parallel and sequential version of fundiversity functions across functional diversity indices. Each point represents the execution time of one run using simulated datasets with fixed properties (4 traits, 100 sites, 500 species), the points are transparent and jittered to avoid overplotting. The parallel version ran across 6 cores.", echo = FALSE}
 knitr::include_graphics(
   here::here("inst", "manuscript", "figures", "fig2_parallel_benchmark.png")
 )
 ```
 
-The parallelized versions of `fundiversity` functions do not always perform better than the sequential versions. This may be due to inherent parallelization issues: there is an overhead cost when splitting tasks across multiple cores of a computer. The efficiency of parallelization depends on the total number of tasks split as well as the number of cores over which the parallelization is done. Overall, our testing framework was slightly biased towards sequential processing as we were limited in the testing dataset size since each computation is run multiple to create a reliable benchmark. Nonetheless, we recommend parallel options be carefully assessed depending on the size of the dataset and the number of available cores.
+On average the parallelized versions of `fundiversity` functions executed an order of magnitude faster than the sequential versions. For functional richness we even observed a difference of two orders of magnitude. However, for functional dispersion, parallelization increased overall computation time. This may be due to inherent parallelization issues: there is an overhead cost when splitting tasks across multiple cores of a computer. The efficiency of parallelization depends on the difficulty of the tasks that are split between cores. In the case of functional richness, the main task is computing the convex hull, which is computationally costly, that is why parallelization increase performance in this case. While computing functional dispersion is simpler, and as such, does not benefit from being split across different cores.
+
+One important note regarding parallelization in `fundiversity`, is that it is important to avoid doing both memoization and parallelization simultaneously. Memoization creates a cache to avoid recomputing results, and the cache may be corrupted if several cores access the same results at the same time. We noticed that toggling memoization while performing parallelization severely increase total computational time, compared to sequential performance.
 
 
 # Conclusion
@@ -225,5 +227,21 @@ Our authors' statement follows the Contributor Roles Taxonomy (CRediT, <https://
 # Data Availability
 
 `fundiversity` is available on CRAN through `install.packages("fundiversity")` as well as on GitHub at <https://github.com/Bisaloo/fundiversity>, for archival all releases are available on Zenodo at <https://doi.org/10.5281/zenodo.4761754>. The data used in this article are available from the package, through `data(package = "fundiversity")` call.
+
+
+# Supplementary Information
+
+```{r fig-s1-benchmark-full, out.width="100%", fig.align='center', fig.cap="\\label{figs1}Performance comparison across functions of different packages over a range of parameters (number of traits, species, and sites). Note that each combination of parameters ran 30 iterations. The lines show trends of execution time in function of number of sites of the input dataset.", echo = FALSE}
+knitr::include_graphics(
+  here::here("inst", "manuscript", "figures", "s1_external_comparison_full.png")
+)
+```
+
+
+```{r fig-s2-internal-full, out.width="100%", fig.align='center', fig.cap="\\label{figs2}Performance comparison across internal functions over a range of parameters (number of traits, species, and sites) and different parallelization parameters. Note that each combination of parameters ran 20 iterations. The lines show trends of execution time in function of number of sites of the input dataset.", echo = FALSE}
+knitr::include_graphics(
+  here::here("inst", "manuscript", "figures", "s1_external_comparison_full.png")
+)
+```
 
 # References
