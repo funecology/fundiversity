@@ -13,6 +13,8 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FDis` the values of functional dispersion at each site.
 #'
+#' NB: when a site contains no species FDis is equal to 0.
+#'
 #' @references
 #' Laliberté, E., & Legendre, P. (2010). A distance-based framework for
 #' measuring functional diversity from multiple traits. Ecology, 91(1),
@@ -47,7 +49,9 @@ fd_fdis <- function(traits, sp_com) {
   }
 
   # Standardize abundance per site
-  sp_com <- sp_com / rowSums(sp_com)
+  site_abundances <- rowSums(sp_com, na.rm = TRUE)
+  site_abundances[site_abundances == 0] <- 1  # Account for site with no species
+  sp_com <- sp_com / site_abundances
 
   centros <- sp_com %*% traits
 
@@ -61,5 +65,4 @@ fd_fdis <- function(traits, sp_com) {
 
   data.frame(site = rownames(sp_com), FDis = fdis_site,
              row.names = NULL)
-
 }

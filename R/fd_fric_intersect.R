@@ -17,6 +17,9 @@
 #' * `FRic_intersect` the volume of the convex hulls intersection of each
 #' pair of site.
 #'
+#' NB: FRic_intersect is equal to `NA` when there are strictly less species in
+#' one of the sites than the number of provided traits.
+#'
 #' @seealso [fd_fric()], [geometry::intersectn()], [geometry::convhulln()]
 #'
 #' @importFrom utils combn

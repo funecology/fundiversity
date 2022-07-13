@@ -7,10 +7,14 @@
 #' @examples
 #' data(traits_birds)
 #' fd_feve(traits_birds)
+#'
 #' @return a data.frame with two columns:
 #' * `site` character column that contains site names based on input `sp_com`
 #' row names,
 #' * `FEve` numeric column that contains FEve values corresponding to each site.
+#'
+#' NB: By definition FEve is equal to `NA` when the number of species per site
+#' is strictly lower than 3.
 #'
 #' @references
 #' Villéger, S., Mason, N.W.H., Mouillot, D., 2008. New Multidimensional
@@ -23,7 +27,7 @@
 #' @export
 fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   if ((!is.null(traits) & !is.null(dist_matrix)) |
-    (is.null(traits) & is.null(dist_matrix))) {
+      (is.null(traits) & is.null(dist_matrix))) {
     stop(
       "Please provide either a trait dataset or a dissimilarity matrix",
       call. = FALSE
@@ -49,13 +53,15 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
     sp_com <- sp_com[, common_species, drop = FALSE]
   } else {
     sp_com <- matrix(1,
-      ncol = nrow(dist_matrix),
-      dimnames = list("s1", rownames(dist_matrix))
+                     ncol = nrow(dist_matrix),
+                     dimnames = list("s1", rownames(dist_matrix))
     )
   }
 
   # Standardize abundance per site
-  sp_com <- sp_com / rowSums(sp_com)
+  site_abundances <- rowSums(sp_com, na.rm = TRUE)
+  site_abundances[site_abundances == 0] <- 1  # Account for site with no species
+  sp_com <- sp_com / site_abundances
 
   feve_site <- future_apply(sp_com, 1, function(site_row) {
     fd_feve_single(site_row, dist_matrix)

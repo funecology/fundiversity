@@ -30,6 +30,17 @@ test_that("Function Divergence works on subset of site/species", {
                         "and site-species matrix\nTaking subset of species"))
 })
 
+test_that("Functional Divergence works for site with no species", {
+  data("traits_plants")
+  data("site_sp_plants")
+
+  fdiv <- expect_silent(
+    fd_fdiv(traits_plants, site_sp_plants[10,, drop = FALSE])
+  )
+
+  expect_equal(fdiv$FDiv[[1]], 0)
+})
+
 test_that("Functional Divergence works in 1D", {
   expect_identical(
     fd_fdiv(traits_birds[, 1]),

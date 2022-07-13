@@ -38,6 +38,9 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FRic` the values of functional richness at each site.
 #'
+#' NB: FRic is equal to `NA` when there are strictly less species in a site
+#' than the number of provided traits.
+#'
 #' @references
 #' Cornwell W. K., Schwilk D. W., Ackerly D. D. (2006), A trait-based test for
 #' habitat filtering; convex hull volume, Ecology 84(6),

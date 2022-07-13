@@ -20,6 +20,8 @@ a data.frame with two columns:
 \item \code{site} the names of the sites as the row names of the input \code{sp_com},
 \item \code{FDis} the values of functional dispersion at each site.
 }
+
+NB: when a site contains no species FDis is equal to 0.
 }
 \description{
 Compute Functional Dispersion (FDis)

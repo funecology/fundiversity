@@ -14,6 +14,8 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `Q` the values of Rao's quadratic entropy at each site.
 #'
+#' NB: Rao's quadratic entropy is 0 when there are no species in the site.
+#'
 #' @references
 #' Pavoine S., Dolédec S. (2005). The apportionment of quadratic entropy: a
 #' useful alternative for partitioning diversity in ecological data.
@@ -61,13 +63,14 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   }
 
   # Standardize abundance per site
-  sp_com <- sp_com / rowSums(sp_com)
+  site_abundances <- rowSums(sp_com, na.rm = TRUE)
+  site_abundances[site_abundances == 0] <- 1  # Account for site with no species
+  sp_com <- sp_com / site_abundances
 
   # Compute Rao's Quadratic entropy for each site
   q_site <- diag(sp_com %*% tcrossprod(dist_matrix, sp_com))
 
-
- data.frame(site = rownames(sp_com),
-            Q = q_site,
-            row.names = NULL)
+  data.frame(site = rownames(sp_com),
+             Q = q_site,
+             row.names = NULL)
 }
