@@ -240,7 +240,7 @@ knitr::include_graphics(
 
 ```{r fig-s2-internal-full, out.width="100%", fig.align='center', fig.cap="\\label{figs2}Performance comparison across internal functions over a range of parameters (number of traits, species, and sites) and different parallelization parameters. Note that each combination of parameters ran 20 iterations. The lines show trends of execution time in function of number of sites of the input dataset.", echo = FALSE}
 knitr::include_graphics(
-  here::here("inst", "manuscript", "figures", "s1_external_comparison_full.png")
+  here::here("inst", "manuscript", "figures", "s2_internal_comparison_full.png")
 )
 ```
 
