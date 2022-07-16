@@ -11,11 +11,11 @@
 #'                abundances or occurrences of species in each site,
 #'                with sites as rows and species as columns
 #' @noRd
-species_in_common = function(traits, site_sp) {
-  if (!is.matrix(traits) & !is.data.frame(traits)) {
+species_in_common <- function(traits, site_sp) {
+  if (!is.matrix(traits) && !is.data.frame(traits)) {
     stop("Trait dataset not of good type, check trait dataset", call. = FALSE)
   }
-  if (!is.matrix(site_sp) & !is.data.frame(site_sp) &
+  if (!is.matrix(site_sp) && !is.data.frame(site_sp) &&
       !inherits(site_sp, "Matrix")) {
     stop("Site-species matrix not of good type, check site-species matrix",
          call. = FALSE)
@@ -28,7 +28,7 @@ species_in_common = function(traits, site_sp) {
          "site-species matrix", call. = FALSE)
   }
 
-  if (length(common_species) != nrow(traits) |
+  if (length(common_species) != nrow(traits) ||
       length(common_species) != ncol(site_sp)) {
     message("Differing number of species between trait dataset ",
             "and site-species matrix\nTaking subset of species",

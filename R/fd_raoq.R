@@ -28,19 +28,19 @@
 #' @export
 fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
-  if ((!is.null(traits) & !is.null(dist_matrix)) |
-      (is.null(traits) & is.null(dist_matrix))) {
+  if ((!is.null(traits) && !is.null(dist_matrix)) ||
+      (is.null(traits) && is.null(dist_matrix))) {
     stop(
       "Please provide either a trait dataset or a dissimilarity matrix",
       call. = FALSE
     )
   }
 
-  if (is.data.frame(traits) | is.vector(traits)) {
+  if (is.data.frame(traits) || is.vector(traits)) {
     traits <- as.matrix(traits)
   }
 
-  if (!is.null(traits) & !is.numeric(traits)) {
+  if (!is.null(traits) && !is.numeric(traits)) {
     stop("Non-continuous trait data found in input traits. ",
          "Please provide only continuous trait data", call. = FALSE)
   }

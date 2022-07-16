@@ -223,7 +223,7 @@ site_sp_10000 <- make_more_sites(1200)
 ### Functional Richness
 
 ```{r bench-sites-fric, fig.cap = "Performance comparison of `fd_fric()` with increasing number of sites."}
-bench_sites_fric = microbenchmark::microbenchmark(
+bench_sites_fric <- microbenchmark::microbenchmark(
   sites_10    = fd_fric(traits_birds, site_sp_birds),
   sites_100   = fd_fric(traits_birds, site_sp_100),
   sites_1000  = fd_fric(traits_birds, site_sp_1000),
@@ -238,7 +238,7 @@ bench_sites_fric
 ### Functional Divergence
 
 ```{r bench-sites-fdiv, fig.cap = "Performance comparison of `fd_fdiv()` with increasing number of sites."}
-bench_sites_fdiv = microbenchmark::microbenchmark(
+bench_sites_fdiv <- microbenchmark::microbenchmark(
   sites_10    = fd_fdiv(traits_birds, site_sp_birds),
   sites_100   = fd_fdiv(traits_birds, site_sp_100),
   sites_1000  = fd_fdiv(traits_birds, site_sp_1000),
@@ -268,7 +268,7 @@ bench_sites_raoq
 ### Functional Evenness
 
 ```{r bench-sites-feve, fig.cap = "Performance comparison of `fd_feve()` with increasing number of sites"}
-bench_sites_feve = microbenchmark::microbenchmark(
+bench_sites_feve <- microbenchmark::microbenchmark(
   sites_10    = fd_feve(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_feve(traits = NULL, site_sp_100,   dist_traits_birds),
   sites_1000  = fd_feve(traits = NULL, site_sp_1000,  dist_traits_birds),

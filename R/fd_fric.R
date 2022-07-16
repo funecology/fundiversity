@@ -54,11 +54,11 @@
 #' @export
 fd_fric <- function(traits, sp_com, stand = FALSE) {
 
-  if (missing(traits) | is.null(traits)) {
+  if (missing(traits) || is.null(traits)) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if (is.data.frame(traits) | is.vector(traits)) {
+  if (is.data.frame(traits) || is.vector(traits)) {
     traits <- as.matrix(traits)
   }
 

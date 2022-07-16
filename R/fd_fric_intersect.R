@@ -30,13 +30,13 @@
 #' fd_fric_intersect(traits_birds)
 #'
 #' @export
-fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
+fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
 
-  if (missing(traits) | is.null(traits)) {
+  if (missing(traits) || is.null(traits)) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if (is.data.frame(traits) | is.vector(traits)) {
+  if (is.data.frame(traits) || is.vector(traits)) {
     traits <- as.matrix(traits)
   }
 
