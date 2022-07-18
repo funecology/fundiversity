@@ -216,6 +216,8 @@ As shown on Fig. \ref{fig2}, on average the parallelized versions of `fundiversi
 
 One important note regarding parallelization in `fundiversity`, is that it is important to avoid doing both memoization and parallelization simultaneously. Memoization creates a cache to avoid recomputing results, and the cache may be corrupted if several cores access the same results at the same time. We noticed that toggling memoization while performing parallelization severely increase total computational time, compared to sequential performance.
 
+Note that these benchmarks only assess the packages computation speed and in no way any package intrinsic quality or usefulness. We're comparing `fundiversity`, a package whose one of the main goals is performance, with other packages that may have other primary goals and offer other benefits. Most other packages offer more features than simply computing functional diversity indices. For example, several packages offer nice default visualization functions to plot the different diversity indices, while we explicitly considered that visualization functions were not part of `fundiversity` and let the users decide how they want to plot their indices.
+
 
 # Conclusion
 
