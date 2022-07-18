@@ -52,11 +52,11 @@ abstract: |
   4. `fundiversity` aims to be a lightweight efficient tool to compute functional diversity indices, that can be used in a variety of contexts. Because it has been designed following clear principles, it is easy to extend. We hope the wider community will adopt it and we welcome all contributions.
 
 keywords:
-  - biodiversity;
-  - diversity facet;
-  - R package;
-  - functional biogeography;
-  - functional ecology;
+  - biodiversity
+  - diversity facet
+  - R package
+  - functional biogeography
+  - functional ecology
   - community ecology
 
 
