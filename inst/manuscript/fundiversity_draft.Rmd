@@ -43,11 +43,11 @@ address:
 abstract: |
   (max 350 words)
   
-  1. Functional diversity is widely used and widespread. However, the main package used to compute functional diversity indices `FD` is not flexible and not adapted to the volume of data used in modern ecological analyses;
+  1. Functional diversity is widely used and widespread. However, the main package used to compute functional diversity indices `FD` is not flexible and not adapted to the volume of data used in modern ecological analyses.
   
-  2. We here present `fundiversity`, an R package that eases the computation of classical functional diversity indices. It leverages parallelization and memoization (storing some results in memory) to maximize efficiency with data with thousands of columns and rows.;
+  2. We here present `fundiversity`, an R package that eases the computation of classical functional diversity indices. It leverages parallelization and memoization (caching results in memory) to maximize efficiency with data with thousands of columns and rows.
   
-  3. In addition to being more flexible we did a performance comparison with packages that provide analog functions. `fundiversity` was always an order of magnitude quicker than alternative packages;
+  3. In addition to being more flexible we did a performance comparison with packages that provide analog functions. `fundiversity` was always an order of magnitude quicker than alternative packages.
   
   4. `fundiversity` aims to be a lightweight efficient tool to compute functional diversity indices, that can be used in a variety of contexts. Because it has been designed following clear principles, it is easy to extend. We hope the wider community will adopt it and we welcome all contributions.
 
@@ -196,7 +196,7 @@ To test the actual performance improvements realized by `fundiversity`, we compa
 
 Table: List of functions available in `fundiversity` to compute functional diversity indices and corresponding functions in other packages. The name of the package is indicated before the `::` while the name of the functions (including specified arguments) follows.
 
-For testing purposes, we used datasets of increasing size with the number of species being 200, 500, or 1000; the number of traits 2, 4, or 10; the number of sites 50, 100, or 500. For each set of parameters, we generated a fictional site-species matrix and site-trait matrix, comprised only of continuous trait data. We used these simulated data to perform benchmarks across comparable functions among the selected packages. The benchmark ran 30 times through the `bench` package [@Hester_bench_2021]. A summary of the results of the benchmark can be seen in Fig. \ref{fig2}. Full results detailing the timings for each combination of parameters and functions are available in the Supplementary Material.
+For testing purposes, we used datasets of increasing size with the number of species being 200, 500, or 1000; the number of traits 2, 4, or 10; the number of sites 50, 100, or 500. For each set of parameters, we generated a fictional site-species matrix and site-trait matrix, comprised only of continuous trait data. We used these simulated data to perform benchmarks across comparable functions among the selected packages. The benchmark ran 30 times through the `bench` package [@Hester_bench_2021]. A summary of the results of the benchmark can be seen in Fig. \ref{fig2}. Full results detailing the timings for each combination of parameters and functions are available in the Supplementary Material (Fig. S\ref{figs1}).
 
 ```{r fig2-benchmark-results, out.width="100%", fig.align='center', fig.cap="\\label{fig2}Timing comparison across functional diversity indices between packages. Each point represents the execution time of one run using a simulated dataset, the points are transparent and jittered to avoid overplotting. We here show the performance results considering only a single set of parameters with 4 traits, 500 species, and 100 sites, repeated 30 times.", echo = FALSE}
 knitr::include_graphics(
@@ -212,7 +212,7 @@ knitr::include_graphics(
 )
 ```
 
-As shown on Fig. \ref{fig2}, on average the parallelized versions of `fundiversity` functions executed an order of magnitude faster than the sequential versions. For functional richness we even observed a difference of two orders of magnitude. However, for functional dispersion, parallelization increased overall computation time. This may be due to inherent parallelization issues: there is an overhead cost when splitting tasks across multiple cores of a computer. The efficiency of parallelization depends on the difficulty of the tasks that are split between cores. In the case of functional richness, the main task is computing the convex hull, which is computationally costly, that is why parallelization increase performance in this case. While computing functional dispersion is simpler, and as such, does not benefit from being split across different cores. Different values for the number of cores, species, traits or sites produce qualitatively the same results (full results in Fig. \ref{fig2}).
+As shown on Fig. \ref{fig2}, on average the parallelized versions of `fundiversity` functions executed an order of magnitude faster than the sequential versions. For functional richness we even observed a difference of two orders of magnitude. However, for functional dispersion, parallelization increased overall computation time. This may be due to inherent parallelization issues: there is an overhead cost when splitting tasks across multiple cores of a computer. The efficiency of parallelization depends on the difficulty of the tasks that are split between cores. In the case of functional richness, the main task is computing the convex hull, which is computationally costly, that is why parallelization increase performance in this case. While computing functional dispersion is simpler, and as such, does not benefit from being split across different cores. Different values for the number of cores, species, traits or sites produce qualitatively the same results (full results in Fig. S\ref{figs2}).
 
 One important note regarding parallelization in `fundiversity`, is that it is important to avoid doing both memoization and parallelization simultaneously. Memoization creates a cache to avoid recomputing results, and the cache may be corrupted if several cores access the same results at the same time. We noticed that toggling memoization while performing parallelization severely increase total computational time, compared to sequential performance.
 
