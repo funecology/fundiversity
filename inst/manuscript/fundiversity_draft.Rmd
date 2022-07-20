@@ -7,7 +7,7 @@ author:
     affiliation: idiv,uleipzig,cefe
     footnote: 1
   - name: Hugo Gruson
-    email: hugo.gruson@normalsup.org
+    email: hugo.gruson@normalesup.org
     orcid_id: 0000-0002-4094-1476
     affiliation: cefe,london
     footnote: 2
