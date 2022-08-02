@@ -12,6 +12,7 @@
 `future.globals = FALSE`, thus making the internal code less error-prone and
 faster in parallel settings.
 
+
 # fundiversity 0.2.1
 
 ## Internal changes
@@ -31,7 +32,7 @@ Please refer to the [parallelization vignette for more information](https://bisa
 * The convex hull computation in `fd_fdiv()`, `fd_fric()`, and 
 `fd_fric_intersect()` is now cached thanks to the 
 [memoise](https://memoise.r-lib.org/) package to speed up repeated runs. This 
-behaviour can be disabled by running `options(fundiversity.memoise = FALSE)` at
+behavior can be disabled by running `options(fundiversity.memoise = FALSE)` at
 the start of your R session.
 
 # fundiversity 0.0.1
