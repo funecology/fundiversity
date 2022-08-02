@@ -1,6 +1,6 @@
 Package: fundiversity
 Title: Easy Computation of Alpha Functional Diversity Indices
-Version: 0.2.1.9000
+Version: 1.0.0
 Authors@R: 
     c(
       person("Matthias", "Grenié",
@@ -20,7 +20,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)
 Imports:

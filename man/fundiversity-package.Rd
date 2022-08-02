@@ -6,7 +6,9 @@
 \alias{fundiversity-package}
 \title{fundiversity: Easy Computation of Alpha Functional Diversity Indices}
 \description{
-Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger et al. 2008 <doi:10.1890/07-1206.1>). Provides efficient and modular functions to compute functional diversity indices.
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
+Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger et al. 2008 \doi{10.1890/07-1206.1}). Provides efficient, modular, and parallelizable functions to compute functional diversity indices.
 }
 \seealso{
 Useful links:

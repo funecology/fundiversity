@@ -1,4 +1,4 @@
-# fundiversity (development version)
+# fundiversity 1.0.0
 
 ## Internal changes
 
