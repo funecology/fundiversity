@@ -13,7 +13,7 @@ Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv), Fun
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://bisaloo.github.io/fundiversity/}
+  \item \url{https://hugogruson.fr/fundiversity/}
   \item \url{https://github.com/bisaloo/fundiversity}
   \item Report bugs at \url{https://github.com/Bisaloo/fundiversity/issues}
 }
