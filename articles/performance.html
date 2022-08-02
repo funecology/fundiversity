@@ -106,7 +106,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <p><strong><code>hillR::hill_func()</code></strong> comes from the <code>hillR</code> package that computes Hill numbers for taxonomic, functional, and functional diversity <span class="citation">(Li 2018)</span>. It implements indices proposed by <span class="citation">Chao, Chiu, and Jost (2014)</span>. It computes Rao’s quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.</p>
 <p><strong><code>adiv::QE()</code></strong> comes from the <code>adiv</code> package which proposes a toolkit to analyze biodiversity <span class="citation">(Pavoine 2020)</span>. This function computes Rao’s quadratic entropy.</p>
 <p><strong><code>SYNCSA::rao.diversity()</code></strong> comes from <code>SYNCSA</code> package which proposes a simulation framework for meta-communities <span class="citation">(Debastiani and Pillar 2012)</span>. The function computes Rao’s quadratic entropy as well as functional redundancy.</p>
-<p><strong><code>mFD::alpha.fd.hill()</code></strong> comes from the <code>mFD</code> package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indiceS.</p>
+<p><strong><code>mFD::alpha.fd.hill()</code></strong> comes from the <code>mFD</code> package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indices.</p>
 </div>
 <div class="section level3">
 <h3 id="benchmark-between-packages">Benchmark between packages<a class="anchor" aria-label="anchor" href="#benchmark-between-packages"></a>
@@ -114,7 +114,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <p>We will now benchmark the functions included in <code>fundiversity</code> with the corresponding function in other packages using the <code>microbenchmark::microbenchmark()</code> function.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">tictoc</span><span class="fu">::</span><span class="fu">tic</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bisaloo.github.io/fundiversity/">fundiversity</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hugogruson.fr/fundiversity/" class="external-link">fundiversity</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"site_sp_birds"</span>, package <span class="op">=</span> <span class="st">"fundiversity"</span><span class="op">)</span></span>
 <span></span>
@@ -238,7 +238,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span><span class="co">#&gt;  species_100000 284.15498 316.50850 448.10526 328.81308 358.02843 956.35379    30   b</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="raos-quadratric-entropy">Rao’s Quadratric Entropy<a class="anchor" aria-label="anchor" href="#raos-quadratric-entropy"></a>
+<h4 id="raos-quadratic-entropy">Rao’s Quadratic Entropy<a class="anchor" aria-label="anchor" href="#raos-quadratic-entropy"></a>
 </h4>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bench_sp_raoq</span> <span class="op">&lt;-</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
@@ -311,7 +311,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="fd-bench-species-compare-1.png" alt=""><p class="caption">Performance comparison between functions for distinct indices in <code>fundiversity</code> with increasing number of species. Smoothed trend lines and standard error enveloppes ares shown.</p>
+<img src="fd-bench-species-compare-1.png" alt=""><p class="caption">Performance comparison between functions for distinct indices in <code>fundiversity</code> with increasing number of species. Smoothed trend lines and standard error envelopes ares shown.</p>
 </div>
 </div>
 </div>
@@ -380,7 +380,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span><span class="co">#&gt;  sites_10000 3603.94346 3757.78241 3813.13545 3800.30931 3866.23993 4042.1464    30    d</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="raos-quadratic-entropy">Rao’s Quadratic Entropy<a class="anchor" aria-label="anchor" href="#raos-quadratic-entropy"></a>
+<h4 id="raos-quadratic-entropy-1">Rao’s Quadratic Entropy<a class="anchor" aria-label="anchor" href="#raos-quadratic-entropy-1"></a>
 </h4>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bench_sites_raoq</span> <span class="op">=</span> <span class="fu">microbenchmark</span><span class="fu">::</span><span class="fu">microbenchmark</span><span class="op">(</span></span>
@@ -456,7 +456,7 @@ knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
 <span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
-<img src="fd-bench-sites-compare-1.png" alt=""><p class="caption">Performance comparison between functions for distinct indices in <code>fundiversity</code> with increasing number of sites. Smoothed trend lines and standard error enveloppes ares shown.</p>
+<img src="fd-bench-sites-compare-1.png" alt=""><p class="caption">Performance comparison between functions for distinct indices in <code>fundiversity</code> with increasing number of sites. Smoothed trend lines and standard error envelopes ares shown.</p>
 </div>
 <details><p><summary>Session info of the machine on which the benchmark was ran and time it took to run</summary></p>
 <pre><code><span><span class="co">#&gt;  seconds needed to generate this document: 3694.109 sec elapsed</span></span>
