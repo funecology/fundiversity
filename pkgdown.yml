@@ -1,12 +1,12 @@
 pandoc: 2.7.3
-pkgdown: 2.0.5
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   design-principles: design-principles.html
   fundiversity: fundiversity.html
   parallel: parallel.html
   performance: performance.html
-last_built: 2022-07-16T10:30Z
+last_built: 2022-08-02T09:48Z
 urls:
   reference: https://bisaloo.github.io/fundiversity/reference
   article: https://bisaloo.github.io/fundiversity/articles
