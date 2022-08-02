@@ -8,7 +8,7 @@ message: 'To cite package "fundiversity" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'fundiversity: Easy Computation of Alpha Functional Diversity Indices'
-version: 0.2.1.9000
+version: 1.0.0
 doi: 10.5281/zenodo.4761754
 abstract: 'Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv),
   Function Evenness (FEve), Functional Richness (FRic), Functional Dispersion (FDis)
@@ -34,7 +34,7 @@ preferred-citation:
   - family-names: Gruson
     given-names: Hugo
     orcid: https://orcid.org/0000-0002-4094-1476
-  notes: R package version 0.2.1.9000
+  notes: R package version 1.0.0
   url: https://CRAN.R-project.org/package=fundiversity
   doi: 10.5281/zenodo.4761754
 repository: https://CRAN.R-project.org/package=fundiversity
@@ -57,7 +57,7 @@ references:
     given-names: Matthias
   - family-names: Gruson
     given-names: Hugo
-  notes: R package version 0.2.1.9000
+  notes: R package version 1.0.0
   url: https://github.com/Bisaloo/fundiversity
   doi: 10.5281/zenodo.4761754
 - type: software
