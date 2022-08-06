@@ -75,6 +75,17 @@ test_that("Functional Divergence works with sparse matrices", {
 
 })
 
+test_that("Functional Divergence works with matrices without rownames", {
+
+  traits_birds_un <- traits_birds
+  rownames(traits_birds_un) <- NULL
+
+  expect_identical(
+    fd_fdiv(traits_birds_un),
+    fd_fdiv(traits_birds)
+  )
+
+})
 
 # Tests for invalid inputs -----------------------------------------------------
 
