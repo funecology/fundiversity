@@ -48,6 +48,9 @@ fd_fdiv <- function(traits, sp_com) {
 
   } else {
 
+    # We may override actual species names but we don't care because species
+    # identity doesn't matter when no species-site matrix is provided.
+    rownames(traits) <- paste0("sp", seq_len(nrow(traits)))
     sp_com <- matrix(1, ncol = nrow(traits),
                      dimnames = list("s1", rownames(traits)))
 
