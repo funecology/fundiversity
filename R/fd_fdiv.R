@@ -48,6 +48,9 @@ fd_fdiv <- function(traits, sp_com) {
 
   } else {
 
+    if (is.null(rownames(traits))) {
+      rownames(traits) <- paste0("sp", seq_len(nrow(traits)))
+   }
     sp_com <- matrix(1, ncol = nrow(traits),
                      dimnames = list("s1", rownames(traits)))
 
