@@ -10,7 +10,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 [![R build
 status](https://github.com/Bisaloo/fundiversity/workflows/R-CMD-check/badge.svg)](https://github.com/Bisaloo/fundiversity/actions)
 [![Coverage
-Status](https://codecov.io/gh/Bisaloo/fundiversity/branch/master/graph/badge.svg?token=HR4YH118VT)](https://codecov.io/gh/Bisaloo/fundiversity)
+Status](https://codecov.io/gh/Bisaloo/fundiversity/branch/master/graph/badge.svg?token=HR4YH118VT)](https://app.codecov.io/gh/Bisaloo/fundiversity)
 [![CRAN
 status](https://www.r-pkg.org/badges/version-ago/fundiversity)](https://CRAN.R-project.org/package=fundiversity)
 [![DOI](https://zenodo.org/badge/300231216.svg)](https://zenodo.org/badge/latestdoi/300231216)
@@ -19,9 +19,9 @@ status](https://www.r-pkg.org/badges/version-ago/fundiversity)](https://CRAN.R-p
 `fundiversity` provides a lightweight package to compute common
 functional diversity indices. To a get a glimpse of what `fundiversity`
 can do refer to the [introductory
-vignette](https://bisaloo.github.io/fundiversity/articles/fundiversity.html).
+vignette](https://hugogruson.fr/fundiversity/articles/fundiversity.html).
 The package is built using clear, public [design
-principles](https://bisaloo.github.io/fundiversity/articles/design-principles.html)
+principles](https://hugogruson.fr/fundiversity/articles/design-principles.html)
 inspired from our own experience and user feedback.
 
 ## Installation
@@ -46,7 +46,7 @@ hulls with `fd_fric_intersect()`, Functional Divergence with
 `fd_fdiv()`, Rao’s Quadratic Entropy with `fd_raoq()`, Functional
 Dispersion with `fd_fdis()` and Functional Evenness with `fd_feve()`.
 You can have a brief overview of the indices in the [introductory
-vignette](https://bisaloo.github.io/fundiversity/articles/fundiversity.html).
+vignette](https://hugogruson.fr/fundiversity/articles/fundiversity.html).
 
 All indices can be computed either using global trait data or at the
 site-level:
@@ -120,8 +120,8 @@ fd_fdiv(traits_birds)
 ```
 
 For more details please refer to the [parallelization
-vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html)
-or use `vignette("parallel", package = "fundiversity")` within R.
+vignette](https://hugogruson.fr/fundiversity/articles/parallel.html) or
+use `vignette("parallel", package = "fundiversity")` within R.
 
 ## Available functional diversity indices
 
@@ -130,20 +130,20 @@ diversity indices can be classified in three “domains” that assess
 different properties of the functional space: richness, divergence, and
 regularity. We made sure that the computations in the package are
 correct in our [correctness
-vignette](https://bisaloo.github.io/fundiversity/articles/correctness.html).
+vignette](https://hugogruson.fr/fundiversity/articles/correctness.html).
 `fundiversity` provides function to compute indices that assess this
 three facets at the site scale:
 
-| Scale                              | Richness                                                                                                                                                                   | Divergence                                                                                                                                                                                                                                                                         | Evenness                                                                               |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| α-diversity<br />(= among sites)   | FRic with [`fd_fric()`](https://bisaloo.github.io/fundiversity/reference/fd_fric.html)                                                                                     | FDiv with [`fd_fdiv()`](https://bisaloo.github.io/fundiversity/reference/fd_fdiv.html)<br />Rao’s QE with [`fd_raoq()`](https://bisaloo.github.io/fundiversity/reference/fd_raoq.html)<br />FDis with [`fd_fdis()`](https://bisaloo.github.io/fundiversity/reference/fd_fdis.html) | FEve with [`fd_feve()`](https://bisaloo.github.io/fundiversity/reference/fd_feve.html) |
-| β-diversity<br />(= between sites) | FRic pairwise intersection with [`fd_fric_intersect()`](https://bisaloo.github.io/fundiversity/reference/fd_fric_intersect.html)<br />alternatives available in `betapart` | available in `entropart`, `betapart` or `hillR`                                                                                                                                                                                                                                    | available in `BAT`                                                                     |
+| Scale                              | Richness                                                                                                                                                               | Divergence                                                                                                                                                                                                                                                             | Evenness                                                                           |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| α-diversity<br />(= among sites)   | FRic with [`fd_fric()`](https://hugogruson.fr/fundiversity/reference/fd_fric.html)                                                                                     | FDiv with [`fd_fdiv()`](https://hugogruson.fr/fundiversity/reference/fd_fdiv.html)<br />Rao’s QE with [`fd_raoq()`](https://hugogruson.fr/fundiversity/reference/fd_raoq.html)<br />FDis with [`fd_fdis()`](https://hugogruson.fr/fundiversity/reference/fd_fdis.html) | FEve with [`fd_feve()`](https://hugogruson.fr/fundiversity/reference/fd_feve.html) |
+| β-diversity<br />(= between sites) | FRic pairwise intersection with [`fd_fric_intersect()`](https://hugogruson.fr/fundiversity/reference/fd_fric_intersect.html)<br />alternatives available in `betapart` | available in `entropart`, `betapart` or `hillR`                                                                                                                                                                                                                        | available in `BAT`                                                                 |
 
 ## Related Packages
 
 Several other packages exist that compute functional diversity indices.
 We did a [performance
-comparison](https://bisaloo.github.io/fundiversity/articles/performance.html)
+comparison](https://hugogruson.fr/fundiversity/articles/performance.html)
 between related packages. We here mention some of them (but do not
 mention the numerous wrappers around these packages):
 
@@ -165,10 +165,10 @@ mention the numerous wrappers around these packages):
 
 1.  parallelization through the `future` backend please refer to the
     [parallelization
-    vignette](https://bisaloo.github.io/fundiversity/articles/parallel.html)
+    vignette](https://hugogruson.fr/fundiversity/articles/parallel.html)
     for details.
 
 2.  memoization means that the results of the functions calls are cached
     and not recomputed when recalled, to toggle it off see the
     `fundiversity::fd_fric()` [Details
-    section](https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details).
+    section](https://hugogruson.fr/fundiversity/reference/fd_fric.html#details).
