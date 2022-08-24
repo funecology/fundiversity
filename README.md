@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![Lifecycle:
-maturing](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://lifecycle.r-lib.org/articles/stages.html#maturing)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R build
 status](https://github.com/Bisaloo/fundiversity/workflows/R-CMD-check/badge.svg)](https://github.com/Bisaloo/fundiversity/actions)
 [![Coverage
@@ -128,8 +128,11 @@ or use `vignette("parallel", package = "fundiversity")` within R.
 According to Pavoine & Bonsall (2011) classification, functional
 diversity indices can be classified in three “domains” that assess
 different properties of the functional space: richness, divergence, and
-regularity. `fundiversity` provides function to compute indices that
-assess this three facets at the site scale:
+regularity. We made sure that the computations in the package are
+correct in our [correctness
+vignette](https://bisaloo.github.io/fundiversity/articles/correctness.html).
+`fundiversity` provides function to compute indices that assess this
+three facets at the site scale:
 
 | Scale                              | Richness                                                                                                                                                                   | Divergence                                                                                                                                                                                                                                                                         | Evenness                                                                               |
 | ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
