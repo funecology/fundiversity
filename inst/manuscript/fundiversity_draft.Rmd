@@ -126,6 +126,8 @@ As we underlined in the introduction, automatic software testing, while not 100%
 
 Table: List of functions available in `fundiversity` to compute functional diversity indices. The two last columns specify which functions are parallelizable and memoizable.
 
+We made sure the indices were numerically exact by using the test dataset available in Villéger et al. [-@Villeger_New_2008]. The functions in `fundiversity` gave identical results than the one found in Figure 2 of Villéger et al. [-@Villeger_New_2008]. We summarize our comparisons in the numerical correctness vignette accessible through `vignette("correctness", package = fundiversity)`.
+
 
 # Case Study
 
