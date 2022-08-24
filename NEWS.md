@@ -2,7 +2,8 @@
 
 ## Internal changes
 
-* Unit tests for non-continuous traits for all functions
+* Unit tests for non-continuous traits for all functions.
+* Correct all URLs of the package
 
 ## Minor changes
 
@@ -14,7 +15,8 @@ faster in parallel settings.
 
 ## Major changes
 
-* Add a vignette on numerical correctedness named `correctedness`.
+* Add a vignette on numerical correctness named `correctness`, accessible
+with `vignette("correctness", package = "fundiversity")`.
 
 
 # fundiversity 0.2.1
@@ -32,7 +34,7 @@ convex hulls across pairs of sites.
 * There is a new function `fd_fdis` to compute Functional Dispersion FDis.
 * `fd_fdiv()`, `fd_feve()`,  `fd_fdis()`, `fd_fric()` can now be computed in
 parallel with the [future](https://cran.r-project.org/package=future) framework. 
-Please refer to the [parallelization vignette for more information](https://bisaloo.github.io/fundiversity/articles/parallel.html).
+Please refer to the [parallelization vignette for more information](https://hugogruson.fr/fundiversity/articles/parallel.html).
 * The convex hull computation in `fd_fdiv()`, `fd_fric()`, and 
 `fd_fric_intersect()` is now cached thanks to the 
 [memoise](https://memoise.r-lib.org/) package to speed up repeated runs. This 
