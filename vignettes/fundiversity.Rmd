@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 - functional dispersion (FDis)
 - Rao's quadratic entropy (Q).
 
-This vignette will introduce you to the data needed as well as how to compute and interpret each index.
+This vignette will introduce you to the data needed as well as how to compute and interpret each index. We made sure the computations of these indices are correct based on a test dataset as specified in the [correctness vignette](./correctness.html).
 
 ```{r setup}
 library("fundiversity")
