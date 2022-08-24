@@ -12,6 +12,10 @@
 `future.globals = FALSE`, thus making the internal code less error-prone and
 faster in parallel settings.
 
+## Major changes
+
+* Add a vignette on numerical correctedness named `correctedness`.
+
 
 # fundiversity 0.2.1
 
