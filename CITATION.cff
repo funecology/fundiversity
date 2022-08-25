@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# CITATION file created with {cffr} R package, v0.2.2
+# CITATION file created with {cffr} R package, v0.2.3
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
  
@@ -13,8 +13,8 @@ doi: 10.5281/zenodo.4761754
 abstract: 'Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv),
   Function Evenness (FEve), Functional Richness (FRic), Functional Dispersion (FDis)
   and Rao''s entropy (Q) (reviewed in Villéger et al. 2008 <doi:10.1890/07-1206.1>).
-  Provides efficient, modular, and parallelizable functions to compute functional
-  diversity indices.'
+  Provides efficient, modular, and parallel functions to compute functional diversity
+  indices.'
 authors:
 - family-names: Grenié
   given-names: Matthias
