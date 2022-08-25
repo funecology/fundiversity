@@ -30,3 +30,5 @@ navbar:
         href: articles/parallel.html
       - text: Design Principles
         href: articles/design-principles.html
+      - text: Numerical Correctness
+        href: articles/correctness.html
