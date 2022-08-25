@@ -1,6 +1,7 @@
 ---
 title: "Computing functional diversity indices with `fundiversity`"
 output: rmarkdown::html_vignette
+link-citations: yes
 bibliography: fundiversity.bib
 vignette: >
   %\VignetteIndexEntry{Computing functional diversity indices with `fundiversity`}

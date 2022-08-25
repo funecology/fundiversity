@@ -1,6 +1,7 @@
 ---
 title: "Verification that indices are implemented correctly"
 output: rmarkdown::html_vignette
+link-citations: yes
 bibliography: fundiversity.bib
 vignette: >
   %\VignetteIndexEntry{Verification that indices are implemented correctly}
