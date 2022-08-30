@@ -9,9 +9,8 @@ test_that("Functional Richness output format", {
   fric <- expect_silent(fd_fric(traits_birds))
 
   expect_s3_class(fric, "data.frame")
-  expect_length(fric, 2)
-  expect_equal(nrow(fric), 1)
-  expect_equal(colnames(fric), c("site", "FRic"))
+  expect_identical(dim(fric), c(1L, 2L))
+  expect_named(fric, c("site", "FRic"))
 
   expect_equal(fd_fric(traits_birds)$FRic, 230967.7, tolerance = 1e-6)
 })
@@ -58,8 +57,8 @@ test_that("Functional Richness can standardize its values", {
   fric <- fd_fric(traits_birds, stand = TRUE)
   fric_low_1 <- suppressMessages(fd_fric(traits_birds, site_sp2, stand = TRUE))
 
-  expect_equal(fric$FRic[[1]], 1)
-  expect_equal(fric_low_1$FRic[[1]], 1)
+  expect_identical(fric$FRic[[1]], 1)
+  expect_identical(fric_low_1$FRic[[1]], 1)
   expect_lt(fric_low_1$FRic[[2]], 1)
 })
 
@@ -107,7 +106,7 @@ test_that("Functional Richness edge cases", {
     fd_fric(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(fric$FRic[[1]], NA_real_)
+  expect_identical(fric$FRic[[1]], NA_real_)
 
 })
 
@@ -121,10 +120,11 @@ test_that("Functional Richness works on sparse matrices", {
 
   sparse_site_sp <- Matrix(site_sp, sparse = TRUE)
 
-  expect_silent(fd_fric(traits_birds, sparse_site_sp))
+  sparse_fric <- expect_silent(fd_fric(traits_birds, sparse_site_sp))
 
-  expect_equal(fd_fric(traits_birds, sparse_site_sp)$FRic, 230967.7,
-               tolerance = 1e-6)
+  fric <- expect_silent(fd_fric(traits_birds, site_sp))
+
+  expect_equal(fric, sparse_fric)
 })
 
 

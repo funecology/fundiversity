@@ -10,10 +10,8 @@ test_that("Functional Richness Intersection output format", {
   fric_int <- expect_silent(fd_fric_intersect(traits_birds))
 
   expect_s3_class(fric_int, "data.frame")
-  expect_length(fric_int, 3)
-  expect_equal(nrow(fric_int), 1)
-  expect_equal(colnames(fric_int), c("first_site", "second_site",
-                                     "FRic_intersect"))
+  expect_identical(dim(fric_int), c(1L, 3L))
+  expect_named(fric_int, c("first_site", "second_site", "FRic_intersect"))
 
   expect_equal(fd_fric_intersect(traits_birds, stand = TRUE)$FRic_intersect,
                1, tolerance = 1e-6)
@@ -65,8 +63,8 @@ test_that("Functional Richness Intersection can standardize its values", {
   fric_int_low_1 <- suppressMessages(fd_fric_intersect(traits_birds, site_sp2,
                                                    stand = TRUE))
 
-  expect_equal(fric_int$FRic_intersect[[1]], 1)
-  expect_equal(fric_int_low_1$FRic_intersect[[2]], 1)
+  expect_identical(fric_int$FRic_intersect[[1]], 1)
+  expect_identical(fric_int_low_1$FRic_intersect[[2]], 1)
   expect_lt(fric_int_low_1$FRic_intersect[[3]], 1)
   expect_lt(fric_int_low_1$FRic_intersect[[1]], 1)
 })
@@ -131,7 +129,7 @@ test_that("Functional Richness Intersection edge cases", {
     fd_fric_intersect(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(fric_inter$FRic_intersect[[1]], NA_real_)
+  expect_identical(fric_inter$FRic_intersect[[1]], NA_real_)
 })
 
 test_that("Functional Richness Intersection works on sparse matrices", {

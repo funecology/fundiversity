@@ -11,17 +11,15 @@ test_that("Functional Evenness output format", {
   feve <- expect_silent(fd_feve(traits_birds, sp_com = simple_site_sp))
 
   expect_s3_class(feve, "data.frame")
-  expect_length(feve, 2)
-  expect_equal(nrow(feve), 1)
-  expect_equal(colnames(feve), c("site", "FEve"))
+  expect_identical(dim(feve), c(1L, 2L))
+  expect_named(feve, c("site", "FEve"))
 
 
   feve <- expect_silent(fd_feve(traits_birds))
 
   expect_s3_class(feve, "data.frame")
-  expect_length(feve, 2)
-  expect_equal(nrow(feve), 1)
-  expect_equal(colnames(feve), c("site", "FEve"))
+  expect_identical(dim(feve), c(1L, 2L))
+  expect_named(feve, c("site", "FEve"))
 
 })
 
@@ -41,7 +39,7 @@ test_that("Functional Evenness computation are in line with other packages", {
 
   abund_mat <- matrix(1, ncol = 3, dimnames = list("site1", letters[1:3]))
 
-  expect_equal(fd_feve(sp_com = abund_mat, dist_matrix = test_dissim)$FEve, 1)
+  expect_identical(fd_feve(sp_com = abund_mat, dist_matrix = test_dissim)$FEve, 1)
 })
 
 test_that("Functional Evenness works in 1D", {
@@ -71,9 +69,9 @@ test_that("Functional Evenness works on subset of site/species", {
 test_that("Functional Evenness edge cases", {
 
   # n_species = 2 < 3 so not possible to compute FEve
-  expect_equal(fd_feve(traits_birds[1:2,],
+  expect_identical(fd_feve(traits_birds[1:2,],
                        simple_site_sp[, 1:2, drop = FALSE])[["FEve"]],
-               NA_real_)
+                   NA_real_)
 
 
   # n_species = 0, so no definition of FEve
@@ -84,7 +82,7 @@ test_that("Functional Evenness edge cases", {
     fd_feve(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(feve$FEve[[1]], NA_real_)
+  expect_identical(feve$FEve[[1]], NA_real_)
 })
 
 test_that("Functional Evenness works on sparse matrices", {
@@ -102,21 +100,26 @@ test_that("Functional Evenness works on sparse matrices", {
   # Only site-species matrix is sparse
   expect_silent(fd_feve(traits_birds, sparse_site_sp))
 
-  expect_equal(fd_feve(traits_birds, sparse_site_sp)$FEve, 0.3743341,
-               tolerance = 1e-6)
+  expect_equal(
+    fd_feve(traits_birds, sparse_site_sp),
+    fd_feve(traits_birds, site_sp)
+  )
 
   # Only distance matrix is sparse
   expect_silent(fd_feve(sp_com = site_sp, dist_matrix = sparse_dist_mat))
 
-  expect_equal(fd_feve(sp_com = site_sp, dist_matrix = sparse_dist_mat)$FEve,
-               0.3743341, tolerance = 1e-6)
+  expect_equal(
+    fd_feve(sp_com = site_sp, dist_matrix = sparse_dist_mat),
+    fd_feve(sp_com = site_sp, dist_matrix = dist(traits_birds))
+  )
 
   # Both site-species and distance matrix are sparse
   expect_silent(fd_feve(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat))
 
   expect_equal(
-    fd_feve(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat)$FEve,
-    0.3743341, tolerance = 1e-6)
+    fd_feve(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat),
+    fd_feve(sp_com = site_sp, dist_matrix = dist(traits_birds))
+  )
 })
 
 

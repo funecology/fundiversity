@@ -10,9 +10,8 @@ test_that("Functional Divergence output format", {
   fdiv <- expect_silent(fd_fdiv(traits_birds))
 
   expect_s3_class(fdiv, "data.frame")
-  expect_length(fdiv, 2)
-  expect_equal(nrow(fdiv), 1)
-  expect_equal(colnames(fdiv), c("site", "FDiv"))
+  expect_identical(dim(fdiv), c(1L, 2L))
+  expect_named(fdiv, c("site", "FDiv"))
 
   expect_equal(fdiv$FDiv, 0.7282172, tolerance = 1e-7)
 })
@@ -40,7 +39,7 @@ test_that("Functional Divergence works for site with no species", {
     fd_fdiv(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(fdiv$FDiv[[1]], 0)
+  expect_identical(fdiv$FDiv[[1]], 0)
 })
 
 test_that("Functional Divergence works in 1D", {
@@ -64,9 +63,8 @@ test_that("Functional Divergence works with sparse matrices", {
   fdiv <- expect_silent(fd_fdiv(traits_birds, sparse_site_sp))
 
   expect_s3_class(fdiv, "data.frame")
-  expect_length(fdiv, 2)
-  expect_equal(nrow(fdiv), 1)
-  expect_equal(colnames(fdiv), c("site", "FDiv"))
+  expect_identical(dim(fdiv), c(1L, 2L))
+  expect_named(fdiv, c("site", "FDiv"))
 
   expect_equal(
     fd_fdiv(traits_birds, sparse_site_sp),

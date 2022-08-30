@@ -11,17 +11,15 @@ test_that("Rao's entropy output format", {
   rq <- expect_silent(fd_raoq(traits_birds, sp_com = simple_site_sp))
 
   expect_s3_class(rq, "data.frame")
-  expect_length(rq, 2)
-  expect_equal(nrow(rq), 1)
-  expect_equal(colnames(rq), c("site", "Q"))
+  expect_identical(dim(rq), c(1L, 2L))
+  expect_named(rq, c("site", "Q"))
 
 
   rq <- expect_silent(fd_raoq(traits_birds))
 
   expect_s3_class(rq, "data.frame")
-  expect_length(rq, 2)
-  expect_equal(nrow(rq), 1)
-  expect_equal(colnames(rq), c("site", "Q"))
+  expect_identical(dim(rq), c(1L, 2L))
+  expect_named(rq, c("site", "Q"))
 
 })
 
@@ -62,7 +60,7 @@ test_that("Rao's quadratric entropy works for sites with no species", {
     fd_raoq(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(raoq$Q[[1]], 0)
+  expect_identical(raoq$Q[[1]], 0)
 })
 
 test_that("Rao's Quadratic Entropy works on sparse matrices", {
@@ -80,21 +78,26 @@ test_that("Rao's Quadratic Entropy works on sparse matrices", {
   # Only site-species matrix is sparse
   expect_silent(fd_raoq(traits_birds, sparse_site_sp))
 
-  expect_equal(fd_raoq(traits_birds, sparse_site_sp)$Q, 170.0519,
-               tolerance = 1e-6)
+  expect_equal(
+    fd_raoq(traits_birds, sparse_site_sp),
+    fd_raoq(traits_birds, site_sp)
+  )
 
   # Only distance matrix is sparse
   expect_silent(fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat))
 
-  expect_equal(fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat)$Q,
-               170.0519, tolerance = 1e-6)
+  expect_equal(
+    fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat),
+    fd_raoq(sp_com = site_sp, dist_matrix = dist(traits_birds))
+  )
 
   # Both site-species and distance matrix are sparse
   expect_silent(fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat))
 
   expect_equal(
-    fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat)$Q,
-    170.0519, tolerance = 1e-6)
+    fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat),
+    fd_raoq(sp_com = site_sp, dist_matrix = dist(traits_birds))
+  )
 
 })
 
