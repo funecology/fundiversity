@@ -38,8 +38,8 @@ preferred-citation:
   url: https://CRAN.R-project.org/package=fundiversity
   doi: 10.5281/zenodo.4761754
 repository: https://CRAN.R-project.org/package=fundiversity
-repository-code: https://github.com/Bisaloo/fundiversity
-url: https://hugogruson.fr/fundiversity/
+repository-code: https://github.com/funecology/fundiversity
+url: https://funecology.github.io/fundiversity/
 contact:
 - family-names: Grenié
   given-names: Matthias
@@ -273,6 +273,3 @@ references:
     email: danielecook@gmail.com
   year: '2022'
   url: https://CRAN.R-project.org/package=memoise
-identifiers:
-- type: url
-  value: https://github.com/bisaloo/fundiversity
