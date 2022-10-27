@@ -62,7 +62,9 @@ keywords:
 
 header-includes:
   - \linenumbers
+  - \modulolinenumbers
   - \usepackage{endfloat}
+  - \hypersetup{citecolor=blue, linkcolor=blue}
 
 csl: methods-in-ecology-and-evolution.csl
 
@@ -76,13 +78,14 @@ output:
     keep_tex: FALSE
     citation_package: default
   
-journal: Methods in Ecology and Evolution
+journal: Ecography
 ---
 
 Running title (max 45 char.): fundiversity: functional diversity in R
 
 Word count (3000-4000 incl. refs & captions): `r wordcountaddin::word_count()`
 
+\pagebreak
 
 # Introduction
 
