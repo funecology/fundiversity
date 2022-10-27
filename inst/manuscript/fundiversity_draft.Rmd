@@ -85,6 +85,14 @@ Running title (max 45 char.): fundiversity: functional diversity in R
 
 Word count (3000-4000 incl. refs & captions): `r wordcountaddin::word_count()`
 
+# Acknowledgements
+
+MG gratefully acknowledges the support of iDiv funded by the German Research Foundation (DFG--FZT 118, 202548816).
+
+# Authors' Contributions
+
+Our authors' statement follows the Contributor Roles Taxonomy (CRediT, <https://casrai.org/credit/>). **Matthias Grenié**: Conceptualization, Methodology, Software, Resources, Writing - Original Draft, Writing - Review & Editing, Supervision. **Hugo Gruson**: Conceptualization, Methodology, Software, Writing - Review & Editing.
+
 \pagebreak
 
 \resetlinenumber
@@ -233,14 +241,6 @@ Note that these benchmarks only assess the packages computation speed and in no 
 
 We proposed a modern alternative R package to compute functional diversity indices. This package follows current best development practices and leverages modern features like parallelization and memoization to increase its performance. This is only made possible by recent developments which were for the most part not available at the time when alternative packages came out. `fundiversity` does not propose to replace the entire toolkit for the researcher interested in functional diversity (including the upstream selection of the traits and building of a functional space) but instead focuses on improving the most computationally costing step: computing functional diversity indices. We hope it will be a useful contribution to this toolkit. This package aims to always be a work in progress and we welcome contributions from interested users and developers.
 
-
-# Acknowledgements
-
-MG gratefully acknowledges the support of iDiv funded by the German Research Foundation (DFG--FZT 118, 202548816).
-
-# Authors' Contributions
-
-Our authors' statement follows the Contributor Roles Taxonomy (CRediT, <https://casrai.org/credit/>). **Matthias Grenié**: Conceptualization, Methodology, Software, Resources, Writing - Original Draft, Writing - Review & Editing, Supervision. **Hugo Gruson**: Conceptualization, Methodology, Software, Writing - Review & Editing.
 
 # Data Availability
 
