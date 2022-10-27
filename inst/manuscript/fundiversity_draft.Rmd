@@ -149,7 +149,7 @@ We made sure the indices were numerically exact by using the test dataset availa
 
 Now that we described the main features of fundiversity, we are going to show how to use it in practice when computing functional diversity indices. As an example dataset, we included in `fundiversity` site-species and trait data from @Nowak_Data_2019. It is accessible through either calls to `site_sp_birds` and `traits_birds` when `fundiversity` is loaded with `library()` or the use of the `data("site_sp_birds", package = "fundiversity")` and `data("traits_birds", package = "fundiversity")` functions when `fundiversity` is not loaded. This dataset describes the presence of bird species in South America at different elevations and four morphological traits.
 
-```{r fig1-conceptual-diagram, out.width="100%", fig.align='center', fig.cap="\\label{fig1}Conceptual diagram showing the input and typical ouput data from `fundiversity` functions. Input data are generally a site-species table and a species-traits table, and the output gives back a table of functional diversity index per site."}
+```{r fig1-conceptual-diagram, out.width="100%", fig.align='center', fig.cap="\\label{fig1}Conceptual diagram showing the input and typical ouput data from `fundiversity` functions. Input data are generally a site-species table and a species-traits table, and the output gives back a table of functional diversity index per site.", echo = FALSE}
 knitr::include_graphics(
   here::here("inst", "manuscript", "figures", "fundiversity_conceptual_diagram.svg")
 )
