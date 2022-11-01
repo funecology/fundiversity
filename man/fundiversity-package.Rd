@@ -8,14 +8,14 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger et al. 2008 \doi{10.1890/07-1206.1}). Provides efficient, modular, and parallelizable functions to compute functional diversity indices.
+Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger et al. 2008 \doi{10.1890/07-1206.1}). Provides efficient, modular, and parallel functions to compute functional diversity indices.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://hugogruson.fr/fundiversity/}
-  \item \url{https://github.com/bisaloo/fundiversity}
-  \item Report bugs at \url{https://github.com/Bisaloo/fundiversity/issues}
+  \item \url{https://funecology.github.io/fundiversity/}
+  \item \url{https://github.com/funecology/fundiversity}
+  \item Report bugs at \url{https://github.com/funecology/fundiversity/issues}
 }
 
 }
