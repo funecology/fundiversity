@@ -60,7 +60,7 @@ references:
     given-names: Hugo
   year: '2022'
   notes: R package version 1.0.0.9000
-  url: https://github.com/Bisaloo/fundiversity
+  url: https://github.com/funecology/fundiversity
   doi: 10.5281/zenodo.4761754
 - type: software
   title: 'R: A Language and Environment for Statistical Computing'
