@@ -216,7 +216,10 @@ bird_fric = fd_fric(traits_birds, site_sp_birds)
 head(bird_fric)
 ```
 
-The parallel computation are done by splitting across sites, so they may be interesting when facing a huge number of sites. However, given the efficiency of `fundiversity` functions, and the overhead costs associated with parallel computation we recommend using parallel computation only when working with matrices of at least 10.000 sites, or when hitting a performance limit of the default sequential execution.
+To use a different backend, you can invoke a different argument in the `future::plan()` function. All possible arguments are detailed in the "Overview" vignette of the `future` package (accessible through `vignette("future-1-overview", package = "future")` once `future` has been installed).
+
+The parallel computation are done by splitting across sites, so it may be interesting when facing a large number of sites. However, given the efficiency of `fundiversity` functions, and the overhead costs associated with parallel computation we recommend using parallel computation only when working with matrices of at least 10.000 sites, or when hitting a performance limit of the default sequential execution.
+
 Also parallel computation should never be used in conjunction with memoization because of the risk of cache corruption if several cores access the memoized cache simultaneously (make sure to use `options(fundiversity.memoise = FALSE)` before launching parallel computations).
 
 
