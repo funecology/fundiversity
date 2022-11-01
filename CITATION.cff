@@ -9,6 +9,7 @@ type: software
 license: GPL-3.0-only
 title: 'fundiversity: Easy Computation of Alpha Functional Diversity Indices'
 version: 1.0.0.9000
+doi: 10.5281/zenodo.4761754
 abstract: 'Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv),
   Function Evenness (FEve), Functional Richness (FRic), Functional Dispersion (FDis)
   and Rao''s entropy (Q) (reviewed in Villéger et al. 2008 <doi:10.1890/07-1206.1>).
@@ -22,6 +23,21 @@ authors:
 - family-names: Gruson
   given-names: Hugo
   orcid: https://orcid.org/0000-0002-4094-1476
+preferred-citation:
+  type: manual
+  title: 'fundiversity: Easy Computation of Alpha Functional Diversity Indices'
+  authors:
+  - family-names: Grenié
+    given-names: Matthias
+    email: matthias.grenie@gmail.com
+    orcid: https://orcid.org/0000-0002-4659-7522
+  - family-names: Gruson
+    given-names: Hugo
+    orcid: https://orcid.org/0000-0002-4094-1476
+  year: '2022'
+  notes: R package version 1.0.0.9000
+  url: https://CRAN.R-project.org/package=fundiversity
+  doi: 10.5281/zenodo.4761754
 repository: https://CRAN.R-project.org/package=fundiversity
 repository-code: https://github.com/funecology/fundiversity
 url: https://funecology.github.io/fundiversity/
@@ -35,6 +51,17 @@ keywords:
 - r
 - r-package
 references:
+- type: manual
+  title: 'fundiversity: Easy Computation of Alpha Functional Diversity Indices'
+  authors:
+  - family-names: Grenié
+    given-names: Matthias
+  - family-names: Gruson
+    given-names: Hugo
+  year: '2022'
+  notes: R package version 1.0.0.9000
+  url: https://github.com/Bisaloo/fundiversity
+  doi: 10.5281/zenodo.4761754
 - type: software
   title: 'R: A Language and Environment for Statistical Computing'
   notes: Depends
