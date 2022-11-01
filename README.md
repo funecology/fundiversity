@@ -10,7 +10,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://
 [![R build
 status](https://github.com/funecology/fundiversity/workflows/R-CMD-check/badge.svg)](https://github.com/funecology/fundiversity/actions)
 [![Coverage
-Status](https://codecov.io/gh/funecology/fundiversity/branch/master/graph/badge.svg?token=HR4YH118VT)](https://app.codecov.io/gh/funecology/fundiversity)
+Status](https://codecov.io/gh/funecology/fundiversity/branch/main/graph/badge.svg?token=HR4YH118VT)](https://app.codecov.io/gh/funecology/fundiversity)
 [![CRAN
 status](https://www.r-pkg.org/badges/version-ago/fundiversity)](https://CRAN.R-project.org/package=fundiversity)
 [![DOI](https://zenodo.org/badge/300231216.svg)](https://zenodo.org/badge/latestdoi/300231216)
