@@ -22,5 +22,5 @@ bibentry(
   year    = year,
   note    = note,
   header  = "To cite the development version, please use:",
-  url     = "https://github.com/Bisaloo/fundiversity",
+  url     = "https://github.com/funecology/fundiversity",
   doi     = "10.5281/zenodo.4761754")

@@ -68,7 +68,7 @@ hexSticker::sticker(
   dpi       = 300,
 
   p_size    = 13,         # Title
-  u_size    =  4,         # URL
+  u_size    =  3.5,         # URL
   # p_family  = "Aller_Rg",
 
   p_color   = "#121212",   # Title
@@ -84,7 +84,7 @@ hexSticker::sticker(
   s_width   = 1.3,         # Subplot
   s_height  = 1.3,         # Subplot
 
-  url       = "https://github.com/Bisaloo/fundiversity",
+  url       = "https://github.com/funecology/fundiversity",
 
   spotlight = TRUE,
   l_alpha   = 0.7,
