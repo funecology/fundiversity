@@ -1,5 +1,6 @@
 
-year <- sub("-.*", "", meta$Date)
+
+year <- if("Date" %in% names(meta), sub("-.*", "", meta$Date), format(Sys.Date(), "%Y"))
 note <- sprintf("R package version %s", meta$Version)
 
 bibentry(
