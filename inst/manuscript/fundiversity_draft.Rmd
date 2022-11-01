@@ -165,7 +165,7 @@ head(traits_birds)
 head(site_sp_birds)[, 1:3]
 ```
 
-Now we obtained trait and occurrence data we need to compute the trait dissimilarity between each pair of species. As all traits are quantitative we first Z-score them, then we compute the Euclidean distance between pairs of species.
+Now we obtained trait and occurrence data we need to compute the trait dissimilarity between each pair of species. As all traits are quantitative we first scale them to zero mean and standard deviation of one (z-score), then we compute the Euclidean distance between pairs of species.
 
 ```{r trait_dissmilarity}
 z_traits = scale(traits_birds, center = TRUE, scale = TRUE)
@@ -173,7 +173,7 @@ z_traits = scale(traits_birds, center = TRUE, scale = TRUE)
 trait_distance = as.matrix(dist(z_traits))
 ```
 
-We can then compute the functional richness of each index at each location. To do so we are using the `fd_fric()` function. It expects quantitative trait values as the first argument and a site-species matrix as the second argument.
+We can then compute the functional richness at each location. To do so we are using the `fd_fric()` function. It expects quantitative trait values as the first argument and a site-species matrix as the second argument.
 
 ```{r fric}
 library("fundiversity")
