@@ -183,7 +183,7 @@ birds_fric = fd_fric(z_traits, site_sp_birds)
 head(birds_fric)
 ```
 
-All other functions in `fundiversity` use a similar structure, the first input is trait data the second one is a site-species matrix. For Rao's quadratic entropy computed through `fd_raoq()` functional dissimilarities can be specified as the third argument:
+All other functions in `fundiversity` use a similar structure, the first input is trait data the second one is a site-species matrix. For Rao's quadratic entropy, computed through `fd_raoq()`, functional dissimilarities can be specified as the third argument:
 
 ```{r raoq}
 # With functional dissimilarity
@@ -197,6 +197,27 @@ identical(birds_raoq, birds_raoq_2)
 ```
 
 If all traits are not quantitative it is possible to transform them back into independent traits through the use of Gower's distance [@Gower_general_1971; and its extensions: @Podani_Extending_1999, @Pavoine_challenge_2009;] then applying multivariate analysis to obtain orthogonal dimensions [@Maire_How_2015].
+
+
+## Using parallel computation
+
+As specified above, `fundiversity` allows for parallel computation of functional diversity metrics through the `future` framework. We here demonstrate how to use it in practice with the case study. A more detailed explanation is provided in the "Parallelization" vignette of `fundiversity` (available through `vignette("parallel", package = "fundiversity")`).
+
+For using parallel computation, we first have to check if the function in `fundiversity` is parallelizable: all functions but `fd_raoq()` are. Then we need to define the parallel setting using the `future::plan()` function. This allows to define how the parallel computation should be split: across cores, across computers, across jobs of a High-Performing Cluster, etc. Here we are going to focus on splitting the computation locally across the 4 cores of the computer using the `future::multisession()` function. We specify the number of cores to use with the `workers` argument in the call to the `future::plan()` function.
+
+```{r parallel-example}
+
+# First: Setup a parallel plan
+future::plan(future::multisession, workers = 4)
+
+# Second: Perform the computation
+bird_fric = fd_fric(traits_birds, site_sp_birds)
+
+head(bird_fric)
+```
+
+The parallel computation are done by splitting across sites, so they may be interesting when facing a huge number of sites. However, given the efficiency of `fundiversity` functions, and the overhead costs associated with parallel computation we recommend using parallel computation only when working with matrices of at least 10.000 sites, or when hitting a performance limit of the default sequential execution.
+Also parallel computation should never be used in conjunction with memoization because of the risk of cache corruption if several cores access the memoized cache simultaneously (make sure to use `options(fundiversity.memoise = FALSE)` before launching parallel computations).
 
 
 # Performance Comparison
