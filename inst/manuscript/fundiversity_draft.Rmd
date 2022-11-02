@@ -275,7 +275,7 @@ We proposed a modern alternative R package to compute functional diversity indic
 
 ```{r fig-s1-benchmark-full, out.width="100%", fig.align='center', fig.cap="\\label{figs1}Performance comparison across functions of different packages over a range of parameters (number of traits, species, and sites). Note that each combination of parameters ran 30 iterations. The lines show trends of execution time in function of number of sites of the input dataset.", echo = FALSE}
 knitr::include_graphics(
-  here::here("inst", "manuscript", "figures", "s1_external_comparison_full.png")
+  here::here("inst", "manuscript", "figures", "s1_external_comparison_full.pdf")
 )
 ```
 
@@ -286,43 +286,17 @@ knitr::include_graphics(
 )
 ```
 
-```{r table-s1-fd-pkg-deps}
-fd_pkg_list = c(
-  "fundiversity", "adiv", "BAT", "betapart", "entropart", "FD", "hilldiv",
-  "hillR", "hypervolume", "mFD", "TPD", "vegan"
-) %>%
-  purrr::set_names(., nm = .)
+```{r table-s1-fd-pkg-deps, echo = FALSE}
+fd_deps_df = readRDS(
+  here::here("inst", "manuscript", "figures", "tab_s1_pkg_deps.Rds")
+)
 
-fd_full_deps = fd_pkg_list %>%
-  lapply(pak::pkg_deps, dependencies = "all") %>%
-  dplyr::bind_rows(.id = "source_pkg")
-
-fd_hard_deps = fd_pkg_list %>%
-  lapply(pak::pkg_deps, dependencies = "hard") %>%
-  dplyr::bind_rows(.id = "source_pkg")
-
-fd_deps_df = fd_full_deps %>%
-  group_by(source_pkg) %>%
-  summarise(
-    n_all_deps = n() - 1  # Remove source package from list
-  ) %>%
-  inner_join(
-    fd_hard_deps %>%
-      group_by(source_pkg) %>%
-      summarise(
-        n_hard_deps = n() - 1  # Remove source package from list
-      ),
-    by = "source_pkg"
-  ) %>%
-  relocate(n_hard_deps, .before = n_all_deps)
-
-fd_deps_df %>%
-  arrange(n_hard_deps) %>%
-  knitr::kable(
-    col.names = c("Package Name", "Number of Hard Dependencies",
-                  "Number of Total Dependencies"),
-    caption = "\\label{tabs1}Table S1. Number of dependencies for functional diversity packages"
-  )
+knitr::kable(
+  dplyr::arrange(fd_deps_df, n_hard_deps),
+  col.names = c("Package Name", "Number of Hard Dependencies",
+                "Number of Total Dependencies"),
+  caption = "\\label{tabs1}Table S1. Number of dependencies for functional diversity packages"
+)
 ```
 
 # References
