@@ -6,28 +6,41 @@ library("dplyr")
 # Correspondence data.frame between internal vs. actual names
 # These are collated from the benchmark*.R files
 fd_fct_names = tibble::tribble(
-  ~index_name,      ~internal_name,                   ~actual_name,
-  "fric",           "fundiversity_fd_fric",           "fundiversity::fd_fric()",
-  "fric",           "BAT_alpha_tree",                 "BAT::alpha()",
-  "fric",           "BAT_alpha_hull",                 "BAT::hull.alpha()",
-  "fric",           "mFD_alpha_fd",                   "mFD::alpha.fd.multidim(ind_vect = 'fric')",
-  "fdis",           "fundiversity_fd_fdis",           "fundiversity::fd_fdis()",
-  "fdis",           "BAT_dispersion",                 "BAT::dispersion()",
-  "fdis",           "FD_fdisp",                       "FD::fdisp()",
-  "fdis",           "mFD_alpha_fd",                   "mFD::alpha.fd.multidim(ind_vect = 'fdis')",
-  "fdiv",           "fundiversity_fd_fdiv",           "fundiversity::fd_fdiv()",
-  "fdiv",           "mFD_alpha_fd",                   "mFD::alpha.fd.multidim(ind_vect = 'fdiv')",
-  "feve",           "fundiversity_fd_feve",           "fundiversity::fd_feve()",
-  "feve",           "mFD_alpha_fd",                   "mFD::alpha.fd.multidim(ind_vect = 'feve')",
-  "raoq",           "fundiversity_fd_raoq",           "fundiversity::fd_raoq()",
-  "raoq",           "adiv_qe",                        "adiv::QE()",
-  "raoq",           "BAT_rao",                        "BAT::rao()",
-  "raoq",           "hillR_hill_func",                "hillR::hill_func(fdis = FALSE)",
-  "raoq",           "mFD_alpha_fd_hill",              "mFD::alpha.fd.hill(q = 2, tau = 'max')",
-  "fric_intersect", "fundiversity_fd_fric_intersect", "fundiversity::fd_fric_intersect()",
-  "fric_intersect", "betapart_functional_beta",       "betapart::functional.beta.pair()",
-  "fric_intersect", "hillR_funct_pairwise",           "hillR::hill_func_parti_pairwise()"
+  ~index_name,      ~fct_internal_name,               ~fct_actual_name,
+  "fric",           "fundiversity_fd_fric",           "fundiversity\nfd_fric()",
+  "fric",           "BAT_alpha_tree",                 "BAT\nalpha()",
+  "fric",           "BAT_alpha_hull",                 "BAT\nhull.alpha()",
+  "fric",           "mFD_alpha_fd",                   "mFD\nalpha.fd.multidim(\nind_vect = 'fric')",
+  "fdis",           "fundiversity_fd_fdis",           "fundiversity\nfd_fdis()",
+  "fdis",           "BAT_dispersion",                 "BAT\ndispersion()",
+  "fdis",           "FD_fdisp",                       "FD\nfdisp()",
+  "fdis",           "mFD_alpha_fd",                   "mFD\nalpha.fd.multidim(\nind_vect = 'fdis')",
+  "fdiv",           "fundiversity_fd_fdiv",           "fundiversity\nfd_fdiv()",
+  "fdiv",           "mFD_alpha_fd",                   "mFD\nalpha.fd.multidim(\nind_vect = 'fdiv')",
+  "feve",           "fundiversity_fd_feve",           "fundiversity\nfd_feve()",
+  "feve",           "mFD_alpha_fd",                   "mFD\nalpha.fd.multidim(\nind_vect = 'feve')",
+  "raoq",           "fundiversity_fd_raoq",           "fundiversity\nfd_raoq()",
+  "raoq",           "adiv_qe",                        "adiv\nQE()",
+  "raoq",           "BAT_rao",                        "BAT\nrao()",
+  "raoq",           "hillR_hill_func",                "hillR\nhill_func(\nfdis = FALSE)",
+  "raoq",           "mFD_alpha_fd_hill",              "mFD\nalpha.fd.hill(\nq = 2, tau = 'max')",
+  "fric_intersect", "fundiversity_fd_fric_intersect", "fundiversity\nfd_fric_intersect()",
+  "fric_intersect", "betapart_functional_beta",       "betapart\nfunctional.beta.pair()",
+  "fric_intersect", "hillR_funct_pairwise",           "hillR\nhill_func_parti_\npairwise()"
 )
+
+full_index_df = tibble::tribble(
+  ~index_name,      ~index_full_name,
+  "fdis"          , "Functional Dispersion",
+  "fdiv"          , "Functional Divergence",
+  "feve"          , "Functional Evenness",
+  "fric"          , "Functional Richness",
+  "fric_intersect", "Functional Richness intersect",
+  "raoq"          , "Rao's Quadratic Entropy"
+)
+
+fd_fct_names = fd_fct_names %>%
+  inner_join(full_index_df, by = "index_name")
 
 # Benchmark using single core
 single_bench = list.files(
@@ -46,6 +59,7 @@ all_bench = bind_rows(list(single_bench))
 para_bench = readRDS("inst/saved_benchmarks/all_multicore_bench.Rds") %>%
   bind_rows() %>%
   select(fd_fct, n_core, everything())
+
 
 # Figure 1: Benchmark across packages ------------------------------------------
 
@@ -198,49 +212,83 @@ fig_s1_full_comparison = single_bench %>%
   ) %>%
   full_join(
     fd_fct_names,
-    by = c(fundiversity_index = "index_name", fd_fct = "internal_name")
+    by = c(fundiversity_index = "index_name", fd_fct = "fct_internal_name")
   ) %>%
   filter(n_traits != 7) %>%
   tidyr::unnest(c(time, gc)) %>%
-  select(fundiversity_index, actual_name, n_sites, n_traits, n_species, time) %>%
-  ggplot(
-    aes(n_sites, time, color = factor(n_species), shape = factor(n_traits),
-        linetype = factor(n_traits))
-  ) +
-  stat_smooth(formula = y ~ x, method = "lm", alpha = 1/5, size = 1/2) +
-  geom_point() +
-  facet_wrap(
-    vars(fundiversity_index, actual_name), ncol = 5,
-    labeller = labeller(
-      fundiversity_index = c(
-        fdis           = "Functional\nDispersion",
-        fdiv           = "Functional\nDivergence",
-        feve           = "Functional\nEvenness",
-        fric           = "Functional\nRichness",
-        fric_intersect = "Functional\nRichness\nintersect",
-        raoq           = "Rao's\nQuadratic\nEntropy"
-      ),
-      actual_name = label_wrap_gen(15))
-  ) +
-  labs(x = "Number of sites", y = "Execution Time",
-       color = "Number of species", shape = "Number of traits",
-       linetype = "Number of traits", caption = "30 iterations") +
-  scale_color_viridis_d() +
-  scale_x_log10() +
-  bench::scale_y_bench_time() +
-  guides(linetype = guide_legend(override.aes = list(color = "black"))) +
-  theme_bw() +
-  theme(
-    aspect.ratio = 1,
-    panel.grid = element_blank(),
-    strip.background = element_blank(),
-    strip.text = element_text(size = 7)
+  select(
+    fundiversity_index, index_full_name, fct_actual_name, n_sites, n_traits,
+    n_species, time
+  ) %>%
+  mutate(
+    n_species = factor(n_species),
+    n_traits = factor(n_traits)
+  ) %>%
+  tidyr::nest(df = -c(fundiversity_index, index_full_name)) %>%
+  mutate(
+    sub_plot = purrr::map2(
+      index_full_name, df,
+      ~.y %>%
+        ggplot(
+          aes(
+            n_sites, time, color = n_species, shape = n_traits,
+            linetype = n_traits
+          )
+        ) +
+        stat_smooth(
+          formula = y ~ x, method = "lm", alpha = 1/5, linewidth = 1/2
+        ) +
+        geom_point() +
+        facet_grid(
+          cols = vars(fct_actual_name)
+        ) +
+        labs(
+          x        = "Number of sites",   y       = "Execution Time",
+          color    = "Number of species", shape   = "Number of traits",
+          linetype = "Number of traits",  title   = .x
+        ) +
+        scale_color_viridis_d(drop = FALSE) +
+        scale_x_log10(
+          breaks = c(50, 100, 300, 500), limits = c(50, 500)
+        ) +
+        bench::scale_y_bench_time(
+          breaks = c(
+            bench::as_bench_time("100ms"), bench::as_bench_time("1.67m"),
+            bench::as_bench_time("1.16d")
+          ),
+          limits = c(
+            bench::as_bench_time("2ms"), bench::as_bench_time("3.8d")
+          )
+        ) +
+        scale_shape(drop = FALSE) +
+        scale_linetype(drop = FALSE) +
+        guides(linetype = guide_legend(override.aes = list(color = "black"))) +
+        coord_cartesian(clip = "off") +
+        theme_bw() +
+        theme(
+          aspect.ratio      = 1,
+          panel.grid        = element_blank(),
+          plot.tag.position = "topleft",
+          strip.background  = element_blank(),
+          strip.text        = element_text(size = 7)
+        )
+    )
   )
+
+fig_s1_final = patchwork::wrap_plots(
+  fig_s1_full_comparison$sub_plot, ncol = 1, guides = "collect"
+)
+
+ggsave(
+  "inst/manuscript/figures/s1_external_comparison_full.pdf",
+  fig_s1_final,
+  width = 6, height = 8, units = "in", scale = 1.7
+)
 
 ggsave(
   "inst/manuscript/figures/s1_external_comparison_full.png",
-  fig_s1_full_comparison,
-  width = 210, height = 148, units = "mm", scale = 1.5
+  fig_s1_final,
+  width = 6, height = 8, units = "in", scale = 1.7, dpi = 600
 )
 
 # Figure S2: Internal Comparison all Parameters --------------------------------
@@ -282,3 +330,38 @@ ggsave(
   fig_s2_all_para_comparison,
   width = 210, height = 148, units = "mm", scale = 1.5
 )
+
+
+# Table S1: Functional Diversity Dependencies ----------------------------------
+
+fd_pkg_list = c(
+  "fundiversity", "adiv", "BAT", "betapart", "entropart", "FD", "hilldiv",
+  "hillR", "hypervolume", "mFD", "TPD", "vegan"
+) %>%
+  purrr::set_names(., nm = .)
+
+fd_full_deps = fd_pkg_list %>%
+  lapply(pak::pkg_deps, dependencies = "all") %>%
+  dplyr::bind_rows(.id = "source_pkg")
+
+fd_hard_deps = fd_pkg_list %>%
+  lapply(pak::pkg_deps, dependencies = "hard") %>%
+  dplyr::bind_rows(.id = "source_pkg")
+
+fd_deps_df = fd_full_deps %>%
+  group_by(source_pkg) %>%
+  summarise(
+    n_all_deps = n() - 1  # Remove source package from list
+  ) %>%
+  inner_join(
+    fd_hard_deps %>%
+      group_by(source_pkg) %>%
+      summarise(
+        n_hard_deps = n() - 1  # Remove source package from list
+      ),
+    by = "source_pkg"
+  ) %>%
+  relocate(n_hard_deps, .before = n_all_deps)
+
+
+saveRDS(fd_deps_df, "inst/manuscript/figures/tab_s1_pkg_deps.Rds")
