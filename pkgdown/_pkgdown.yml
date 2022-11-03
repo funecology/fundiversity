@@ -18,17 +18,3 @@ reference:
     contents:
     - starts_with("traits_")
     - starts_with("site_sp_")
-
-navbar:
-  components:
-    articles:
-      text: Articles
-      menu:
-      - text: Performance Comparison
-        href: articles/performance.html
-      - text: Parallelization
-        href: articles/parallel.html
-      - text: Design Principles
-        href: articles/design-principles.html
-      - text: Numerical Correctness
-        href: articles/correctness.html
