@@ -1,8 +1,8 @@
 ---
-title: "Design Principles"
+title: "5. Design Principles for fundiversity"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Design Principles}
+  %\VignetteIndexEntry{5. Design Principles for fundiversity}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

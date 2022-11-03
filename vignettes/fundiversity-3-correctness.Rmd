@@ -1,10 +1,10 @@
 ---
-title: "Verification that indices are implemented correctly"
+title: "4. Check Numerical Correctness of Indices"
 output: rmarkdown::html_vignette
 link-citations: yes
 bibliography: fundiversity.bib
 vignette: >
-  %\VignetteIndexEntry{Verification that indices are implemented correctly}
+  %\VignetteIndexEntry{4. Check Numerical Correctness of Indices}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

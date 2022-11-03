@@ -1,16 +1,16 @@
 ---
-title: "Performance comparison with other functional diversity packages"
+title: "3. Performance Benchmark with other packages"
 output: rmarkdown::html_vignette
 bibliography: performance.bib
 vignette: >
-  %\VignetteIndexEntry{Performance comparison with other functional diversity packages}
+  %\VignetteIndexEntry{3. Performance Benchmark with other packages}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 <!-- 
 # Pre-render with 
-knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
+knitr::knit("vignettes/_fundiversity-2-performance.Rmd", output = "vignettes/fundiversity-2-performance.Rmd")
 -->
 
 ```{r, include = FALSE}
@@ -312,7 +312,11 @@ all_bench_sites %>%
 <summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
 
 ```{r sessioninfo, echo = FALSE}
-tictoc::toc(func.toc = function(x, y, msg) tictoc::toc.outmsg(x, y, paste0(msg, " seconds needed to generate this document")))
+tictoc::toc(
+  func.toc = function(x, y, msg) tictoc::toc.outmsg(
+    x, y, paste0(msg, " seconds needed to generate this document")
+    )
+)
 sessioninfo::session_info()
 ```
 

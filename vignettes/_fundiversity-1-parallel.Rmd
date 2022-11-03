@@ -1,15 +1,15 @@
 ---
-title: "Parallelization"
+title: "2. Parallelize Computation of Indices"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Parallelization}
+  %\VignetteIndexEntry{2. Parallelize Computation of Indices}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 <!-- 
 # Pre-render with 
-knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
+knitr::knit("vignettes/_fundiversity-1-parallel.Rmd", output = "vignettes/fundiversity-1-parallel.Rmd")
 -->
 
 ```{r vignette-setup, include = FALSE}
@@ -120,7 +120,12 @@ microbenchmark::microbenchmark(
 <summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
 
 ```{r sessioninfo, echo = FALSE}
-tictoc::toc(func.toc = function(x, y, msg) tictoc::toc.outmsg(x, y, paste0(msg, " seconds needed to generate this document")))
+tictoc::toc(
+  func.toc = function(x, y, msg)
+    tictoc::toc.outmsg(
+      x, y, paste0(msg, " seconds needed to generate this document")
+    )
+)
 sessioninfo::session_info()
 ```
 
