@@ -1,9 +1,9 @@
 ---
-title: "Performance comparison with other functional diversity packages"
+title: "3. Performance Benchmark with other packages"
 output: rmarkdown::html_vignette
 bibliography: performance.bib
 vignette: >
-  %\VignetteIndexEntry{Performance comparison with other functional diversity packages}
+  %\VignetteIndexEntry{3. Performance Benchmark with other packages}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

@@ -1,10 +1,10 @@
 ---
-title: "Computing functional diversity indices with `fundiversity`"
+title: "1. Overview of how to use fundiversity"
 output: rmarkdown::html_vignette
 link-citations: yes
 bibliography: fundiversity.bib
 vignette: >
-  %\VignetteIndexEntry{Computing functional diversity indices with `fundiversity`}
+  %\VignetteIndexEntry{1. Overview of how to use fundiversity}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
