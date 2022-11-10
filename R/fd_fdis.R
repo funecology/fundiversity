@@ -24,12 +24,17 @@
 #' @export
 fd_fdis <- function(traits, sp_com) {
 
-  if (missing(traits) | is.null(traits)) {
+  if (missing(traits) || is.null(traits)) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if (is.data.frame(traits) | is.vector(traits)) {
+  if (is.data.frame(traits) || is.vector(traits)) {
     traits <- as.matrix(traits)
+  }
+
+  if (!is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
   }
 
   traits <- remove_species_without_trait(traits)
@@ -59,7 +64,7 @@ fd_fdis <- function(traits, sp_com) {
 
     sqrt(colSums(t(traits) - centro)^2)
 
-  })
+  }, future.globals = FALSE)
 
   fdis_site <- diag(sp_com %*% dists_centro)
 

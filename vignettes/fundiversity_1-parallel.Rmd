@@ -1,15 +1,15 @@
 ---
-title: "Parallelization"
+title: "2. Parallelize Computation of Indices"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Parallelization}
+  %\VignetteIndexEntry{2. Parallelize Computation of Indices}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 <!-- 
 # Pre-render with 
-knitr::knit("vignettes/_parallel.Rmd", output = "vignettes/parallel.Rmd")
+knitr::knit("vignettes/_fundiversity-1-parallel.Rmd", output = "vignettes/fundiversity-1-parallel.Rmd")
 -->
 
 

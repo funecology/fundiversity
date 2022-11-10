@@ -1,25 +1,25 @@
-# Preamble code
+# Preamble code ----------------------------------------------------------------
 data("traits_birds")
 simple_site_sp <- matrix(1, nrow = 1, ncol = nrow(traits_birds),
                         dimnames = list("s1", row.names(traits_birds)))
 
-# Actual tests
+
+# Tests for valid inputs -------------------------------------------------------
+
 test_that("Rao's entropy output format", {
 
   rq <- expect_silent(fd_raoq(traits_birds, sp_com = simple_site_sp))
 
   expect_s3_class(rq, "data.frame")
-  expect_length(rq, 2)
-  expect_equal(nrow(rq), 1)
-  expect_equal(colnames(rq), c("site", "Q"))
+  expect_identical(dim(rq), c(1L, 2L))
+  expect_named(rq, c("site", "Q"))
 
 
   rq <- expect_silent(fd_raoq(traits_birds))
 
   expect_s3_class(rq, "data.frame")
-  expect_length(rq, 2)
-  expect_equal(nrow(rq), 1)
-  expect_equal(colnames(rq), c("site", "Q"))
+  expect_identical(dim(rq), c(1L, 2L))
+  expect_named(rq, c("site", "Q"))
 
 })
 
@@ -60,7 +60,7 @@ test_that("Rao's quadratric entropy works for sites with no species", {
     fd_raoq(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(raoq$Q[[1]], 0)
+  expect_identical(raoq$Q[[1]], 0)
 })
 
 test_that("Rao's Quadratic Entropy works on sparse matrices", {
@@ -78,23 +78,31 @@ test_that("Rao's Quadratic Entropy works on sparse matrices", {
   # Only site-species matrix is sparse
   expect_silent(fd_raoq(traits_birds, sparse_site_sp))
 
-  expect_equal(fd_raoq(traits_birds, sparse_site_sp)$Q, 170.0519,
-               tolerance = 1e-6)
+  expect_equal(
+    fd_raoq(traits_birds, sparse_site_sp),
+    fd_raoq(traits_birds, site_sp)
+  )
 
   # Only distance matrix is sparse
   expect_silent(fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat))
 
-  expect_equal(fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat)$Q,
-               170.0519, tolerance = 1e-6)
+  expect_equal(
+    fd_raoq(sp_com = site_sp, dist_matrix = sparse_dist_mat),
+    fd_raoq(sp_com = site_sp, dist_matrix = dist(traits_birds))
+  )
 
   # Both site-species and distance matrix are sparse
   expect_silent(fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat))
 
   expect_equal(
-    fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat)$Q,
-    170.0519, tolerance = 1e-6)
+    fd_raoq(sp_com = sparse_site_sp, dist_matrix = sparse_dist_mat),
+    fd_raoq(sp_com = site_sp, dist_matrix = dist(traits_birds))
+  )
 
 })
+
+
+# Tests for invalid inputs -----------------------------------------------------
 
 test_that("Rao's entropy fails gracefully", {
   # No traits and no dissimilarity
@@ -116,6 +124,18 @@ test_that("Rao's entropy fails gracefully", {
     fd_raoq(data.frame(a = 1, row.names = "sp1"), matrix(1)),
     paste0("No species in common found between trait dataset ",
            "and site-species matrix"),
+    fixed = TRUE
+  )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds)
+  traits_birds_cat$cat_trait <- "a"
+
+  expect_error(
+    fd_raoq(traits_birds_cat, site_sp_birds),
+    paste0("Non-continuous trait data found in input traits. ",
+           "Please provide only continuous trait data"),
     fixed = TRUE
   )
 })

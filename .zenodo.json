@@ -1,0 +1,19 @@
+{
+    "description": "Computes 5 alpha-functional diversity indices: Functional Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger et al. 2008 <doi:10.1890/07-1206.1>). Provides efficient, modular, and parallelizable functions to compute functional diversity indices.",
+    "license": "GPL-3.0",
+    "title": "fundiversity: Easy Computation of Alpha Functional Diversity Indices",
+    "upload_type": "software",
+    "creators": [
+        {
+            "affiliation": "London School of Hygiene and Tropical Medicine",
+            "name": "Hugo Gruson"
+            "orcid": "0000-0002-4094-1476"
+        },
+        {
+            "affiliation": "iDiv (German Center for Integrative Biodiversity Research)",
+            "name": "Matthias Grenié",
+            "orcid": "0000-0002-4659-7522"
+        }
+    ],
+    "access_right": "open"
+}

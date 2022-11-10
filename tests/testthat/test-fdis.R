@@ -1,16 +1,17 @@
-# Preamble code
+# Preamble code ----------------------------------------------------------------
 data("traits_birds")
 traits_birds_sc <- scale(traits_birds)
 
-# Actual tests
+
+# Tests for valid inputs -------------------------------------------------------
+
 test_that("Functional Dispersion output format", {
 
   fdis <- expect_silent(fd_fdis(traits_birds))
 
   expect_s3_class(fdis, "data.frame")
-  expect_length(fdis, 2)
-  expect_equal(nrow(fdis), 1)
-  expect_equal(colnames(fdis), c("site", "FDis"))
+  expect_identical(dim(fdis), c(1L, 2L))
+  expect_named(fdis, c("site", "FDis"))
 
   expect_equal(fdis$FDis, 146.2072, tolerance = 1e-7)
 })
@@ -38,7 +39,7 @@ test_that("Functional Dispersion works for site with no species", {
     fd_fdis(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(fdis$FDis[[1]], 0)
+  expect_identical(fdis$FDis[[1]], 0)
 })
 
 test_that("Functional Dispersion works in 1D", {
@@ -62,9 +63,8 @@ test_that("Functional Dispersion works with sparse matrices", {
   fdis <- expect_silent(fd_fdis(traits_birds, sparse_site_sp))
 
   expect_s3_class(fdis, "data.frame")
-  expect_length(fdis, 2)
-  expect_equal(nrow(fdis), 1)
-  expect_equal(colnames(fdis), c("site", "FDis"))
+  expect_identical(dim(fdis), c(1L, 2L))
+  expect_named(fdis, c("site", "FDis"))
 
   expect_equal(
     fd_fdis(traits_birds, sparse_site_sp),
@@ -72,6 +72,9 @@ test_that("Functional Dispersion works with sparse matrices", {
   )
 
 })
+
+
+# Tests for invalid inputs -----------------------------------------------------
 
 test_that("Functional Dispersion fails gracefully", {
 
@@ -88,4 +91,17 @@ test_that("Functional Dispersion fails gracefully", {
            "and site-species matrix"),
     fixed = TRUE
   )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds_sc)
+  traits_birds_cat$cat_trait <- "a"
+
+  expect_error(
+    fd_fdis(traits_birds_cat, site_sp_birds),
+    paste0("Non-continuous trait data found in input traits. ",
+           "Please provide only continuous trait data"),
+    fixed = TRUE
+  )
 })
+

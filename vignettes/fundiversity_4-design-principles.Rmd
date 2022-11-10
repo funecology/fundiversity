@@ -1,8 +1,8 @@
 ---
-title: "Design Principles"
+title: "5. Design Principles for fundiversity"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Design Principles}
+  %\VignetteIndexEntry{5. Design Principles for fundiversity}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -80,9 +80,9 @@ One acceptable exception is when function need dissimilarity matrix as input,
 such as for the computation of FEve or Rao's Quadratic Entropy. Because other
 functions in fundiversity accept raw trait data, for the sake of coherence
 the functions that need dissimilarity matrix as input should also accept
-raw trait data and compute dissimlilarity internally. To do so, they should
+raw trait data and compute dissimilarity internally. To do so, they should
 still make minimal assumptions regarding the input dataset that all traits are
-quantitative. If it's not the case, then it's the user's responsability
+quantitative. If it's not the case, then it's the user's responsibility
 to choose the adapted dissimilarity metric she wants to use.
 
 ## Inputs

@@ -3,7 +3,7 @@ test_that("remove_species_without_trait() works", {
   data("traits_birds")
 
   expect_silent(remove_species_without_trait(traits_birds))
-  expect_equal(remove_species_without_trait(traits_birds), traits_birds)
+  expect_identical(remove_species_without_trait(traits_birds), traits_birds)
 
   traits_birds_missing <- traits_birds
   traits_birds_missing[1, 1] <- NA
@@ -16,7 +16,7 @@ test_that("remove_species_without_trait() works", {
 
   traits_birds_missing[2, 2] <- NA
 
-  expect_equal(
+  expect_identical(
     suppressMessages(remove_species_without_trait(traits_birds_missing)),
     traits_birds_missing[3:nrow(traits_birds), ])
   expect_message(remove_species_without_trait(traits_birds_missing),

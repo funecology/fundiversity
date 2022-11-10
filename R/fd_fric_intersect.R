@@ -30,14 +30,19 @@
 #' fd_fric_intersect(traits_birds)
 #'
 #' @export
-fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
+fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
 
-  if (missing(traits) | is.null(traits)) {
+  if (missing(traits) || is.null(traits)) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if (is.data.frame(traits) | is.vector(traits)) {
+  if (is.data.frame(traits) || is.vector(traits)) {
     traits <- as.matrix(traits)
+  }
+
+  if (!is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
   }
 
   if (ncol(traits) > 16) {
@@ -100,7 +105,7 @@ fd_fric_intersect = function(traits, sp_com, stand = FALSE) {
       # way more efficient that compute with fd_chull_inters
       fd_chull(first_traits)$vol
     }
-  })
+  }, future.globals = FALSE)
 
   data.frame(first_site = all_site_comb[,1],
              second_site = all_site_comb[,2],

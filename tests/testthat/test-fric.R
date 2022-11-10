@@ -1,15 +1,16 @@
-# Preamble code
+# Preamble code ----------------------------------------------------------------
 data("traits_birds")
 
-# Actual tests
+
+# Tests for valid inputs -------------------------------------------------------
+
 test_that("Functional Richness output format", {
 
   fric <- expect_silent(fd_fric(traits_birds))
 
   expect_s3_class(fric, "data.frame")
-  expect_length(fric, 2)
-  expect_equal(nrow(fric), 1)
-  expect_equal(colnames(fric), c("site", "FRic"))
+  expect_identical(dim(fric), c(1L, 2L))
+  expect_named(fric, c("site", "FRic"))
 
   expect_equal(fd_fric(traits_birds)$FRic, 230967.7, tolerance = 1e-6)
 })
@@ -56,8 +57,8 @@ test_that("Functional Richness can standardize its values", {
   fric <- fd_fric(traits_birds, stand = TRUE)
   fric_low_1 <- suppressMessages(fd_fric(traits_birds, site_sp2, stand = TRUE))
 
-  expect_equal(fric$FRic[[1]], 1)
-  expect_equal(fric_low_1$FRic[[1]], 1)
+  expect_identical(fric$FRic[[1]], 1)
+  expect_identical(fric_low_1$FRic[[1]], 1)
   expect_lt(fric_low_1$FRic[[2]], 1)
 })
 
@@ -105,7 +106,7 @@ test_that("Functional Richness edge cases", {
     fd_fric(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(fric$FRic[[1]], NA_real_)
+  expect_identical(fric$FRic[[1]], NA_real_)
 
 })
 
@@ -119,11 +120,15 @@ test_that("Functional Richness works on sparse matrices", {
 
   sparse_site_sp <- Matrix(site_sp, sparse = TRUE)
 
-  expect_silent(fd_fric(traits_birds, sparse_site_sp))
+  sparse_fric <- expect_silent(fd_fric(traits_birds, sparse_site_sp))
 
-  expect_equal(fd_fric(traits_birds, sparse_site_sp)$FRic, 230967.7,
-               tolerance = 1e-6)
+  fric <- expect_silent(fd_fric(traits_birds, site_sp))
+
+  expect_equal(fric, sparse_fric)
 })
+
+
+# Tests for invalid inputs -----------------------------------------------------
 
 test_that("Functional Richness fails gracefully", {
 
@@ -138,6 +143,18 @@ test_that("Functional Richness fails gracefully", {
     fd_fric(data.frame(a = 1, row.names = "sp1"), matrix(1)),
     paste0("No species in common found between trait dataset ",
            "and site-species matrix"),
+    fixed = TRUE
+  )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds)
+  traits_birds_cat$cat_trait <- "a"
+
+  expect_error(
+    fd_fric(traits_birds_cat, site_sp_birds),
+    paste0("Non-continuous trait data found in input traits. ",
+           "Please provide only continuous trait data"),
     fixed = TRUE
   )
 })

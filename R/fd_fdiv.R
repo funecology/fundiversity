@@ -24,12 +24,17 @@
 #' @export
 fd_fdiv <- function(traits, sp_com) {
 
-  if (missing(traits) | is.null(traits)) {
+  if (missing(traits) || is.null(traits)) {
     stop("Please provide a trait dataset", call. = FALSE)
   }
 
-  if (is.data.frame(traits) | is.vector(traits)) {
+  if (is.data.frame(traits) || is.vector(traits)) {
     traits <- as.matrix(traits)
+  }
+
+  if (!is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
   }
 
   traits <- remove_species_without_trait(traits)
@@ -43,6 +48,9 @@ fd_fdiv <- function(traits, sp_com) {
 
   } else {
 
+    if (is.null(rownames(traits))) {
+      rownames(traits) <- paste0("sp", seq_len(nrow(traits)))
+   }
     sp_com <- matrix(1, ncol = nrow(traits),
                      dimnames = list("s1", rownames(traits)))
 
@@ -83,7 +91,7 @@ fd_fdiv <- function(traits, sp_com) {
     FDiv <- (deltaD + mean_dG) / (deltaD_abs + mean_dG)
 
     return(FDiv)
-  })
+  }, future.globals = FALSE)
 
   data.frame(site = rownames(sp_com), FDiv = fdiv_site,
              row.names = NULL)

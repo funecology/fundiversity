@@ -1,16 +1,16 @@
 ---
-title: "Performance comparison with other functional diversity packages"
+title: "3. Performance Benchmark with other packages"
 output: rmarkdown::html_vignette
 bibliography: performance.bib
 vignette: >
-  %\VignetteIndexEntry{Performance comparison with other functional diversity packages}
+  %\VignetteIndexEntry{3. Performance Benchmark with other packages}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
 <!-- 
 # Pre-render with 
-knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
+knitr::knit("vignettes/_fundiversity-2-performance.Rmd", output = "vignettes/fundiversity-2-performance.Rmd")
 -->
 
 ```{r, include = FALSE}
@@ -45,7 +45,7 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 
 **`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
 
-**`mFD::alpha.fd.hill()`** comes from the `mFD` package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indiceS.
+**`mFD::alpha.fd.hill()`** comes from the `mFD` package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indices.
 
 ## Benchmark between packages
 
@@ -149,7 +149,7 @@ ggplot2::autoplot(bench_sp_fdiv)
 bench_sp_fdiv
 ```
 
-### Rao's Quadratric Entropy
+### Rao's Quadratic Entropy
 
 ```{r bench-species-raoq, fig.cap = "Performance comparison of `fd_raoq()` with increasing number of species."}
 bench_sp_raoq <- microbenchmark::microbenchmark(
@@ -179,7 +179,7 @@ bench_sp_feve
 
 ### Comparing between indices
 
-```{r bench-species-compare, fig.cap="Performance comparison between functions for distinct indices in `fundiversity` with increasing number of species. Smoothed trend lines and standard error enveloppes ares shown."}
+```{r bench-species-compare, fig.cap="Performance comparison between functions for distinct indices in `fundiversity` with increasing number of species. Smoothed trend lines and standard error envelopes ares shown."}
 all_bench_sp <- list(fric = bench_sp_fric,
                      fdiv = bench_sp_fdiv,
                      raoq = bench_sp_raoq,
@@ -223,7 +223,7 @@ site_sp_10000 <- make_more_sites(1200)
 ### Functional Richness
 
 ```{r bench-sites-fric, fig.cap = "Performance comparison of `fd_fric()` with increasing number of sites."}
-bench_sites_fric = microbenchmark::microbenchmark(
+bench_sites_fric <- microbenchmark::microbenchmark(
   sites_10    = fd_fric(traits_birds, site_sp_birds),
   sites_100   = fd_fric(traits_birds, site_sp_100),
   sites_1000  = fd_fric(traits_birds, site_sp_1000),
@@ -238,7 +238,7 @@ bench_sites_fric
 ### Functional Divergence
 
 ```{r bench-sites-fdiv, fig.cap = "Performance comparison of `fd_fdiv()` with increasing number of sites."}
-bench_sites_fdiv = microbenchmark::microbenchmark(
+bench_sites_fdiv <- microbenchmark::microbenchmark(
   sites_10    = fd_fdiv(traits_birds, site_sp_birds),
   sites_100   = fd_fdiv(traits_birds, site_sp_100),
   sites_1000  = fd_fdiv(traits_birds, site_sp_1000),
@@ -268,7 +268,7 @@ bench_sites_raoq
 ### Functional Evenness
 
 ```{r bench-sites-feve, fig.cap = "Performance comparison of `fd_feve()` with increasing number of sites"}
-bench_sites_feve = microbenchmark::microbenchmark(
+bench_sites_feve <- microbenchmark::microbenchmark(
   sites_10    = fd_feve(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_feve(traits = NULL, site_sp_100,   dist_traits_birds),
   sites_1000  = fd_feve(traits = NULL, site_sp_1000,  dist_traits_birds),
@@ -283,7 +283,7 @@ bench_sites_feve
 
 ### Comparing between indices
 
-```{r bench-sites-compare, fig.cap = "Performance comparison between functions for distinct indices in `fundiversity` with increasing number of sites. Smoothed trend lines and standard error enveloppes ares shown."}
+```{r bench-sites-compare, fig.cap = "Performance comparison between functions for distinct indices in `fundiversity` with increasing number of sites. Smoothed trend lines and standard error envelopes ares shown."}
 all_bench_sites <- list(fric = bench_sites_fric,
                         fdiv = bench_sites_fdiv,
                         raoq = bench_sites_raoq,
@@ -312,7 +312,11 @@ all_bench_sites %>%
 <summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
 
 ```{r sessioninfo, echo = FALSE}
-tictoc::toc(func.toc = function(x, y, msg) tictoc::toc.outmsg(x, y, paste0(msg, " seconds needed to generate this document")))
+tictoc::toc(
+  func.toc = function(x, y, msg) tictoc::toc.outmsg(
+    x, y, paste0(msg, " seconds needed to generate this document")
+    )
+)
 sessioninfo::session_info()
 ```
 

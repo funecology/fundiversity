@@ -1,8 +1,11 @@
-url: https://bisaloo.github.io/fundiversity/
+url: https://funecology.github.io/fundiversity/
+
+template:
+  bootstrap: 5
 
 authors:
   Hugo Gruson:
-    href: https://www.normalesup.org/~hgruson/
+    href: https://hugogruson.fr/
   Matthias Grenié:
     href: https://rekyt.github.io/
 
@@ -15,15 +18,3 @@ reference:
     contents:
     - starts_with("traits_")
     - starts_with("site_sp_")
-
-navbar:
-  components:
-    articles:
-      text: Articles
-      menu:
-      - text: Performance Comparison
-        href: articles/performance.html
-      - text: Parallelization
-        href: articles/parallel.html
-      - text: Design Principles
-        href: articles/design-principles.html

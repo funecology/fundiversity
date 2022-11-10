@@ -1,6 +1,6 @@
 Package: fundiversity
 Title: Easy Computation of Alpha Functional Diversity Indices
-Version: 0.2.0
+Version: 1.0.0.9000
 Authors@R: 
     c(
       person("Matthias", "Grenié",
@@ -14,13 +14,13 @@ Authors@R:
 Description: Computes 5 alpha-functional diversity indices: Functional
   Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic),
   Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger
-  et al. 2008 <doi:10.1890/07-1206.1>). Provides efficient and modular functions
-  to compute functional diversity indices.
+  et al. 2008 <doi:10.1890/07-1206.1>). Provides efficient, modular, and
+  parallel functions to compute functional diversity indices.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)
 Imports:
@@ -33,7 +33,7 @@ Suggests:
     knitr,
     rmarkdown,
     memoise
-URL: https://bisaloo.github.io/fundiversity/, https://github.com/bisaloo/fundiversity
-BugReports: https://github.com/Bisaloo/fundiversity/issues
+URL: https://funecology.github.io/fundiversity/, https://github.com/funecology/fundiversity
+BugReports: https://github.com/funecology/fundiversity/issues
 Config/testthat/edition: 3
 VignetteBuilder: knitr

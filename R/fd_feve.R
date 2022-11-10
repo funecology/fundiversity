@@ -26,16 +26,22 @@
 #'
 #' @export
 fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
-  if ((!is.null(traits) & !is.null(dist_matrix)) |
-      (is.null(traits) & is.null(dist_matrix))) {
+
+  if ((!is.null(traits) && !is.null(dist_matrix)) ||
+      (is.null(traits) && is.null(dist_matrix))) {
     stop(
       "Please provide either a trait dataset or a dissimilarity matrix",
       call. = FALSE
     )
   }
 
-  if (is.data.frame(traits) | is.vector(traits)) {
+  if (is.data.frame(traits) || is.vector(traits)) {
     traits <- as.matrix(traits)
+  }
+
+  if (!is.null(traits) && !is.numeric(traits)) {
+    stop("Non-continuous trait data found in input traits. ",
+         "Please provide only continuous trait data", call. = FALSE)
   }
 
   if (is.null(dist_matrix)) {
@@ -65,7 +71,7 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   feve_site <- future_apply(sp_com, 1, function(site_row) {
     fd_feve_single(site_row, dist_matrix)
-  })
+  }, future.globals = FALSE)
 
   data.frame(
     site = rownames(sp_com),

@@ -1,34 +1,25 @@
-## General Comments
-
-Fixed CRAN link in README.md 
-
 ## Test environments
 
-* Mac OS High Sierra 10.13.6 (local), R 4.0.3
-* (GitHub Action) Microsoft Windows Server 2019, R-release
-* (GitHub Action) Mac OS 10.15.7, R-release
-* (GitHub Action) Ubuntu 20.04.2, R 3.4.4
-* (GitHub Action) Ubuntu 20.04.2, R-oldrel
-* (GitHub Action) Ubuntu 20.04.2, R-release
-* (GitHub Action) Ubuntu 20.04.2, R-devel
-* (rhub) Fedora Linux, R-devel, clang, gfortran
-* (rhub) macOS 10.13.6 High Sierra, R-release, CRAN's setup
-* (rhub) Ubuntu Linux 20.04.1 LTS, R-release, GCC
-* (rhub) Ubuntu Linux 20.04.1 LTS, R-devel with rchk
-* (rhub) Windows Server 2008 R2 SP1, R-devel, 32/64 bit
-* (win-builder) R-release
-* (win-builder) R-oldrel
-* (win-builder) R-devel
+* local macOS 12.4 install, R 4.2.1
+* macOS (on GitHub actions), R release
+* ubuntu 20.04 (on GitHub actions), R 4.1.3, R 4.2.1, R-devel
+* Windows (on GitHub actions), R 4.2.1
+* win-builder (R release and devel)
+* devtools::check_rhub()
 
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 0 note
 
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: ‘Matthias Grenié <matthias.grenie@gmail.com>’
 
-Possibly mis-spelled words in DESCRIPTION:
-  FDis (16:26)
-  FEve (15:41)
+## Comments
 
+One NOTE due to possibly invalid URLS: https://doi.org/10.1111/2041-210X.12232; 
+https://doi.org/10.1111/2041-210X.13430; https://doi.org/10.1111/ddi.12946; 
+https://doi.org/10.1111/geb.12299;
+https://doi.org/10.1111/j.1600-0706.2008.16668.x; 
+https://doi.org/10.1146/annurev-ecolsys-120213-091540;
+https://doi.org/10.1890/07-1206.1; https://doi.org/10.21105/joss.01041
+
+All of them resolve perfectly when tested on two different browsers.

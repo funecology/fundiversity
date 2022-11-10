@@ -1,17 +1,17 @@
-# Preamble code
+# Preamble code ----------------------------------------------------------------
 data("traits_birds")
 data("site_sp_birds")
 
-# Actual tests
+
+# Tests for valid inputs -------------------------------------------------------
+
 test_that("Functional Richness Intersection output format", {
 
   fric_int <- expect_silent(fd_fric_intersect(traits_birds))
 
   expect_s3_class(fric_int, "data.frame")
-  expect_length(fric_int, 3)
-  expect_equal(nrow(fric_int), 1)
-  expect_equal(colnames(fric_int), c("first_site", "second_site",
-                                     "FRic_intersect"))
+  expect_identical(dim(fric_int), c(1L, 3L))
+  expect_named(fric_int, c("first_site", "second_site", "FRic_intersect"))
 
   expect_equal(fd_fric_intersect(traits_birds, stand = TRUE)$FRic_intersect,
                1, tolerance = 1e-6)
@@ -63,8 +63,8 @@ test_that("Functional Richness Intersection can standardize its values", {
   fric_int_low_1 <- suppressMessages(fd_fric_intersect(traits_birds, site_sp2,
                                                    stand = TRUE))
 
-  expect_equal(fric_int$FRic_intersect[[1]], 1)
-  expect_equal(fric_int_low_1$FRic_intersect[[2]], 1)
+  expect_identical(fric_int$FRic_intersect[[1]], 1)
+  expect_identical(fric_int_low_1$FRic_intersect[[2]], 1)
   expect_lt(fric_int_low_1$FRic_intersect[[3]], 1)
   expect_lt(fric_int_low_1$FRic_intersect[[1]], 1)
 })
@@ -129,7 +129,7 @@ test_that("Functional Richness Intersection edge cases", {
     fd_fric_intersect(traits_plants, site_sp_plants[10,, drop = FALSE])
   )
 
-  expect_equal(fric_inter$FRic_intersect[[1]], NA_real_)
+  expect_identical(fric_inter$FRic_intersect[[1]], NA_real_)
 })
 
 test_that("Functional Richness Intersection works on sparse matrices", {
@@ -149,6 +149,9 @@ test_that("Functional Richness Intersection works on sparse matrices", {
     1, tolerance = 1e-6)
 })
 
+
+# Tests for invalid inputs -----------------------------------------------------
+
 test_that("Functional Richness Intersection fails gracefully", {
 
   # No traits
@@ -162,6 +165,18 @@ test_that("Functional Richness Intersection fails gracefully", {
     fd_fric_intersect(data.frame(a = 1, row.names = "sp1"), matrix(1)),
     paste0("No species in common found between trait dataset ",
            "and site-species matrix"),
+    fixed = TRUE
+  )
+
+  ## Categorical trait data
+  # Add non-continuous traits
+  traits_birds_cat <- as.data.frame(traits_birds)
+  traits_birds_cat$cat_trait <- "a"
+
+  expect_error(
+    fd_fric_intersect(traits_birds_cat, site_sp_birds),
+    paste0("Non-continuous trait data found in input traits. ",
+           "Please provide only continuous trait data"),
     fixed = TRUE
   )
 })

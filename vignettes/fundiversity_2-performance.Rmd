@@ -1,9 +1,9 @@
 ---
-title: "Performance comparison with other functional diversity packages"
+title: "3. Performance Benchmark with other packages"
 output: rmarkdown::html_vignette
 bibliography: performance.bib
 vignette: >
-  %\VignetteIndexEntry{Performance comparison with other functional diversity packages}
+  %\VignetteIndexEntry{3. Performance Benchmark with other packages}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -29,7 +29,7 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 
 **`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
 
-**`mFD::alpha.fd.hill()`** comes from the `mFD` package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indiceS.
+**`mFD::alpha.fd.hill()`** comes from the `mFD` package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indices.
 
 ## Benchmark between packages
 
@@ -173,7 +173,7 @@ bench_sp_fdiv
 #>  species_100000 284.15498 316.50850 448.10526 328.81308 358.02843 956.35379    30   b
 ```
 
-### Rao's Quadratric Entropy
+### Rao's Quadratic Entropy
 
 
 ```r
@@ -252,7 +252,7 @@ all_bench_sp %>%
   theme(aspect.ratio = 1)
 ```
 
-![Performance comparison between functions for distinct indices in `fundiversity` with increasing number of species. Smoothed trend lines and standard error enveloppes ares shown.](fd-bench-species-compare-1.png)
+![Performance comparison between functions for distinct indices in `fundiversity` with increasing number of species. Smoothed trend lines and standard error envelopes ares shown.](fd-bench-species-compare-1.png)
 
 ## Increasing the number of sites
 
@@ -408,7 +408,7 @@ all_bench_sites %>%
   theme(aspect.ratio = 1)
 ```
 
-![Performance comparison between functions for distinct indices in `fundiversity` with increasing number of sites. Smoothed trend lines and standard error enveloppes ares shown.](fd-bench-sites-compare-1.png)
+![Performance comparison between functions for distinct indices in `fundiversity` with increasing number of sites. Smoothed trend lines and standard error envelopes ares shown.](fd-bench-sites-compare-1.png)
 
 <details>
 <summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>

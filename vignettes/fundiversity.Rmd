@@ -1,9 +1,10 @@
 ---
-title: "Computing functional diversity indices with `fundiversity`"
+title: "1. Overview of how to use fundiversity"
 output: rmarkdown::html_vignette
+link-citations: yes
 bibliography: fundiversity.bib
 vignette: >
-  %\VignetteIndexEntry{Computing functional diversity indices with `fundiversity`}
+  %\VignetteIndexEntry{1. Overview of how to use fundiversity}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -24,7 +25,7 @@ knitr::opts_chunk$set(
 - functional dispersion (FDis)
 - Rao's quadratic entropy (Q).
 
-This vignette will introduce you to the data needed as well as how to compute and interpret each index.
+This vignette will introduce you to the data needed as well as how to compute and interpret each index. We made sure the computations of these indices are correct based on a test dataset as specified in the [correctness vignette](./correctness.html).
 
 ```{r setup}
 library("fundiversity")

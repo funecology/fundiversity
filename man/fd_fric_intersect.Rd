@@ -7,7 +7,10 @@
 fd_fric_intersect(traits, sp_com, stand = FALSE)
 }
 \arguments{
-\item{traits}{The matrix dataset for which you want to compute the index}
+\item{traits}{Trait matrix with species as rows and traits as columns.
+It has to contain exclusively numerical values. This can be
+either a \code{matrix}, a \code{data.frame}, or a \code{\link[Matrix:Matrix]{Matrix::Matrix()}}
+object.}
 
 \item{sp_com}{Site-species matrix with sites as rows and species as columns
 if not provided, the function considers all species with equal
@@ -42,13 +45,14 @@ this function uses the convex hull of all provided traits,
 thus standardized volume of self-intersection hulls can be lower than one.
 }
 \details{
-By default, when loading \code{fundiversity}, the functions to compute
-convex hulls are \href{https://en.wikipedia.org/wiki/Memoization}{memoised}
-through the \code{memoise} package if it is installed. To deactivate this behavior
-you can set the option \code{fundiversity.memoise} to \code{FALSE} by running the
-following line: \code{options(fundiversity.memoise = FALSE)}.
-If you use it interactively it will only affect your current session.
-Add it to your script(s) or \code{.Rprofile} file to avoid toggling it each time.
+By default, when loading \pkg{fundiversity}, the functions to
+compute convex hulls are
+\href{https://en.wikipedia.org/wiki/Memoization}{memoised} through the \code{memoise}
+package if it is installed. To deactivate this behavior you can set the
+option \code{fundiversity.memoise} to \code{FALSE} by running the following line:
+\code{options(fundiversity.memoise = FALSE)}. If you use it interactively it will
+only affect your current session. Add it to your script(s) or \code{.Rprofile}
+file to avoid toggling it each time.
 }
 \section{Parallelization}{
 
