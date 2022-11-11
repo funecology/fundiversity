@@ -252,14 +252,7 @@ Based on these correlations we can see that:
 3. `hillR_traits` seems close to `BAT_traits` and `BAT_dist_sc`.
 
 But for all other functions, the correlations are lower making it difficult to
-see clear equivalences.
-
-
-
-## Rao's Quadratic Entropy - Q
-
-
-
+see clear equivalences
 
 
 
