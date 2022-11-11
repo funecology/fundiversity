@@ -62,7 +62,7 @@ fd_fdis <- function(traits, sp_com) {
 
   dists_centro <- future_apply(centros, 1, function(centro) {
 
-    sqrt(colSums(t(traits) - centro)^2)
+    sqrt(colSums((t(traits) - centro)^2))
 
   }, future.globals = FALSE)
 

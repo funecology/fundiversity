@@ -13,7 +13,7 @@ test_that("Functional Dispersion output format", {
   expect_identical(dim(fdis), c(1L, 2L))
   expect_named(fdis, c("site", "FDis"))
 
-  expect_equal(fdis$FDis, 146.2072, tolerance = 1e-7)
+  expect_equal(fdis$FDis, 133.3902, tolerance = 1e-7)
 })
 
 test_that("Function Dispersion works on subset of site/species", {

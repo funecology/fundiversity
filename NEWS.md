@@ -1,3 +1,11 @@
+# fundiversity 1.0.0.9000
+
+## Bug fixes
+
+* Fix a bug in the computation of `fd_fdis()` because of a misplaced square.
+**NB**: All FDis computation done with it to this day were wrong.
+
+
 # fundiversity 1.0.0
 
 ## Internal changes
