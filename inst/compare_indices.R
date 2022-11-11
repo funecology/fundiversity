@@ -119,7 +119,21 @@ mFD_dispersions = list(
   join_list_by_site()
 
 
-# hillR?
+# hillR
+hillR_dispersion_traits = hillR::hill_func(site_sp_birds, traits_birds)
+hillR_dispersion_traits_sc = hillR::hill_func(site_sp_birds, traits_birds_sc)
+
+hillR_dispersions = list(
+  hillR_traits = hillR_dispersion_traits,
+  hillR_traits_sc = hillR_dispersion_traits_sc
+) %>%
+  purrr::imap(
+    ~.x %>%
+      .["FDis", ] %>%
+      tibble::enframe("site", "fdis") %>%
+      rename(!!.y := fdis)
+  ) %>%
+  join_list_by_site()
 
 ## Diagnostic plots
 
@@ -127,7 +141,8 @@ list(
   fundiversity_dispersions,
   BAT_dispersions,
   FD_dispersions,
-  mFD_dispersions
+  mFD_dispersions,
+  hillR_dispersions
 ) %>%
   {Reduce(function(x, y) inner_join(x, y, by = "site"), .)} %>%
   select(-site) %>%
