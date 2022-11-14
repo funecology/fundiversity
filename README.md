@@ -21,7 +21,7 @@ functional diversity indices. To a get a glimpse of what `fundiversity`
 can do refer to the [introductory
 vignette](https://funecology.github.io/fundiversity/articles/fundiversity.html).
 The package is built using clear, public [design
-principles](https://funecology.github.io/fundiversity/articles/design-principles.html)
+principles](https://funecology.github.io/fundiversity/articles/fundiversity_4-design-principles.html)
 inspired from our own experience and user feedback.
 
 ## Installation
