@@ -10,7 +10,7 @@ vignette: >
 
 <!-- 
 # Pre-render with 
-knitr::knit("vignettes/_fundiversity-2-performance.Rmd", output = "vignettes/fundiversity_2-performance.Rmd")
+knitr::knit("vignettes/_fundiversity_2-performance.Rmd", output = "vignettes/fundiversity_2-performance.Rmd")
 -->
 
 ```{r setup, include = FALSE}
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
   fig.height = 8.5,
   fig.width = 8,
   message = FALSE,
-  eval = TRUE
+  error   = FALSE
 )
 
 suppressPackageStartupMessages({
