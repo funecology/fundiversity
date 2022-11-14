@@ -10,10 +10,10 @@ vignette: >
 
 <!-- 
 # Pre-render with 
-knitr::knit("vignettes/_fundiversity-2-performance.Rmd", output = "vignettes/fundiversity-2-performance.Rmd")
+knitr::knit("vignettes/_fundiversity-2-performance.Rmd", output = "vignettes/fundiversity_2-performance.Rmd")
 -->
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
   fig.height = 8.5,
   fig.width = 8,
   message = FALSE,
-  eval = FALSE
+  eval = TRUE
 )
 
 suppressPackageStartupMessages({
@@ -49,15 +49,15 @@ Here is a table that summarizes the comparable functions (and their arguments) f
 | α-diversity      | Rao's Quadratic Entropy (Q)                       | @Villeger_Decomposing_2013    | `fd_raoq()`             | `adiv::QE()`<br />`BAT::rao()`<br />`hillR::hill_func()` (standardize traits without warning)<br />`mFD::alpha.fd.hill(..., q = 2, tau = "max")` (returns a slightly modified version of Q according to @Ricotta_Diversity_2009)                        |
 | β-diversity      | Functional Richness Intersection (FRic_intersect) | @Rao_Diversity_1982           | `fd_fric_intersect()`   | `betapart::functional.beta.pair()`<br />`hillR::hill_func_parti_pairwise()`                                                                                                                                                                             |
 
-The other packages are thus: `adiv` [@Pavoine_adiv_2020], `BAT` [@Cardoso_BAT_2015], `betapart` [@Baselga_betapart_2012], `FD` [@Laliberte_FD_2014], `hillR` [@Li_hillR_2018], and `mFD` [@Magneville_mFD_2022].
+The other packages are thus: `adiv` [@Pavoine_adiv_2020], `BAT` [@Cardoso_BAT_2015], `betapart` [@Baselga_betapart_2012], `FD` [@Laliberte_FD_2014], `hillR` [@Li_hillR_2018], and `mFD` [@Magneville_mFD_2022]. For fairness of comparison, even if `FD::dbFD()` contains most indices we're not considering it as it computes all indices together for each call, and would necessarily be slower.
 
 
 ## Benchmark between packages
 
-We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function.
+We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function. We will use the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`.
 
-```{r setup}
-tictoc::tic()
+```{r initial}
+tictoc::tic()  # Time execution of vignette
 library(fundiversity)
 data("traits_birds", package = "fundiversity")
 data("site_sp_birds", package = "fundiversity")
@@ -65,84 +65,133 @@ data("site_sp_birds", package = "fundiversity")
 dist_traits_birds <- dist(traits_birds)
 ```
 
-## Functional Dispersion (FDis)
+
+### Functional Dispersion (FDis)
 
 ```{r bench-fdis}
 fdis_bench <- microbenchmark::microbenchmark(
   fundiversity = {
     fundiversity::fd_fdis(traits_birds, site_sp_birds)
   },
-  adiv = {
-    adiv::QE(site_sp_birds, dis = dist_traits_birds)
-  },
-  hillR = {
-    hillR::hill_func(site_sp_birds, dist_traits_birds, traits_as_is = TRUE)[1, ]
-  },
-  SYNCSA = {
-    SYNCSA::rao.diversity(site_sp_birds,
-                          phylodist = as.matrix(dist_traits_birds),
-                          standardize = FALSE)$PhyRao
-  },
   FD = {
     FD::fdisp(dist_traits_birds, site_sp_birds)
   },
   mFD = {
-    mFD::alpha.fd.hill(site_sp_birds, dist_traits_birds, q = 2, tau = "max",
-                       details_returned = FALSE)
+    mFD::alpha.fd.multidim(
+    traits_birds, site_sp_birds, ind_vect = "fdis",
+    scaling = FALSE, verbose = FALSE, details_returned = FALSE
+  )
   },
-  times = 500
+  times = 30
 )
 
-ggplot2::autoplot(pkg_bench)
-pkg_bench
+ggplot2::autoplot(fdis_bench) +
+  labs(title = "Functional Dispersion (FDis)")
+```
+
+
+### Functional Divergence (FDiv)
+
+```{r bench-fdiv}
+fdiv_bench <- microbenchmark::microbenchmark(
+  fundiversity = fd_fdiv(traits_birds, site_sp_birds),
+  mFD = mFD::alpha.fd.multidim(
+    traits_birds, site_sp_birds, ind_vect = "fdiv",
+    scaling = FALSE, verbose = FALSE
+  ),
+  times = 30
+)
+
+ggplot2::autoplot(fdiv_bench) +
+  labs(title = "Functional Divergence (FDiv)")
 
 ```
 
-## Functional Divergence (FDiv)
 
-## Functional Evenness (FEve)
+### Functional Evenness (FEve)
 
-## Functional Richness (FRic)
-
-## Rao's Quadratic Entropy (Q)
-
-## Functional Richness Intersection (FRic_intersect)
-
-With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
-
-```{r bench-data-rao, fig.cap="Performance comparison in computing Rao's quadratic entropy between `fundiversity` and other packages"}
-pkg_bench <- microbenchmark::microbenchmark(
-  fundiversity = {
-    fundiversity::fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds)
-  },
-  adiv = {
-    adiv::QE(site_sp_birds, dis = dist_traits_birds)
-  },
-  hillR = {
-    hillR::hill_func(site_sp_birds, dist_traits_birds, traits_as_is = TRUE)[1, ]
-  },
-  SYNCSA = {
-    SYNCSA::rao.diversity(site_sp_birds,
-                          phylodist = as.matrix(dist_traits_birds),
-                          standardize = FALSE)$PhyRao
-  },
-  FD = {
-    suppressMessages(
-      FD::dbFD(x = dist_traits_birds, a = site_sp_birds, stand.x = FALSE,
-               calc.FRic = TRUE, calc.CWM = FALSE, calc.FDiv = FALSE,
-               calc.FGR = FALSE, m = "max", stand.FRic = FALSE,
-               messages = FALSE))
-  },
-  mFD = {
-    mFD::alpha.fd.hill(site_sp_birds, dist_traits_birds, q = 2, tau = "max",
-                       details_returned = FALSE)
-  },
-  times = 500
+```{r bench-feve}
+feve_bench <- microbenchmark::microbenchmark(
+  fundiversity = fd_feve(traits_birds, site_sp_birds),
+  mFD = mFD::alpha.fd.multidim(
+    traits_birds, site_sp_birds, ind_vect = "feve",
+    scaling = FALSE, verbose = FALSE
+  ),
+  times = 30
 )
 
-ggplot2::autoplot(pkg_bench)
-pkg_bench
+ggplot2::autoplot(feve_bench) +
+  labs(title = "Functional Evenness (FEve)")
 ```
+
+
+### Functional Richness (FRic)
+
+```{r bench-fric}
+fric_bench <- microbenchmark::microbenchmark(
+  fundiversity = fd_fric(traits_birds, site_sp_birds),
+  BAT_tree = BAT::alpha(
+    site_sp_birds, traits_birds
+  ),
+  BAT_alpha_hull = BAT::hull.alpha(
+    BAT::hull.build(site_sp_birds, traits_birds)
+  ),
+  mFD = mFD::alpha.fd.multidim(
+    traits_birds, site_sp_birds, ind_vect = "fric",
+    scaling = FALSE, verbose = FALSE
+  ),
+  times = 30
+)
+
+ggplot2::autoplot(fric_bench) +
+  labs(title = "Functional Richness (FRic)")
+```
+
+
+### Functional Richness Intersection (FRic_intersect)
+
+```{r bench-fric-intersect}
+fric_bench <- microbenchmark::microbenchmark(
+  fundiversity  = fd_fric_intersect(traits_birds, site_sp_birds) ,
+  betapart = betapart::functional.beta.pair(
+    site_sp_birds, traits_birds
+  ),
+  hillR = hillR::hill_func_parti_pairwise(
+    site_sp_birds, traits_birds
+  ),
+  times = 30
+)
+
+ggplot2::autoplot(fric_bench) +
+  labs(title = "Functional Richness Intersection (FRic)")
+```
+
+
+### Rao's Quadratic Entropy (Q)
+
+```{r bench-raoq}
+raoq_bench <- fric_bench <- microbenchmark::microbenchmark(
+  fundiversity = fd_raoq(traits_birds, site_sp_birds),
+  adiv= adiv::QE(
+    site_sp_birds, dist_traits_birds
+  ),
+  BAT_rao           = BAT::rao(
+    site_sp_birds, distance = traits_birds
+  ),
+  hillR_hill_func   = hillR::hill_func(
+    site_sp_birds, traits_birds, fdis = FALSE
+  ),
+  mFD_alpha_fd_hill = mFD::alpha.fd.hill(
+    site_sp_birds, dist_traits_birds, q = 2,
+    tau = "max"
+  ),
+  times = 30
+)
+
+ggplot2::autoplot(raoq_bench) +
+  labs(title = "Rao's Quadatric Entropy (Q)")
+```
+
 
 
 # Benchmark within `fundiversity`
