@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   class.warning = "collapsable-warnings",
   warning = FALSE,
-  fig.path = "fd-",
+  fig.path = "vignettes/perf-",
   fig.height = 8.5,
   fig.width = 8,
   message = FALSE,
@@ -267,7 +267,7 @@ bench_sp_feve <- microbenchmark::microbenchmark(
   species_200    = fd_feve(     traits_birds, site_sp_birds),
   species_1000   = fd_feve(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_feve( null_sp_10000$tr, null_sp_10000$si),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sp_feve)
@@ -325,7 +325,7 @@ bench_sites_fric <- microbenchmark::microbenchmark(
   sites_100   = fd_fric(traits_birds, site_sp_100),
   sites_1000  = fd_fric(traits_birds, site_sp_1000),
   sites_10000 = fd_fric(traits_birds, site_sp_10000),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sites_fric)
@@ -340,7 +340,7 @@ bench_sites_fdiv <- microbenchmark::microbenchmark(
   sites_100   = fd_fdiv(traits_birds, site_sp_100),
   sites_1000  = fd_fdiv(traits_birds, site_sp_1000),
   sites_10000 = fd_fdiv(traits_birds, site_sp_10000),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sites_fdiv)
@@ -355,7 +355,7 @@ bench_sites_raoq = microbenchmark::microbenchmark(
   sites_100   = fd_raoq(traits = NULL, site_sp_100,   dist_traits_birds),
   sites_1000  = fd_raoq(traits = NULL, site_sp_1000,  dist_traits_birds),
   sites_10000 = fd_raoq(traits = NULL, site_sp_10000, dist_traits_birds),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sites_raoq)
@@ -370,7 +370,7 @@ bench_sites_feve <- microbenchmark::microbenchmark(
   sites_100   = fd_feve(traits = NULL, site_sp_100,   dist_traits_birds),
   sites_1000  = fd_feve(traits = NULL, site_sp_1000,  dist_traits_birds),
   sites_10000 = fd_feve(traits = NULL, site_sp_10000, dist_traits_birds),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sites_feve)
