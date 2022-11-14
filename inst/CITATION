@@ -5,7 +5,7 @@ note <- sprintf("R package version %s", meta$Version)
 
 bibentry(
   bibtype = "manual",
-  title   = "{fundiversity}: Easy Computation of Alpha Functional Diversity Indices",
+  title   = "{fundiversity}: Easy Computation of Functional Diversity Indices",
   author  = c(person("Matthias", "Grenié"),
               person("Hugo", "Gruson")),
   year    = year,
@@ -16,7 +16,7 @@ bibentry(
 
 bibentry(
   bibtype = "manual",
-  title   = "{fundiversity}: Easy Computation of Alpha Functional Diversity Indices",
+  title   = "{fundiversity}: Easy Computation of Functional Diversity Indices",
   author  = c(person("Matthias", "Grenié"),
               person("Hugo", "Gruson")),
   year    = year,
