@@ -10,7 +10,7 @@ vignette: >
 
 <!-- 
 # Pre-render with 
-knitr::knit("vignettes/_performance.Rmd", output = "vignettes/performance.Rmd")
+knitr::knit("vignettes/_fundiversity_2-performance.Rmd", output = "vignettes/fundiversity_2-performance.Rmd")
 -->
 
 
@@ -21,23 +21,27 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 
 ## Main functions
 
-**`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by @Laliberte_FD_2014. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
+Here is a table that summarizes the comparable functions (and their arguments) for functions included in `fundiversity`. Note that the package name is indicated before `::` followed by the function name.
 
-**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by @Chao_Unifying_2014. It computes Rao's quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.
+|    Index Type    | Index Name                                        | Source                        | `fundiversity` function | Equivalent Functions |
+|:-----------------|:--------------------------------------------------|:------------------------------|:------------------------|----------------------|
+| α-diversity      | Functional Dispersion (FDis)                      | @Laliberte_distancebased_2010 | `fd_fdis()`             | ~~`BAT::dispersion()`~~ (doesn't compute FDis)<br />`FD::fdisp()`<br />~~`hillR::hill_func()`~~ (actually rely on `FD` for FDis computations and standardize the traits without telling the user)<br />`mFD::alpha.fd.multidim(..., ind_vect = "fdis")` |
+| α-diversity      | Functional Divergence (FDiv)                      | @Villeger_New_2008            | `fd_fdiv()`             | `mFD::alpha.fd.multidim(..., ind_vect = "fdiv")`                                                                                                                                                                                                        |
+| α-diversity      | Functional Evenness (FEve)                        | @Villeger_New_2008            | `fd_feve()`             | `mFD::alpha.fd.multidim(..., ind_vect = "feve")`                                                                                                                                                                                                        |
+| α-diversity      | Functional Richness (FRic)                        | @Villeger_New_2008            | `fd_fric()`             | `BAT::alpha()` (tree, not strictly equal)<br />`BAT::hull.alpha()` (hull)<br />`mFD::alpha.fd.multidim(..., ind_vect = "fric")`                                                                                                                         |
+| α-diversity      | Rao's Quadratic Entropy (Q)                       | @Villeger_Decomposing_2013    | `fd_raoq()`             | `adiv::QE()`<br />`BAT::rao()`<br />`hillR::hill_func()` (standardize traits without warning)<br />`mFD::alpha.fd.hill(..., q = 2, tau = "max")` (returns a slightly modified version of Q according to @Ricotta_Diversity_2009)                        |
+| β-diversity      | Functional Richness Intersection (FRic_intersect) | @Rao_Diversity_1982           | `fd_fric_intersect()`   | `betapart::functional.beta.pair()`<br />`hillR::hill_func_parti_pairwise()`                                                                                                                                                                             |
 
-**`adiv::QE()`** comes from the `adiv` package which proposes a toolkit to analyze biodiversity [@Pavoine_adiv_2020]. This function computes Rao's quadratic entropy.
+The other packages are thus: `adiv` [@Pavoine_adiv_2020], `BAT` [@Cardoso_BAT_2015], `betapart` [@Baselga_betapart_2012], `FD` [@Laliberte_FD_2014], `hillR` [@Li_hillR_2018], and `mFD` [@Magneville_mFD_2022]. For fairness of comparison, even if `FD::dbFD()` contains most indices we're not considering it as it computes all indices together for each call, and would necessarily be slower.
 
-**`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
-
-**`mFD::alpha.fd.hill()`** comes from the `mFD` package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indices.
 
 ## Benchmark between packages
 
-We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function.
+We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function. We will use the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`.
 
 
 ```r
-tictoc::tic()
+tictoc::tic()  # Time execution of vignette
 library(fundiversity)
 data("traits_birds", package = "fundiversity")
 data("site_sp_birds", package = "fundiversity")
@@ -45,55 +49,180 @@ data("site_sp_birds", package = "fundiversity")
 dist_traits_birds <- dist(traits_birds)
 ```
 
-With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
+
+### Functional Dispersion (FDis)
 
 
 ```r
-pkg_bench <- microbenchmark::microbenchmark(
+fdis_bench <- microbenchmark::microbenchmark(
   fundiversity = {
-    fundiversity::fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds)
-  },
-  adiv = {
-    adiv::QE(site_sp_birds, dis = dist_traits_birds)
-  },
-  hillR = {
-    hillR::hill_func(site_sp_birds, dist_traits_birds, traits_as_is = TRUE)[1, ]
-  },
-  SYNCSA = {
-    SYNCSA::rao.diversity(site_sp_birds,
-                          phylodist = as.matrix(dist_traits_birds),
-                          standardize = FALSE)$PhyRao
+    fundiversity::fd_fdis(traits_birds, site_sp_birds)
   },
   FD = {
-    suppressMessages(
-      FD::dbFD(x = dist_traits_birds, a = site_sp_birds, stand.x = FALSE,
-               calc.FRic = TRUE, calc.CWM = FALSE, calc.FDiv = FALSE,
-               calc.FGR = FALSE, m = "max", stand.FRic = FALSE,
-               messages = FALSE))
+    FD::fdisp(dist_traits_birds, site_sp_birds)
   },
   mFD = {
-    mFD::alpha.fd.hill(site_sp_birds, dist_traits_birds, q = 2, tau = "max",
-                       details_returned = FALSE)
+    mFD::alpha.fd.multidim(
+    traits_birds, site_sp_birds, ind_vect = "fdis",
+    scaling = FALSE, verbose = FALSE, details_returned = FALSE
+  )
   },
-  times = 500
+  times = 30
 )
 
-ggplot2::autoplot(pkg_bench)
+ggplot2::autoplot(fdis_bench) +
+  labs(title = "Functional Dispersion (FDis)")
 ```
 
-![Performance comparison in computing Rao's quadratic entropy between `fundiversity` and other packages](fd-bench-data-rao-1.png)
+![plot of chunk bench-fdis](vignettes/perf-bench-fdis-1.png)
+
+
+### Functional Divergence (FDiv)
+
 
 ```r
-pkg_bench
-#> Unit: milliseconds
-#>          expr         min          lq        mean      median          uq       max neval  cld
-#>  fundiversity    2.287913    2.630710    3.089326    2.762887    2.891716   44.3695   500 a   
-#>          adiv   14.906173   15.719250   26.646127   16.773885   32.032801  103.7893   500  b  
-#>         hillR   20.696094   22.602998   32.499789   24.343631   33.482000  680.6541   500  b  
-#>        SYNCSA  101.301958  105.161422  129.325061  118.840921  146.598844  758.1414   500   c 
-#>            FD 3849.335158 3956.290358 4053.866622 4000.860019 4050.856521 4778.5860   500    d
-#>           mFD    4.251853    4.609947   11.588040    4.842196    5.545768  665.1295   500 a
+fdiv_bench <- microbenchmark::microbenchmark(
+  fundiversity = fd_fdiv(traits_birds, site_sp_birds),
+  mFD = mFD::alpha.fd.multidim(
+    traits_birds, site_sp_birds, ind_vect = "fdiv",
+    scaling = FALSE, verbose = FALSE
+  ),
+  times = 30
+)
+
+ggplot2::autoplot(fdiv_bench) +
+  labs(title = "Functional Divergence (FDiv)")
 ```
+
+![plot of chunk bench-fdiv](vignettes/perf-bench-fdiv-1.png)
+
+
+### Functional Evenness (FEve)
+
+
+```r
+feve_bench <- microbenchmark::microbenchmark(
+  fundiversity = fd_feve(traits_birds, site_sp_birds),
+  mFD = mFD::alpha.fd.multidim(
+    traits_birds, site_sp_birds, ind_vect = "feve",
+    scaling = FALSE, verbose = FALSE
+  ),
+  times = 30
+)
+
+ggplot2::autoplot(feve_bench) +
+  labs(title = "Functional Evenness (FEve)")
+```
+
+![plot of chunk bench-feve](vignettes/perf-bench-feve-1.png)
+
+
+### Functional Richness (FRic)
+
+
+```r
+fric_bench <- microbenchmark::microbenchmark(
+  fundiversity = fd_fric(traits_birds, site_sp_birds),
+  BAT_tree = BAT::alpha(
+    site_sp_birds, traits_birds
+  ),
+  BAT_alpha_hull = BAT::hull.alpha(
+    BAT::hull.build(site_sp_birds, traits_birds)
+  ),
+  mFD = mFD::alpha.fd.multidim(
+    traits_birds, site_sp_birds, ind_vect = "fric",
+    scaling = FALSE, verbose = FALSE
+  ),
+  times = 30
+)
+
+ggplot2::autoplot(fric_bench) +
+  labs(title = "Functional Richness (FRic)")
+```
+
+![plot of chunk bench-fric](vignettes/perf-bench-fric-1.png)
+
+
+### Functional Richness Intersection (FRic_intersect)
+
+
+```r
+fric_bench <- microbenchmark::microbenchmark(
+  fundiversity  = fd_fric_intersect(traits_birds, site_sp_birds) ,
+  betapart = betapart::functional.beta.pair(
+    site_sp_birds, traits_birds
+  ),
+  hillR = hillR::hill_func_parti_pairwise(
+    site_sp_birds, traits_birds
+  ),
+  times = 30
+)
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+#>   |                                                                                                                                                                   |                                                                                                                                                           |   0%  |                                                                                                                                                                   |======================                                                                                                                                     |  14%  |                                                                                                                                                                   |============================================                                                                                                               |  29%  |                                                                                                                                                                   |==================================================================                                                                                         |  43%  |                                                                                                                                                                   |=========================================================================================                                                                  |  57%  |                                                                                                                                                                   |===============================================================================================================                                            |  71%  |                                                                                                                                                                   |=====================================================================================================================================                      |  86%  |                                                                                                                                                                   |===========================================================================================================================================================| 100%
+
+ggplot2::autoplot(fric_bench) +
+  labs(title = "Functional Richness Intersection (FRic)")
+```
+
+![plot of chunk bench-fric-intersect](vignettes/perf-bench-fric-intersect-1.png)
+
+
+### Rao's Quadratic Entropy (Q)
+
+
+```r
+raoq_bench <- fric_bench <- microbenchmark::microbenchmark(
+  fundiversity = fd_raoq(traits_birds, site_sp_birds),
+  adiv= adiv::QE(
+    site_sp_birds, dist_traits_birds
+  ),
+  BAT_rao           = BAT::rao(
+    site_sp_birds, distance = traits_birds
+  ),
+  hillR_hill_func   = hillR::hill_func(
+    site_sp_birds, traits_birds, fdis = FALSE
+  ),
+  mFD_alpha_fd_hill = mFD::alpha.fd.hill(
+    site_sp_birds, dist_traits_birds, q = 2,
+    tau = "max"
+  ),
+  times = 30
+)
+
+ggplot2::autoplot(raoq_bench) +
+  labs(title = "Rao's Quadatric Entropy (Q)")
+```
+
+![plot of chunk bench-raoq](vignettes/perf-bench-raoq-1.png)
+
 
 
 # Benchmark within `fundiversity`
@@ -134,16 +263,16 @@ bench_sp_fric <- microbenchmark::microbenchmark(
 ggplot2::autoplot(bench_sp_fric)
 ```
 
-![Performance comparison of `fd_fric()` with increasing number of species.](fd-bench-species-fric-1.png)
+![Performance comparison of `fd_fric()` with increasing number of species.](vignettes/perf-bench-species-fric-1.png)
 
 ```r
 bench_sp_fric
 #> Unit: milliseconds
-#>            expr       min        lq      mean    median        uq        max neval cld
-#>     species_200  17.43907  17.86243  19.25563  18.36463  19.43581   30.67592    30  a 
-#>    species_1000  18.61623  18.95761  23.12715  19.33508  20.27961  116.57998    30  a 
-#>   species_10000  28.16377  28.72545  58.63922  29.44426  37.00387  662.93365    30  a 
-#>  species_100000 148.85628 172.34064 313.60939 180.87062 212.01963 2071.42395    30   b
+#>            expr        min         lq       mean     median         uq        max neval  cld
+#>     species_200   12.36418   12.80943   13.60747   13.71786   14.41047   15.83627    30 a   
+#>    species_1000   23.31680   23.68592   24.23437   24.18171   24.57780   25.74661    30  b  
+#>   species_10000  151.97398  154.68181  157.13215  155.78226  156.93596  183.96191    30   c 
+#>  species_100000 1479.97618 1492.20538 1509.40089 1500.46330 1533.35869 1589.32163    30    d
 ```
 
 ### Functional Divergence
@@ -161,16 +290,16 @@ bench_sp_fdiv <- microbenchmark::microbenchmark(
 ggplot2::autoplot(bench_sp_fdiv)
 ```
 
-![Performance comparison of `fd_fdiv()` with increasing number of species.](fd-bench-species-fdiv-1.png)
+![Performance comparison of `fd_fdiv()` with increasing number of species.](vignettes/perf-bench-species-fdiv-1.png)
 
 ```r
 bench_sp_fdiv
 #> Unit: milliseconds
-#>            expr       min        lq      mean    median        uq       max neval cld
-#>     species_200  48.44905  49.03244  51.10591  49.83909  50.63842  80.15223    30  a 
-#>    species_1000  49.90169  50.47038  54.57637  51.34235  54.04361  81.71650    30  a 
-#>   species_10000  64.80198  65.77591 106.63771  66.45525  96.01833 822.19062    30  a 
-#>  species_100000 284.15498 316.50850 448.10526 328.81308 358.02843 956.35379    30   b
+#>            expr        min         lq       mean     median         uq        max neval cld
+#>     species_200   37.53411   38.63954   40.84117   39.02272   39.77698   77.91128    30 a  
+#>    species_1000   51.71992   52.21308   55.28145   52.93504   55.30452   84.34247    30 a  
+#>   species_10000  214.75505  217.13990  223.02683  218.52580  225.44913  264.04955    30  b 
+#>  species_100000 1873.67877 1924.51210 1964.79177 1943.87130 1966.96059 2691.71863    30   c
 ```
 
 ### Rao's Quadratic Entropy
@@ -187,15 +316,15 @@ bench_sp_raoq <- microbenchmark::microbenchmark(
 ggplot2::autoplot(bench_sp_raoq)
 ```
 
-![Performance comparison of `fd_raoq()` with increasing number of species.](fd-bench-species-raoq-1.png)
+![Performance comparison of `fd_raoq()` with increasing number of species.](vignettes/perf-bench-species-raoq-1.png)
 
 ```r
 bench_sp_raoq
 #> Unit: milliseconds
-#>           expr          min           lq         mean       median           uq         max neval cld
-#>    species_200     2.670416     2.943108     5.652929     3.171312     3.366178    77.94491    30  a 
-#>   species_1000    91.829330    92.648495   104.365654    94.808870   116.528429   126.52938    30  a 
-#>  species_10000 24088.575237 24965.084344 25589.177876 25347.518500 26110.519379 28657.24666    30   b
+#>           expr          min           lq         mean       median           uq          max neval cld
+#>    species_200     1.614968     1.929047     2.124704     2.014533     2.246302     3.095525    30  a 
+#>   species_1000    32.239209    34.317836    39.271630    35.933560    44.568225    52.960511    30  a 
+#>  species_10000 11530.830206 11925.934757 12237.035809 12124.626635 12308.096241 14334.269405    30   b
 ```
 
 ### Functional Evenness
@@ -206,22 +335,21 @@ bench_sp_feve <- microbenchmark::microbenchmark(
   species_200    = fd_feve(     traits_birds, site_sp_birds),
   species_1000   = fd_feve(  null_sp_1000$tr, null_sp_1000$si),
   species_10000  = fd_feve( null_sp_10000$tr, null_sp_10000$si),
-  times = 30
+  times = 15
 )
-#> Error in getGlobalsAndPackages(expr, envir = envir, globals = globals): The total size of the 2 globals that need to be exported for the future expression ('FUN(X = structure(c(0, 0, 0.000165289256198347, 0.000224719101123596,; 0, 0, 0, 0, 0.00016, 0.000158730158730159, 0.000165289256198347,; 0, 0, 0, 0, 0, 0, 0, 0.000165289256198347, 0.000224719101123596,; 0.000307692307692308, 0.000377358490566038, 0.00048780487804878,; 0, 0.00016, 0.000158730158730159, 0, 0, 0, 0, 0, 0, 0, 0, 0.000165289256198347,; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.000307692307692308, 0.000377358490566038,; ...; "sp10835", "sp10836", "sp10837", "sp10838", "sp10839", "sp10840",; "sp10841", "sp10842", "sp10843", "sp10844", "sp10845", "sp10846",; "sp10847", "sp10848", "sp10849", "sp10850"))))') is 899.49 MiB. This exceeds the maximum allowed size of 500.00 MiB (option 'future.globals.maxSize'). There are two globals: 'dist_matrix' (899.48 MiB of class 'numeric') and 'FUN' (10.75 KiB of class 'function').
 
 ggplot2::autoplot(bench_sp_feve)
 ```
 
-![Performance comparison of `fd_feve()` with increasing number of species.](fd-bench-species-feve-1.png)
+![Performance comparison of `fd_feve()` with increasing number of species.](vignettes/perf-bench-species-feve-1.png)
 
 ```r
 bench_sp_feve
 #> Unit: milliseconds
 #>           expr         min          lq        mean      median          uq         max neval cld
-#>    species_200    11.17215    11.44301    12.33728    11.79237    12.24989    20.59761    30  a 
-#>   species_1000   197.85067   279.95442   280.47473   289.50154   297.68343   336.33779    30  a 
-#>  species_10000 58136.53352 60618.48446 60999.92341 61352.07935 61751.75521 62372.93708    30   b
+#>    species_200    21.55576    22.44688    23.50691    22.82013    23.65089    32.24283    15  a 
+#>   species_1000   121.84733   128.29471   152.71531   138.33167   170.26665   248.93367    15  a 
+#>  species_10000 26828.42785 27607.81541 28201.10510 28443.35138 28890.96393 29580.48697    15   b
 ```
 
 ### Comparing between indices
@@ -252,7 +380,7 @@ all_bench_sp %>%
   theme(aspect.ratio = 1)
 ```
 
-![Performance comparison between functions for distinct indices in `fundiversity` with increasing number of species. Smoothed trend lines and standard error envelopes ares shown.](fd-bench-species-compare-1.png)
+![Performance comparison between functions for distinct indices in `fundiversity` with increasing number of species. Smoothed trend lines and standard error envelopes ares shown.](vignettes/perf-bench-species-compare-1.png)
 
 ## Increasing the number of sites
 
@@ -275,54 +403,54 @@ site_sp_10000 <- make_more_sites(1200)
 
 
 ```r
-bench_sites_fric = microbenchmark::microbenchmark(
+bench_sites_fric <- microbenchmark::microbenchmark(
   sites_10    = fd_fric(traits_birds, site_sp_birds),
   sites_100   = fd_fric(traits_birds, site_sp_100),
   sites_1000  = fd_fric(traits_birds, site_sp_1000),
   sites_10000 = fd_fric(traits_birds, site_sp_10000),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sites_fric)
 ```
 
-![Performance comparison of `fd_fric()` with increasing number of sites.](fd-bench-sites-fric-1.png)
+![Performance comparison of `fd_fric()` with increasing number of sites.](vignettes/perf-bench-sites-fric-1.png)
 
 ```r
 bench_sites_fric
 #> Unit: milliseconds
-#>         expr        min         lq       mean     median         uq        max neval cld
-#>     sites_10   17.77558   18.58610   21.18691   19.36247   19.83560   66.98525    30 a  
-#>    sites_100   32.91720   34.17783   37.24440   35.02940   35.70176   96.30081    30 a  
-#>   sites_1000  178.65317  181.95299  221.38235  186.83763  191.94836 1102.60246    30  b 
-#>  sites_10000 1754.78248 1785.23758 1857.44765 1846.69689 1890.84202 2232.53853    30   c
+#>         expr        min         lq       mean     median         uq        max neval  cld
+#>     sites_10   12.95003   14.40414   14.37138   14.53821   14.64774   14.88149    15 a   
+#>    sites_100   46.54270   47.33172   48.62437   47.93317   48.55881   56.80942    15  b  
+#>   sites_1000  366.69686  369.36775  382.36053  372.04964  373.21907  439.19306    15   c 
+#>  sites_10000 3621.97069 3648.16404 3676.04721 3674.07862 3685.51011 3781.17867    15    d
 ```
 
 ### Functional Divergence
 
 
 ```r
-bench_sites_fdiv = microbenchmark::microbenchmark(
+bench_sites_fdiv <- microbenchmark::microbenchmark(
   sites_10    = fd_fdiv(traits_birds, site_sp_birds),
   sites_100   = fd_fdiv(traits_birds, site_sp_100),
   sites_1000  = fd_fdiv(traits_birds, site_sp_1000),
   sites_10000 = fd_fdiv(traits_birds, site_sp_10000),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sites_fdiv)
 ```
 
-![Performance comparison of `fd_fdiv()` with increasing number of sites.](fd-bench-sites-fdiv-1.png)
+![Performance comparison of `fd_fdiv()` with increasing number of sites.](vignettes/perf-bench-sites-fdiv-1.png)
 
 ```r
 bench_sites_fdiv
 #> Unit: milliseconds
-#>         expr        min         lq       mean     median         uq       max neval  cld
-#>     sites_10   50.17003   51.88956   58.73887   53.34411   55.25329  197.9635    30 a   
-#>    sites_100   80.40664   84.18102   97.06916   84.94270   94.98646  166.4284    30  b  
-#>   sites_1000  386.55725  402.17618  429.92229  413.10485  469.88815  509.0017    30   c 
-#>  sites_10000 3603.94346 3757.78241 3813.13545 3800.30931 3866.23993 4042.1464    30    d
+#>         expr        min         lq       mean     median         uq       max neval cld
+#>     sites_10   39.63325   41.24368  112.09478   42.64533   49.30549  977.6762    15 a  
+#>    sites_100   87.30023   88.66757   91.60604   89.62134   91.83784  104.1536    15 a  
+#>   sites_1000  550.87182  564.60342  590.08749  571.28974  609.63248  670.8392    15  b 
+#>  sites_10000 5370.57408 5446.68860 5506.19918 5515.43131 5548.97704 5683.7983    15   c
 ```
 
 ### Rao's Quadratic Entropy
@@ -334,49 +462,49 @@ bench_sites_raoq = microbenchmark::microbenchmark(
   sites_100   = fd_raoq(traits = NULL, site_sp_100,   dist_traits_birds),
   sites_1000  = fd_raoq(traits = NULL, site_sp_1000,  dist_traits_birds),
   sites_10000 = fd_raoq(traits = NULL, site_sp_10000, dist_traits_birds),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sites_raoq)
 ```
 
-![Performance comparison of `fd_raoq()` with increasing number of sites.](fd-bench-sites-raoq-1.png)
+![Performance comparison of `fd_raoq()` with increasing number of sites.](vignettes/perf-bench-sites-raoq-1.png)
 
 ```r
 bench_sites_raoq
 #> Unit: milliseconds
-#>         expr       min          lq        mean      median          uq         max neval cld
-#>     sites_10   2.43763    2.618498    2.835577    2.786454    2.899721    4.214509    30  a 
-#>    sites_100   3.07880    3.293774    7.170445    4.036631   11.673449   22.447060    30  a 
-#>   sites_1000  10.89814   11.346314   23.568799   12.680631   24.267842  161.626134    30  a 
-#>  sites_10000 408.95982 1106.958572 1084.559002 1157.547212 1230.670102 1490.536708    30   b
+#>         expr          min           lq         mean       median           uq          max neval cld
+#>     sites_10     1.305388     1.373195     1.730570     1.673388     1.859260     2.841629    15  a 
+#>    sites_100     5.714635     6.079408     6.269544     6.216827     6.582287     6.662803    15  a 
+#>   sites_1000   158.858490   160.203727   163.750736   162.037000   166.297011   177.618505    15  a 
+#>  sites_10000 17319.181265 18525.977838 19631.978457 19567.741895 20606.599524 22621.288906    15   b
 ```
 
 ### Functional Evenness
 
 
 ```r
-bench_sites_feve = microbenchmark::microbenchmark(
+bench_sites_feve <- microbenchmark::microbenchmark(
   sites_10    = fd_feve(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_feve(traits = NULL, site_sp_100,   dist_traits_birds),
   sites_1000  = fd_feve(traits = NULL, site_sp_1000,  dist_traits_birds),
   sites_10000 = fd_feve(traits = NULL, site_sp_10000, dist_traits_birds),
-  times = 30
+  times = 15
 )
 
 ggplot2::autoplot(bench_sites_feve)
 ```
 
-![Performance comparison of `fd_feve()` with increasing number of sites](fd-bench-sites-feve-1.png)
+![Performance comparison of `fd_feve()` with increasing number of sites](vignettes/perf-bench-sites-feve-1.png)
 
 ```r
 bench_sites_feve
 #> Unit: milliseconds
-#>         expr         min          lq       mean      median         uq        max neval cld
-#>     sites_10    27.47611    27.95555    34.4079    28.74399    29.6761   189.6112    30 a  
-#>    sites_100   127.61540   130.15233   168.1676   132.48679   168.9531   819.7361    30 a  
-#>   sites_1000  1195.25759  1268.52395  1432.1127  1287.19147  1839.7692  1916.8058    30  b 
-#>  sites_10000 12192.27871 13661.60213 14675.2386 14058.28719 14820.7077 28405.1799    30   c
+#>         expr        min          lq        mean      median          uq         max neval  cld
+#>     sites_10    20.7863    21.11284    23.41424    21.76958    24.25294    33.69812    15 a   
+#>    sites_100   115.5896   119.65343   134.82523   122.64418   143.24770   223.65343    15  b  
+#>   sites_1000  1071.2165  1096.59893  1138.79985  1144.60834  1182.83699  1206.20735    15   c 
+#>  sites_10000 11100.1283 11259.63408 11369.78653 11410.91073 11455.95123 11584.87717    15    d
 ```
 
 
@@ -408,189 +536,200 @@ all_bench_sites %>%
   theme(aspect.ratio = 1)
 ```
 
-![Performance comparison between functions for distinct indices in `fundiversity` with increasing number of sites. Smoothed trend lines and standard error envelopes ares shown.](fd-bench-sites-compare-1.png)
+![Performance comparison between functions for distinct indices in `fundiversity` with increasing number of sites. Smoothed trend lines and standard error envelopes ares shown.](vignettes/perf-bench-sites-compare-1.png)
 
 <details>
 <summary>Session info of the machine on which the benchmark was ran and time it took to run</summary>
 
 
 ```
-#>  seconds needed to generate this document: 3694.109 sec elapsed
-#> ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-#>  setting  value                       
-#>  version  R version 3.6.3 (2020-02-29)
-#>  os       Ubuntu 16.04.7 LTS          
-#>  system   x86_64, linux-gnu           
-#>  ui       RStudio                     
-#>  language (EN)                        
-#>  collate  en_US.UTF-8                 
-#>  ctype    en_US.UTF-8                 
-#>  tz       Europe/Berlin               
-#>  date     2021-07-30                  
+#>  seconds needed to generate this document: 1746.094 sec elapsed
+#> ─ Session info ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#>  setting  value
+#>  version  R version 4.2.1 (2022-06-23)
+#>  os       Ubuntu 20.04.5 LTS
+#>  system   x86_64, linux-gnu
+#>  ui       RStudio
+#>  language (EN)
+#>  collate  en_US.UTF-8
+#>  ctype    en_US.UTF-8
+#>  tz       Etc/UTC
+#>  date     2022-11-14
+#>  rstudio  2022.02.0+443 Prairie Trillium (server)
+#>  pandoc   NA
 #> 
-#> ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────
-#>  !  package           * version    date       lib source                            
-#>     abind               1.4-5      2016-07-21 [3] CRAN (R 3.5.0)                    
-#>     ade4                1.7-17     2021-06-17 [1] CRAN (R 3.6.3)                    
-#>     adegenet            2.1.3      2020-05-10 [1] CRAN (R 3.6.3)                    
-#>     adegraphics         1.0-15     2018-12-18 [1] CRAN (R 3.6.3)                    
-#>     adephylo            1.1-11     2017-12-18 [3] CRAN (R 3.5.0)                    
-#>     adiv                2.0.1      2020-08-26 [1] CRAN (R 3.6.3)                    
-#>     ape                 5.5        2021-04-25 [3] CRAN (R 3.6.3)                    
-#>     assertthat          0.2.1      2019-03-21 [3] CRAN (R 3.5.3)                    
-#>     boot                1.3-28     2021-05-03 [4] CRAN (R 3.6.3)                    
-#>     cachem              1.0.5      2021-05-15 [3] CRAN (R 3.6.3)                    
-#>     class               7.3-19     2021-05-03 [4] CRAN (R 3.6.3)                    
-#>     classInt            0.4-3      2020-04-07 [3] CRAN (R 3.6.3)                    
-#>     cli                 3.0.1      2021-07-17 [1] CRAN (R 3.6.3)                    
-#>     cluster             2.1.2      2021-04-17 [4] CRAN (R 3.6.3)                    
-#>     clusterGeneration   1.3.7      2020-12-15 [3] CRAN (R 3.6.3)                    
-#>     coda                0.19-4     2020-09-30 [3] CRAN (R 3.6.3)                    
-#>     codetools           0.2-18     2020-11-04 [4] CRAN (R 3.6.3)                    
-#>     colorspace          2.0-2      2021-06-24 [1] CRAN (R 3.6.3)                    
-#>     combinat            0.0-8      2010-08-05 [3] CRAN (R 3.5.0)                    
-#>     crayon              1.4.1      2021-02-08 [3] CRAN (R 3.6.3)                    
-#>     crosstalk           1.1.1      2021-01-12 [3] CRAN (R 3.6.3)                    
-#>     DBI                 1.1.1      2021-01-15 [3] CRAN (R 3.6.3)                    
-#>     deldir              0.2-10     2021-02-16 [3] CRAN (R 3.6.3)                    
-#>     desc                1.3.0      2021-03-05 [3] CRAN (R 3.6.3)                    
-#>     digest              0.6.27     2020-10-24 [3] CRAN (R 3.6.3)                    
-#>     dplyr             * 1.0.7      2021-06-18 [1] CRAN (R 3.6.3)                    
-#>     DT                  0.18       2021-04-14 [3] CRAN (R 3.6.3)                    
-#>     e1071               1.7-7      2021-05-23 [3] CRAN (R 3.6.3)                    
-#>     ellipsis            0.3.2      2021-04-29 [3] CRAN (R 3.6.3)                    
-#>     evaluate            0.14       2019-05-28 [3] CRAN (R 3.6.0)                    
-#>     expm                0.999-6    2021-01-13 [3] CRAN (R 3.6.3)                    
-#>     FactoMineR          2.4        2020-12-11 [3] CRAN (R 3.6.3)                    
-#>     fansi               0.5.0      2021-05-25 [3] CRAN (R 3.6.3)                    
-#>     farver              2.1.0      2021-02-28 [3] CRAN (R 3.6.3)                    
-#>     fastmap             1.1.0      2021-01-25 [3] CRAN (R 3.6.3)                    
-#>     fastmatch           1.1-3      2021-07-23 [1] CRAN (R 3.6.3)                    
-#>     FD                  1.0-12     2014-08-19 [1] CRAN (R 3.6.3)                    
-#>     flashClust          1.01-2     2012-08-21 [3] CRAN (R 3.5.0)                    
-#>  VP fundiversity      * 0.2.0      2021-01-22 [?] local                             
-#>     future              1.21.0     2020-12-10 [3] CRAN (R 3.6.3)                    
-#>     future.apply        1.7.0      2021-01-04 [3] CRAN (R 3.6.3)                    
-#>     gdata               2.18.0     2017-06-06 [3] CRAN (R 3.5.0)                    
-#>     generics            0.1.0      2020-10-31 [3] CRAN (R 3.6.3)                    
-#>     geometry            0.4.5      2019-12-04 [3] CRAN (R 3.6.1)                    
-#>     ggplot2           * 3.3.5      2021-06-25 [1] CRAN (R 3.6.3)                    
-#>     ggrepel             0.9.1      2021-01-15 [3] CRAN (R 3.6.3)                    
-#>     globals             0.14.0     2020-11-22 [3] CRAN (R 3.6.3)                    
-#>     glue                1.4.2      2020-08-27 [3] CRAN (R 3.6.3)                    
-#>     gmodels             2.18.1     2018-06-25 [3] CRAN (R 3.5.0)                    
-#>     gtable              0.3.0      2019-03-25 [3] CRAN (R 3.5.3)                    
-#>     gtools              3.9.2      2021-06-06 [3] CRAN (R 3.6.3)                    
-#>     highr               0.9        2021-04-16 [3] CRAN (R 3.6.3)                    
-#>     hillR               0.5.0      2020-07-07 [1] CRAN (R 3.6.3)                    
-#>     hms                 1.1.0      2021-05-17 [3] CRAN (R 3.6.3)                    
-#>     htmltools           0.5.1.1    2021-01-22 [3] CRAN (R 3.6.3)                    
-#>     htmlwidgets         1.5.3      2020-12-10 [3] CRAN (R 3.6.3)                    
-#>     httpuv              1.6.1      2021-05-07 [3] CRAN (R 3.6.3)                    
-#>     httr                1.4.2      2020-07-20 [3] CRAN (R 3.6.3)                    
-#>     igraph              1.2.6      2020-10-06 [3] CRAN (R 3.6.3)                    
-#>     jpeg                0.1-9      2021-07-24 [1] CRAN (R 3.6.3)                    
-#>     jsonlite            1.7.2      2020-12-09 [3] CRAN (R 3.6.3)                    
-#>     KernSmooth          2.23-20    2021-05-03 [4] CRAN (R 3.6.3)                    
-#>     knitr               1.33       2021-04-24 [3] CRAN (R 3.6.3)                    
-#>     later               1.2.0      2021-04-23 [3] CRAN (R 3.6.3)                    
-#>     lattice             0.20-44    2021-05-02 [4] CRAN (R 3.6.3)                    
-#>     latticeExtra        0.6-29     2019-12-19 [3] CRAN (R 3.6.2)                    
-#>     lazyeval            0.2.2      2019-03-15 [3] CRAN (R 3.5.3)                    
-#>     leaps               3.1        2020-01-16 [3] CRAN (R 3.6.2)                    
-#>     LearnBayes          2.15.1     2018-03-18 [3] CRAN (R 3.5.0)                    
-#>     lifecycle           1.0.0      2021-02-15 [3] CRAN (R 3.6.3)                    
-#>     listenv             0.8.0      2019-12-05 [3] CRAN (R 3.6.1)                    
-#>     magic               1.5-9      2018-09-17 [3] CRAN (R 3.5.1)                    
-#>     magrittr            2.0.1      2020-11-17 [3] CRAN (R 3.6.3)                    
-#>     manipulateWidget    0.11.0     2021-05-31 [3] CRAN (R 3.6.3)                    
-#>     maps                3.3.0      2018-04-03 [3] CRAN (R 3.5.0)                    
-#>     MASS                7.3-54     2021-05-03 [4] CRAN (R 3.6.3)                    
-#>     Matrix              1.3-4      2021-06-01 [4] CRAN (R 3.6.3)                    
-#>     memoise             2.0.0      2021-01-26 [3] CRAN (R 3.6.3)                    
-#>     mFD                 1.0.0      2021-07-29 [1] Github (CmlMagneville/mFD@a6af567)
-#>     mgcv                1.8-36     2021-06-01 [4] CRAN (R 3.6.3)                    
-#>     microbenchmark      1.4-7      2019-09-24 [1] CRAN (R 3.6.3)                    
-#>     mime                0.11       2021-06-23 [1] CRAN (R 3.6.3)                    
-#>     miniUI              0.1.1.1    2018-05-18 [3] CRAN (R 3.5.0)                    
-#>     mnormt              2.0.2      2020-09-01 [3] CRAN (R 3.6.3)                    
-#>     multcomp            1.4-17     2021-04-29 [3] CRAN (R 3.6.3)                    
-#>     munsell             0.5.0      2018-06-12 [3] CRAN (R 3.5.0)                    
-#>     mvtnorm             1.1-2      2021-06-07 [3] CRAN (R 3.6.3)                    
-#>     nlme                3.1-152    2021-02-04 [4] CRAN (R 3.6.3)                    
-#>     numDeriv            2016.8-1.1 2019-06-06 [3] CRAN (R 3.6.0)                    
-#>     parallelly          1.26.0     2021-06-09 [3] CRAN (R 3.6.3)                    
-#>     patchwork           1.1.1      2020-12-17 [1] CRAN (R 3.6.3)                    
-#>     permute             0.9-5      2019-03-12 [3] CRAN (R 3.5.3)                    
-#>     phangorn            2.7.0      2021-05-03 [3] CRAN (R 3.6.3)                    
-#>     phylobase           0.8.10     2020-03-01 [3] CRAN (R 3.6.3)                    
-#>     phytools            0.7-80     2021-06-03 [3] CRAN (R 3.6.3)                    
-#>     pillar              1.6.2      2021-07-29 [1] CRAN (R 3.6.3)                    
-#>     pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 3.6.3)                    
-#>     pkgload             1.2.1      2021-04-06 [3] CRAN (R 3.6.3)                    
-#>     plotrix             3.8-1      2021-01-21 [1] CRAN (R 3.6.3)                    
-#>     plyr                1.8.6      2020-03-03 [3] CRAN (R 3.6.3)                    
-#>     png                 0.1-7      2013-12-03 [3] CRAN (R 3.5.0)                    
-#>     prettyunits         1.1.1      2020-01-24 [3] CRAN (R 3.6.2)                    
-#>     progress            1.2.2      2019-05-16 [3] CRAN (R 3.6.0)                    
-#>     promises            1.2.0.1    2021-02-11 [3] CRAN (R 3.6.3)                    
-#>     proxy               0.4-26     2021-06-07 [3] CRAN (R 3.6.3)                    
-#>     purrr               0.3.4      2020-04-17 [3] CRAN (R 3.6.3)                    
-#>     quadprog            1.5-8      2019-11-20 [3] CRAN (R 3.6.1)                    
-#>     R6                  2.5.0      2020-10-28 [3] CRAN (R 3.6.3)                    
-#>     raster              3.4-10     2021-05-03 [3] CRAN (R 3.6.3)                    
-#>     RColorBrewer        1.1-2      2014-12-07 [3] CRAN (R 3.5.0)                    
-#>     Rcpp                1.0.7      2021-07-07 [1] CRAN (R 3.6.3)                    
-#>     RcppArmadillo       0.10.6.0.0 2021-07-16 [1] CRAN (R 3.6.3)                    
-#>     reshape2            1.4.4      2020-04-09 [3] CRAN (R 3.6.3)                    
-#>     rgl                 0.104.16   2021-01-10 [1] CRAN (R 3.6.3)                    
-#>     rlang               0.4.11     2021-04-30 [3] CRAN (R 3.6.3)                    
-#>     rmarkdown           2.8        2021-05-07 [3] CRAN (R 3.6.3)                    
-#>     rncl                0.8.4      2020-02-10 [3] CRAN (R 3.6.2)                    
-#>     RNeXML              2.4.5      2020-06-18 [3] CRAN (R 3.6.3)                    
-#>     rprojroot           2.0.2      2020-11-15 [3] CRAN (R 3.6.3)                    
-#>     rstudioapi          0.13       2020-11-12 [3] CRAN (R 3.6.3)                    
-#>     sandwich            3.0-1      2021-05-18 [3] CRAN (R 3.6.3)                    
-#>     scales              1.1.1      2020-05-11 [3] CRAN (R 3.6.3)                    
-#>     scatterplot3d       0.3-41     2018-03-14 [3] CRAN (R 3.5.0)                    
-#>     seqinr              4.2-8      2021-06-09 [3] CRAN (R 3.6.3)                    
-#>     sessioninfo         1.1.1      2018-11-05 [3] CRAN (R 3.5.1)                    
-#>     sf                  1.0-0      2021-06-09 [3] CRAN (R 3.6.3)                    
-#>     shiny               1.6.0      2021-01-25 [3] CRAN (R 3.6.3)                    
-#>     sp                  1.4-5      2021-01-10 [3] CRAN (R 3.6.3)                    
-#>     spData              0.3.8      2020-07-03 [3] CRAN (R 3.6.3)                    
-#>     spdep               1.1-8      2021-05-23 [3] CRAN (R 3.6.3)                    
-#>     stringi             1.7.3      2021-07-16 [1] CRAN (R 3.6.3)                    
-#>     stringr             1.4.0      2019-02-10 [3] CRAN (R 3.5.2)                    
-#>     survival            3.2-11     2021-04-26 [4] CRAN (R 3.6.3)                    
-#>     SYNCSA              1.3.4      2020-01-09 [1] CRAN (R 3.6.3)                    
-#>     testthat          * 3.0.2      2021-02-14 [3] CRAN (R 3.6.3)                    
-#>     TH.data             1.0-10     2019-01-21 [3] CRAN (R 3.5.2)                    
-#>     tibble              3.1.3      2021-07-23 [1] CRAN (R 3.6.3)                    
-#>     tictoc              1.0.1      2021-04-19 [3] CRAN (R 3.6.3)                    
-#>     tidyr               1.1.3      2021-03-03 [3] CRAN (R 3.6.3)                    
-#>     tidyselect          1.1.1      2021-04-30 [3] CRAN (R 3.6.3)                    
-#>     tmvnsim             1.0-2      2016-12-15 [3] CRAN (R 3.6.3)                    
-#>     units               0.7-2      2021-06-08 [3] CRAN (R 3.6.3)                    
-#>     utf8                1.2.2      2021-07-24 [1] CRAN (R 3.6.3)                    
-#>     uuid                0.1-4      2020-02-26 [3] CRAN (R 3.6.3)                    
-#>     vctrs               0.3.8      2021-04-29 [3] CRAN (R 3.6.3)                    
-#>     vegan               2.5-7      2020-11-28 [3] CRAN (R 3.6.3)                    
-#>     withr               2.4.2      2021-04-18 [3] CRAN (R 3.6.3)                    
-#>     xfun                0.24       2021-06-15 [1] CRAN (R 3.6.3)                    
-#>     XML                 3.99-0.3   2020-01-20 [3] CRAN (R 3.6.3)                    
-#>     xml2                1.3.2      2020-04-23 [3] CRAN (R 3.6.3)                    
-#>     xtable              1.8-4      2019-04-21 [1] CRAN (R 3.6.3)                    
-#>     yaml                2.2.1      2020-02-01 [3] CRAN (R 3.6.2)                    
-#>     zoo                 1.8-9      2021-03-09 [3] CRAN (R 3.6.3)                    
+#> ─ Packages ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#>  !  package           * version    date (UTC) lib source
+#>  P  abind               1.4-5      2016-07-21 [3] CRAN (R 4.2.0)
+#>     ade4                1.7-19     2022-04-19 [1] CRAN (R 4.2.0)
+#>     adegraphics         1.0-16     2021-09-16 [1] CRAN (R 4.2.1)
+#>     adiv                2.2        2022-10-06 [1] CRAN (R 4.2.1)
+#>     ape                 5.6-2      2022-03-02 [1] CRAN (R 4.2.0)
+#>     assertthat          0.2.1      2019-03-21 [3] CRAN (R 4.1.3)
+#>     base64enc           0.1-3      2015-07-28 [1] CRAN (R 4.2.1)
+#>     BAT                 2.9.2      2022-11-08 [1] CRAN (R 4.2.1)
+#>     betapart            1.5.6      2022-04-06 [1] CRAN (R 4.2.1)
+#>     cachem              1.0.6      2021-08-19 [3] CRAN (R 4.1.3)
+#>     caret               6.0-93     2022-08-09 [1] CRAN (R 4.2.1)
+#>     class               7.3-20     2022-01-13 [5] CRAN (R 4.1.2)
+#>  VP cli                 3.4.0      2022-09-23 [?] CRAN (R 4.2.1) (on disk 3.4.1)
+#>     cluster             2.1.3      2022-03-28 [5] CRAN (R 4.1.3)
+#>     clusterGeneration   1.3.7      2020-12-15 [1] CRAN (R 4.2.0)
+#>     coda                0.19-4     2020-09-30 [1] CRAN (R 4.2.0)
+#>     codetools           0.2-18     2020-11-04 [5] CRAN (R 4.0.3)
+#>     colorspace          2.0-3      2022-02-21 [1] CRAN (R 4.2.0)
+#>     combinat            0.0-8      2012-10-29 [1] CRAN (R 4.2.0)
+#>     crayon              1.5.1      2022-03-26 [1] CRAN (R 4.2.0)
+#>     data.table          1.14.2     2021-09-27 [1] CRAN (R 4.2.0)
+#>     DBI                 1.1.2      2021-12-20 [3] CRAN (R 4.1.3)
+#>     deldir              1.0-6      2021-10-23 [1] CRAN (R 4.2.1)
+#>     dendextend          1.16.0     2022-07-04 [1] CRAN (R 4.2.1)
+#>  P  digest              0.6.29     2021-12-01 [3] CRAN (R 4.2.0)
+#>     doParallel          1.0.17     2022-02-07 [1] CRAN (R 4.2.1)
+#>     doSNOW              1.0.20     2022-02-04 [1] CRAN (R 4.2.1)
+#>     dplyr             * 1.0.10     2022-09-01 [1] CRAN (R 4.2.1)
+#>     e1071               1.7-12     2022-10-24 [1] CRAN (R 4.2.1)
+#>     ellipsis            0.3.2      2021-04-29 [1] CRAN (R 4.2.0)
+#>     evaluate            0.18       2022-11-07 [1] CRAN (R 4.2.1)
+#>     expm                0.999-6    2021-01-13 [1] CRAN (R 4.2.0)
+#>     fansi               1.0.3      2022-03-24 [1] CRAN (R 4.2.0)
+#>     farver              2.1.0      2021-02-28 [1] CRAN (R 4.2.0)
+#>     fastcluster         1.2.3      2021-05-24 [1] CRAN (R 4.2.1)
+#>  P  fastmap             1.1.0      2021-01-25 [3] CRAN (R 4.2.1)
+#>     fastmatch           1.1-3      2021-07-23 [1] CRAN (R 4.2.0)
+#>     FD                  1.0-12.1   2022-05-02 [1] CRAN (R 4.2.0)
+#>     foreach             1.5.2      2022-02-02 [1] CRAN (R 4.2.1)
+#>     fundiversity      * 0.2.1.9000 2022-04-12 [3] Github (bisaloo/fundiversity@87652ba)
+#>  VP future              1.26.1     2022-09-02 [3] CRAN (R 4.2.1) (on disk 1.28.0)
+#>  VP future.apply        1.9.0      2022-11-05 [3] CRAN (R 4.2.1) (on disk 1.10.0)
+#>     generics            0.1.2      2022-01-31 [1] CRAN (R 4.2.0)
+#>  P  geometry            0.4.6      2022-04-18 [3] CRAN (R 4.2.0)
+#>     ggplot2           * 3.3.6      2022-05-03 [1] CRAN (R 4.2.0)
+#>  VP globals             0.15.0     2022-08-28 [3] CRAN (R 4.2.1) (on disk 0.16.1)
+#>     glue                1.6.2      2022-02-24 [1] CRAN (R 4.2.0)
+#>     gower               1.0.0      2022-02-03 [1] CRAN (R 4.2.1)
+#>     gridExtra           2.3        2017-09-09 [1] CRAN (R 4.2.1)
+#>     gtable              0.3.0      2019-03-25 [1] CRAN (R 4.2.0)
+#>     hardhat             1.2.0      2022-06-30 [1] CRAN (R 4.2.1)
+#>     highr               0.9        2021-04-16 [1] CRAN (R 4.2.1)
+#>     hillR               0.5.1      2021-03-02 [1] CRAN (R 4.2.0)
+#>     hms                 1.1.1      2021-09-26 [1] CRAN (R 4.2.0)
+#>     htmltools           0.5.3      2022-07-18 [1] CRAN (R 4.2.1)
+#>     htmlwidgets         1.5.4      2021-09-08 [1] CRAN (R 4.2.1)
+#>     httr                1.4.4      2022-08-17 [1] CRAN (R 4.2.1)
+#>     hypervolume         3.0.4      2022-05-28 [1] CRAN (R 4.2.1)
+#>     igraph              1.3.2      2022-06-13 [1] CRAN (R 4.2.0)
+#>     interp              1.1-3      2022-07-13 [1] CRAN (R 4.2.1)
+#>     ipred               0.9-13     2022-06-02 [1] CRAN (R 4.2.1)
+#>     iterators           1.0.14     2022-02-05 [1] CRAN (R 4.2.1)
+#>     itertools           0.1-3      2014-03-12 [1] CRAN (R 4.2.1)
+#>     jpeg                0.1-9      2021-07-24 [1] CRAN (R 4.2.1)
+#>     jsonlite            1.8.3      2022-10-21 [1] CRAN (R 4.2.1)
+#>     KernSmooth          2.23-20    2021-05-03 [5] CRAN (R 4.0.5)
+#>     knitr               1.40       2022-08-24 [1] CRAN (R 4.2.1)
+#>     ks                  1.13.5     2022-04-14 [1] CRAN (R 4.2.1)
+#>     lattice             0.20-45    2021-09-22 [3] CRAN (R 4.1.3)
+#>     latticeExtra        0.6-30     2022-07-04 [1] CRAN (R 4.2.1)
+#>     lava                1.7.0      2022-10-25 [1] CRAN (R 4.2.1)
+#>     lifecycle           1.0.3      2022-10-07 [1] CRAN (R 4.2.1)
+#>  P  listenv             0.8.0      2019-12-05 [3] CRAN (R 4.2.1)
+#>     lpSolve             5.6.15     2020-01-24 [1] CRAN (R 4.2.0)
+#>     lubridate           1.9.0      2022-11-06 [1] CRAN (R 4.2.1)
+#>  P  magic               1.6-0      2022-02-09 [3] CRAN (R 4.2.0)
+#>     magrittr            2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
+#>     maps                3.4.0      2021-09-25 [1] CRAN (R 4.2.0)
+#>     MASS                7.3-58.1   2022-08-03 [3] CRAN (R 4.2.1)
+#>     Matrix              1.4-1      2022-03-23 [3] CRAN (R 4.1.3)
+#>     mclust              6.0.0      2022-10-31 [1] CRAN (R 4.2.1)
+#>     memoise             2.0.1      2021-11-26 [3] CRAN (R 4.1.3)
+#>     mFD                 1.0.2      2022-11-08 [1] CRAN (R 4.2.1)
+#>     mgcv                1.8-40     2022-03-29 [5] CRAN (R 4.1.3)
+#>     microbenchmark      1.4.9      2021-11-09 [3] CRAN (R 4.1.3)
+#>     mnormt              2.1.0      2022-06-07 [1] CRAN (R 4.2.0)
+#>     ModelMetrics        1.2.2.2    2020-03-17 [1] CRAN (R 4.2.1)
+#>     multcomp            1.4-19     2022-04-26 [1] CRAN (R 4.2.0)
+#>     munsell             0.5.0      2018-06-12 [1] CRAN (R 4.2.0)
+#>     mvtnorm             1.1-3      2021-10-08 [1] CRAN (R 4.2.0)
+#>     nlme                3.1-159    2022-08-09 [3] CRAN (R 4.2.1)
+#>     nls2                0.3-3      2022-05-02 [1] CRAN (R 4.2.1)
+#>     nnet                7.3-17     2022-01-13 [5] CRAN (R 4.1.2)
+#>     numDeriv            2016.8-1.1 2019-06-06 [1] CRAN (R 4.2.0)
+#>     palmerpenguins      0.1.1      2022-08-15 [1] CRAN (R 4.2.1)
+#>  VP parallelly          1.31.1     2022-07-21 [3] CRAN (R 4.2.1) (on disk 1.32.1)
+#>     patchwork           1.1.2      2022-08-19 [1] CRAN (R 4.2.1)
+#>     pdist               1.2.1      2022-05-02 [1] CRAN (R 4.2.1)
+#>     permute             0.9-7      2022-01-27 [1] CRAN (R 4.2.0)
+#>     phangorn            2.9.0      2022-06-16 [1] CRAN (R 4.2.0)
+#>     phylobase           0.8.10     2020-03-01 [1] CRAN (R 4.2.1)
+#>     phytools            1.0-3      2022-04-05 [1] CRAN (R 4.2.0)
+#>     picante             1.8.2      2020-06-10 [1] CRAN (R 4.2.1)
+#>     pillar              1.7.0      2022-02-01 [1] CRAN (R 4.2.0)
+#>     pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 4.2.0)
+#>     plotrix             3.8-2      2021-09-08 [1] CRAN (R 4.2.0)
+#>     plyr                1.8.7      2022-03-24 [1] CRAN (R 4.2.0)
+#>     png                 0.1-7      2013-12-03 [1] CRAN (R 4.2.1)
+#>     pracma              2.4.2      2022-09-22 [1] CRAN (R 4.2.1)
+#>     prettyunits         1.1.1      2020-01-24 [1] CRAN (R 4.2.0)
+#>     pROC                1.18.0     2021-09-03 [1] CRAN (R 4.2.1)
+#>     prodlim             2019.11.13 2019-11-17 [1] CRAN (R 4.2.1)
+#>     progress            1.2.2      2019-05-16 [1] CRAN (R 4.2.0)
+#>     proto               1.0.0      2016-10-29 [1] CRAN (R 4.2.1)
+#>     proxy               0.4-27     2022-06-09 [1] CRAN (R 4.2.1)
+#>     purrr               0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
+#>     quadprog            1.5-8      2019-11-20 [1] CRAN (R 4.2.0)
+#>     R6                  2.5.1      2021-08-19 [1] CRAN (R 4.2.0)
+#>     raster              3.6-3      2022-09-18 [1] CRAN (R 4.2.1)
+#>     rcdd                1.5        2021-11-18 [1] CRAN (R 4.2.1)
+#>     RColorBrewer        1.1-3      2022-04-03 [1] CRAN (R 4.2.0)
+#>  P  Rcpp                1.0.8.3    2022-03-17 [3] CRAN (R 4.2.0)
+#>     recipes             1.0.3      2022-11-09 [1] CRAN (R 4.2.1)
+#>     reshape2            1.4.4      2020-04-09 [1] CRAN (R 4.2.1)
+#>     rgeos               0.5-9      2021-12-15 [1] CRAN (R 4.2.1)
+#>     rgl                 0.110.2    2022-09-26 [1] CRAN (R 4.2.1)
+#>     rlang               1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
+#>     rncl                0.8.6      2022-03-18 [1] CRAN (R 4.2.1)
+#>     RNeXML              2.4.8      2022-10-19 [1] CRAN (R 4.2.1)
+#>     rpart               4.1.16     2022-01-24 [5] CRAN (R 4.1.2)
+#>     rstudioapi          0.14       2022-08-22 [1] CRAN (R 4.2.1)
+#>     sandwich            3.0-2      2022-06-15 [1] CRAN (R 4.2.0)
+#>     scales              1.2.0      2022-04-13 [1] CRAN (R 4.2.0)
+#>     scatterplot3d       0.3-41     2018-03-14 [1] CRAN (R 4.2.0)
+#>     sessioninfo         1.2.2      2021-12-06 [3] CRAN (R 4.1.3)
+#>     snow                0.4-4      2021-10-27 [1] CRAN (R 4.2.1)
+#>     sp                  1.5-0      2022-06-05 [1] CRAN (R 4.2.0)
+#>     stringi             1.7.6      2021-11-29 [1] CRAN (R 4.2.0)
+#>     stringr             1.4.0      2019-02-10 [1] CRAN (R 4.2.0)
+#>     survival            3.3-1      2022-03-03 [3] CRAN (R 4.1.3)
+#>     terra               1.6-17     2022-09-10 [1] CRAN (R 4.2.1)
+#>     TH.data             1.1-1      2022-04-26 [1] CRAN (R 4.2.0)
+#>     tibble              3.1.7      2022-05-03 [1] CRAN (R 4.2.0)
+#>     tictoc              1.0.1      2021-04-19 [3] CRAN (R 4.1.3)
+#>     tidyr               1.2.1      2022-09-08 [1] CRAN (R 4.2.1)
+#>     tidyselect          1.2.0      2022-10-10 [1] CRAN (R 4.2.1)
+#>     timechange          0.1.1      2022-11-04 [1] CRAN (R 4.2.1)
+#>     timeDate            4021.106   2022-09-30 [1] CRAN (R 4.2.1)
+#>     utf8                1.2.2      2021-07-24 [1] CRAN (R 4.2.0)
+#>     uuid                1.1-0      2022-04-19 [1] CRAN (R 4.2.1)
+#>     vctrs               0.5.0      2022-10-22 [1] CRAN (R 4.2.1)
+#>     vegan               2.6-2      2022-04-17 [1] CRAN (R 4.2.0)
+#>     viridis             0.6.2      2021-10-13 [1] CRAN (R 4.2.1)
+#>     viridisLite         0.4.0      2021-04-13 [1] CRAN (R 4.2.0)
+#>     withr               2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
+#>     xfun                0.34       2022-10-18 [1] CRAN (R 4.2.1)
+#>     XML                 3.99-0.12  2022-10-28 [1] CRAN (R 4.2.1)
+#>     xml2                1.3.3      2021-11-30 [1] CRAN (R 4.2.1)
+#>     zoo                 1.8-10     2022-04-15 [1] CRAN (R 4.2.0)
 #> 
-#> [1] /homes/ke76dimu/R/x86_64-pc-linux-gnu-library/3.6
-#> [2] /usr/local/lib/R/site-library
-#> [3] /usr/lib/R/site-library
-#> [4] /usr/lib/R/library
+#>  [1] /home/ke76dimu/R-library/4.2
+#>  [2] /usr/local/lib/R/site-library
+#>  [3] /data/library/4.1
+#>  [4] /usr/lib/R/site-library
+#>  [5] /usr/lib/R/library
 #> 
 #>  V ── Loaded and on-disk version mismatch.
 #>  P ── Loaded and on-disk path mismatch.
+#> 
+#> ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 ```
 
 </details>
