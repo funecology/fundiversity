@@ -52,35 +52,25 @@ All indices can be computed either using global trait data or at the
 site-level:
 
 ``` r
-library(fundiversity)
+library("fundiversity")
 
-# Get trait data included in the package
-data("traits_birds")
-
-# Compute Functional Richness of all birds included
+# If only the trait dataset is specified, considers all species together
+# by default
 fd_fric(traits_birds)
 #>   site     FRic
 #> 1   s1 230967.7
 
-# Compute Functional Divergence
-fd_fdiv(traits_birds)
-#>   site      FDiv
-#> 1   s1 0.7282172
-
-# Compute Rao's Quadratic Entropy
-fd_raoq(traits_birds)
-#>   site        Q
-#> 1   s1 170.0519
-
-# Compute Functional Dispersion
-fd_fdis(traits_birds)
-#>   site     FDis
-#> 1   s1 146.2072
-
-# Compute Functional Evenness
-fd_feve(traits_birds)
-#>   site      FEve
-#> 1   s1 0.3743341
+# We can also compute diversity across sites
+fd_fric(traits_birds, site_sp_birds)
+#>        site       FRic
+#> 1  elev_250 171543.730
+#> 2  elev_500 185612.548
+#> 3 elev_1000 112600.176
+#> 4 elev_1500  66142.748
+#> 5 elev_2000  20065.764
+#> 6 elev_2500  18301.176
+#> 7 elev_3000  17530.651
+#> 8 elev_3500   3708.735
 ```
 
 To compute Rao’s Quadratic Entropy, the user can also provide a distance
@@ -120,8 +110,9 @@ fd_fdiv(traits_birds)
 ```
 
 For more details please refer to the [parallelization
-vignette](https://funecology.github.io/fundiversity/articles/parallel.html)
-or use `vignette("parallel", package = "fundiversity")` within R.
+vignette](https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html)
+or use `vignette("fundiversity_1-parallel", package = "fundiversity")`
+within R.
 
 ## Available functional diversity indices
 
@@ -130,7 +121,7 @@ diversity indices can be classified in three “domains” that assess
 different properties of the functional space: richness, divergence, and
 regularity. We made sure that the computations in the package are
 correct in our [correctness
-vignette](https://funecology.github.io/fundiversity/articles/correctness.html).
+vignette](https://funecology.github.io/fundiversity/articles/fundiversity_3-correctness.html).
 `fundiversity` provides function to compute indices that assess this
 three facets at the site scale:
 
@@ -143,7 +134,7 @@ three facets at the site scale:
 
 Several other packages exist that compute functional diversity indices.
 We did a [performance
-comparison](https://funecology.github.io/fundiversity/articles/performance.html)
+comparison](https://funecology.github.io/fundiversity/articles/fundiversity_2-performance.html)
 between related packages. We here mention some of them (but do not
 mention the numerous wrappers around these packages):
 
