@@ -19,6 +19,7 @@ Description: Computes six functional diversity indices: Functional
   parallel functions to compute functional diversity indices.
   (preprint: <doi:10.32942/osf.io/dg7hw>)
 License: GPL-3
+Language: en
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
