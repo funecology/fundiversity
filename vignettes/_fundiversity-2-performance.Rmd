@@ -22,7 +22,8 @@ knitr::opts_chunk$set(
   fig.path = "fd-",
   fig.height = 8.5,
   fig.width = 8,
-  message = FALSE
+  message = FALSE,
+  eval = FALSE
 )
 
 suppressPackageStartupMessages({
@@ -37,15 +38,19 @@ This vignette presents some performance tests ran between `fundiversity` and oth
 
 ## Main functions
 
-**`FD::dbFD()`** is probably the most known function to compute functional diversity indices. It comes from the `FD` package proposed by @Laliberte_FD_2014. It can compute many indices: functional richness, Rao's quadratic entropy, community-weighted mean, functional divergence, functional dispersion, and functional group richness. This swiss-army knife of functional diversity indices has many options and compute several indices in a single run.
+Here is a table that summarizes the comparable functions (and their arguments) for functions included in `fundiversity`. Note that the package name is indicated before `::` followed by the function name.
 
-**`hillR::hill_func()`** comes from the `hillR` package that computes Hill numbers for taxonomic, functional, and functional diversity [@Li_hillR_2018]. It implements indices proposed by @Chao_Unifying_2014. It computes Rao's quadratic entropy, the mean functional diversity per species, as well as the total functional diversity.
+|    Index Type    | Index Name                                        | Source                        | `fundiversity` function | Equivalent Functions |
+|:-----------------|:--------------------------------------------------|:------------------------------|:------------------------|----------------------|
+| α-diversity      | Functional Dispersion (FDis)                      | @Laliberte_distancebased_2010 | `fd_fdis()`             | ~~`BAT::dispersion()`~~ (doesn't compute FDis)<br />`FD::fdisp()`<br />~~`hillR::hill_func()`~~ (actually rely on `FD` for FDis computations and standardize the traits without telling the user)<br />`mFD::alpha.fd.multidim(..., ind_vect = "fdis")` |
+| α-diversity      | Functional Divergence (FDiv)                      | @Villeger_New_2008            | `fd_fdiv()`             | `mFD::alpha.fd.multidim(..., ind_vect = "fdiv")`                                                                                                                                                                                                        |
+| α-diversity      | Functional Evenness (FEve)                        | @Villeger_New_2008            | `fd_feve()`             | `mFD::alpha.fd.multidim(..., ind_vect = "feve")`                                                                                                                                                                                                        |
+| α-diversity      | Functional Richness (FRic)                        | @Villeger_New_2008            | `fd_fric()`             | `BAT::alpha()` (tree, not strictly equal)<br />`BAT::hull.alpha()` (hull)<br />`mFD::alpha.fd.multidim(..., ind_vect = "fric")`                                                                                                                         |
+| α-diversity      | Rao's Quadratic Entropy (Q)                       | @Villeger_Decomposing_2013    | `fd_raoq()`             | `adiv::QE()`<br />`BAT::rao()`<br />`hillR::hill_func()` (standardize traits without warning)<br />`mFD::alpha.fd.hill(..., q = 2, tau = "max")` (returns a slightly modified version of Q according to @Ricotta_Diversity_2009)                        |
+| β-diversity      | Functional Richness Intersection (FRic_intersect) | @Rao_Diversity_1982           | `fd_fric_intersect()`   | `betapart::functional.beta.pair()`<br />`hillR::hill_func_parti_pairwise()`                                                                                                                                                                             |
 
-**`adiv::QE()`** comes from the `adiv` package which proposes a toolkit to analyze biodiversity [@Pavoine_adiv_2020]. This function computes Rao's quadratic entropy.
+The other packages are thus: `adiv` [@Pavoine_adiv_2020], `BAT` [@Cardoso_BAT_2015], `betapart` [@Baselga_betapart_2012], `FD` [@Laliberte_FD_2014], `hillR` [@Li_hillR_2018], and `mFD` [@Magneville_mFD_2022].
 
-**`SYNCSA::rao.diversity()`** comes from `SYNCSA` package which proposes a simulation framework for meta-communities [@Debastiani_SYNCSA_2012]. The function computes Rao's quadratic entropy as well as functional redundancy.
-
-**`mFD::alpha.fd.hill()`** comes from the `mFD` package which offers a coherent framework to work with functional spaces and perform quality checks, diagnostic plots, as well as computing many functional diversity indices.
 
 ## Benchmark between packages
 
@@ -59,6 +64,49 @@ data("site_sp_birds", package = "fundiversity")
 
 dist_traits_birds <- dist(traits_birds)
 ```
+
+## Functional Dispersion (FDis)
+
+```{r bench-fdis}
+fdis_bench <- microbenchmark::microbenchmark(
+  fundiversity = {
+    fundiversity::fd_fdis(traits_birds, site_sp_birds)
+  },
+  adiv = {
+    adiv::QE(site_sp_birds, dis = dist_traits_birds)
+  },
+  hillR = {
+    hillR::hill_func(site_sp_birds, dist_traits_birds, traits_as_is = TRUE)[1, ]
+  },
+  SYNCSA = {
+    SYNCSA::rao.diversity(site_sp_birds,
+                          phylodist = as.matrix(dist_traits_birds),
+                          standardize = FALSE)$PhyRao
+  },
+  FD = {
+    FD::fdisp(dist_traits_birds, site_sp_birds)
+  },
+  mFD = {
+    mFD::alpha.fd.hill(site_sp_birds, dist_traits_birds, q = 2, tau = "max",
+                       details_returned = FALSE)
+  },
+  times = 500
+)
+
+ggplot2::autoplot(pkg_bench)
+pkg_bench
+
+```
+
+## Functional Divergence (FDiv)
+
+## Functional Evenness (FEve)
+
+## Functional Richness (FRic)
+
+## Rao's Quadratic Entropy (Q)
+
+## Functional Richness Intersection (FRic_intersect)
 
 With the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`:
 
