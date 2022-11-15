@@ -15,7 +15,8 @@ knitr::knit("vignettes/_fundiversity_1-parallel.Rmd", output = "vignettes/fundiv
 ```{r vignette-setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.path = "vignettes/para-"
 )
 tictoc::tic()
 
