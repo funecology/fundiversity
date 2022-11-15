@@ -187,6 +187,12 @@ birds_fric = fd_fric(z_traits, site_sp_birds)
 head(birds_fric)
 ```
 
+If the site-species matrix is not provided, `fundiversity` considers that all species present in the trait matrix are all present in a single site:
+
+```{r fric-only-traits}
+fd_fric(z_traits)
+```
+
 All other functions in `fundiversity` use a similar structure, the first input is trait data, the second one is a site-species matrix (Figure \ref{fig1}). For Rao's quadratic entropy, computed through `fd_raoq()`, functional dissimilarities can be specified as the third argument:
 
 ```{r raoq}
