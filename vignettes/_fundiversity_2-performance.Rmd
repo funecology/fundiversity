@@ -157,7 +157,7 @@ fric_bench <- microbenchmark::microbenchmark(
     site_sp_birds, traits_birds
   ),
   hillR = hillR::hill_func_parti_pairwise(
-    site_sp_birds, traits_birds
+    site_sp_birds, traits_birds, .progress = FALSE
   ),
   times = 30
 )
