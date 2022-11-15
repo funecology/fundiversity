@@ -9,7 +9,7 @@ vignette: >
 
 <!-- 
 # Pre-render with 
-knitr::knit("vignettes/_fundiversity-1-parallel.Rmd", output = "vignettes/fundiversity-1-parallel.Rmd")
+knitr::knit("vignettes/_fundiversity_1-parallel.Rmd", output = "vignettes/fundiversity_1-parallel.Rmd")
 -->
 
 ```{r vignette-setup, include = FALSE}
@@ -18,7 +18,16 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 tictoc::tic()
+
+options(fundiversity.memoise = FALSE)
 ```
+
+Note: This vignette presents some performance tests ran between non-parallel and parallel versions of `fundiversity` functions. Note that to avoid the dependency on other packages, this vignette is [**pre-computed**](https://ropensci.org/technotes/2019/12/08/precompute-vignettes/).
+
+
+Within `fundiversity` the computation of most indices can be parallelized using the `future` package. The indices that currently support parallelization are: **FRic**, **FDis**, **FDiv**, and **FEve**. The goal of this vignette is to explain how to toggle and use parallelization in `fundiversity`.
+
+The `future` package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The [first vignette of `future`](https://cran.r-project.org/package=future) gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. `fundiversity` can thus run on all these different backends following the user's choice.
 
 ```{r setup}
 library("fundiversity")
@@ -26,11 +35,6 @@ library("fundiversity")
 data("traits_birds", package = "fundiversity")
 data("site_sp_birds", package = "fundiversity")
 ```
-
-Within `fundiversity` the computation of most indices can be parallelized using the `future` package. The indices that currently support parallelization are: **FRic**, **FDis**, **FDiv**, and **FEve**. The goal of this vignette is to explain how to toggle and use parallelization in `fundiversity`.
-
-The `future` package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The [first vignette of `future`](https://cran.r-project.org/package=future) gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. `fundiversity` can thus run on all these different backends following the user's choice.
-
 
 # Running code in parallel
 
