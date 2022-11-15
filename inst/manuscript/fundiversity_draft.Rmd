@@ -206,7 +206,7 @@ birds_raoq_2 = fd_raoq(z_traits, site_sp_birds)
 identical(birds_raoq, birds_raoq_2)
 ```
 
-If all traits are not quantitative, it is possible to transform them back into independent traits through the use of Gower's distance [@Gower_general_1971; and its extensions: @Podani_Extending_1999, @Pavoine_challenge_2009] then applying multivariate analysis to obtain orthogonal dimensions [@Maire_How_2015]. As this is out of the scope of `fundiversity`, it's the user responsibility to decide how to proceed to obtain back independent quantitative traits.
+If not all traits are quantitative, it is possible to transform them back into independent traits through the use of Gower's distance [@Gower_general_1971; and its extensions: @Podani_Extending_1999, @Pavoine_challenge_2009] then applying multivariate analysis to obtain orthogonal dimensions [@Maire_How_2015]. As this is out of the scope of `fundiversity`, it's the user responsibility to decide how to proceed to obtain back independent quantitative traits.
 
 
 ## Using parallel computation
