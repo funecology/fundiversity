@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   class.warning = "collapsable-warnings",
   warning = FALSE,
-  fig.path = "vignettes/perf-",
+  fig.path = here::here("vignettes", "perf-"),
   fig.height = 8.5,
   fig.width = 8,
   message = FALSE,
