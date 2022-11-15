@@ -23,7 +23,10 @@ arguments about why they should trust the code provided to them.
 
 We want to contribute to change this trend and in this vignette, we show that 
 indices computed by `fundiversity` behave as theoretically expected, and as
-presented in @Villeger_New_2008.
+presented in @Villeger_New_2008. We also internally compared `fundiversity`
+results with ones obtained by other packages. You can see the equivalence
+between functions in the [benchmark vignette](https://funecology.github.io/fundiversity/articles/fundiversity_2-performance.html#main-functions)
+that compares `fundiversity` and alternative packages.
 
 ```{r load-pkg}
 library(fundiversity)
