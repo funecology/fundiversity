@@ -1,6 +1,6 @@
 Package: fundiversity
 Title: Easy Computation of Functional Diversity Indices
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: 
     c(
       person("Matthias", "Grenié",
