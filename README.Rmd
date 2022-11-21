@@ -30,7 +30,6 @@ pkg_has_vignettes_and_test = function(pkg_name, pkg_dir = temp_dir) {
 
 # fundiversity <img src="man/figures/logo.png" align="right" alt="fundiversity logo" width="120" />
 
-
 <!-- badges: start -->
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![R build status](https://github.com/funecology/fundiversity/workflows/R-CMD-check/badge.svg)](https://github.com/funecology/fundiversity/actions)
@@ -46,6 +45,7 @@ The package is built using clear, public
 [design principles](https://funecology.github.io/fundiversity/articles/fundiversity_4-design-principles.html)
 inspired from our own experience and user feedback.
 
+
 ## Installation
 
 You can install the stable version from CRAN with:
@@ -59,6 +59,7 @@ Alternatively, you can install the development version with:
 ```{r eval = FALSE}
 install.packages("fundiversity", repos = "https://bisaloo.r-universe.dev")
 ```
+
 
 ## Examples
 
