@@ -156,7 +156,7 @@ mention the numerous wrappers around these packages):
 
 1.  parallelization through the `future` backend please refer to the
     [parallelization
-    vignette](https://funecology.github.io/fundiversity/articles/parallel.html)
+    vignette](https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html)
     for details.
 
 2.  memoization means that the results of the functions calls are cached
