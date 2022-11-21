@@ -10,8 +10,7 @@ remove_species_without_trait <- function(trait_mat) {
   complete_traits <- complete.cases(trait_mat)
 
   if (sum(complete_traits) != nrow(trait_mat)) {
-    message("Removed ", sum(!complete_traits), " species with missing trait(s)",
-            call. = FALSE)
+    message("Removed ", sum(!complete_traits), " species with missing trait(s)")
   }
 
   trait_mat[complete_traits,, drop = FALSE]
