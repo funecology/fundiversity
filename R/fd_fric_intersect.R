@@ -20,7 +20,10 @@
 #' pair of site.
 #'
 #' NB: FRic_intersect is equal to `NA` when there are strictly less species in
-#' one of the sites than the number of provided traits.
+#' one of the sites than the number of provided traits. Note that only species
+#' with strictly different trait combinations are considered unique, species
+#' that share the exact same trait values across all traits are considered as
+#' one species.
 #'
 #' @seealso [fd_fric()], [geometry::intersectn()], [geometry::convhulln()]
 #'
