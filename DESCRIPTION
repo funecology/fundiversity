@@ -32,6 +32,7 @@ Imports:
     Matrix,
     vegan
 Suggests:
+    future,
     knitr,
     memoise,
     rmarkdown,
