@@ -64,17 +64,25 @@ test_that("Functional Richness can standardize its values", {
 
 test_that("Functional Richness edge cases", {
 
-  # Not enough species compared to the number of traits to be computed
-  expect_identical(
-    fd_fric(traits_birds[1:4, ])[["FRic"]],
-    NA_real_
+  # Warning when there is less traits than number of species
+  expect_warning(
+    na_fric <- fd_fric(traits_birds[1:4, ]),
+    "Some sites had less species than traits so returned FRic is 'NA'"
   )
 
-  # Several species with similar trait values -> not enought species for FRic
+  # Not enough species compared to the number of traits to be computed
+  expect_identical(na_fric[["FRic"]], NA_real_)
+
+  # Several species with duplicate trait values -> not enough species for FRic
   dup_traits <- lapply(1:5, function(x) traits_birds[1,, drop = FALSE])
   dup_traits <- do.call(rbind, dup_traits)
 
-  expect_identical(fd_fric(dup_traits)[["FRic"]], NA_real_)
+  expect_warning(
+    na_dup_fric <- fd_fric(dup_traits),
+    "Some sites had less species than traits so returned FRic is 'NA'"
+  )
+
+  expect_identical(na_dup_fric[["FRic"]], NA_real_)
 
   # Trying to compute FRic with >16 traits
   many_traits <- cbind(traits_birds, traits_birds, traits_birds, traits_birds,
@@ -93,17 +101,21 @@ test_that("Functional Richness edge cases", {
                     dimnames = list("s1", rownames(traits_birds)))
   site_sp[1,1] <- 1
 
-  expect_silent(fd_fric(traits_birds, site_sp))
+  expect_warning(
+    single_fric <- fd_fric(traits_birds, site_sp),
+    "Some sites had less species than traits so returned FRic is 'NA'"
+  )
 
-  expect_identical(fd_fric(traits_birds, site_sp)[["FRic"]], NA_real_)
+  expect_identical(single_fric[["FRic"]], NA_real_)
 
 
   # FRic for site with no species (should be NA)
   data("traits_plants")
   data("site_sp_plants")
 
-  fric <- expect_silent(
-    fd_fric(traits_plants, site_sp_plants[10,, drop = FALSE])
+  expect_warning(
+    fric <- fd_fric(traits_plants, site_sp_plants[10,, drop = FALSE]),
+    "Some sites had less species than traits so returned FRic is 'NA'"
   )
 
   expect_identical(fric$FRic[[1]], NA_real_)

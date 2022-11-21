@@ -45,7 +45,9 @@
 #' * `FRic` the values of functional richness at each site.
 #'
 #' NB: FRic is equal to `NA` when there are strictly less species in a site
-#' than the number of provided traits.
+#' than the number of provided traits. Note that only species with strictly
+#' different trait combinations are considered unique, species that share the
+#' exact same trait values across all traits are considered as one species.
 #'
 #' @references
 #' Cornwell W. K., Schwilk D. W., Ackerly D. D. (2006), A trait-based test for
@@ -101,6 +103,12 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
   fric_site <- future_apply(sp_com, 1, function(site_row) {
     fd_chull(traits[site_row > 0,, drop = FALSE])$vol
   }, future.globals = FALSE)
+
+  if (any(is.na(fric_site))) {
+    warning(
+      "Some sites had less species than traits so returned FRic is 'NA'"
+    )
+  }
 
   data.frame(site = rownames(sp_com), FRic = fric_site/max_range,
              row.names = NULL)

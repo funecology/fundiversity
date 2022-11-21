@@ -109,6 +109,13 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
     }
   }, future.globals = FALSE)
 
+  if (any(is.na(fric_intersect))) {
+    warning(
+      "Some sites had less species than traits so returned FRic_intersect ",
+      "is 'NA'"
+    )
+  }
+
   data.frame(first_site = all_site_comb[,1],
              second_site = all_site_comb[,2],
              FRic_intersect = fric_intersect/max_range,
