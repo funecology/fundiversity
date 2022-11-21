@@ -8,13 +8,14 @@ message: 'To cite package "fundiversity" in publications use:'
 type: software
 license: GPL-3.0-only
 title: 'fundiversity: Easy Computation of Functional Diversity Indices'
-version: 1.0.0.9000
+version: 1.1.0
 doi: 10.5281/zenodo.4761754
-abstract: 'Computes six functional diversity indices: Functional Divergence (FDiv),
-  Function Evenness (FEve), Functional Richness (FRic), Functional Richness intersections
-  (FRic_intersect), Functional Dispersion (FDis), Rao''s entropy (Q) (reviewed in
-  Villéger et al. 2008 <doi:10.1890/07-1206.1>). Provides efficient, modular, and
-  parallel functions to compute functional diversity indices. (preprint: <doi:10.32942/osf.io/dg7hw>)'
+abstract: 'Computes six functional diversity indices. These are namely, Functional
+  Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional
+  Richness intersections (FRic_intersect), Functional Dispersion (FDis), and Rao''s
+  entropy (Q) (reviewed in Villéger et al. 2008 <doi:10.1890/07-1206.1>). Provides
+  efficient, modular, and parallel functions to compute functional diversity indices
+  (preprint: <doi:10.32942/osf.io/dg7hw>).'
 authors:
 - family-names: Grenié
   given-names: Matthias
@@ -35,7 +36,7 @@ preferred-citation:
     given-names: Hugo
     orcid: https://orcid.org/0000-0002-4094-1476
   year: '2022'
-  notes: R package version 1.0.0.9000
+  notes: R package version 1.1.0
   url: https://CRAN.R-project.org/package=fundiversity
   doi: 10.5281/zenodo.4761754
 repository: https://CRAN.R-project.org/package=fundiversity
@@ -59,7 +60,7 @@ references:
   - family-names: Gruson
     given-names: Hugo
   year: '2022'
-  notes: R package version 1.0.0.9000
+  notes: R package version 1.1.0
   url: https://github.com/funecology/fundiversity
   doi: 10.5281/zenodo.4761754
 - type: software
