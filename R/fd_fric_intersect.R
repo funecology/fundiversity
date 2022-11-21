@@ -5,6 +5,8 @@
 #' hull). Note that when standardizing convex hulls of intersections,
 #' this function uses the convex hull of all provided traits,
 #' thus standardized volume of self-intersection hulls can be lower than one.
+#' NB: FRic_intersect is equal to `NA` when there are strictly less species in
+#' one of the sites than the number of provided traits.
 #'
 #' @inheritParams fd_fric
 #'

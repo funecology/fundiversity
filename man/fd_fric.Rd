@@ -37,7 +37,9 @@ than the number of provided traits.
 }
 \description{
 Functional Richness is computed as the volume of the convex hull from all
-included traits.
+included traits following Villéger et al. (2008).
+NB: FRic is equal to \code{NA} when there are strictly less species in a site
+than the number of provided traits.
 }
 \details{
 By default, when loading \pkg{fundiversity}, the functions to

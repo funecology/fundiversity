@@ -32,7 +32,8 @@ a data.frame with two columns:
 NB: Rao's quadratic entropy is 0 when there are no species in the site.
 }
 \description{
-Compute Rao's entropy index (Rao's Q)
+This function computes Rao's Quadratic Entropy following Rao (1982).
+NB: Rao's quadratic entropy is 0 when there are no species in the site.
 }
 \examples{
 data(traits_birds)

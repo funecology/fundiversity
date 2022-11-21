@@ -1,7 +1,9 @@
 #' Compute Functional Richness (FRic)
 #'
 #' Functional Richness is computed as the volume of the convex hull from all
-#' included traits.
+#' included traits following Villéger et al. (2008).
+#' NB: FRic is equal to `NA` when there are strictly less species in a site
+#' than the number of provided traits.
 #'
 #' @param traits Trait matrix with species as rows and traits as columns.
 #'               It has to contain exclusively numerical values. This can be

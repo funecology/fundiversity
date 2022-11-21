@@ -43,6 +43,8 @@ of sites (including self-intersection, which corresponds to their convex
 hull). Note that when standardizing convex hulls of intersections,
 this function uses the convex hull of all provided traits,
 thus standardized volume of self-intersection hulls can be lower than one.
+NB: FRic_intersect is equal to \code{NA} when there are strictly less species in
+one of the sites than the number of provided traits.
 }
 \details{
 By default, when loading \pkg{fundiversity}, the functions to

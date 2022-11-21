@@ -27,7 +27,8 @@ a data.frame with two columns:
 NB: when a site contains no species FDis is equal to 0.
 }
 \description{
-Compute Functional Dispersion (FDis)
+This function computes Functional Dispersion (FDis) following Laliberté &
+Legendre (2010). NB: when a site contains no species FDis is equal to 0.
 }
 \section{Parallelization}{
 

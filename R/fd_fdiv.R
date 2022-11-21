@@ -1,5 +1,9 @@
 #' Compute Functional Divergence (FDiv)
 #'
+#' This function computes Functional Divergence (FDiv) following Villéger et al.
+#' (2008). NB: when a site contains no species FDiv is equal to 0. If for a site
+#' there are less traits than species, then FDiv is equal to `NaN`.
+#'
 #' @inheritParams fd_fric
 #'
 #' @inheritSection fd_fric Parallelization
@@ -13,7 +17,8 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FDiv` the values of functional divergence at each site.
 #'
-#' NB: when a site contains no species FDiv is equal to 0.
+#' NB: when a site contains no species FDiv is equal to 0. If for a site
+#' there are less traits than species, then FDiv is equal to `NaN`.
 #'
 #' @references
 #' Villéger S., Mason N. W. H., Mouillot D. (2008), New multidimensional

@@ -1,5 +1,9 @@
 #' Compute Functional Evenness (FEve)
 #'
+#' This function computes Functional Evenness (FEve) following Villéger et al.
+#' (2008). NB: By definition FEve is equal to `NA` when the number of species
+#' per site is strictly lower than 3.
+#'
 #' @inheritParams fd_raoq
 #'
 #' @inheritSection fd_fric Parallelization
