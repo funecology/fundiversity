@@ -1,7 +1,9 @@
 #' Compute Functional Richness (FRic)
 #'
 #' Functional Richness is computed as the volume of the convex hull from all
-#' included traits.
+#' included traits following Villéger et al. (2008).
+#' NB: FRic is equal to `NA` when there are strictly less species in a site
+#' than the number of provided traits.
 #'
 #' @param traits Trait matrix with species as rows and traits as columns.
 #'               It has to contain exclusively numerical values. This can be
@@ -23,7 +25,7 @@
 #' The computation of this function can be parallelized thanks to
 #' [future::plan()]. To get more information on how to parallelize your
 #' computation please refer to the parallelization vignette with:
-#' `vignette("parallel", package = "fundiversity")`
+#' `vignette("fundiversity_1-parallel", package = "fundiversity")`
 #'
 #' @examples
 #' data(traits_birds)
@@ -43,7 +45,9 @@
 #' * `FRic` the values of functional richness at each site.
 #'
 #' NB: FRic is equal to `NA` when there are strictly less species in a site
-#' than the number of provided traits.
+#' than the number of provided traits. Note that only species with strictly
+#' different trait combinations are considered unique, species that share the
+#' exact same trait values across all traits are considered as one species.
 #'
 #' @references
 #' Cornwell W. K., Schwilk D. W., Ackerly D. D. (2006), A trait-based test for
@@ -99,6 +103,12 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
   fric_site <- future_apply(sp_com, 1, function(site_row) {
     fd_chull(traits[site_row > 0,, drop = FALSE])$vol
   }, future.globals = FALSE)
+
+  if (any(is.na(fric_site))) {
+    warning(
+      "Some sites had less species than traits so returned FRic is 'NA'"
+    )
+  }
 
   data.frame(site = rownames(sp_com), FRic = fric_site/max_range,
              row.names = NULL)

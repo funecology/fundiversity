@@ -24,10 +24,13 @@ a data.frame with two columns:
 \item \code{FDiv} the values of functional divergence at each site.
 }
 
-NB: when a site contains no species FDiv is equal to 0.
+NB: when a site contains no species FDiv is equal to 0. If for a site
+there are less traits than species, then FDiv is equal to \code{NaN}.
 }
 \description{
-Compute Functional Divergence (FDiv)
+This function computes Functional Divergence (FDiv) following Villéger et al.
+(2008). NB: when a site contains no species FDiv is equal to 0. If for a site
+there are less traits than species, then FDiv is equal to \code{NaN}.
 }
 \details{
 By default, when loading \pkg{fundiversity}, the functions to
@@ -44,7 +47,7 @@ file to avoid toggling it each time.
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
 }
 
 \examples{

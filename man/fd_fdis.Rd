@@ -27,14 +27,15 @@ a data.frame with two columns:
 NB: when a site contains no species FDis is equal to 0.
 }
 \description{
-Compute Functional Dispersion (FDis)
+This function computes Functional Dispersion (FDis) following Laliberté &
+Legendre (2010). NB: when a site contains no species FDis is equal to 0.
 }
 \section{Parallelization}{
 
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
 }
 
 \examples{

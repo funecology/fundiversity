@@ -1,5 +1,8 @@
 #' Compute Rao's entropy index (Rao's Q)
 #'
+#' This function computes Rao's Quadratic Entropy following Rao (1982).
+#' NB: Rao's quadratic entropy is 0 when there are no species in the site.
+#'
 #' @inheritParams fd_fric
 #' @param dist_matrix A dissimilarity matrix that can be provided instead of a
 #'                    trait data.frame (default: `NULL`).

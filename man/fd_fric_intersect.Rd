@@ -35,7 +35,10 @@ pair of site.
 }
 
 NB: FRic_intersect is equal to \code{NA} when there are strictly less species in
-one of the sites than the number of provided traits.
+one of the sites than the number of provided traits. Note that only species
+with strictly different trait combinations are considered unique, species
+that share the exact same trait values across all traits are considered as
+one species.
 }
 \description{
 Compute volume of the intersection of the convex hulls of all pairs
@@ -43,6 +46,8 @@ of sites (including self-intersection, which corresponds to their convex
 hull). Note that when standardizing convex hulls of intersections,
 this function uses the convex hull of all provided traits,
 thus standardized volume of self-intersection hulls can be lower than one.
+NB: FRic_intersect is equal to \code{NA} when there are strictly less species in
+one of the sites than the number of provided traits.
 }
 \details{
 By default, when loading \pkg{fundiversity}, the functions to
@@ -59,7 +64,7 @@ file to avoid toggling it each time.
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
 }
 
 \examples{

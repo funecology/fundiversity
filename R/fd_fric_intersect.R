@@ -5,6 +5,8 @@
 #' hull). Note that when standardizing convex hulls of intersections,
 #' this function uses the convex hull of all provided traits,
 #' thus standardized volume of self-intersection hulls can be lower than one.
+#' NB: FRic_intersect is equal to `NA` when there are strictly less species in
+#' one of the sites than the number of provided traits.
 #'
 #' @inheritParams fd_fric
 #'
@@ -18,7 +20,10 @@
 #' pair of site.
 #'
 #' NB: FRic_intersect is equal to `NA` when there are strictly less species in
-#' one of the sites than the number of provided traits.
+#' one of the sites than the number of provided traits. Note that only species
+#' with strictly different trait combinations are considered unique, species
+#' that share the exact same trait values across all traits are considered as
+#' one species.
 #'
 #' @seealso [fd_fric()], [geometry::intersectn()], [geometry::convhulln()]
 #'
@@ -106,6 +111,13 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
       fd_chull(first_traits)$vol
     }
   }, future.globals = FALSE)
+
+  if (any(is.na(fric_intersect))) {
+    warning(
+      "Some sites had less species than traits so returned FRic_intersect ",
+      "is 'NA'"
+    )
+  }
 
   data.frame(first_site = all_site_comb[,1],
              second_site = all_site_comb[,2],

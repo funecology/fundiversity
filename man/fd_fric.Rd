@@ -33,11 +33,15 @@ a data.frame with two columns:
 }
 
 NB: FRic is equal to \code{NA} when there are strictly less species in a site
-than the number of provided traits.
+than the number of provided traits. Note that only species with strictly
+different trait combinations are considered unique, species that share the
+exact same trait values across all traits are considered as one species.
 }
 \description{
 Functional Richness is computed as the volume of the convex hull from all
-included traits.
+included traits following Villéger et al. (2008).
+NB: FRic is equal to \code{NA} when there are strictly less species in a site
+than the number of provided traits.
 }
 \details{
 By default, when loading \pkg{fundiversity}, the functions to
@@ -54,7 +58,7 @@ file to avoid toggling it each time.
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
 }
 
 \examples{

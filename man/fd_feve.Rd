@@ -34,14 +34,16 @@ NB: By definition FEve is equal to \code{NA} when the number of species per site
 is strictly lower than 3.
 }
 \description{
-Compute Functional Evenness (FEve)
+This function computes Functional Evenness (FEve) following Villéger et al.
+(2008). NB: By definition FEve is equal to \code{NA} when the number of species
+per site is strictly lower than 3.
 }
 \section{Parallelization}{
 
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
 }
 
 \examples{

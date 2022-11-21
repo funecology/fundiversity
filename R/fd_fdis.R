@@ -1,5 +1,8 @@
 #' Compute Functional Dispersion (FDis)
 #'
+#' This function computes Functional Dispersion (FDis) following Laliberté &
+#' Legendre (2010). NB: when a site contains no species FDis is equal to 0.
+#'
 #' @inheritParams fd_fdiv
 #'
 #' @inheritSection fd_fric Parallelization
