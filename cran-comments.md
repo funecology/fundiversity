@@ -34,3 +34,11 @@ Possibly misspelled words in DESCRIPTION:
   preprint (20:4)
 
 but the word is well written.
+
+Fixed the following found from previous CRAN submission:
+
+Found the following (possibly) invalid file URIs:
+    URI: ./correctness.html
+      From: inst/doc/fundiversity.html
+    URI: ./parallel.html
+      From: inst/doc/fundiversity.html
