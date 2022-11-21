@@ -1,4 +1,20 @@
-# fundiversity 1.0.0.9000
+# fundiversity 1.1.0
+
+##  Minor changes
+
+* Change vignette names and indexing so that they are ordered similarly on the
+pkgdown website, on CRAN, and using `vignette`. Vignettes are renamed
+`fundiversity_X-topic.Rmd` but the overview vignette `fundiversity.Rmd`.
+* Fully replace all URLs still pointing to
+https://github.com/bisaloo/fundiversity to
+https://github.com/funecology/fundiversity
+* Update documentation of `fd_*()` functions for edge cases and arguments.
+* Fix unuseful argument in `remove_species_without_traits()` that would display
+`FALSE` at the end of each message.
+* Update parallel vignette with list of parallelizable function at the top and
+explain that vignette is pre-computed.
+* Update performance/benchmark vignette to reflect actually ran benchmark in
+manuscript.
 
 ## Bug fixes
 
