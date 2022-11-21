@@ -43,7 +43,7 @@ per site is strictly lower than 3.
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
 }
 
 \examples{

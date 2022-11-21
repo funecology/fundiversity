@@ -35,7 +35,7 @@ Legendre (2010). NB: when a site contains no species FDis is equal to 0.
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
 }
 
 \examples{

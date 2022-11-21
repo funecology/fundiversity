@@ -25,7 +25,7 @@
 #' The computation of this function can be parallelized thanks to
 #' [future::plan()]. To get more information on how to parallelize your
 #' computation please refer to the parallelization vignette with:
-#' `vignette("parallel", package = "fundiversity")`
+#' `vignette("fundiversity_1-parallel", package = "fundiversity")`
 #'
 #' @examples
 #' data(traits_birds)
