@@ -75,7 +75,7 @@ layout: 3p
 output: 
   rticles::elsevier_article:
     latex_engine: xelatex
-    keep_tex: FALSE
+    keep_tex: TRUE
     citation_package: default
   
 journal: Ecography
