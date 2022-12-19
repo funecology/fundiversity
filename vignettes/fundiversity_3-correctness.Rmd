@@ -109,10 +109,10 @@ Conversely, changes of abundances on a single trait axis don't impact FDiv but
 reduce FEve (this correspond to the panel b of Figure 2):
 
 ```{r data-b}
-l <- 2 # common species
-s <- 1 # rare species
+l <- 1.5 # common species
+s <- 0.5 # rare species
 
-wb <- matrix(c(l, l, l, l, l, s, s, s, s), nrow = 1)
+wb <- matrix(c(l, l, 1, l, l, s, s, s, s), nrow = 1)
 colnames(wb) <- rownames(data_a)
 rownames(wb) <- "site"
 ```
@@ -128,7 +128,7 @@ raoq_b <- fd_raoq(data_a, wb)[["Q"]]
 ```
 
 As expected, we found an FRic value of `r fric_b` (should be 2), an FEve value
-of `r feve_b` (should be 0.778), and a FDiv value of `r round(fdiv_b, 3)`
+of `r round(feve_b, 3)` (should be 0.778), and a FDiv value of `r round(fdiv_b, 3)`
 (should be 0.692).
 
 # Changes of coordinates (= traits)
