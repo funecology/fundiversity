@@ -56,6 +56,12 @@ fd_fdis <- function(traits, sp_com) {
 
   }
 
+  if (is.data.frame(sp_com)) {
+
+    sp_com <- as.matrix(sp_com)
+
+  }
+
   # Standardize abundance per site
   site_abundances <- rowSums(sp_com, na.rm = TRUE)
   site_abundances[site_abundances == 0] <- 1  # Account for site with no species
@@ -63,14 +69,15 @@ fd_fdis <- function(traits, sp_com) {
 
   centros <- sp_com %*% traits
 
-  dists_centro <- future_apply(centros, 1, function(centro) {
+  dists_centro <- future_apply(
+    centros, 1, function(centro) {
 
     sqrt(colSums((t(traits) - centro)^2))
 
-  }, future.globals = FALSE)
+    }, future.globals = FALSE
+  )
 
   fdis_site <- diag(sp_com %*% dists_centro)
 
-  data.frame(site = rownames(sp_com), FDis = fdis_site,
-             row.names = NULL)
+  data.frame(site = rownames(sp_com), FDis = fdis_site, row.names = NULL)
 }

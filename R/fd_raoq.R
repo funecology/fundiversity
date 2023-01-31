@@ -70,6 +70,12 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   }
 
+  if (is.data.frame(sp_com)) {
+
+    sp_com <- as.matrix(sp_com)
+
+  }
+
   # Standardize abundance per site
   site_abundances <- rowSums(sp_com, na.rm = TRUE)
   site_abundances[site_abundances == 0] <- 1  # Account for site with no species
@@ -78,7 +84,5 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   # Compute Rao's Quadratic entropy for each site
   q_site <- diag(sp_com %*% tcrossprod(dist_matrix, sp_com))
 
-  data.frame(site = rownames(sp_com),
-             Q = q_site,
-             row.names = NULL)
+  data.frame(site = rownames(sp_com), Q = q_site, row.names = NULL)
 }

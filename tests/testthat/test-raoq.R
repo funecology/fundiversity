@@ -101,6 +101,27 @@ test_that("Rao's Quadratic Entropy works on sparse matrices", {
 
 })
 
+test_that("Rao's Quadratic Entropy works on data.frame as well as matrix", {
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  site_sp_df <- as.data.frame(site_sp)
+
+  raoq    <- expect_silent(fd_raoq(traits_birds, site_sp))
+  raoq_df <- expect_silent(fd_raoq(traits_birds, site_sp_df))
+
+  expect_s3_class(raoq, "data.frame")
+  expect_identical(dim(raoq), c(1L, 2L))
+  expect_named(raoq, c("site", "Q"))
+
+  expect_equal(
+    raoq,
+    raoq_df
+  )
+})
+
 
 # Tests for invalid inputs -----------------------------------------------------
 

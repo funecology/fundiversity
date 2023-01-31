@@ -16,7 +16,7 @@ test_that("Functional Dispersion output format", {
   expect_equal(fdis$FDis, 133.3902, tolerance = 1e-7)
 })
 
-test_that("Function Dispersion works on subset of site/species", {
+test_that("Functional Dispersion works on subset of site/species", {
   site_sp <- matrix(1, ncol = nrow(traits_birds))
   colnames(site_sp) <-  rownames(traits_birds)
   rownames(site_sp) <- "s1"
@@ -73,6 +73,26 @@ test_that("Functional Dispersion works with sparse matrices", {
 
 })
 
+test_that("Functional Dispersion works on data.frame as well as matrix", {
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  site_sp_df <- as.data.frame(site_sp)
+
+  fdis    <- expect_silent(fd_fdis(traits_birds, site_sp))
+  fdis_df <- expect_silent(fd_fdis(traits_birds, site_sp_df))
+
+  expect_s3_class(fdis, "data.frame")
+  expect_identical(dim(fdis), c(1L, 2L))
+  expect_named(fdis, c("site", "FDis"))
+
+  expect_equal(
+    fdis,
+    fdis_df
+  )
+})
 
 # Tests for invalid inputs -----------------------------------------------------
 
