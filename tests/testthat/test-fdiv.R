@@ -85,6 +85,27 @@ test_that("Functional Divergence works with matrices without rownames", {
 
 })
 
+test_that("Functional Divergence works on data.frame as well as matrix", {
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  site_sp_df <- as.data.frame(site_sp)
+
+  fdiv    <- expect_silent(fd_fdiv(traits_birds, site_sp))
+  fdiv_df <- expect_silent(fd_fdiv(traits_birds, site_sp_df))
+
+  expect_s3_class(fdiv, "data.frame")
+  expect_identical(dim(fdiv), c(1L, 2L))
+  expect_named(fdiv, c("site", "FDiv"))
+
+  expect_equal(
+    fdiv,
+    fdiv_df
+  )
+})
+
 # Tests for invalid inputs -----------------------------------------------------
 
 test_that("Functional Divergence fails gracefully", {

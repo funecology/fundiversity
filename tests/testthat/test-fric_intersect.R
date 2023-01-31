@@ -162,6 +162,30 @@ test_that("Functional Richness Intersection works on sparse matrices", {
     1, tolerance = 1e-6)
 })
 
+test_that("Functional Richness Inters. works on data.frame as well as matrix", {
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  site_sp_df <- as.data.frame(site_sp)
+
+  fric_intersect    <- expect_silent(
+    fd_fric_intersect(traits_birds, site_sp)
+  )
+  fric_intersect_df <- expect_silent(
+    fd_fric_intersect(traits_birds, site_sp_df)
+  )
+
+  expect_s3_class(fric_intersect, "data.frame")
+  expect_identical(dim(fric_intersect), c(1L, 3L))
+  expect_named(fric_intersect, c("first_site", "second_site", "FRic_intersect"))
+
+  expect_equal(
+    fric_intersect,
+    fric_intersect_df
+  )
+})
 
 # Tests for invalid inputs -----------------------------------------------------
 

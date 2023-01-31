@@ -122,6 +122,26 @@ test_that("Functional Evenness works on sparse matrices", {
   )
 })
 
+test_that("Functional Evenness works on data.frame as well as matrix", {
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  site_sp_df <- as.data.frame(site_sp)
+
+  feve    <- expect_silent(fd_feve(traits_birds, site_sp))
+  feve_df <- expect_silent(fd_feve(traits_birds, site_sp_df))
+
+  expect_s3_class(feve, "data.frame")
+  expect_identical(dim(feve), c(1L, 2L))
+  expect_named(feve, c("site", "FEve"))
+
+  expect_equal(
+    feve,
+    feve_df
+  )
+})
 
 # Tests for invalid inputs -----------------------------------------------------
 

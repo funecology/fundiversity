@@ -139,6 +139,27 @@ test_that("Functional Richness works on sparse matrices", {
   expect_equal(fric, sparse_fric)
 })
 
+test_that("Functional Richness works on data.frame as well as matrix", {
+
+  site_sp <- matrix(1, ncol = nrow(traits_birds))
+  colnames(site_sp) <-  rownames(traits_birds)
+  rownames(site_sp) <- "s1"
+
+  site_sp_df <- as.data.frame(site_sp)
+
+  fric    <- expect_silent(fd_fric(traits_birds, site_sp))
+  fric_df <- expect_silent(fd_fric(traits_birds, site_sp_df))
+
+  expect_s3_class(fric, "data.frame")
+  expect_identical(dim(fric), c(1L, 2L))
+  expect_named(fric, c("site", "FRic"))
+
+  expect_equal(
+    fric,
+    fric_df
+  )
+})
+
 
 # Tests for invalid inputs -----------------------------------------------------
 
