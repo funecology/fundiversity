@@ -70,7 +70,7 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   }
 
-  if (!is.matrix(sp_com)) {
+  if (is.data.frame(sp_com)) {
 
     sp_com <- as.matrix(sp_com)
 
