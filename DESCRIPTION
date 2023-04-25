@@ -17,7 +17,7 @@ Description: Computes six functional diversity indices. These are namely,
   Dispersion (FDis), and Rao's entropy (Q) (reviewed in Villéger et al. 2008
   <doi:10.1890/07-1206.1>). Provides efficient, modular, and parallel functions
   to compute functional diversity indices
-  (preprint: <doi:10.32942/osf.io/dg7hw>).
+  (Grenié & Gruson 2023 <doi:10.1111/ecog.06585>).
 License: GPL-3
 Language: en
 Encoding: UTF-8
