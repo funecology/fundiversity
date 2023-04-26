@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# CITATION file created with {cffr} R package, v0.4.0
+# CITATION file created with {cffr} R package, v0.4.1
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
  
@@ -10,12 +10,12 @@ license: GPL-3.0-only
 title: 'fundiversity: Easy Computation of Functional Diversity Indices'
 version: 1.1.1
 doi: 10.5281/zenodo.4761754
-abstract: 'Computes six functional diversity indices. These are namely, Functional
+abstract: Computes six functional diversity indices. These are namely, Functional
   Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional
-  Richness intersections (FRic_intersect), Functional Dispersion (FDis), and Rao''s
+  Richness intersections (FRic_intersect), Functional Dispersion (FDis), and Rao's
   entropy (Q) (reviewed in Villéger et al. 2008 <doi:10.1890/07-1206.1>). Provides
   efficient, modular, and parallel functions to compute functional diversity indices
-  (preprint: <doi:10.32942/osf.io/dg7hw>).'
+  (Grenié & Gruson 2023 <doi:10.1111/ecog.06585>).
 authors:
 - family-names: Grenié
   given-names: Matthias
@@ -35,7 +35,7 @@ preferred-citation:
   - family-names: Gruson
     given-names: Hugo
     orcid: https://orcid.org/0000-0002-4094-1476
-  year: '2022'
+  year: '2023'
   notes: R package version 1.1.1
   url: https://CRAN.R-project.org/package=fundiversity
   doi: 10.5281/zenodo.4761754
@@ -48,21 +48,32 @@ contact:
   email: matthias.grenie@gmail.com
   orcid: https://orcid.org/0000-0002-4659-7522
 keywords:
+- biodiversity
+- biodiversity-indicators
+- biodiversity-informatics
+- functional-diversity
 - functional-ecology
+- functional-trait
+- functional-traits
 - r
 - r-package
+- trait
+- trait-based
+- traits
 references:
-- type: manual
-  title: 'fundiversity: Easy Computation of Functional Diversity Indices'
+- type: article
+  title: 'fundiversity: a modular R package to compute functional diversity indices'
   authors:
   - family-names: Grenié
     given-names: Matthias
   - family-names: Gruson
     given-names: Hugo
-  year: '2022'
-  notes: R package version 1.1.1
-  url: https://github.com/funecology/fundiversity
-  doi: 10.5281/zenodo.4761754
+  journal: Ecography
+  year: '2023'
+  doi: 10.1111/ecog.06585
+  volume: '2023'
+  issue: '3'
+  start: e06585
 - type: software
   title: 'R: A Language and Environment for Statistical Computing'
   notes: Depends
@@ -71,7 +82,7 @@ references:
   - name: R Core Team
   location:
     name: Vienna, Austria
-  year: '2022'
+  year: '2023'
   institution:
     name: R Foundation for Statistical Computing
   version: '>= 2.10'
@@ -85,7 +96,7 @@ references:
   - family-names: Bengtsson
     given-names: Henrik
     email: henrikb@braju.com
-  year: '2022'
+  year: '2023'
 - type: software
   title: geometry
   abstract: 'geometry: Mesh Generation and Surface Tessellation'
@@ -105,7 +116,7 @@ references:
     given-names: David C.
     email: david.c.sterratt@ed.ac.uk
     orcid: https://orcid.org/0000-0001-9092-9099
-  year: '2022'
+  year: '2023'
 - type: software
   title: Matrix
   abstract: 'Matrix: Sparse and Dense Matrix Classes and Methods'
@@ -122,7 +133,7 @@ references:
   - family-names: Jagan
     given-names: Mikael
     orcid: https://orcid.org/0000-0002-3542-2938
-  year: '2022'
+  year: '2023'
 - type: software
   title: vegan
   abstract: 'vegan: Community Ecology Package'
@@ -198,7 +209,7 @@ references:
     given-names: Cajo J.F.
   - family-names: Weedon
     given-names: James
-  year: '2022'
+  year: '2023'
 - type: software
   title: future
   abstract: 'future: Unified Parallel and Distributed Processing in R for Everyone'
@@ -209,7 +220,7 @@ references:
   - family-names: Bengtsson
     given-names: Henrik
     email: henrikb@braju.com
-  year: '2022'
+  year: '2023'
 - type: software
   title: knitr
   abstract: 'knitr: A General-Purpose Package for Dynamic Report Generation in R'
@@ -221,7 +232,7 @@ references:
     given-names: Yihui
     email: xie@yihui.name
     orcid: https://orcid.org/0000-0003-0645-5666
-  year: '2022'
+  year: '2023'
 - type: software
   title: memoise
   abstract: 'memoise: ''Memoisation'' of Functions'
@@ -243,7 +254,7 @@ references:
   - family-names: Cook
     given-names: Daniel
     email: danielecook@gmail.com
-  year: '2022'
+  year: '2023'
 - type: software
   title: rmarkdown
   abstract: 'rmarkdown: Dynamic Documents for R'
@@ -253,37 +264,40 @@ references:
   authors:
   - family-names: Allaire
     given-names: JJ
-    email: jj@rstudio.com
+    email: jj@posit.co
   - family-names: Xie
     given-names: Yihui
     email: xie@yihui.name
     orcid: https://orcid.org/0000-0003-0645-5666
+  - family-names: Dervieux
+    given-names: Christophe
+    email: cderv@posit.co
+    orcid: https://orcid.org/0000-0003-4474-2498
   - family-names: McPherson
     given-names: Jonathan
-    email: jonathan@rstudio.com
+    email: jonathan@posit.co
   - family-names: Luraschi
     given-names: Javier
-    email: javier@rstudio.com
   - family-names: Ushey
     given-names: Kevin
-    email: kevin@rstudio.com
+    email: kevin@posit.co
   - family-names: Atkins
     given-names: Aron
-    email: aron@rstudio.com
+    email: aron@posit.co
   - family-names: Wickham
     given-names: Hadley
-    email: hadley@rstudio.com
+    email: hadley@posit.co
   - family-names: Cheng
     given-names: Joe
-    email: joe@rstudio.com
+    email: joe@posit.co
   - family-names: Chang
     given-names: Winston
-    email: winston@rstudio.com
+    email: winston@posit.co
   - family-names: Iannone
     given-names: Richard
-    email: rich@rstudio.com
+    email: rich@posit.co
     orcid: https://orcid.org/0000-0003-3925-190X
-  year: '2022'
+  year: '2023'
 - type: software
   title: testthat
   abstract: 'testthat: Unit Testing for R'
@@ -294,5 +308,5 @@ references:
   - family-names: Wickham
     given-names: Hadley
     email: hadley@rstudio.com
-  year: '2022'
+  year: '2023'
   version: '>= 3.0.0'
