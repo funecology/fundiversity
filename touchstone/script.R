@@ -8,7 +8,7 @@
 # installs branches to benchmark
 touchstone::branch_install()
 
-# benchmark a function call from your package (two calls per branch)
+# benchmark a function call from your package (10 calls per branch)
 touchstone::benchmark_run(
   expr_before_benchmark = library(fundiversity),
   fric = fd_fric(traits_birds, site_sp_birds),
