@@ -10,21 +10,40 @@ touchstone::branch_install()
 
 # benchmark a function call from your package (two calls per branch)
 touchstone::benchmark_run(
-  # expr_before_benchmark = source("dir/data.R"), #<-- TODO OTPIONAL setup before benchmark
-  random_test = yourpkg::f(), #<- TODO put the call you want to benchmark here
-  n = 2
+  expr_before_benchmark = library(fundiversity),
+  fric = fd_fric(traits_birds, site_sp_birds),
+  n = 10
 )
 
-# TODO OPTIONAL benchmark any R expression (six calls per branch)
-# touchstone::benchmark_run(
-#   more = {
-#     if (TRUE) {
-#       y <- yourpkg::f2(x = 3)
-#     }
-#   }, #<- TODO put the call you want to benchmark here
-#   n = 6
-# )
+touchstone::benchmark_run(
+  expr_before_benchmark = library(fundiversity),
+  fdiv =  fd_fdiv(traits_birds, site_sp_birds),
+  n = 10
+)
 
+touchstone::benchmark_run(
+  expr_before_benchmark = library(fundiversity),
+  feve = fd_feve(traits_birds, site_sp_birds),
+  n = 10
+)
+
+touchstone::benchmark_run(
+  expr_before_benchmark = library(fundiversity),
+  fdis = fd_fdis(traits_birds, site_sp_birds),
+  n = 10
+)
+
+touchstone::benchmark_run(
+  expr_before_benchmark = library(fundiversity),
+  raoq = fd_raoq(traits_birds, site_sp_birds),
+  n = 10
+)
+
+touchstone::benchmark_run(
+  expr_before_benchmark = library(fundiversity),
+  fric_intersect = fd_fric_intersect(traits_birds, site_sp_birds),
+  n = 10
+)
 
 # create artifacts used downstream in the GitHub Action
 touchstone::benchmark_analyze()
