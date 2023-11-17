@@ -100,8 +100,15 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
     max_range <- fd_chull(traits)$vol
   }
 
+  f <- if (use_memoise()) {
+    memoise::memoise(fd_chull)
+  } else {
+    fd_chull
+  }
+
   fric_site <- future_apply(sp_com, 1, function(site_row) {
-    fd_chull(traits[site_row > 0,, drop = FALSE])$vol
+    res <- f(traits[site_row > 0, , drop = FALSE])
+    return(res$vol)
   }, future.globals = FALSE)
 
   if (any(is.na(fric_site))) {

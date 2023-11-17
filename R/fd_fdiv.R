@@ -66,6 +66,12 @@ fd_fdiv <- function(traits, sp_com) {
   site_abundances[site_abundances == 0] <- 1  # Account for site with no species
   sp_com <- sp_com / site_abundances
 
+  f <- if (use_memoise()) {
+    memoise::memoise(fd_chull)
+  } else {
+    fd_chull
+  }
+
   # Compute Functional Divergence
   fdiv_site <- future_apply(sp_com, 1, function(sp_site) {
 
@@ -79,7 +85,7 @@ fd_fdiv <- function(traits, sp_com) {
     # Select traits for species actually in site
     sub_traits <- traits[names(sub_site),, drop = FALSE]
 
-    ch <- fd_chull(sub_traits)
+    ch <- f(sub_traits)
 
     verts <- ch$p[unique(c(ch$hull)),, drop = FALSE]
 
