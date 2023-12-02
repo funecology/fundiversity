@@ -187,6 +187,23 @@ test_that("Functional Richness Inters. works on data.frame as well as matrix", {
   )
 })
 
+test_that("Functional Richness Intersection works when sites have no names", {
+
+  site_sp_no_names <- site_sp_birds[1,, drop = FALSE]
+  rownames(site_sp_no_names) <- NULL
+
+  fric_int <- expect_silent(fd_fric_intersect(traits_birds, site_sp_no_names))
+
+  expect_s3_class(fric_int, "data.frame")
+  expect_identical(dim(fric_int), c(1L, 3L))
+  expect_named(fric_int, c("first_site", "second_site", "FRic_intersect"))
+
+  expect_equal(fric_int$FRic_intersect, 171543.73, tolerance = 1e-7)
+  expect_equal(fric_int[1, "first_site"], "s1")
+  expect_equal(fric_int[1, "second_site"], "s1")
+
+})
+
 # Tests for invalid inputs -----------------------------------------------------
 
 test_that("Functional Richness Intersection fails gracefully", {

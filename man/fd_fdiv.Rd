@@ -24,6 +24,9 @@ a data.frame with two columns:
 \item \code{FDiv} the values of functional divergence at each site.
 }
 
+If the \code{sp_com} argument is not provided or if \code{sp_com} doesn't have rownames,
+arbitrary rownames \code{s1}, \code{s2}, \code{s3}, etc. will be used.
+
 NB: when a site contains no species FDiv is equal to 0. If for a site
 there are less traits than species, then FDiv is equal to \code{NaN}.
 }

@@ -106,6 +106,22 @@ test_that("Functional Divergence works on data.frame as well as matrix", {
   )
 })
 
+test_that("Functional Divergence works when sites have no names", {
+
+  site_sp_no_names <- site_sp_birds[1,, drop = FALSE]
+  rownames(site_sp_no_names) <- NULL
+
+  fdiv <- expect_silent(fd_fdiv(traits_birds, site_sp_no_names))
+
+  expect_s3_class(fdiv, "data.frame")
+  expect_identical(dim(fdiv), c(1L, 2L))
+  expect_named(fdiv, c("site", "FDiv"))
+
+  expect_equal(fdiv$FDiv, 0.6847251, tolerance = 1e-7)
+  expect_equal(fdiv[1, "site"], "s1")
+
+})
+
 # Tests for invalid inputs -----------------------------------------------------
 
 test_that("Functional Divergence fails gracefully", {

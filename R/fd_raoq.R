@@ -17,6 +17,9 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `Q` the values of Rao's quadratic entropy at each site.
 #'
+#' ```{r child = "man/rmdchunks/no_row_names.Rmd"}
+#' ```
+#'
 #' NB: Rao's quadratic entropy is 0 when there are no species in the site.
 #'
 #' @references
@@ -73,6 +76,12 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
   if (is.data.frame(sp_com)) {
 
     sp_com <- as.matrix(sp_com)
+
+  }
+
+  if (is.null(rownames(sp_com))) {
+
+    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
 
   }
 
