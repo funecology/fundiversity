@@ -30,6 +30,9 @@ row names,
 \item \code{FEve} numeric column that contains FEve values corresponding to each site.
 }
 
+If the \code{sp_com} argument is not provided or if \code{sp_com} doesn't have rownames,
+arbitrary rownames \code{s1}, \code{s2}, \code{s3}, etc. will be used.
+
 NB: By definition FEve is equal to \code{NA} when the number of species per site
 is strictly lower than 3.
 }
