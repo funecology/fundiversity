@@ -17,6 +17,9 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FDiv` the values of functional divergence at each site.
 #'
+#' ```{r child = "man/rmdchunks/no_row_names.Rmd"}
+#' ```
+#'
 #' NB: when a site contains no species FDiv is equal to 0. If for a site
 #' there are less traits than species, then FDiv is equal to `NaN`.
 #'
@@ -58,6 +61,12 @@ fd_fdiv <- function(traits, sp_com) {
    }
     sp_com <- matrix(1, ncol = nrow(traits),
                      dimnames = list("s1", rownames(traits)))
+
+  }
+
+  if (is.null(rownames(sp_com))) {
+
+    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
 
   }
 
