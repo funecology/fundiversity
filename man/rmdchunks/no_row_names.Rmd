@@ -1,0 +1,2 @@
+If the `sp_com` argument is not provided or if `sp_com` doesn't have rownames,
+arbitrary rownames `s1`, `s2`, `s3`, etc. will be used.
