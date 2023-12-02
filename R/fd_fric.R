@@ -44,6 +44,9 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FRic` the values of functional richness at each site.
 #'
+#' ```{r child = "man/rmdchunks/no_row_names.Rmd"}
+#' ```
+#'
 #' NB: FRic is equal to `NA` when there are strictly less species in a site
 #' than the number of provided traits. Note that only species with strictly
 #' different trait combinations are considered unique, species that share the
@@ -91,6 +94,12 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
 
     sp_com <- matrix(1, ncol = nrow(traits),
                      dimnames = list("s1", rownames(traits)))
+
+  }
+
+  if (is.null(rownames(sp_com))) {
+
+    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
 
   }
 

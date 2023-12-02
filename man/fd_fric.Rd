@@ -32,6 +32,9 @@ a data.frame with two columns:
 \item \code{FRic} the values of functional richness at each site.
 }
 
+If the \code{sp_com} argument is not provided or if \code{sp_com} doesn't have rownames,
+arbitrary rownames \code{s1}, \code{s2}, \code{s3}, etc. will be used.
+
 NB: FRic is equal to \code{NA} when there are strictly less species in a site
 than the number of provided traits. Note that only species with strictly
 different trait combinations are considered unique, species that share the
