@@ -67,7 +67,7 @@ fd_fdiv <- function(traits, sp_com) {
   sp_com <- sp_com / site_abundances
 
   f <- if (use_memoise()) {
-    memoise::memoise(fd_chull)
+    fd_chull_memoised
   } else {
     fd_chull
   }

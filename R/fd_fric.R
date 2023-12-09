@@ -101,7 +101,7 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
   }
 
   f <- if (use_memoise()) {
-    memoise::memoise(fd_chull)
+    fd_chull_memoised
   } else {
     fd_chull
   }
