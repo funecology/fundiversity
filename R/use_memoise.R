@@ -1,6 +1,14 @@
-# We respect users' explicit choice and error if we cannot honour it. However,
-# by default, without any explicit option set by the user, we use memoise only
-# if it was installed when fundiversity was loaded, without any messages.
+#' Options for \pkg{fundiversity}
+#'
+#' The memoisation is the convex hull computation in \pkg{fundiversity} is
+#' controlled via the `fundiversity.memoise` option:
+#' - if unset, the default is to use memoisation if \pkg{memoise} was installed
+#'  when \pkg{fundiversity} was loaded, and not to use memoisation otherwise.
+#' - if `options(fundiversity.memoise = TRUE)`, memoisation is used and an error
+#'  is thrown if \pkg{memoise} is not installed.
+#' - if `options(fundiversity.memoise = FALSE)`, memoisation is not used.
+#'
+#' @rdname fundiversity-options
 use_memoise <- function() {
 
   # Cannot use memoise in parallel settings
