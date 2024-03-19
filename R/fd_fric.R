@@ -96,14 +96,14 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
 
   max_range <- 1
 
-  if (stand) {
-    max_range <- fd_chull(traits)$vol
-  }
-
   f <- if (use_memoise()) {
     fd_chull_memoised
   } else {
     fd_chull
+  }
+
+  if (stand) {
+    max_range <- f(traits)$vol
   }
 
   fric_site <- future_apply(sp_com, 1, function(site_row) {
