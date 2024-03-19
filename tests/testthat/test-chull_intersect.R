@@ -1,24 +1,13 @@
-data("traits_birds")
+test_that("fd_chull_intersect() gives good value", {
 
-test_that("memoise options work on fd_chull_intersect()", {
-  skip_if_not_installed("memoise")
-
-  if (getOption("fundiversity.memoise", TRUE)) {
-    expect_true(memoise::is.memoised(fd_chull_intersect))
-
-    ch_i <- fd_chull_intersect(traits_birds, traits_birds)
-
-    expect_true(
-      memoise::has_cache(fd_chull_intersect)(traits_birds, traits_birds)
+  box_trait <- matrix(
+    c(-0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5), ncol = 2,
+    dimnames = list(
+      species = paste0("sp", 1:4), traits = paste0("trait", 1:2)
     )
-  } else {
-    expect_false(memoise::is.memoised(fd_chull_intersect))
+  )
 
-    ch_i <- fd_chull_intersect(traits_birds, traits_birds)
-
-    expect_false(
-      memoise::has_cache(fd_chull_intersect)(traits_birds, traits_birds)
-    )
-  }
+  expect_equal(fd_chull_intersect(box_trait, box_trait)$vol,  1)
+  expect_equal(fd_chull_intersect(box_trait, box_trait)$area, 4)
 
 })
