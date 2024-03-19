@@ -24,7 +24,14 @@ test_that("use_memoise() sends back FALSE when memoise isn't installed", {
 
   # If memoise not installed & options TRUE
   withr::local_options(fundiversity.memoise = TRUE)
-  expect_error(use_memoise(), regexp = "memoise is not installedor was installed after fundiversity was loaded.Please install memoise and restart R.", fixed = TRUE)
+  expect_error(
+    use_memoise(),
+    regexp = paste0(
+      "memoise is not installed or was installed after fundiversity was ",
+      "loaded. Please install memoise and restart R."
+    ),
+    fixed = TRUE
+  )
 
   # If memoise not installed & options FALSE
   withr::local_options(fundiversity.memoise = FALSE)

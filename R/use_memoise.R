@@ -8,8 +8,8 @@ use_memoise <- function() {
       return(TRUE)
     }
     stop(
-      "memoise is not installed",
-      "or was installed after fundiversity was loaded.",
+      "memoise is not installed ",
+      "or was installed after fundiversity was loaded. ",
       "Please install memoise and restart R.",
       call. = FALSE
     )
