@@ -1,7 +1,7 @@
 test_that("use_memoise() works when memoise is installed", {
 
   # Pretend fd_chull_memoised() exists = memoise installed before fundiversity
-  fd_chull_memoised <- NULL
+  local_mocked_bindings(exists = function(...) TRUE)
 
   # If memoise installed & options TRUE
   withr::local_options(fundiversity.memoise = TRUE)
@@ -46,13 +46,18 @@ test_that("use_memoise() sends back FALSE when memoise isn't installed", {
 
 test_that("use_memoise() sends back FALSE when plan is parallel", {
 
-  # Check both fd_chull() and fd_chull_intersect()
+  future::plan("multisession")
 
-  ## If memoise not installed
-  # If memoise not installed & options TRUE
+  withr::local_options(fundiversity.memoise = TRUE)
+  expect_false(use_memoise())
 
   # If memoise not installed & options FALSE
+  withr::local_options(fundiversity.memoise = FALSE)
+  expect_false(use_memoise())
 
   # If memoise not installed & options NULL
+  withr::local_options(fundiversity.memoise = NULL)
+  expect_false(use_memoise())
 
+  future::plan("sequential")
 })

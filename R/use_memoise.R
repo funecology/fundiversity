@@ -2,6 +2,12 @@
 # by default, without any explicit option set by the user, we use memoise only
 # if it was installed when fundiversity was loaded, without any messages.
 use_memoise <- function() {
+
+  # Cannot use memoise in parallel settings
+  if (!inherits(future::plan(), "sequential")) {
+    return(FALSE)
+  }
+
   # explicitly set to TRUE by user
   if (isTRUE(getOption("fundiversity.memoise"))) {
     if (exists("fd_chull_memoised")) {
