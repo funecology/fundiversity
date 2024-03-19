@@ -25,3 +25,5 @@ use_memoise <- function() {
     return(exists("fd_chull_memoised"))
   }
 }
+
+exists <- NULL
