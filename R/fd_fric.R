@@ -34,11 +34,16 @@
 #' @details By default, when loading \pkg{fundiversity}, the functions to
 #' compute convex hulls are
 #' [memoised](https://en.wikipedia.org/wiki/Memoization) through the `memoise`
-#' package if it is installed. To deactivate this behavior you can set the
+#' package if it is installed (their results are cached to avoid recomputing the
+#' same functional volume twice). To deactivate this behavior you can set the
 #' option `fundiversity.memoise` to `FALSE` by running the following line:
 #' `options(fundiversity.memoise = FALSE)`. If you use it interactively it will
 #' only affect your current session. Add it to your script(s) or `.Rprofile`
-#' file to avoid toggling it each time.
+#' file to avoid toggling it each time. By changing the option, the behavior
+#' will automatically change the next time you run the function. **Note**:
+#' memoisation is only available when the `memoise` package has been installed
+#' **and without parallelization**, otherwise `fundiversity` will use unmemoised
+#' versions of the functions.
 #'
 #' @return a data.frame with two columns:
 #' * `site` the names of the sites as the row names of the input `sp_com`,
