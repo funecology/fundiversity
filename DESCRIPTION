@@ -36,7 +36,8 @@ Suggests:
     knitr,
     memoise,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 URL: https://funecology.github.io/fundiversity/, https://github.com/funecology/fundiversity
 BugReports: https://github.com/funecology/fundiversity/issues
 Config/testthat/edition: 3
