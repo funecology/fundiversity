@@ -122,6 +122,22 @@ test_that("Rao's Quadratic Entropy works on data.frame as well as matrix", {
   )
 })
 
+test_that("Rao's Quadratric Entropy works when sites have no names", {
+
+  site_sp_no_names <- site_sp_birds[1,, drop = FALSE]
+  rownames(site_sp_no_names) <- NULL
+
+  raoq <- expect_silent(fd_raoq(traits_birds, site_sp_no_names))
+
+  expect_s3_class(raoq, "data.frame")
+  expect_identical(dim(raoq), c(1L, 2L))
+  expect_named(raoq, c("site", "Q"))
+
+  expect_equal(raoq$Q, 194.78095, tolerance = 1e-7)
+  expect_equal(raoq[1, "site"], "s1")
+
+})
+
 
 # Tests for invalid inputs -----------------------------------------------------
 

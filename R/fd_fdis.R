@@ -16,6 +16,9 @@
 #' * `site` the names of the sites as the row names of the input `sp_com`,
 #' * `FDis` the values of functional dispersion at each site.
 #'
+#' ```{r child = "man/rmdchunks/no_row_names.Rmd"}
+#' ```
+#'
 #' NB: when a site contains no species FDis is equal to 0.
 #'
 #' @references
@@ -59,6 +62,12 @@ fd_fdis <- function(traits, sp_com) {
   if (is.data.frame(sp_com)) {
 
     sp_com <- as.matrix(sp_com)
+
+  }
+
+  if (is.null(rownames(sp_com))) {
+
+    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
 
   }
 

@@ -143,6 +143,23 @@ test_that("Functional Evenness works on data.frame as well as matrix", {
   )
 })
 
+test_that("Functional Evenness works when sites have no names", {
+
+  site_sp_no_names <- site_sp_birds[1,, drop = FALSE]
+  rownames(site_sp_no_names) <- NULL
+
+  feve <- expect_silent(fd_feve(traits_birds, site_sp_no_names))
+
+  expect_s3_class(feve, "data.frame")
+  expect_identical(dim(feve), c(1L, 2L))
+  expect_named(feve, c("site", "FEve"))
+
+  expect_equal(feve$FEve, 0.3841202, tolerance = 1e-7)
+  expect_equal(feve[1, "site"], "s1")
+
+})
+
+
 # Tests for invalid inputs -----------------------------------------------------
 
 test_that("Functional Evenness fails gracefully", {

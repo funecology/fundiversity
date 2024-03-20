@@ -19,6 +19,9 @@
 #' * `FRic_intersect` the volume of the convex hulls intersection of each
 #' pair of site.
 #'
+#' ```{r child = "man/rmdchunks/no_row_names.Rmd"}
+#' ```
+#'
 #' NB: FRic_intersect is equal to `NA` when there are strictly less species in
 #' one of the sites than the number of provided traits. Note that only species
 #' with strictly different trait combinations are considered unique, species
@@ -70,6 +73,12 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
 
     sp_com <- matrix(1, ncol = nrow(traits),
                      dimnames = list("s1", rownames(traits)))
+
+  }
+
+  if (is.null(rownames(sp_com))) {
+
+    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
 
   }
 

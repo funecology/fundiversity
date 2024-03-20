@@ -17,6 +17,9 @@
 #' row names,
 #' * `FEve` numeric column that contains FEve values corresponding to each site.
 #'
+#' ```{r child = "man/rmdchunks/no_row_names.Rmd"}
+#' ```
+#'
 #' NB: By definition FEve is equal to `NA` when the number of species per site
 #' is strictly lower than 3.
 #'
@@ -66,6 +69,12 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
                      ncol = nrow(dist_matrix),
                      dimnames = list("s1", rownames(dist_matrix))
     )
+  }
+
+  if (is.null(rownames(sp_com))) {
+
+    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
+
   }
 
   # Standardize abundance per site

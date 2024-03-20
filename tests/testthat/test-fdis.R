@@ -94,6 +94,22 @@ test_that("Functional Dispersion works on data.frame as well as matrix", {
   )
 })
 
+test_that("Functional Dispersion works when sites have no names", {
+
+  site_sp_no_names <- site_sp_birds[1,, drop = FALSE]
+  rownames(site_sp_no_names) <- NULL
+
+  fdis <- expect_silent(fd_fdis(traits_birds, site_sp_no_names))
+
+  expect_s3_class(fdis, "data.frame")
+  expect_identical(dim(fdis), c(1L, 2L))
+  expect_named(fdis, c("site", "FDis"))
+
+  expect_equal(fdis$FDis, 151.3885, tolerance = 1e-7)
+  expect_equal(fdis[1, "site"], "s1")
+
+})
+
 # Tests for invalid inputs -----------------------------------------------------
 
 test_that("Functional Dispersion fails gracefully", {

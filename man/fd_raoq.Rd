@@ -29,6 +29,9 @@ a data.frame with two columns:
 \item \code{Q} the values of Rao's quadratic entropy at each site.
 }
 
+If the \code{sp_com} argument is not provided or if \code{sp_com} doesn't have rownames,
+arbitrary rownames \code{s1}, \code{s2}, \code{s3}, etc. will be used.
+
 NB: Rao's quadratic entropy is 0 when there are no species in the site.
 }
 \description{
