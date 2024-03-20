@@ -187,6 +187,20 @@ test_that("Functional Richness Inters. works on data.frame as well as matrix", {
   )
 })
 
+test_that("Functional Richness Intersect works with unmemoised version", {
+
+  withr::local_options(fundiversity.memoise = FALSE)
+
+  fric_int <- expect_silent(fd_fric_intersect(traits_birds))
+
+  expect_s3_class(fric_int, "data.frame")
+  expect_identical(dim(fric_int), c(1L, 3L))
+  expect_named(fric_int, c("first_site", "second_site", "FRic_intersect"))
+
+  expect_equal(fd_fric_intersect(traits_birds, stand = TRUE)$FRic_intersect,
+               1, tolerance = 1e-6)
+})
+
 # Tests for invalid inputs -----------------------------------------------------
 
 test_that("Functional Richness Intersection fails gracefully", {

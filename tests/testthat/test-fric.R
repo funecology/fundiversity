@@ -160,6 +160,19 @@ test_that("Functional Richness works on data.frame as well as matrix", {
   )
 })
 
+test_that("Functional Richness works with unmemoised version", {
+
+  withr::local_options(fundiversity.memoise = FALSE)
+
+  fric <- expect_silent(fd_fric(traits_birds))
+
+  expect_s3_class(fric, "data.frame")
+  expect_identical(dim(fric), c(1L, 2L))
+  expect_named(fric, c("site", "FRic"))
+
+  expect_equal(fd_fric(traits_birds)$FRic, 230967.7, tolerance = 1e-6)
+})
+
 
 # Tests for invalid inputs -----------------------------------------------------
 
