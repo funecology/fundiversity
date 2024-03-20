@@ -87,6 +87,7 @@ fd_fric(traits_birds, site_sp_birds[, 1:60])
 fd_fric(traits_birds[1:5,], site_sp_birds[, 6:10])
 ```
 
+
 # Functional Richness (FRic) - `fd_fric()`
 
 Functional Richness (FRic) represents the total amount of functional space filed by a community in a dataset [@Villeger_New_2008]. You can compute FRic in `fundiversity` using the `fd_fric()` function.
