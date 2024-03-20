@@ -75,20 +75,20 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
 
   max_range <- 1
 
-  f <- if (use_memoise()) {
+  convex_hull <- if (use_memoise()) {
     fd_chull_memoised
   } else {
     fd_chull
   }
 
-  f_inter <- if (use_memoise()) {
+  convex_hull_intersect <- if (use_memoise()) {
     fd_chull_intersect_memoised
   } else {
     fd_chull_intersect
   }
 
   if (stand) {
-    max_range <- f(traits)$vol
+    max_range <- convex_hull(traits)$vol
   }
 
   # All pairs of sites (not within themselves)
@@ -116,11 +116,11 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
       second_row    <- sp_com[site_comb[[2]],, drop = TRUE]
       second_traits <- traits[second_row > 0,, drop = FALSE]
 
-      f_inter(first_traits, second_traits)$vol
+      convex_hull_intersect(first_traits, second_traits)$vol
     } else {
       # Self-intersection (equivalent to regular convex hulls)
-      # way more efficient that compute with fd_chull_inters
-      f(first_traits)$vol
+      # way more efficient that compute with convex_hull_intersect()
+      convex_hull(first_traits)$vol
     }
   }, future.globals = FALSE)
 

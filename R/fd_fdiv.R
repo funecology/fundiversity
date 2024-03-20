@@ -66,7 +66,7 @@ fd_fdiv <- function(traits, sp_com) {
   site_abundances[site_abundances == 0] <- 1  # Account for site with no species
   sp_com <- sp_com / site_abundances
 
-  f <- if (use_memoise()) {
+  convex_hull <- if (use_memoise()) {
     fd_chull_memoised
   } else {
     fd_chull
@@ -85,7 +85,7 @@ fd_fdiv <- function(traits, sp_com) {
     # Select traits for species actually in site
     sub_traits <- traits[names(sub_site),, drop = FALSE]
 
-    ch <- f(sub_traits)
+    ch <- convex_hull(sub_traits)
 
     verts <- ch$p[unique(c(ch$hull)),, drop = FALSE]
 

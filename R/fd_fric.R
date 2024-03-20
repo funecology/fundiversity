@@ -101,18 +101,18 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
 
   max_range <- 1
 
-  f <- if (use_memoise()) {
+  convex_hull <- if (use_memoise()) {
     fd_chull_memoised
   } else {
     fd_chull
   }
 
   if (stand) {
-    max_range <- f(traits)$vol
+    max_range <- convex_hull(traits)$vol
   }
 
   fric_site <- future_apply(sp_com, 1, function(site_row) {
-    res <- f(traits[site_row > 0, , drop = FALSE])
+    res <- convex_hull(traits[site_row > 0, , drop = FALSE])
     return(res$vol)
   }, future.globals = FALSE)
 
