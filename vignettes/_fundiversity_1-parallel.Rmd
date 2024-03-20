@@ -27,8 +27,10 @@ Note: This vignette presents some performance tests ran between non-parallel and
 
 Within `fundiversity` the computation of most indices can be parallelized using the `future` package. The goal of this vignette is to explain how to toggle and use parallelization in `fundiversity`. The functions that currently support parallelization are summarized in the table below:
 
-```{r child="man/rmdchunks/_fundiversity_functions.Rmd"}
+```{r child="../man/rmdchunks/_fundiversity_functions.Rmd"}
 ```
+
+Note that **memoization and parallelization cannot be used at the same time**. If the option `fundiversity.memoise` has been set to `TRUE` but the computation are parallelized, `fundiversity` will use unmemoised version of functions.
 
 The `future` package provides a simple and general framework to allow asynchronous computation depending on the resources available for the user. The [first vignette of `future`](https://cran.r-project.org/package=future) gives a general overview of all its features. The main idea being that the user should write the code once and that it would run seamlessly sequentially, or in parallel on a single computer, or on a cluster, or distributed over several computers. `fundiversity` can thus run on all these different backends following the user's choice.
 
