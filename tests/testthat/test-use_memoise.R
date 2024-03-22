@@ -61,3 +61,14 @@ test_that("use_memoise() sends back FALSE when plan is parallel", {
 
   future::plan("sequential")
 })
+
+test_that("use_memoise() really triggers memoization when TRUE", {
+
+  skip_if_not_installed("memoise")
+
+  devnull <- fd_fric(c(1, 2, 5, 9))
+  expect_true(
+    memoise::has_cache(fd_chull_memoised)(matrix(c(1, 2, 5, 9), nrow = 4))
+  )
+
+})
