@@ -33,11 +33,9 @@ use_memoise <- function() {
     return(FALSE)
   }
   # unspecified / default
-  if (is.null(getOption("fundiversity.memoise"))) {
-    # TRUE or FALSE depending on whether memoise was installed when fundiversity
-    # was loaded
-    return(exists("fd_chull_memoised"))
-  }
+  # TRUE or FALSE depending on whether memoise was installed when fundiversity
+  # was loaded
+  return(exists("fd_chull_memoised"))
 }
 
 # Added this to make 'testthat::local_mocked_bindings()' work
