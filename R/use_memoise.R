@@ -40,4 +40,6 @@ use_memoise <- function() {
   }
 }
 
+# Added this to make 'testthat::local_mocked_bindings()' work
+# in 'test-use_memoise.R'
 exists <- NULL
