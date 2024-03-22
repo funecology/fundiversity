@@ -128,7 +128,7 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
       convex_hull_intersect(first_traits, second_traits)$vol
     } else {
       # Self-intersection (equivalent to regular convex hulls)
-      # way more efficient that compute with convex_hull_intersect()
+      # way more efficient than computing with convex_hull_intersect()
       convex_hull(first_traits)$vol
     }
   }, future.globals = FALSE)
