@@ -8,7 +8,10 @@
 #'  is thrown if \pkg{memoise} is not installed.
 #' - if `options(fundiversity.memoise = FALSE)`, memoisation is not used.
 #'
-#' @rdname fundiversity-options
+#' @name fundiversity-options
+NULL
+
+#' @keywords internal
 use_memoise <- function() {
 
   # Cannot use memoise in parallel settings
