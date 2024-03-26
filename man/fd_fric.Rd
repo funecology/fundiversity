@@ -50,18 +50,24 @@ than the number of provided traits.
 By default, when loading \pkg{fundiversity}, the functions to
 compute convex hulls are
 \href{https://en.wikipedia.org/wiki/Memoization}{memoised} through the \code{memoise}
-package if it is installed. To deactivate this behavior you can set the
+package if it is installed (their results are cached to avoid recomputing the
+same functional volume twice). To deactivate this behavior you can set the
 option \code{fundiversity.memoise} to \code{FALSE} by running the following line:
 \code{options(fundiversity.memoise = FALSE)}. If you use it interactively it will
 only affect your current session. Add it to your script(s) or \code{.Rprofile}
-file to avoid toggling it each time.
+file to avoid toggling it each time. By changing the option, the behavior
+will automatically change the next time you run the function. \strong{Note}:
+memoisation is only available when the \code{memoise} package has been installed
+\strong{and without parallelization}, otherwise \code{fundiversity} will use unmemoised
+versions of the functions. In other words, \strong{memoization and parallelization
+are mutually exclusive}.
 }
 \section{Parallelization}{
 
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}.
 }
 
 \examples{

@@ -16,7 +16,7 @@ test_that("Functional Divergence output format", {
   expect_equal(fdiv$FDiv, 0.7282172, tolerance = 1e-7)
 })
 
-test_that("Function Divergence works on subset of site/species", {
+test_that("Functional Divergence works on subset of site/species", {
   site_sp <- matrix(1, ncol = nrow(traits_birds))
   colnames(site_sp) <-  rownames(traits_birds)
   rownames(site_sp) <- "s1"
@@ -106,12 +106,14 @@ test_that("Functional Divergence works on data.frame as well as matrix", {
   )
 })
 
+
 test_that("Functional Divergence works when sites have no names", {
 
   site_sp_no_names <- site_sp_birds[1,, drop = FALSE]
   rownames(site_sp_no_names) <- NULL
 
   fdiv <- expect_silent(fd_fdiv(traits_birds, site_sp_no_names))
+
 
   expect_s3_class(fdiv, "data.frame")
   expect_identical(dim(fdiv), c(1L, 2L))
@@ -120,6 +122,16 @@ test_that("Functional Divergence works when sites have no names", {
   expect_equal(fdiv$FDiv, 0.6847251, tolerance = 1e-7)
   expect_equal(fdiv[1, "site"], "s1")
 
+})
+
+
+test_that("Functional Divergence works with unmemoised version", {
+
+  withr::local_options(fundiversity.memoise = FALSE)
+
+  fdiv <- expect_silent(fd_fdiv(traits_birds))
+
+  expect_equal(fdiv$FDiv, 0.7282172, tolerance = 1e-7)
 })
 
 # Tests for invalid inputs -----------------------------------------------------

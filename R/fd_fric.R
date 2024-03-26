@@ -25,7 +25,7 @@
 #' The computation of this function can be parallelized thanks to
 #' [future::plan()]. To get more information on how to parallelize your
 #' computation please refer to the parallelization vignette with:
-#' `vignette("fundiversity_1-parallel", package = "fundiversity")`
+#' `vignette("fundiversity_1-parallel", package = "fundiversity")`.
 #'
 #' @examples
 #' data(traits_birds)
@@ -34,11 +34,17 @@
 #' @details By default, when loading \pkg{fundiversity}, the functions to
 #' compute convex hulls are
 #' [memoised](https://en.wikipedia.org/wiki/Memoization) through the `memoise`
-#' package if it is installed. To deactivate this behavior you can set the
+#' package if it is installed (their results are cached to avoid recomputing the
+#' same functional volume twice). To deactivate this behavior you can set the
 #' option `fundiversity.memoise` to `FALSE` by running the following line:
 #' `options(fundiversity.memoise = FALSE)`. If you use it interactively it will
 #' only affect your current session. Add it to your script(s) or `.Rprofile`
-#' file to avoid toggling it each time.
+#' file to avoid toggling it each time. By changing the option, the behavior
+#' will automatically change the next time you run the function. **Note**:
+#' memoisation is only available when the `memoise` package has been installed
+#' **and without parallelization**, otherwise `fundiversity` will use unmemoised
+#' versions of the functions. In other words, **memoization and parallelization
+#' are mutually exclusive**.
 #'
 #' @return a data.frame with two columns:
 #' * `site` the names of the sites as the row names of the input `sp_com`,
@@ -105,12 +111,19 @@ fd_fric <- function(traits, sp_com, stand = FALSE) {
 
   max_range <- 1
 
+  convex_hull <- if (use_memoise()) {
+    fd_chull_memoised
+  } else {
+    fd_chull
+  }
+
   if (stand) {
-    max_range <- fd_chull(traits)$vol
+    max_range <- convex_hull(traits)$vol
   }
 
   fric_site <- future_apply(sp_com, 1, function(site_row) {
-    fd_chull(traits[site_row > 0,, drop = FALSE])$vol
+    res <- convex_hull(traits[site_row > 0, , drop = FALSE])
+    return(res$vol)
   }, future.globals = FALSE)
 
   if (any(is.na(fric_site))) {

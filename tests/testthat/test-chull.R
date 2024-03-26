@@ -1,20 +1,13 @@
-data("traits_birds")
+test_that("fd_chull() gives good value", {
 
-test_that("memoise options works on fd_chull()", {
-  skip_if_not_installed("memoise")
+  box_trait <- matrix(
+    c(-0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5), ncol = 2,
+    dimnames = list(
+      species = paste0("sp", 1:4), traits = paste0("trait", 1:2)
+    )
+  )
 
-  if (getOption("fundiversity.memoise", TRUE)) {
-    expect_true(memoise::is.memoised(fd_chull))
-
-    ch <- fd_chull(traits_birds)
-
-    expect_true(memoise::has_cache(fd_chull)(traits_birds))
-  } else {
-    expect_false(memoise::is.memoised(fd_chull))
-
-    ch <- fd_chull(traits_birds)
-
-    expect_false(memoise::has_cache(fd_chull)(traits_birds))
-  }
+  expect_equal(fd_chull(box_trait)$vol,  1)
+  expect_equal(fd_chull(box_trait)$area, 4)
 
 })
