@@ -25,7 +25,7 @@
 #' The computation of this function can be parallelized thanks to
 #' [future::plan()]. To get more information on how to parallelize your
 #' computation please refer to the parallelization vignette with:
-#' `vignette("fundiversity_1-parallel", package = "fundiversity")`
+#' `vignette("fundiversity_1-parallel", package = "fundiversity")`.
 #'
 #' @examples
 #' data(traits_birds)
@@ -43,7 +43,8 @@
 #' will automatically change the next time you run the function. **Note**:
 #' memoisation is only available when the `memoise` package has been installed
 #' **and without parallelization**, otherwise `fundiversity` will use unmemoised
-#' versions of the functions.
+#' versions of the functions. In other words, **memoization and parallelization
+#' are mutually exclusive**.
 #'
 #' @return a data.frame with two columns:
 #' * `site` the names of the sites as the row names of the input `sp_com`,

@@ -48,14 +48,15 @@ file to avoid toggling it each time. By changing the option, the behavior
 will automatically change the next time you run the function. \strong{Note}:
 memoisation is only available when the \code{memoise} package has been installed
 \strong{and without parallelization}, otherwise \code{fundiversity} will use unmemoised
-versions of the functions.
+versions of the functions. In other words, \strong{memoization and parallelization
+are mutually exclusive}.
 }
 \section{Parallelization}{
 
 The computation of this function can be parallelized thanks to
 \code{\link[future:plan]{future::plan()}}. To get more information on how to parallelize your
 computation please refer to the parallelization vignette with:
-\code{vignette("fundiversity_1-parallel", package = "fundiversity")}
+\code{vignette("fundiversity_1-parallel", package = "fundiversity")}.
 }
 
 \examples{
