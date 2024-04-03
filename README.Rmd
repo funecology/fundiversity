@@ -101,7 +101,8 @@ future::plan(future::multisession)
 fd_fdiv(traits_birds)
 ```
 
-For more details please refer to the [parallelization vignette](https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html) or use `vignette("fundiversity_1-parallel", package = "fundiversity")` within R.
+For more details please refer to the [parallelization vignette](https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html) or use `vignette("fundiversity_1-parallel", package = "fundiversity")` within R. **Note**: parallelization and memoization are **mutually exclusive**, when doing computation in parallel, fundiversity falls back on **unmemoised** versions of function.
+
 
 ## Available functional diversity indices
 

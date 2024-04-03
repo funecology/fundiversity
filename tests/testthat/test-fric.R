@@ -170,10 +170,22 @@ test_that("Functional Richness works when sites have no names", {
   expect_s3_class(fric, "data.frame")
   expect_identical(dim(fric), c(1L, 2L))
   expect_named(fric, c("site", "FRic"))
-
   expect_equal(fric$FRic, 171543.730, tolerance = 1e-7)
   expect_equal(fric[1, "site"], "s1")
+})
 
+
+test_that("Functional Richness works with unmemoised version", {
+
+  withr::local_options(fundiversity.memoise = FALSE)
+
+  fric <- expect_silent(fd_fric(traits_birds))
+
+  expect_s3_class(fric, "data.frame")
+  expect_identical(dim(fric), c(1L, 2L))
+  expect_named(fric, c("site", "FRic"))
+
+  expect_equal(fd_fric(traits_birds)$FRic, 230967.7, tolerance = 1e-6)
 })
 
 
