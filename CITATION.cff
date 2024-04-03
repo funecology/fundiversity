@@ -1,5 +1,5 @@
 # -----------------------------------------------------------
-# CITATION file created with {cffr} R package, v0.4.1
+# CITATION file created with {cffr} R package, v1.0.0
 # See also: https://docs.ropensci.org/cffr/
 # -----------------------------------------------------------
  
@@ -13,9 +13,9 @@ doi: 10.5281/zenodo.4761754
 abstract: Computes six functional diversity indices. These are namely, Functional
   Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional
   Richness intersections (FRic_intersect), Functional Dispersion (FDis), and Rao's
-  entropy (Q) (reviewed in Villéger et al. 2008 <doi:10.1890/07-1206.1>). Provides
-  efficient, modular, and parallel functions to compute functional diversity indices
-  (Grenié & Gruson 2023 <doi:10.1111/ecog.06585>).
+  entropy (Q) (reviewed in Villéger et al. 2008 <https://doi.org/10.1890/07-1206.1>).
+  Provides efficient, modular, and parallel functions to compute functional diversity
+  indices (Grenié & Gruson 2023 <https://doi.org/10.1111/ecog.06585>).
 authors:
 - family-names: Grenié
   given-names: Matthias
@@ -35,7 +35,7 @@ preferred-citation:
   - family-names: Gruson
     given-names: Hugo
     orcid: https://orcid.org/0000-0002-4094-1476
-  year: '2023'
+  year: '2024'
   notes: R package version 1.1.1
   url: https://CRAN.R-project.org/package=fundiversity
   doi: 10.5281/zenodo.4761754
@@ -80,11 +80,10 @@ references:
   url: https://www.R-project.org/
   authors:
   - name: R Core Team
-  location:
-    name: Vienna, Austria
-  year: '2023'
   institution:
     name: R Foundation for Statistical Computing
+    address: Vienna, Austria
+  year: '2024'
   version: '>= 2.10'
 - type: software
   title: future.apply
@@ -96,7 +95,8 @@ references:
   - family-names: Bengtsson
     given-names: Henrik
     email: henrikb@braju.com
-  year: '2023'
+    orcid: https://orcid.org/0000-0002-7579-5165
+  year: '2024'
 - type: software
   title: geometry
   abstract: 'geometry: Mesh Generation and Surface Tessellation'
@@ -116,7 +116,7 @@ references:
     given-names: David C.
     email: david.c.sterratt@ed.ac.uk
     orcid: https://orcid.org/0000-0001-9092-9099
-  year: '2023'
+  year: '2024'
 - type: software
   title: Matrix
   abstract: 'Matrix: Sparse and Dense Matrix Classes and Methods'
@@ -126,6 +126,7 @@ references:
   authors:
   - family-names: Bates
     given-names: Douglas
+    orcid: https://orcid.org/0000-0001-8316-9503
   - family-names: Maechler
     given-names: Martin
     email: mmaechler+Matrix@gmail.com
@@ -133,7 +134,7 @@ references:
   - family-names: Jagan
     given-names: Mikael
     orcid: https://orcid.org/0000-0002-3542-2938
-  year: '2023'
+  year: '2024'
 - type: software
   title: vegan
   abstract: 'vegan: Community Ecology Package'
@@ -209,7 +210,7 @@ references:
     given-names: Cajo J.F.
   - family-names: Weedon
     given-names: James
-  year: '2023'
+  year: '2024'
 - type: software
   title: future
   abstract: 'future: Unified Parallel and Distributed Processing in R for Everyone'
@@ -220,7 +221,8 @@ references:
   - family-names: Bengtsson
     given-names: Henrik
     email: henrikb@braju.com
-  year: '2023'
+    orcid: https://orcid.org/0000-0002-7579-5165
+  year: '2024'
 - type: software
   title: knitr
   abstract: 'knitr: A General-Purpose Package for Dynamic Report Generation in R'
@@ -232,7 +234,7 @@ references:
     given-names: Yihui
     email: xie@yihui.name
     orcid: https://orcid.org/0000-0003-0645-5666
-  year: '2023'
+  year: '2024'
 - type: software
   title: memoise
   abstract: 'memoise: ''Memoisation'' of Functions'
@@ -254,7 +256,7 @@ references:
   - family-names: Cook
     given-names: Daniel
     email: danielecook@gmail.com
-  year: '2023'
+  year: '2024'
 - type: software
   title: rmarkdown
   abstract: 'rmarkdown: Dynamic Documents for R'
@@ -297,7 +299,7 @@ references:
     given-names: Richard
     email: rich@posit.co
     orcid: https://orcid.org/0000-0003-3925-190X
-  year: '2023'
+  year: '2024'
 - type: software
   title: testthat
   abstract: 'testthat: Unit Testing for R'
@@ -307,6 +309,30 @@ references:
   authors:
   - family-names: Wickham
     given-names: Hadley
-    email: hadley@rstudio.com
-  year: '2023'
+    email: hadley@posit.co
+  year: '2024'
   version: '>= 3.0.0'
+- type: software
+  title: withr
+  abstract: 'withr: Run Code ''With'' Temporarily Modified Global State'
+  notes: Suggests
+  url: https://withr.r-lib.org
+  repository: https://CRAN.R-project.org/package=withr
+  authors:
+  - family-names: Hester
+    given-names: Jim
+  - family-names: Henry
+    given-names: Lionel
+    email: lionel@posit.co
+  - family-names: Müller
+    given-names: Kirill
+    email: krlmlr+r@mailbox.org
+  - family-names: Ushey
+    given-names: Kevin
+    email: kevinushey@gmail.com
+  - family-names: Wickham
+    given-names: Hadley
+    email: hadley@posit.co
+  - family-names: Chang
+    given-names: Winston
+  year: '2024'
