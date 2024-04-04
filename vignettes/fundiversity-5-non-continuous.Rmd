@@ -1,0 +1,36 @@
+---
+title: "fundiversity-5-non-continuous"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{fundiversity-5-non-continuous}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fundiversity)
+```
+
+fundiversity can only work with trait that are continuous. So what is needed is to transform back the non-continuous traits into continuous measures. There are several ways to do that and it has implications on how the traits influence the functional diversity indices.
+fundiversity explicitly excludes functions dealing with transforming non-continuous traits into continuous traits from its features as several other packages exist to work on them. (mFD, ade4, ?)
+Here we mention the different questions that have to be answered when doing so by showing one example and one possible workflow to transform non-continuous trait data into continuous data.
+
+How to deal with non-continuous traits?
+
+Different kinds of dissimilarity
+Gower's, adapted Gower, dist.ktab()
+
+the nature of distinct type of traits: binary traits by default have greater importance
+
+Cited references
+Gower
+Pavoine
+Maire et al.
+De Bello handbook
