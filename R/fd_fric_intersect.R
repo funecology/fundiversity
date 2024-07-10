@@ -56,7 +56,7 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
   if (ncol(traits) > 16) {
     stop("Due to computational limits FRic intersect can only be computed ",
          "with n <= 16 traits\nConsider dimension reduction techniques ",
-         "if you have more than 16 traits")
+         "if you have more than 16 traits", call. = FALSE)
   }
 
   traits <- remove_species_without_trait(traits)
@@ -136,7 +136,8 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
   if (any(is.na(fric_intersect))) {
     warning(
       "Some sites had less species than traits so returned FRic_intersect ",
-      "is 'NA'"
+      "is 'NA'",
+      call. = FALSE
     )
   }
 
