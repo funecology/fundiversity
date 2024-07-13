@@ -7,15 +7,18 @@ concurrency:
 on: 
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   prepare:
     runs-on: ubuntu-latest 
     if:
       true &&
       (
-        github.event.comment.author_association == 'OWNER' ||
-        github.event.comment.author_association == 'MEMBER' ||
-        github.event.comment.author_association == 'COLLABORATOR' 
+        github.event.pull_request.author_association == 'OWNER' ||
+        github.event.pull_request.author_association == 'MEMBER' ||
+        github.event.pull_request.author_association == 'COLLABORATOR' 
       )
     outputs:
       config: ${{ steps.read_touchstone_config.outputs.config }}
