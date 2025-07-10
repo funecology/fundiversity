@@ -34,8 +34,7 @@
 #' @export
 fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
-  if ((!is.null(traits) && !is.null(dist_matrix)) ||
-      (is.null(traits) && is.null(dist_matrix))) {
+  if (!xor(is.null(traits), is.null(dist_matrix))) {
     stop(
       "Please provide either a trait dataset or a dissimilarity matrix",
       call. = FALSE
