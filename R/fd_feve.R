@@ -70,11 +70,7 @@ fd_feve <- function(traits = NULL, sp_com, dist_matrix = NULL) {
     )
   }
 
-  if (is.null(rownames(sp_com))) {
-
-    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
-
-  }
+  rownames(sp_com) <- rownames(sp_com) %||% paste0("s", seq_len(nrow(sp_com)))
 
   # Standardize abundance per site
   site_abundances <- rowSums(sp_com, na.rm = TRUE)
