@@ -1,7 +1,7 @@
 Package: fundiversity
 Title: Easy Computation of Functional Diversity Indices
 Version: 1.1.1
-Authors@R: 
+Authors@R:
     c(
       person("Matthias", "Grenié",
         email = "matthias.grenie@gmail.com",
@@ -24,8 +24,8 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
-Depends: 
-    R (>= 2.10)
+Depends:
+    R (>= 3.2.0)
 Imports:
     future.apply,
     geometry,
