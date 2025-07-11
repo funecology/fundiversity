@@ -34,8 +34,7 @@
 #' @export
 fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
-  if ((!is.null(traits) && !is.null(dist_matrix)) ||
-      (is.null(traits) && is.null(dist_matrix))) {
+  if (!xor(is.null(traits), is.null(dist_matrix))) {
     stop(
       "Please provide either a trait dataset or a dissimilarity matrix",
       call. = FALSE
@@ -79,11 +78,7 @@ fd_raoq <- function(traits = NULL, sp_com, dist_matrix = NULL) {
 
   }
 
-  if (is.null(rownames(sp_com))) {
-
-    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
-
-  }
+  rownames(sp_com) <- rownames(sp_com) %||% paste0("s", seq_len(nrow(sp_com)))
 
   # Standardize abundance per site
   site_abundances <- rowSums(sp_com, na.rm = TRUE)

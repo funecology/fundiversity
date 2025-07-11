@@ -88,11 +88,8 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
 
   }
 
-  if (is.null(rownames(sp_com))) {
+  rownames(sp_com) <- rownames(sp_com) %||% paste0("s", seq_len(nrow(sp_com)))
 
-    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
-
-  }
 
   max_range <- 1
 
@@ -145,7 +142,7 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
     }
   }, future.globals = FALSE)
 
-  if (any(is.na(fric_intersect))) {
+  if (anyNA(fric_intersect)) {
     warning(
       "Some sites had less species than traits so returned FRic_intersect ",
       "is 'NA'",

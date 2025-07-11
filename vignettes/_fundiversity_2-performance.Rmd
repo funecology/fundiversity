@@ -386,8 +386,7 @@ all_bench_sites <- list(fric = bench_sites_fric,
                         raoq = bench_sites_raoq,
                         feve = bench_sites_feve) %>%
   bind_rows(.id = "fd_index") %>%
-  mutate(n_sites = gsub("sites", "", expr) %>%
-           as.numeric())
+  mutate(n_sites = as.numeric(gsub("sites", "", expr, fixed = TRUE)))
 
 all_bench_sites %>%
   ggplot(aes(n_sites, time * 1e-9, color = fd_index)) +
