@@ -5,84 +5,60 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Computes 5 alpha-functional diversity indices: Functional
-  Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic),
-  Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger
-  et al. 2008 &lt;doi:10.1890/07-1206.1&gt;). Provides efficient, modular, and
-  parallelizable functions to compute functional diversity indices.">
-<title>Easy Computation of Alpha Functional Diversity Indices • fundiversity</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<title>Easy Computation of Functional Diversity Indices • fundiversity</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Easy Computation of Alpha Functional Diversity Indices">
-<meta property="og:description" content="Computes 5 alpha-functional diversity indices: Functional
-  Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic),
-  Functional Dispersion (FDis) and Rao's entropy (Q) (reviewed in Villéger
-  et al. 2008 &lt;doi:10.1890/07-1206.1&gt;). Provides efficient, modular, and
-  parallelizable functions to compute functional diversity indices.">
-<meta property="og:image" content="https://bisaloo.github.io/fundiversity/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Easy Computation of Functional Diversity Indices">
+<meta name="description" content="Computes six functional diversity indices. These are namely, Functional Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional Richness intersections (FRic_intersect), Functional Dispersion (FDis), and Rao's entropy (Q) (reviewed in Villéger et al. 2008 &lt;doi:10.1890/07-1206.1&gt;). Provides efficient, modular, and parallel functions to compute functional diversity indices (Grenié &amp; Gruson 2023 &lt;doi:10.1111/ecog.06585&gt;).">
+<meta property="og:description" content="Computes six functional diversity indices. These are namely, Functional Divergence (FDiv), Function Evenness (FEve), Functional Richness (FRic), Functional Richness intersections (FRic_intersect), Functional Dispersion (FDis), and Rao's entropy (Q) (reviewed in Villéger et al. 2008 &lt;doi:10.1890/07-1206.1&gt;). Provides efficient, modular, and parallel functions to compute functional diversity indices (Grenié &amp; Gruson 2023 &lt;doi:10.1111/ecog.06585&gt;).">
+<meta property="og:image" content="https://funecology.github.io/fundiversity/logo.png">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="index.html">fundiversity</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="articles/fundiversity.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="articles/fundiversity.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/performance.html">Performance Comparison</a>
-    <a class="dropdown-item" href="articles/parallel.html">Parallelization</a>
-    <a class="dropdown-item" href="articles/design-principles.html">Design Principles</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/fundiversity_1-parallel.html">2. Parallelize Computation of Indices</a></li>
+    <li><a class="dropdown-item" href="articles/fundiversity_2-performance.html">3. Performance Benchmark with other packages</a></li>
+    <li><a class="dropdown-item" href="articles/fundiversity_3-correctness.html">4. Check Numerical Correctness of Indices</a></li>
+    <li><a class="dropdown-item" href="articles/fundiversity_4-design-principles.html">5. Design Principles for fundiversity</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/Bisaloo/fundiversity/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/funecology/fundiversity/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-home">
 <div class="row">
@@ -92,7 +68,8 @@
 </h1>
 </div>
 <!-- badges: start -->
-<p><code>fundiversity</code> provides a lightweight package to compute common functional diversity indices. To a get a glimpse of what <code>fundiversity</code> can do refer to the <a href="https://bisaloo.github.io/fundiversity/articles/fundiversity.html">introductory vignette</a>. The package is built using clear, public <a href="https://bisaloo.github.io/fundiversity/articles/design-principles.html">design principles</a> inspired from our own experience and user feedback.</p>
+
+<p><code>fundiversity</code> provides a lightweight package to compute common functional diversity indices. To a get a glimpse of what <code>fundiversity</code> can do refer to the <a href="https://funecology.github.io/fundiversity/articles/fundiversity.html">introductory vignette</a>. The package is built using clear, public <a href="https://funecology.github.io/fundiversity/articles/fundiversity_4-design-principles.html">design principles</a> inspired from our own experience and user feedback.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -106,38 +83,28 @@
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p><code>fundiversity</code> lets you compute six functional diversity indices: Functional Richness with <code><a href="reference/fd_fric.html">fd_fric()</a></code>, intersection with between convex hulls with <code><a href="reference/fd_fric_intersect.html">fd_fric_intersect()</a></code>, Functional Divergence with <code><a href="reference/fd_fdiv.html">fd_fdiv()</a></code>, Rao’s Quadratic Entropy with <code><a href="reference/fd_raoq.html">fd_raoq()</a></code>, Functional Dispersion with <code><a href="reference/fd_fdis.html">fd_fdis()</a></code> and Functional Evenness with <code><a href="reference/fd_feve.html">fd_feve()</a></code>. You can have a brief overview of the indices in the <a href="https://bisaloo.github.io/fundiversity/articles/fundiversity.html">introductory vignette</a>.</p>
+<p><code>fundiversity</code> lets you compute six functional diversity indices: Functional Richness with <code><a href="reference/fd_fric.html">fd_fric()</a></code>, intersection with between convex hulls with <code><a href="reference/fd_fric_intersect.html">fd_fric_intersect()</a></code>, Functional Divergence with <code><a href="reference/fd_fdiv.html">fd_fdiv()</a></code>, Rao’s Quadratic Entropy with <code><a href="reference/fd_raoq.html">fd_raoq()</a></code>, Functional Dispersion with <code><a href="reference/fd_fdis.html">fd_fdis()</a></code> and Functional Evenness with <code><a href="reference/fd_feve.html">fd_feve()</a></code>. You can have a brief overview of the indices in the <a href="https://funecology.github.io/fundiversity/articles/fundiversity.html">introductory vignette</a>.</p>
 <p>All indices can be computed either using global trait data or at the site-level:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://hugogruson.fr/fundiversity/" class="external-link">fundiversity</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://funecology.github.io/fundiversity/">"fundiversity"</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Get trait data included in the package</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"traits_birds"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Compute Functional Richness of all birds included</span></span>
+<span><span class="co"># If only the trait dataset is specified, considers all species together</span></span>
+<span><span class="co"># by default</span></span>
 <span><span class="fu"><a href="reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   site     FRic</span></span>
 <span><span class="co">#&gt; 1   s1 230967.7</span></span>
 <span></span>
-<span><span class="co"># Compute Functional Divergence</span></span>
-<span><span class="fu"><a href="reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   site      FDiv</span></span>
-<span><span class="co">#&gt; 1   s1 0.7282172</span></span>
-<span></span>
-<span><span class="co"># Compute Rao's Quadratic Entropy</span></span>
-<span><span class="fu"><a href="reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   site        Q</span></span>
-<span><span class="co">#&gt; 1   s1 170.0519</span></span>
-<span></span>
-<span><span class="co"># Compute Functional Dispersion</span></span>
-<span><span class="fu"><a href="reference/fd_fdis.html">fd_fdis</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   site     FDis</span></span>
-<span><span class="co">#&gt; 1   s1 146.2072</span></span>
-<span></span>
-<span><span class="co"># Compute Functional Evenness</span></span>
-<span><span class="fu"><a href="reference/fd_feve.html">fd_feve</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   site      FEve</span></span>
-<span><span class="co">#&gt; 1   s1 0.3743341</span></span></code></pre></div>
+<span><span class="co"># We can also compute diversity across sites</span></span>
+<span><span class="fu"><a href="reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, <span class="va">site_sp_birds</span><span class="op">)</span></span>
+<span><span class="co">#&gt;        site       FRic</span></span>
+<span><span class="co">#&gt; 1  elev_250 171543.730</span></span>
+<span><span class="co">#&gt; 2  elev_500 185612.548</span></span>
+<span><span class="co">#&gt; 3 elev_1000 112600.176</span></span>
+<span><span class="co">#&gt; 4 elev_1500  66142.748</span></span>
+<span><span class="co">#&gt; 5 elev_2000  20065.764</span></span>
+<span><span class="co">#&gt; 6 elev_2500  18301.176</span></span>
+<span><span class="co">#&gt; 7 elev_3000  17530.651</span></span>
+<span><span class="co">#&gt; 8 elev_3500   3708.735</span></span></code></pre></div>
 <p>To compute Rao’s Quadratic Entropy, the user can also provide a distance matrix between species directly:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dist_traits_birds</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span><span class="op">)</span></span>
@@ -150,11 +117,19 @@
 <h2 id="function-summary">Function Summary<a class="anchor" aria-label="anchor" href="#function-summary"></a>
 </h2>
 <table class="table">
+<colgroup>
+<col width="30%">
+<col width="21%">
+<col width="26%">
+<col width="21%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Function Name</th>
 <th align="left">Index Name</th>
-<th align="center">Parallelizable[1]</th>
-<th align="center">Memoizable[2]</th>
+<th align="center">Parallelizable<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;parallelization through the &lt;code&gt;future&lt;/code&gt; backend please refer to the &lt;a href="https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html"&gt;parallelization vignette&lt;/a&gt; for details.&lt;/p&gt;'><sup>1</sup></a>
+</th>
+<th align="center">Memoizable<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;memoization means that the results of the functions calls are cached and not recomputed when recalled, to toggle it off see the &lt;code&gt;&lt;a href="reference/fd_fric.html"&gt;fundiversity::fd_fric()&lt;/a&gt;&lt;/code&gt; &lt;a href="https://funecology.github.io/fundiversity/reference/fd_fric.html#details"&gt;Details section&lt;/a&gt;.&lt;/p&gt;'><sup>2</sup></a>
+</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -205,16 +180,16 @@
 <span><span class="fu"><a href="reference/fd_fdiv.html">fd_fdiv</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   site      FDiv</span></span>
 <span><span class="co">#&gt; 1   s1 0.7282172</span></span></code></pre></div>
-<p>For more details please refer to the <a href="https://bisaloo.github.io/fundiversity/articles/parallel.html">parallelization vignette</a> or use <code><a href="articles/parallel.html">vignette("parallel", package = "fundiversity")</a></code> within R.</p>
+<p>For more details please refer to the <a href="https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html">parallelization vignette</a> or use <code><a href="articles/fundiversity_1-parallel.html">vignette("fundiversity_1-parallel", package = "fundiversity")</a></code> within R. <strong>Note</strong>: parallelization and memoization are <strong>mutually exclusive</strong>, when doing computation in parallel, fundiversity falls back on <strong>unmemoised</strong> versions of function.</p>
 </div>
 <div class="section level2">
 <h2 id="available-functional-diversity-indices">Available functional diversity indices<a class="anchor" aria-label="anchor" href="#available-functional-diversity-indices"></a>
 </h2>
-<p>According to Pavoine &amp; Bonsall (2011) classification, functional diversity indices can be classified in three “domains” that assess different properties of the functional space: richness, divergence, and regularity. <code>fundiversity</code> provides function to compute indices that assess this three facets at the site scale:</p>
+<p>According to Pavoine &amp; Bonsall (2011) classification, functional diversity indices can be classified in three “domains” that assess different properties of the functional space: richness, divergence, and regularity. We made sure that the computations in the package are correct in our <a href="https://funecology.github.io/fundiversity/articles/fundiversity_3-correctness.html">correctness vignette</a>. <code>fundiversity</code> provides function to compute indices that assess this three facets at the site scale:</p>
 <table class="table">
 <colgroup>
 <col width="6%">
-<col width="30%">
+<col width="29%">
 <col width="48%">
 <col width="15%">
 </colgroup>
@@ -227,16 +202,16 @@
 <tbody>
 <tr class="odd">
 <td>α-diversity<br>(= among sites)</td>
-<td>FRic with <a href="https://bisaloo.github.io/fundiversity/reference/fd_fric.html"><code>fd_fric()</code></a>
+<td>FRic with <a href="https://funecology.github.io/fundiversity/reference/fd_fric.html"><code>fd_fric()</code></a>
 </td>
-<td>FDiv with <a href="https://bisaloo.github.io/fundiversity/reference/fd_fdiv.html"><code>fd_fdiv()</code></a><br>Rao’s QE with <a href="https://bisaloo.github.io/fundiversity/reference/fd_raoq.html"><code>fd_raoq()</code></a><br>FDis with <a href="https://bisaloo.github.io/fundiversity/reference/fd_fdis.html"><code>fd_fdis()</code></a>
+<td>FDiv with <a href="https://funecology.github.io/fundiversity/reference/fd_fdiv.html"><code>fd_fdiv()</code></a><br>Rao’s QE with <a href="https://funecology.github.io/fundiversity/reference/fd_raoq.html"><code>fd_raoq()</code></a><br>FDis with <a href="https://funecology.github.io/fundiversity/reference/fd_fdis.html"><code>fd_fdis()</code></a>
 </td>
-<td>FEve with <a href="https://bisaloo.github.io/fundiversity/reference/fd_feve.html"><code>fd_feve()</code></a>
+<td>FEve with <a href="https://funecology.github.io/fundiversity/reference/fd_feve.html"><code>fd_feve()</code></a>
 </td>
 </tr>
 <tr class="even">
 <td>β-diversity<br>(= between sites)</td>
-<td>FRic pairwise intersection with <a href="https://bisaloo.github.io/fundiversity/reference/fd_fric_intersect.html"><code>fd_fric_intersect()</code></a><br>alternatives available in <code>betapart</code>
+<td>FRic pairwise intersection with <a href="https://funecology.github.io/fundiversity/reference/fd_fric_intersect.html"><code>fd_fric_intersect()</code></a><br>alternatives available in <code>betapart</code>
 </td>
 <td>available in <code>entropart</code>, <code>betapart</code> or <code>hillR</code>
 </td>
@@ -249,14 +224,14 @@
 <div class="section level2">
 <h2 id="related-packages">Related Packages<a class="anchor" aria-label="anchor" href="#related-packages"></a>
 </h2>
-<p>Several other packages exist that compute functional diversity indices. We did a <a href="https://bisaloo.github.io/fundiversity/articles/performance.html">performance comparison</a> between related packages. We here mention some of them (but do not mention the numerous wrappers around these packages):</p>
+<p>Several other packages exist that compute functional diversity indices. We did a <a href="https://funecology.github.io/fundiversity/articles/fundiversity_2-performance.html">performance comparison</a> between related packages. We here mention some of them (but do not mention the numerous wrappers around these packages):</p>
 <table class="table">
 <colgroup>
 <col width="20%">
-<col width="44%">
+<col width="43%">
 <col width="5%">
-<col width="3%">
-<col width="3%">
+<col width="4%">
+<col width="4%">
 <col width="22%">
 </colgroup>
 <thead><tr class="header">
@@ -271,7 +246,7 @@
 <tr class="odd">
 <td><a href="https://github.com/cran/adiv" class="external-link"><code>adiv</code></a></td>
 <td>Functional Entropy, Functional Redundancy</td>
-<td>✅</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td><img src="https://www.r-pkg.org/badges/last-release/adiv"></td>
@@ -359,18 +334,16 @@
 </tbody>
 </table>
 <hr>
-<ol style="list-style-type: decimal">
-<li><p>parallelization through the <code>future</code> backend please refer to the <a href="https://bisaloo.github.io/fundiversity/articles/parallel.html">parallelization vignette</a> for details.</p></li>
-<li><p>memoization means that the results of the functions calls are cached and not recomputed when recalled, to toggle it off see the <code><a href="reference/fd_fric.html">fundiversity::fd_fric()</a></code> <a href="https://bisaloo.github.io/fundiversity/reference/fd_fric.html#details">Details section</a>.</p></li>
-</ol>
 </div>
 </div>
+
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=fundiversity" class="external-link">View on CRAN</a></li>
-<li><a href="https://github.com/Bisaloo/fundiversity/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/Bisaloo/fundiversity/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/funecology/fundiversity/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/funecology/fundiversity/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -394,18 +367,18 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://rekyt.github.io/" class="external-link">Matthias Grenié</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-4659-7522" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://rekyt.github.io/" class="external-link">Matthias Grenié</a> <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-4659-7522" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 <li>
-<a href="https://www.normalesup.org/~hgruson/" class="external-link">Hugo Gruson</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4094-1476" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<a href="https://hugogruson.fr/" class="external-link">Hugo Gruson</a> <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-4094-1476" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>  </li>
 </ul>
 </div>
 
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://lifecycle.r-lib.org/articles/stages.html#maturing" class="external-link"><img src="https://img.shields.io/badge/lifecycle-maturing-blue.svg" alt="Lifecycle: maturing"></a></li>
-<li><a href="https://github.com/Bisaloo/fundiversity/actions" class="external-link"><img src="https://github.com/Bisaloo/fundiversity/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://codecov.io/gh/Bisaloo/fundiversity" class="external-link"><img src="https://codecov.io/gh/Bisaloo/fundiversity/branch/master/graph/badge.svg?token=HR4YH118VT" alt="Coverage Status"></a></li>
+<li><a href="https://lifecycle.r-lib.org/articles/stages.html#stable" class="external-link"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a></li>
+<li><a href="https://github.com/funecology/fundiversity/actions" class="external-link"><img src="https://github.com/funecology/fundiversity/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://app.codecov.io/gh/funecology/fundiversity" class="external-link"><img src="https://codecov.io/gh/funecology/fundiversity/branch/main/graph/badge.svg?token=HR4YH118VT" alt="Coverage Status"></a></li>
 <li><a href="https://CRAN.R-project.org/package=fundiversity" class="external-link"><img src="https://www.r-pkg.org/badges/version-ago/fundiversity" alt="CRAN status"></a></li>
 <li><a href="https://zenodo.org/badge/latestdoi/300231216" class="external-link"><img src="https://zenodo.org/badge/300231216.svg" alt="DOI"></a></li>
 </ul>
@@ -416,21 +389,19 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by <a href="https://rekyt.github.io/" class="external-link">Matthias Grenié</a>, <a href="https://www.normalesup.org/~hgruson/" class="external-link">Hugo Gruson</a>.</p>
+  <p>Developed by <a href="https://rekyt.github.io/" class="external-link">Matthias Grenié</a>, <a href="https://hugogruson.fr/" class="external-link">Hugo Gruson</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

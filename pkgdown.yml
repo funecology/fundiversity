@@ -1,13 +1,13 @@
-pandoc: 2.7.3
-pkgdown: 2.0.6
+pandoc: 3.1.11
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
-  design-principles: design-principles.html
+  fundiversity_1-parallel: fundiversity_1-parallel.html
+  fundiversity_2-performance: fundiversity_2-performance.html
+  fundiversity_3-correctness: fundiversity_3-correctness.html
+  fundiversity_4-design-principles: fundiversity_4-design-principles.html
   fundiversity: fundiversity.html
-  parallel: parallel.html
-  performance: performance.html
-last_built: 2022-08-09T15:04Z
+last_built: 2025-07-18T11:31Z
 urls:
-  reference: https://bisaloo.github.io/fundiversity/reference
-  article: https://bisaloo.github.io/fundiversity/articles
-
+  reference: https://funecology.github.io/fundiversity/reference
+  article: https://funecology.github.io/fundiversity/articles
