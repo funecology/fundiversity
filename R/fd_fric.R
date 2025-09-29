@@ -63,6 +63,11 @@
 #' habitat filtering; convex hull volume, Ecology 84(6),
 #' \doi{10.1890/0012-9658(2006)87[1465:ATTFHF]2.0.CO;2}
 #'
+#' Villéger, S., Mason, N.W.H., Mouillot, D., 2008. New Multidimensional
+#' Functional Diversity Indices for a Multifaceted Framework in Functional
+#' Ecology. Ecology 89, 2290–2301. \doi{10.1890/07-1206.1}
+#'
+#'
 #' @importFrom future.apply future_apply
 #' @export
 fd_fric <- function(traits, sp_com, stand = FALSE) {
