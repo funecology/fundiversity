@@ -9,12 +9,14 @@ csv_files <- rdryad::dryad_download("10.5061/dryad.c0n737b")[[1]] %>%
 
 # Trait matrices ---------------------------------------------------------------
 
-traits_plants <- read.csv(grep("Traits_plants", csv_files, value = TRUE)) %>%
+traits_plants <- grep("Traits_plants", csv_files, value = TRUE, fixed = TRUE) %>%
+  read.csv() %>%
   select(Species, where(is.numeric)) %>%
   column_to_rownames("Species") %>%
   as.matrix()
 
-traits_birds <- read.csv(grep("Traits_birds", csv_files, value = TRUE)) %>%
+traits_birds <- grep("Traits_birds", csv_files, value = TRUE, fixed = TRUE) %>%
+  read.csv() %>%
   select(Species, where(is.numeric)) %>%
   column_to_rownames("Species") %>%
   as.matrix()
@@ -23,7 +25,8 @@ traits_birds <- read.csv(grep("Traits_birds", csv_files, value = TRUE)) %>%
 # Site-species matrices --------------------------------------------------------
 
 # Birds site-species matrix
-elev_birds <- read.csv(grep("Elevation_birds", csv_files, value = TRUE))
+elev_birds <- grep("Elevation_birds", csv_files, value = TRUE, fixed = TRUE) %>%
+  read.csv()
 
 elevations <- union(elev_birds$Min..elevation..m.a.s.l..,
                     elev_birds$Max..elevation..m.a.s.l..) %>%
@@ -48,7 +51,8 @@ site_sp_birds <- elev_birds %>%
 
 
 # Plants site-species matrix
-elev_plants <- read.csv(grep("Elevation_plants", csv_files, value = TRUE))
+elev_plants <- grep("Elevation_plants", csv_files, value = TRUE, fixed = TRUE) %>%
+  read.csv()
 
 plant_elev <- union(elev_plants$Min..elevation..m.a.s.l..,
                     elev_plants$Max..elevation..m.a.s.l..) %>%

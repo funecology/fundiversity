@@ -37,6 +37,18 @@
 #' data(traits_birds)
 #' fd_fric_intersect(traits_birds)
 #'
+#' @references
+#' Villéger S., Grenouillet G., Brosse S. (2013), Decomposing functional
+#' \eqn{\beta}{beta}-diversity reveals that low functional
+#' \eqn{\beta}{beta}-diversity is driven by low functional turnover in European
+#' fish assemblages, Global Ecology and Biogeography, 22(6), 671–681.
+#' \doi{10.1111/geb.12021}.
+#'
+#' Zhao T., Villéger S., Cucherousset J. (2019). Accounting for intraspecific
+#' diversity when examining relationships between non-native species and
+#' functional diversity. Oecologia, 189(1), 171-183.
+#' \doi{10.1007/s00442-018-4311-3}.
+#'
 #' @export
 fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
 
@@ -56,7 +68,7 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
   if (ncol(traits) > 16) {
     stop("Due to computational limits FRic intersect can only be computed ",
          "with n <= 16 traits\nConsider dimension reduction techniques ",
-         "if you have more than 16 traits")
+         "if you have more than 16 traits", call. = FALSE)
   }
 
   traits <- remove_species_without_trait(traits)
@@ -76,11 +88,8 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
 
   }
 
-  if (is.null(rownames(sp_com))) {
+  rownames(sp_com) <- rownames(sp_com) %||% paste0("s", seq_len(nrow(sp_com)))
 
-    rownames(sp_com) <- paste0("s", seq_len(nrow(sp_com)))
-
-  }
 
   max_range <- 1
 
@@ -133,10 +142,11 @@ fd_fric_intersect <- function(traits, sp_com, stand = FALSE) {
     }
   }, future.globals = FALSE)
 
-  if (any(is.na(fric_intersect))) {
+  if (anyNA(fric_intersect)) {
     warning(
       "Some sites had less species than traits so returned FRic_intersect ",
-      "is 'NA'"
+      "is 'NA'",
+      call. = FALSE
     )
   }
 
