@@ -1,3 +1,8 @@
+# fundiversity (development version)
+
+* `fd_fdis()` is now ~20x faster, removing the need for parallel
+  processing.
+
 # fundiversity 1.1.0
 
 ##  Minor changes

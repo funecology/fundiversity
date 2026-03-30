@@ -4,7 +4,7 @@
 | `fd_fric_intersect()` | FRic_intersect | ✅                 |  ✅            |
 | `fd_fdiv()`           | FDiv           | ✅                 |  ✅            |
 | `fd_feve()`           | FEve           | ✅                 |  ❌            |
-| `fd_fdis()`           | FDis           | ✅                 |  ❌            |
+| `fd_fdis()`           | FDis           | ❌                 |  ❌            |
 | `fd_raoq()`           | Rao's Q        | ❌                 |  ❌            |
 
 [^1]: parallelization through the `future` backend please refer to the [parallelization vignette](https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html) for details.

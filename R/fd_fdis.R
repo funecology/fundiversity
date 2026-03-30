@@ -26,7 +26,6 @@
 #' measuring functional diversity from multiple traits. Ecology, 91(1),
 #' 299–305. \doi{10.1890/08-2244.1}
 #'
-#' @importFrom future.apply future_apply
 #' @export
 fd_fdis <- function(traits, sp_com) {
 
@@ -78,15 +77,14 @@ fd_fdis <- function(traits, sp_com) {
 
   centros <- sp_com %*% traits
 
-  dists_centro <- future_apply(
-    centros, 1, function(centro) {
-
-    sqrt(colSums((t(traits) - centro)^2))
-
-    }, future.globals = FALSE
+  # Transform (a-b)^2 to a^2 + b^2 - 2ab to avoid explicit loop
+  centros_sq   <- rowSums(centros^2)
+  traits_sq    <- rowSums(traits^2)
+  dists_to_centro <- sqrt(
+    outer(centros_sq, traits_sq, `+`) - 2 * tcrossprod(centros, traits)
   )
 
-  fdis_site <- diag(sp_com %*% dists_centro)
+  fdis_site <- rowSums(sp_com * dists_to_centro)
 
   data.frame(site = rownames(sp_com), FDis = fdis_site, row.names = NULL)
 }

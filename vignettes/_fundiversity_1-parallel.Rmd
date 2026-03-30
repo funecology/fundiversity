@@ -20,7 +20,12 @@ knitr::opts_chunk$set(
 )
 tictoc::tic()
 
-options(fundiversity.memoise = FALSE)
+
+options(
+  fundiversity.memoise = FALSE,
+  # FIXME: unclear why FUN export is so large in fd_eve()
+  future.globals.maxSize = 2000 * 1024^2 # 2000 MB
+)
 ```
 
 Note: This vignette presents some performance tests ran between non-parallel and parallel versions of `fundiversity` functions. Note that to avoid the dependency on other packages, this vignette is [**pre-computed**](https://ropensci.org/technotes/2019/12/08/precompute-vignettes/).
