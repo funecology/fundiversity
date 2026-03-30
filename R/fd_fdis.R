@@ -26,7 +26,6 @@
 #' measuring functional diversity from multiple traits. Ecology, 91(1),
 #' 299–305. \doi{10.1890/08-2244.1}
 #'
-#' @importFrom future.apply future_apply
 #' @export
 fd_fdis <- function(traits, sp_com) {
 
