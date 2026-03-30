@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">fundiversity</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.1.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -134,7 +134,7 @@ section&lt;/a&gt;.&lt;/p&gt;'><sup>2</sup></a>
 <tr class="odd">
 <td align="left"><code><a href="../reference/fd_fdis.html">fd_fdis()</a></code></td>
 <td align="left">FDis</td>
-<td align="center">✅</td>
+<td align="center">❌</td>
 <td align="center">❌</td>
 </tr>
 <tr class="even">
@@ -220,9 +220,9 @@ performance gain thanks to parallelization:</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">non_parallel_bench</span>, <span class="va">parallel_bench</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Unit: milliseconds</span></span>
-<span><span class="co">#&gt;          expr      min       lq      mean    median       uq      max neval cld</span></span>
-<span><span class="co">#&gt;  non_parallel   8.9509   9.2691  14.93812  13.32405  18.4841   33.153    20  a </span></span>
-<span><span class="co">#&gt;      parallel 224.7037 248.9997 345.59427 274.59615 304.6889 1660.164    20   b</span></span></code></pre></div>
+<span><span class="co">#&gt;          expr       min        lq      mean    median        uq        max neval</span></span>
+<span><span class="co">#&gt;  non_parallel  6.353103  6.530705  7.048172  6.783957  7.419328   8.047106    20</span></span>
+<span><span class="co">#&gt;      parallel 58.655666 60.348733 98.017574 64.985843 67.026148 742.737245    20</span></span></code></pre></div>
 <p>The non parallelized code runs faster than the parallelized one!
 Indeed, the parallelization in <code>fundiversity</code> parallelize the
 computation across different sites. So parallelization should be used
@@ -255,121 +255,62 @@ indices.</p>
 <span>  <span class="op">}</span>, times <span class="op">=</span> <span class="fl">20</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; Unit: seconds</span></span>
-<span><span class="co">#&gt;          expr      min        lq      mean    median        uq       max neval cld</span></span>
-<span><span class="co">#&gt;           seq 78.13766 195.17853 184.92560 196.89360 197.90500 200.56116    20  a </span></span>
-<span><span class="co">#&gt;  multisession 34.23402  54.44036  53.39172  54.88206  55.19359  61.83829    20   b</span></span>
-<span><span class="co">#&gt;     multicore 75.43857 192.45136 183.07222 196.48277 201.16889 209.39847    20  a</span></span></code></pre></div>
+<span><span class="co">#&gt;          expr       min        lq      mean    median        uq       max neval</span></span>
+<span><span class="co">#&gt;           seq 18.728512 19.103694 19.232935 19.176466 19.301487 19.761445    20</span></span>
+<span><span class="co">#&gt;  multisession 10.094391 10.395965 13.815399 15.532990 15.817894 15.971519    20</span></span>
+<span><span class="co">#&gt;     multicore  5.591176  5.859922  5.969892  5.940668  6.049153  6.460862    20</span></span></code></pre></div>
 <details><summary>
 Session info of the machine on which the benchmark was ran and time it
 took to run
-</summary><pre><code><span><span class="co">#&gt;  seconds needed to generate this document: 8443.78 sec elapsed</span></span>
-<span><span class="co">#&gt; ─ Session info ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
+</summary><pre><code><span><span class="co">#&gt;  seconds needed to generate this document: 787.217 sec elapsed</span></span>
+<span><span class="co">#&gt; ─ Session info ────────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="co">#&gt;  setting  value</span></span>
-<span><span class="co">#&gt;  version  R version 4.3.1 (2023-06-16 ucrt)</span></span>
-<span><span class="co">#&gt;  os       Windows 11 x64 (build 22631)</span></span>
-<span><span class="co">#&gt;  system   x86_64, mingw32</span></span>
-<span><span class="co">#&gt;  ui       RStudio</span></span>
+<span><span class="co">#&gt;  version  R version 4.5.3 (2026-03-11)</span></span>
+<span><span class="co">#&gt;  os       Ubuntu 24.04.4 LTS</span></span>
+<span><span class="co">#&gt;  system   x86_64, linux-gnu</span></span>
+<span><span class="co">#&gt;  ui       Positron</span></span>
 <span><span class="co">#&gt;  language (EN)</span></span>
-<span><span class="co">#&gt;  collate  French_France.utf8</span></span>
-<span><span class="co">#&gt;  ctype    fr_FR.UTF-8</span></span>
-<span><span class="co">#&gt;  tz       Europe/Paris</span></span>
-<span><span class="co">#&gt;  date     2024-03-26</span></span>
-<span><span class="co">#&gt;  rstudio  2023.12.1+402 Ocean Storm (desktop)</span></span>
-<span><span class="co">#&gt;  pandoc   3.1.1 @ C:/Program Files/RStudio/resources/app/bin/quarto/bin/tools/ (via rmarkdown)</span></span>
+<span><span class="co">#&gt;  collate  en_GB.UTF-8</span></span>
+<span><span class="co">#&gt;  ctype    en_GB.UTF-8</span></span>
+<span><span class="co">#&gt;  tz       Europe/Berlin</span></span>
+<span><span class="co">#&gt;  date     2026-03-30</span></span>
+<span><span class="co">#&gt;  pandoc   3.1.3 @ /bin/pandoc</span></span>
+<span><span class="co">#&gt;  quarto   1.9.12 @ /opt/quarto/bin/quarto</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ─ Packages ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span>
-<span><span class="co">#&gt;  ! package        * version    date (UTC) lib source</span></span>
-<span><span class="co">#&gt;    abind            1.4-5      2016-07-21 [1] CRAN (R 4.3.0)</span></span>
-<span><span class="co">#&gt;    cachem           1.0.8      2023-05-01 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    cli              3.6.2      2023-12-11 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    cluster          2.1.6      2023-12-01 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    codetools        0.2-19     2023-02-01 [2] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    commonmark       1.9.1      2024-01-30 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    crayon           1.5.2      2022-09-29 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    curl             5.2.1      2024-03-01 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    desc             1.4.3      2023-12-10 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    devtools         2.4.5      2022-10-11 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    digest           0.6.35     2024-03-11 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    ellipsis         0.3.2      2021-04-29 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    evaluate         0.23       2023-11-01 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    fansi            1.0.6      2023-12-08 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    fastmap          1.1.1      2023-02-24 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    fs               1.6.3      2023-07-20 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;  P fundiversity   * 1.1.1      2024-01-03 [?] Github (funecology/fundiversity@d11d749)</span></span>
-<span><span class="co">#&gt;    future           1.33.1     2023-12-22 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    future.apply     1.11.1     2023-12-21 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    geometry         0.4.7      2023-02-03 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    gh               1.4.0      2023-02-22 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    gitcreds         0.1.2      2022-09-08 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    globals          0.16.3     2024-03-08 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    glue             1.7.0      2024-01-09 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    htmltools        0.5.7      2023-11-03 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    htmlwidgets      1.6.4      2023-12-06 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    httpuv           1.6.14     2024-01-26 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    httr2            1.0.0      2023-11-14 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    jsonlite         1.8.8      2023-12-04 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    knitr            1.45       2023-10-30 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    later            1.3.2      2023-12-06 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    lattice          0.22-5     2023-10-24 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    lifecycle        1.0.4      2023-11-07 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    listenv          0.9.1      2024-01-29 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    magic            1.6-1      2022-11-16 [1] CRAN (R 4.3.0)</span></span>
-<span><span class="co">#&gt;    magrittr         2.0.3      2022-03-30 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    MASS             7.3-60.0.1 2024-01-13 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    Matrix           1.6-5      2024-01-11 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    memoise          2.0.1      2021-11-26 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    mgcv             1.9-1      2023-12-21 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    microbenchmark   1.4.10     2023-04-28 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    mime             0.12       2021-09-28 [1] CRAN (R 4.3.0)</span></span>
-<span><span class="co">#&gt;    miniUI           0.1.1.1    2018-05-18 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    multcomp         1.4-25     2023-06-20 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    mvtnorm          1.2-4      2023-11-27 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    nlme             3.1-164    2023-11-27 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    parallelly       1.37.1     2024-02-29 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    permute          0.9-7      2022-01-27 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    pillar           1.9.0      2023-03-22 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    pkgbuild         1.4.4      2024-03-17 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    pkgconfig        2.0.3      2019-09-22 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    pkgload          1.3.4      2024-01-16 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    profvis          0.3.8      2023-05-02 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    promises         1.2.1      2023-08-10 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    purrr            1.0.2      2023-08-10 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    R6               2.5.1      2021-08-19 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    rappdirs         0.3.3      2021-01-31 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    Rcpp             1.0.12     2024-01-09 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    remotes          2.5.0      2024-03-17 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    rlang            1.1.3      2024-01-10 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    rmarkdown        2.26       2024-03-05 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    roxygen2         7.3.1      2024-01-22 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    rprojroot        2.0.4      2023-11-05 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    rstudioapi       0.15.0     2023-07-07 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    sandwich         3.1-0      2023-12-11 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    sessioninfo      1.2.2      2021-12-06 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    shiny            1.8.0      2023-11-17 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    stringi          1.8.3      2023-12-11 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    stringr          1.5.1      2023-11-14 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    survival         3.5-8      2024-02-14 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    TH.data          1.1-2      2023-04-17 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    tibble           3.2.1      2023-03-20 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    tictoc           1.2.1      2024-03-18 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    urlchecker       1.0.1      2021-11-30 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    usethis          2.2.3      2024-02-19 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    utf8             1.2.4      2023-10-22 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    vctrs            0.6.5      2023-12-01 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    vegan            2.6-4      2022-10-11 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    withr            3.0.0      2024-01-16 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    xfun             0.42       2024-02-08 [1] CRAN (R 4.3.3)</span></span>
-<span><span class="co">#&gt;    xml2             1.3.6      2023-12-04 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    xtable           1.8-4      2019-04-21 [1] CRAN (R 4.3.1)</span></span>
-<span><span class="co">#&gt;    yaml             2.3.8      2023-12-11 [1] CRAN (R 4.3.2)</span></span>
-<span><span class="co">#&gt;    zoo              1.8-12     2023-04-13 [1] CRAN (R 4.3.1)</span></span>
+<span><span class="co">#&gt; ─ Packages ────────────────────────────────────────────────────────────────────────────</span></span>
+<span><span class="co">#&gt;  package        * version    date (UTC) lib source</span></span>
+<span><span class="co">#&gt;  abind            1.4-8      2024-09-12 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  cachem           1.1.0      2024-05-16 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  cli              3.6.5      2025-04-23 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  codetools        0.2-20     2024-03-31 [2] CRAN (R 4.5.3)</span></span>
+<span><span class="co">#&gt;  digest           0.6.39     2025-11-19 [1] RSPM</span></span>
+<span><span class="co">#&gt;  evaluate         1.0.5      2025-08-27 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  fastmap          1.2.0      2024-05-15 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  fundiversity   * 1.1.1.9000 2026-03-29 [1] local</span></span>
+<span><span class="co">#&gt;  future         * 1.69.0     2026-01-16 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  future.apply     1.20.2     2026-02-20 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  geometry         0.5.2      2025-02-08 [1] RSPM</span></span>
+<span><span class="co">#&gt;  globals          0.19.0     2026-02-02 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  knitr            1.51       2025-12-20 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  lattice          0.22-9     2026-02-09 [2] CRAN (R 4.5.3)</span></span>
+<span><span class="co">#&gt;  listenv          0.10.0     2025-11-02 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  magic            1.6-1      2022-11-16 [1] RSPM</span></span>
+<span><span class="co">#&gt;  Matrix           1.7-4      2025-08-28 [2] CRAN (R 4.5.3)</span></span>
+<span><span class="co">#&gt;  memoise          2.0.1      2021-11-26 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  microbenchmark   1.5.0      2024-09-04 [1] RSPM</span></span>
+<span><span class="co">#&gt;  otel             0.2.0      2025-08-29 [1] RSPM</span></span>
+<span><span class="co">#&gt;  parallelly       1.46.1     2026-01-08 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  Rcpp             1.1.1      2026-01-10 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  rlang            1.1.7      2026-01-09 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  sessioninfo      1.2.3      2025-02-05 [1] RSPM (R 4.5.0)</span></span>
+<span><span class="co">#&gt;  tictoc           1.2.1      2024-03-18 [1] RSPM</span></span>
+<span><span class="co">#&gt;  xfun             0.56       2026-01-18 [1] RSPM (R 4.5.0)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  [1] C:/Users/greniem/AppData/Local/R/win-library/4.3</span></span>
-<span><span class="co">#&gt;  [2] C:/Program Files/R/R-4.3.1/library</span></span>
+<span><span class="co">#&gt;  [1] /home/hgruson/.local/share/R/x86_64-pc-linux-gnu-library/4.5</span></span>
+<span><span class="co">#&gt;  [2] /opt/R/4.5.3/lib/R/library</span></span>
+<span><span class="co">#&gt;  * ── Packages attached to the search path.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;  P ── Loaded and on-disk path mismatch.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></code></pre>
+<span><span class="co">#&gt; ───────────────────────────────────────────────────────────────────────────────────────</span></span></code></pre>
 </details>
 </div>
 
@@ -384,7 +325,7 @@ took to run
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
