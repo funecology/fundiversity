@@ -40,7 +40,7 @@ The other packages are thus: `adiv` [@Pavoine_adiv_2020], `BAT` [@Cardoso_BAT_20
 We will now benchmark the functions included in `fundiversity` with the corresponding function in other packages using the `microbenchmark::microbenchmark()` function. We will use the fairly small (~220 species, 8 sites, 4 traits) provided dataset in `fundiversity`.
 
 
-```r
+``` r
 tictoc::tic()  # Time execution of vignette
 library(fundiversity)
 data("traits_birds", package = "fundiversity")
@@ -53,7 +53,7 @@ dist_traits_birds <- dist(traits_birds)
 ### Functional Dispersion (FDis)
 
 
-```r
+``` r
 fdis_bench <- microbenchmark::microbenchmark(
   fundiversity = {
     fundiversity::fd_fdis(traits_birds, site_sp_birds)
@@ -80,7 +80,7 @@ ggplot2::autoplot(fdis_bench) +
 ### Functional Divergence (FDiv)
 
 
-```r
+``` r
 fdiv_bench <- microbenchmark::microbenchmark(
   fundiversity = fd_fdiv(traits_birds, site_sp_birds),
   mFD = mFD::alpha.fd.multidim(
@@ -100,7 +100,7 @@ ggplot2::autoplot(fdiv_bench) +
 ### Functional Evenness (FEve)
 
 
-```r
+``` r
 feve_bench <- microbenchmark::microbenchmark(
   fundiversity = fd_feve(traits_birds, site_sp_birds),
   mFD = mFD::alpha.fd.multidim(
@@ -120,7 +120,7 @@ ggplot2::autoplot(feve_bench) +
 ### Functional Richness (FRic)
 
 
-```r
+``` r
 fric_bench <- microbenchmark::microbenchmark(
   fundiversity = fd_fric(traits_birds, site_sp_birds),
   BAT_tree = BAT::alpha(
@@ -146,7 +146,7 @@ ggplot2::autoplot(fric_bench) +
 ### Functional Richness Intersection (FRic_intersect)
 
 
-```r
+``` r
 fric_bench <- microbenchmark::microbenchmark(
   fundiversity  = fd_fric_intersect(traits_birds, site_sp_birds) ,
   betapart = betapart::functional.beta.pair(
@@ -168,7 +168,7 @@ ggplot2::autoplot(fric_bench) +
 ### Rao's Quadratic Entropy (Q)
 
 
-```r
+``` r
 raoq_bench <- fric_bench <- microbenchmark::microbenchmark(
   fundiversity = fd_raoq(traits_birds, site_sp_birds),
   adiv= adiv::QE(
@@ -202,7 +202,7 @@ We now proceed to the performance evaluation of functions within `fundiversity` 
 ## Increasing the number of species
 
 
-```r
+``` r
 make_more_sp <- function(n) {
   traits <- do.call(rbind, replicate(n, traits_birds, simplify = FALSE))
   row.names(traits) <- paste0("sp", seq_len(nrow(traits)))
@@ -221,7 +221,7 @@ null_sp_100000 <- make_more_sp(500)
 ### Functional Richness
 
 
-```r
+``` r
 bench_sp_fric <- microbenchmark::microbenchmark(
   species_200    = fd_fric(     traits_birds, site_sp_birds),
   species_1000   = fd_fric(  null_sp_1000$tr, null_sp_1000$si),
@@ -235,20 +235,20 @@ ggplot2::autoplot(bench_sp_fric)
 
 ![Performance comparison of `fd_fric()` with increasing number of species.](perf-bench-species-fric-1.png)
 
-```r
+``` r
 bench_sp_fric
 #> Unit: milliseconds
-#>            expr        min         lq       mean     median         uq        max neval  cld
-#>     species_200   12.40461   12.86473   13.63794   13.65822   13.96949   15.64313    30 a   
-#>    species_1000   23.31024   23.98235   24.77462   24.52898   24.99526   32.20389    30  b  
-#>   species_10000  152.16972  153.69475  155.65197  154.41463  155.87235  167.39586    30   c 
-#>  species_100000 1538.24210 1552.02784 1573.05390 1571.92017 1587.70159 1629.76043    30    d
+#>            expr       min        lq      mean    median        uq        max neval
+#>     species_200  64.13693  77.22506  86.41686  87.48392  95.01912  101.53571    30
+#>    species_1000  19.91788  48.31584  62.22163  67.09528  78.68881   90.86103    30
+#>   species_10000  54.59200  80.25405 106.29215 113.69053 123.96300  166.99047    30
+#>  species_100000 705.44201 805.23353 895.93754 872.40737 950.08097 1357.15555    30
 ```
 
 ### Functional Divergence
 
 
-```r
+``` r
 bench_sp_fdiv <- microbenchmark::microbenchmark(
   species_200    = fd_fdiv(     traits_birds, site_sp_birds),
   species_1000   = fd_fdiv(  null_sp_1000$tr, null_sp_1000$si),
@@ -262,20 +262,20 @@ ggplot2::autoplot(bench_sp_fdiv)
 
 ![Performance comparison of `fd_fdiv()` with increasing number of species.](perf-bench-species-fdiv-1.png)
 
-```r
+``` r
 bench_sp_fdiv
 #> Unit: milliseconds
-#>            expr        min         lq       mean     median         uq        max neval cld
-#>     species_200   38.18281   39.33241   41.03782   39.80735   40.19474   63.38092    30 a  
-#>    species_1000   52.21140   53.58856   54.88775   54.00482   54.58979   61.12244    30 a  
-#>   species_10000  215.96505  218.21261  227.32449  221.46767  231.33971  262.64920    30  b 
-#>  species_100000 1996.22764 2035.16809 2090.07993 2068.75306 2097.02749 2805.37816    30   c
+#>            expr       min        lq      mean    median        uq       max neval
+#>     species_200  65.75675  82.74022  92.22989  95.55403  98.83634  113.6111    30
+#>    species_1000  24.31990  71.34581  85.56509  82.23807  93.26562  258.7621    30
+#>   species_10000  77.21861 100.54385 119.36332 125.36045 135.46570  150.1822    30
+#>  species_100000 694.82638 789.91390 853.43494 836.83280 919.55921 1033.8374    30
 ```
 
 ### Rao's Quadratic Entropy
 
 
-```r
+``` r
 bench_sp_raoq <- microbenchmark::microbenchmark(
   species_200    = fd_raoq(     traits_birds, site_sp_birds),
   species_1000   = fd_raoq(  null_sp_1000$tr, null_sp_1000$si),
@@ -288,19 +288,23 @@ ggplot2::autoplot(bench_sp_raoq)
 
 ![Performance comparison of `fd_raoq()` with increasing number of species.](perf-bench-species-raoq-1.png)
 
-```r
+``` r
 bench_sp_raoq
-#> Unit: milliseconds
-#>           expr         min           lq         mean       median           uq          max neval cld
-#>    species_200    1.537703     1.751935     1.954434     1.950017     2.041037     3.230497    30  a 
-#>   species_1000   31.957110    34.274255    39.128452    35.156704    37.556228    66.194976    30  a 
-#>  species_10000 9890.756358 10163.144236 11121.366410 11055.979331 11964.694993 13632.668874    30   b
+#> Unit: microseconds
+#>           expr         min          lq         mean      median          uq         max
+#>    species_200     617.236     645.822     914.5668     737.549     897.623    3043.669
+#>   species_1000    9534.446    9652.328   10449.2975    9774.182   10267.441   20289.876
+#>  species_10000 2212780.688 2227410.464 2396306.9486 2234898.178 2507233.705 3239781.685
+#>  neval
+#>     30
+#>     30
+#>     30
 ```
 
 ### Functional Evenness
 
 
-```r
+``` r
 bench_sp_feve <- microbenchmark::microbenchmark(
   species_200    = fd_feve(     traits_birds, site_sp_birds),
   species_1000   = fd_feve(  null_sp_1000$tr, null_sp_1000$si),
@@ -313,19 +317,19 @@ ggplot2::autoplot(bench_sp_feve)
 
 ![Performance comparison of `fd_feve()` with increasing number of species.](perf-bench-species-feve-1.png)
 
-```r
+``` r
 bench_sp_feve
 #> Unit: milliseconds
-#>           expr         min          lq        mean      median          uq         max neval cld
-#>    species_200    22.25434    23.58857    26.28398    24.66652    25.41282    49.21613    15  a 
-#>   species_1000   133.12192   148.39296   167.29508   163.98844   186.30949   212.94652    15  a 
-#>  species_10000 26209.90991 27553.75296 28085.39492 28186.57578 28599.03918 29311.05335    15   b
+#>           expr        min         lq       mean     median         uq       max neval
+#>    species_200   19.45845   61.86210   66.13876   70.94195   75.60393   92.3494    15
+#>   species_1000   61.28659   96.18897  103.89838  111.66572  118.36332  137.2943    15
+#>  species_10000 7974.82839 8187.74411 8294.13681 8273.52413 8376.39503 8759.0515    15
 ```
 
 ### Comparing between indices
 
 
-```r
+``` r
 all_bench_sp <- list(fric = bench_sp_fric,
                      fdiv = bench_sp_fdiv,
                      raoq = bench_sp_raoq,
@@ -355,7 +359,7 @@ all_bench_sp %>%
 ## Increasing the number of sites
 
 
-```r
+``` r
 make_more_sites <- function(n) {
   site_sp <- do.call(rbind, replicate(n, site_sp_birds, simplify = FALSE))
   rownames(site_sp) <- paste0("s", seq_len(nrow(site_sp)))
@@ -372,7 +376,7 @@ site_sp_10000 <- make_more_sites(1200)
 ### Functional Richness
 
 
-```r
+``` r
 bench_sites_fric <- microbenchmark::microbenchmark(
   sites_10    = fd_fric(traits_birds, site_sp_birds),
   sites_100   = fd_fric(traits_birds, site_sp_100),
@@ -386,20 +390,20 @@ ggplot2::autoplot(bench_sites_fric)
 
 ![Performance comparison of `fd_fric()` with increasing number of sites.](perf-bench-sites-fric-1.png)
 
-```r
+``` r
 bench_sites_fric
 #> Unit: milliseconds
-#>         expr        min         lq       mean     median         uq        max neval  cld
-#>     sites_10   12.60195   13.45944   14.88054   13.96007   14.29602   21.66510    15 a   
-#>    sites_100   45.57530   47.25923   49.87524   48.75620   52.29567   56.19952    15  b  
-#>   sites_1000  372.72833  386.35628  400.43169  395.60903  408.99573  449.87164    15   c 
-#>  sites_10000 3833.05136 3885.11306 3921.60544 3919.29055 3942.32492 4016.96576    15    d
+#>         expr        min         lq       mean     median         uq       max neval
+#>     sites_10   71.68416   74.57767   86.00700   86.54204   89.98176  133.8206    15
+#>    sites_100   38.16260   61.20081   75.49481   68.14976   89.16593  141.3453    15
+#>   sites_1000  217.49465  259.31534  284.66718  280.32306  315.58773  339.4681    15
+#>  sites_10000 2178.74594 2241.01618 2287.08006 2262.96084 2341.91784 2396.5195    15
 ```
 
 ### Functional Divergence
 
 
-```r
+``` r
 bench_sites_fdiv <- microbenchmark::microbenchmark(
   sites_10    = fd_fdiv(traits_birds, site_sp_birds),
   sites_100   = fd_fdiv(traits_birds, site_sp_100),
@@ -413,20 +417,20 @@ ggplot2::autoplot(bench_sites_fdiv)
 
 ![Performance comparison of `fd_fdiv()` with increasing number of sites.](perf-bench-sites-fdiv-1.png)
 
-```r
+``` r
 bench_sites_fdiv
 #> Unit: milliseconds
-#>         expr        min         lq       mean     median         uq        max neval  cld
-#>     sites_10   38.17040   39.17880   40.79484   39.59029   42.08936   45.43952    15 a   
-#>    sites_100   85.09805   85.99399   94.77048   86.88365   96.33675  149.45931    15  b  
-#>   sites_1000  538.76135  545.03628  582.84610  564.85683  605.87486  677.86382    15   c 
-#>  sites_10000 5278.55172 5336.69296 5405.90861 5378.53730 5458.24597 5552.26594    15    d
+#>         expr        min         lq       mean     median        uq       max neval
+#>     sites_10   71.26430   81.32178   93.05191   92.95528  102.5015  115.5599    15
+#>    sites_100   49.15161   78.18654   87.77382   98.11574  102.1231  108.4241    15
+#>   sites_1000  255.95116  314.93415  334.68212  340.96382  365.8025  410.0258    15
+#>  sites_10000 2442.80506 2489.52070 2563.07758 2563.32031 2603.2711 2742.8240    15
 ```
 
 ### Rao's Quadratic Entropy
 
 
-```r
+``` r
 bench_sites_raoq = microbenchmark::microbenchmark(
   sites_10    = fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_raoq(traits = NULL, site_sp_100,   dist_traits_birds),
@@ -440,20 +444,20 @@ ggplot2::autoplot(bench_sites_raoq)
 
 ![Performance comparison of `fd_raoq()` with increasing number of sites.](perf-bench-sites-raoq-1.png)
 
-```r
+``` r
 bench_sites_raoq
-#> Unit: milliseconds
-#>         expr          min           lq         mean       median           uq          max neval cld
-#>     sites_10     1.443757     1.717630     1.887153     1.861230     2.037991     2.518933    15  a 
-#>    sites_100     5.689849     6.004428     6.718675     6.178415     6.460348    13.786219    15  a 
-#>   sites_1000   158.130064   158.814848   160.907719   159.296631   163.977418   166.066294    15  a 
-#>  sites_10000 16296.391504 17530.369693 18080.130808 18193.538354 18411.571843 21033.249202    15   b
+#> Unit: microseconds
+#>         expr        min          lq        mean     median         uq        max neval
+#>     sites_10    489.460    528.4935    815.2409    544.496    634.829   3576.162    15
+#>    sites_100    834.088    870.0800   1523.9049    968.512   1349.571   4322.532    15
+#>   sites_1000   5510.532   5648.2775   6217.1693   5722.048   6303.896   8682.980    15
+#>  sites_10000 364585.747 387482.0435 446235.0449 391929.816 401485.191 979961.408    15
 ```
 
 ### Functional Evenness
 
 
-```r
+``` r
 bench_sites_feve <- microbenchmark::microbenchmark(
   sites_10    = fd_feve(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_feve(traits = NULL, site_sp_100,   dist_traits_birds),
@@ -467,28 +471,27 @@ ggplot2::autoplot(bench_sites_feve)
 
 ![Performance comparison of `fd_feve()` with increasing number of sites](perf-bench-sites-feve-1.png)
 
-```r
+``` r
 bench_sites_feve
 #> Unit: milliseconds
-#>         expr         min          lq        mean      median          uq         max neval cld
-#>     sites_10    20.26885    20.79379    25.80265    21.06491    21.39182    90.92815    15 a  
-#>    sites_100   113.64419   115.81009   123.60943   118.04145   123.54457   185.57582    15 a  
-#>   sites_1000  1034.37573  1107.36408  1146.78358  1119.68000  1134.07348  1668.68480    15  b 
-#>  sites_10000 10779.65515 10969.94333 11249.27062 11090.00824 11317.37080 12341.22800    15   c
+#>         expr        min         lq       mean     median         uq       max neval
+#>     sites_10   34.80425   65.51428   75.59681   75.20675   80.92903  123.1772    15
+#>    sites_100   36.21243   52.06759   67.81010   70.84707   79.89431  113.9671    15
+#>   sites_1000  228.73873  272.52938  294.80104  305.90444  318.44339  343.6069    15
+#>  sites_10000 2030.46418 2056.30757 2150.92871 2105.95845 2203.93375 2441.4576    15
 ```
 
 
 ### Comparing between indices
 
 
-```r
+``` r
 all_bench_sites <- list(fric = bench_sites_fric,
                         fdiv = bench_sites_fdiv,
                         raoq = bench_sites_raoq,
                         feve = bench_sites_feve) %>%
   bind_rows(.id = "fd_index") %>%
-  mutate(n_sites = gsub("sites", "", expr) %>%
-           as.numeric())
+  mutate(n_sites = as.numeric(gsub("sites", "", expr, fixed = TRUE)))
 
 all_bench_sites %>%
   ggplot(aes(n_sites, time * 1e-9, color = fd_index)) +
@@ -513,198 +516,206 @@ all_bench_sites %>%
 
 
 ```
-#>  seconds needed to generate this document: 1691.449 sec elapsed
-#> ─ Session info ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#>  seconds needed to generate this document: 600.353 sec elapsed
+#> ─ Session info ────────────────────────────────────────────────────────────────────────
 #>  setting  value
-#>  version  R version 4.2.1 (2022-06-23)
-#>  os       Ubuntu 20.04.5 LTS
+#>  version  R version 4.5.3 (2026-03-11)
+#>  os       Ubuntu 24.04.4 LTS
 #>  system   x86_64, linux-gnu
-#>  ui       RStudio
+#>  ui       Positron
 #>  language (EN)
-#>  collate  en_US.UTF-8
-#>  ctype    en_US.UTF-8
-#>  tz       Etc/UTC
-#>  date     2022-11-15
-#>  rstudio  2022.02.0+443 Prairie Trillium (server)
-#>  pandoc   2.17.1.1 @ /usr/lib/rstudio-server/bin/quarto/bin/ (via rmarkdown)
+#>  collate  en_GB.UTF-8
+#>  ctype    en_GB.UTF-8
+#>  tz       Europe/Berlin
+#>  date     2026-03-30
+#>  pandoc   3.1.3 @ /bin/pandoc
+#>  quarto   1.9.12 @ /opt/quarto/bin/quarto
 #> 
-#> ─ Packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#> ─ Packages ────────────────────────────────────────────────────────────────────────────
 #>  package           * version    date (UTC) lib source
-#>  abind               1.4-5      2016-07-21 [1] CRAN (R 4.2.0)
-#>  ade4                1.7-19     2022-04-19 [1] CRAN (R 4.2.0)
-#>  adegraphics         1.0-16     2021-09-16 [1] CRAN (R 4.2.1)
-#>  adiv                2.2        2022-10-06 [1] CRAN (R 4.2.1)
-#>  ape                 5.6-2      2022-03-02 [1] CRAN (R 4.2.0)
-#>  assertthat          0.2.1      2019-03-21 [3] CRAN (R 4.1.3)
-#>  base64enc           0.1-3      2015-07-28 [1] CRAN (R 4.2.1)
-#>  BAT                 2.9.2      2022-11-08 [1] CRAN (R 4.2.1)
-#>  betapart            1.5.6      2022-04-06 [1] CRAN (R 4.2.1)
-#>  cachem              1.0.6      2021-08-19 [3] CRAN (R 4.1.3)
-#>  caret               6.0-93     2022-08-09 [1] CRAN (R 4.2.1)
-#>  class               7.3-20     2022-01-13 [5] CRAN (R 4.1.2)
-#>  cli                 3.4.1      2022-09-23 [1] CRAN (R 4.2.1)
-#>  cluster             2.1.3      2022-03-28 [5] CRAN (R 4.1.3)
-#>  clusterGeneration   1.3.7      2020-12-15 [1] CRAN (R 4.2.0)
-#>  coda                0.19-4     2020-09-30 [1] CRAN (R 4.2.0)
-#>  codetools           0.2-18     2020-11-04 [5] CRAN (R 4.0.3)
-#>  colorspace          2.0-3      2022-02-21 [1] CRAN (R 4.2.0)
-#>  combinat            0.0-8      2012-10-29 [1] CRAN (R 4.2.0)
-#>  crayon              1.5.1      2022-03-26 [1] CRAN (R 4.2.0)
-#>  data.table          1.14.2     2021-09-27 [1] CRAN (R 4.2.0)
-#>  DBI                 1.1.2      2021-12-20 [3] CRAN (R 4.1.3)
-#>  deldir              1.0-6      2021-10-23 [1] CRAN (R 4.2.1)
-#>  dendextend          1.16.0     2022-07-04 [1] CRAN (R 4.2.1)
-#>  digest              0.6.29     2021-12-01 [1] CRAN (R 4.2.0)
-#>  doParallel          1.0.17     2022-02-07 [1] CRAN (R 4.2.1)
-#>  doSNOW              1.0.20     2022-02-04 [1] CRAN (R 4.2.1)
-#>  dplyr             * 1.0.10     2022-09-01 [1] CRAN (R 4.2.1)
-#>  e1071               1.7-12     2022-10-24 [1] CRAN (R 4.2.1)
-#>  ellipsis            0.3.2      2021-04-29 [1] CRAN (R 4.2.0)
-#>  evaluate            0.18       2022-11-07 [1] CRAN (R 4.2.1)
-#>  expm                0.999-6    2021-01-13 [1] CRAN (R 4.2.0)
-#>  fansi               1.0.3      2022-03-24 [1] CRAN (R 4.2.0)
-#>  farver              2.1.0      2021-02-28 [1] CRAN (R 4.2.0)
-#>  fastcluster         1.2.3      2021-05-24 [1] CRAN (R 4.2.1)
-#>  fastmap             1.1.0      2021-01-25 [1] CRAN (R 4.2.1)
-#>  fastmatch           1.1-3      2021-07-23 [1] CRAN (R 4.2.0)
-#>  FD                  1.0-12.1   2022-05-02 [1] CRAN (R 4.2.0)
-#>  foreach             1.5.2      2022-02-02 [1] CRAN (R 4.2.1)
-#>  fundiversity      * 0.2.1.9000 2022-04-12 [3] Github (bisaloo/fundiversity@87652ba)
-#>  future              1.28.0     2022-09-02 [1] CRAN (R 4.2.1)
-#>  future.apply        1.10.0     2022-11-05 [1] CRAN (R 4.2.1)
-#>  generics            0.1.2      2022-01-31 [1] CRAN (R 4.2.0)
-#>  geometry            0.4.6      2022-04-18 [1] CRAN (R 4.2.0)
-#>  ggplot2           * 3.3.6      2022-05-03 [1] CRAN (R 4.2.0)
-#>  globals             0.16.1     2022-08-28 [1] CRAN (R 4.2.1)
-#>  glue                1.6.2      2022-02-24 [1] CRAN (R 4.2.0)
-#>  gower               1.0.0      2022-02-03 [1] CRAN (R 4.2.1)
-#>  gridExtra           2.3        2017-09-09 [1] CRAN (R 4.2.1)
-#>  gtable              0.3.0      2019-03-25 [1] CRAN (R 4.2.0)
-#>  hardhat             1.2.0      2022-06-30 [1] CRAN (R 4.2.1)
-#>  here                1.0.1      2020-12-13 [3] CRAN (R 4.1.3)
-#>  highr               0.9        2021-04-16 [1] CRAN (R 4.2.1)
-#>  hillR               0.5.1      2021-03-02 [1] CRAN (R 4.2.0)
-#>  hms                 1.1.1      2021-09-26 [1] CRAN (R 4.2.0)
-#>  htmltools           0.5.3      2022-07-18 [1] CRAN (R 4.2.1)
-#>  htmlwidgets         1.5.4      2021-09-08 [1] CRAN (R 4.2.1)
-#>  httr                1.4.4      2022-08-17 [1] CRAN (R 4.2.1)
-#>  hypervolume         3.0.4      2022-05-28 [1] CRAN (R 4.2.1)
-#>  igraph              1.3.2      2022-06-13 [1] CRAN (R 4.2.0)
-#>  interp              1.1-3      2022-07-13 [1] CRAN (R 4.2.1)
-#>  ipred               0.9-13     2022-06-02 [1] CRAN (R 4.2.1)
-#>  iterators           1.0.14     2022-02-05 [1] CRAN (R 4.2.1)
-#>  itertools           0.1-3      2014-03-12 [1] CRAN (R 4.2.1)
-#>  jpeg                0.1-9      2021-07-24 [1] CRAN (R 4.2.1)
-#>  jsonlite            1.8.3      2022-10-21 [1] CRAN (R 4.2.1)
-#>  KernSmooth          2.23-20    2021-05-03 [5] CRAN (R 4.0.5)
-#>  knitr               1.40       2022-08-24 [1] CRAN (R 4.2.1)
-#>  ks                  1.13.5     2022-04-14 [1] CRAN (R 4.2.1)
-#>  lattice             0.20-45    2021-09-22 [3] CRAN (R 4.1.3)
-#>  latticeExtra        0.6-30     2022-07-04 [1] CRAN (R 4.2.1)
-#>  lava                1.7.0      2022-10-25 [1] CRAN (R 4.2.1)
-#>  lifecycle           1.0.3      2022-10-07 [1] CRAN (R 4.2.1)
-#>  listenv             0.8.0      2019-12-05 [1] CRAN (R 4.2.1)
-#>  lpSolve             5.6.15     2020-01-24 [1] CRAN (R 4.2.0)
-#>  lubridate           1.9.0      2022-11-06 [1] CRAN (R 4.2.1)
-#>  magic               1.6-0      2022-02-09 [1] CRAN (R 4.2.0)
-#>  magrittr            2.0.3      2022-03-30 [1] CRAN (R 4.2.0)
-#>  maps                3.4.0      2021-09-25 [1] CRAN (R 4.2.0)
-#>  MASS                7.3-58.1   2022-08-03 [3] CRAN (R 4.2.1)
-#>  Matrix              1.4-1      2022-03-23 [3] CRAN (R 4.1.3)
-#>  mclust              6.0.0      2022-10-31 [1] CRAN (R 4.2.1)
-#>  memoise             2.0.1      2021-11-26 [3] CRAN (R 4.1.3)
-#>  mFD                 1.0.2      2022-11-08 [1] CRAN (R 4.2.1)
-#>  mgcv                1.8-40     2022-03-29 [5] CRAN (R 4.1.3)
-#>  microbenchmark      1.4.9      2021-11-09 [3] CRAN (R 4.1.3)
-#>  mnormt              2.1.0      2022-06-07 [1] CRAN (R 4.2.0)
-#>  ModelMetrics        1.2.2.2    2020-03-17 [1] CRAN (R 4.2.1)
-#>  multcomp            1.4-19     2022-04-26 [1] CRAN (R 4.2.0)
-#>  munsell             0.5.0      2018-06-12 [1] CRAN (R 4.2.0)
-#>  mvtnorm             1.1-3      2021-10-08 [1] CRAN (R 4.2.0)
-#>  nlme                3.1-159    2022-08-09 [3] CRAN (R 4.2.1)
-#>  nls2                0.3-3      2022-05-02 [1] CRAN (R 4.2.1)
-#>  nnet                7.3-17     2022-01-13 [5] CRAN (R 4.1.2)
-#>  numDeriv            2016.8-1.1 2019-06-06 [1] CRAN (R 4.2.0)
-#>  palmerpenguins      0.1.1      2022-08-15 [1] CRAN (R 4.2.1)
-#>  parallelly          1.32.1     2022-07-21 [1] CRAN (R 4.2.1)
-#>  patchwork           1.1.2      2022-08-19 [1] CRAN (R 4.2.1)
-#>  pdist               1.2.1      2022-05-02 [1] CRAN (R 4.2.1)
-#>  permute             0.9-7      2022-01-27 [1] CRAN (R 4.2.0)
-#>  phangorn            2.9.0      2022-06-16 [1] CRAN (R 4.2.0)
-#>  phylobase           0.8.10     2020-03-01 [1] CRAN (R 4.2.1)
-#>  phytools            1.0-3      2022-04-05 [1] CRAN (R 4.2.0)
-#>  picante             1.8.2      2020-06-10 [1] CRAN (R 4.2.1)
-#>  pillar              1.7.0      2022-02-01 [1] CRAN (R 4.2.0)
-#>  pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 4.2.0)
-#>  plotrix             3.8-2      2021-09-08 [1] CRAN (R 4.2.0)
-#>  plyr                1.8.7      2022-03-24 [1] CRAN (R 4.2.0)
-#>  png                 0.1-7      2013-12-03 [1] CRAN (R 4.2.1)
-#>  pracma              2.4.2      2022-09-22 [1] CRAN (R 4.2.1)
-#>  prettyunits         1.1.1      2020-01-24 [1] CRAN (R 4.2.0)
-#>  pROC                1.18.0     2021-09-03 [1] CRAN (R 4.2.1)
-#>  prodlim             2019.11.13 2019-11-17 [1] CRAN (R 4.2.1)
-#>  progress            1.2.2      2019-05-16 [1] CRAN (R 4.2.0)
-#>  proto               1.0.0      2016-10-29 [1] CRAN (R 4.2.1)
-#>  proxy               0.4-27     2022-06-09 [1] CRAN (R 4.2.1)
-#>  purrr               0.3.4      2020-04-17 [1] CRAN (R 4.2.0)
-#>  quadprog            1.5-8      2019-11-20 [1] CRAN (R 4.2.0)
-#>  R6                  2.5.1      2021-08-19 [1] CRAN (R 4.2.0)
-#>  raster              3.6-3      2022-09-18 [1] CRAN (R 4.2.1)
-#>  rcdd                1.5        2021-11-18 [1] CRAN (R 4.2.1)
-#>  RColorBrewer        1.1-3      2022-04-03 [1] CRAN (R 4.2.0)
-#>  Rcpp                1.0.8.3    2022-03-17 [1] CRAN (R 4.2.0)
-#>  recipes             1.0.3      2022-11-09 [1] CRAN (R 4.2.1)
-#>  reshape2            1.4.4      2020-04-09 [1] CRAN (R 4.2.1)
-#>  rgeos               0.5-9      2021-12-15 [1] CRAN (R 4.2.1)
-#>  rgl                 0.110.2    2022-09-26 [1] CRAN (R 4.2.1)
-#>  rlang               1.0.6      2022-09-24 [1] CRAN (R 4.2.1)
-#>  rmarkdown           2.13       2022-03-10 [3] CRAN (R 4.1.3)
-#>  rncl                0.8.6      2022-03-18 [1] CRAN (R 4.2.1)
-#>  RNeXML              2.4.8      2022-10-19 [1] CRAN (R 4.2.1)
-#>  rpart               4.1.16     2022-01-24 [5] CRAN (R 4.1.2)
-#>  rprojroot           2.0.3      2022-04-02 [1] CRAN (R 4.2.1)
-#>  rstudioapi          0.14       2022-08-22 [1] CRAN (R 4.2.1)
-#>  sandwich            3.0-2      2022-06-15 [1] CRAN (R 4.2.0)
-#>  scales              1.2.0      2022-04-13 [1] CRAN (R 4.2.0)
-#>  scatterplot3d       0.3-41     2018-03-14 [1] CRAN (R 4.2.0)
-#>  sessioninfo         1.2.2      2021-12-06 [3] CRAN (R 4.1.3)
-#>  snow                0.4-4      2021-10-27 [1] CRAN (R 4.2.1)
-#>  sp                  1.5-0      2022-06-05 [1] CRAN (R 4.2.0)
-#>  stringi             1.7.6      2021-11-29 [1] CRAN (R 4.2.0)
-#>  stringr             1.4.0      2019-02-10 [1] CRAN (R 4.2.0)
-#>  survival            3.3-1      2022-03-03 [3] CRAN (R 4.1.3)
-#>  terra               1.6-17     2022-09-10 [1] CRAN (R 4.2.1)
-#>  TH.data             1.1-1      2022-04-26 [1] CRAN (R 4.2.0)
-#>  tibble              3.1.7      2022-05-03 [1] CRAN (R 4.2.0)
-#>  tictoc              1.0.1      2021-04-19 [3] CRAN (R 4.1.3)
-#>  tidyr               1.2.1      2022-09-08 [1] CRAN (R 4.2.1)
-#>  tidyselect          1.2.0      2022-10-10 [1] CRAN (R 4.2.1)
-#>  timechange          0.1.1      2022-11-04 [1] CRAN (R 4.2.1)
-#>  timeDate            4021.106   2022-09-30 [1] CRAN (R 4.2.1)
-#>  utf8                1.2.2      2021-07-24 [1] CRAN (R 4.2.0)
-#>  uuid                1.1-0      2022-04-19 [1] CRAN (R 4.2.1)
-#>  vctrs               0.5.0      2022-10-22 [1] CRAN (R 4.2.1)
-#>  vegan               2.6-2      2022-04-17 [1] CRAN (R 4.2.0)
-#>  viridis             0.6.2      2021-10-13 [1] CRAN (R 4.2.1)
-#>  viridisLite         0.4.0      2021-04-13 [1] CRAN (R 4.2.0)
-#>  withr               2.5.0      2022-03-03 [1] CRAN (R 4.2.0)
-#>  xfun                0.34       2022-10-18 [1] CRAN (R 4.2.1)
-#>  XML                 3.99-0.12  2022-10-28 [1] CRAN (R 4.2.1)
-#>  xml2                1.3.3      2021-11-30 [1] CRAN (R 4.2.1)
-#>  yaml                2.3.6      2022-10-18 [1] CRAN (R 4.2.1)
-#>  zoo                 1.8-10     2022-04-15 [1] CRAN (R 4.2.0)
+#>  abind               1.4-8      2024-09-12 [1] RSPM (R 4.5.0)
+#>  ade4                1.7-24     2026-03-21 [1] RSPM
+#>  adegraphics         1.0-22     2025-04-07 [1] RSPM
+#>  adiv                2.2.1      2024-02-19 [1] RSPM
+#>  ape                 5.8-1      2024-12-16 [1] RSPM
+#>  base64enc           0.1-6      2026-02-02 [1] RSPM (R 4.5.0)
+#>  BAT                 2.11.0     2025-07-29 [1] RSPM
+#>  betapart            1.6.1      2025-07-24 [1] RSPM
+#>  bit                 4.6.0      2025-03-06 [1] RSPM (R 4.5.0)
+#>  bit64               4.6.0-1    2025-01-16 [1] CRAN (R 4.5.2)
+#>  boot                1.3-32     2025-08-29 [2] CRAN (R 4.5.3)
+#>  cachem              1.1.0      2024-05-16 [1] RSPM (R 4.5.0)
+#>  caret               7.0-1      2024-12-10 [1] RSPM
+#>  class               7.3-23     2025-01-01 [2] CRAN (R 4.5.3)
+#>  cli                 3.6.5      2025-04-23 [1] RSPM (R 4.5.0)
+#>  cluster             2.1.8.2    2026-02-05 [2] CRAN (R 4.5.3)
+#>  clusterGeneration   1.3.8      2023-08-16 [1] RSPM
+#>  coda                0.19-4.1   2024-01-31 [1] RSPM
+#>  codetools           0.2-20     2024-03-31 [2] CRAN (R 4.5.3)
+#>  combinat            0.0-8      2012-10-29 [1] RSPM
+#>  crayon              1.5.3      2024-06-20 [1] CRAN (R 4.5.2)
+#>  data.table          1.18.2.1   2026-01-27 [1] RSPM (R 4.5.0)
+#>  deldir              2.0-4      2024-02-28 [1] RSPM (R 4.5.0)
+#>  dendextend          1.19.1     2025-07-15 [1] RSPM
+#>  DEoptim             2.2-8      2022-11-11 [1] RSPM
+#>  dichromat           2.0-0.1    2022-05-02 [1] RSPM (R 4.5.0)
+#>  digest              0.6.39     2025-11-19 [1] RSPM
+#>  doParallel          1.0.17     2022-02-07 [1] RSPM (R 4.5.0)
+#>  doSNOW              1.0.20     2022-02-04 [1] RSPM
+#>  dplyr             * 1.2.0      2026-02-03 [1] RSPM (R 4.5.0)
+#>  e1071               1.7-17     2025-12-18 [1] RSPM
+#>  evaluate            1.0.5      2025-08-27 [1] RSPM (R 4.5.0)
+#>  expm                1.0-0      2024-08-19 [1] RSPM
+#>  farver              2.1.2      2024-05-13 [1] CRAN (R 4.5.2)
+#>  fastcluster         1.3.0      2025-05-07 [1] RSPM
+#>  fastmap             1.2.0      2024-05-15 [1] RSPM (R 4.5.0)
+#>  fastmatch           1.1-8      2026-01-17 [1] RSPM
+#>  FD                  1.0-12.3   2023-11-26 [1] RSPM
+#>  foreach             1.5.2      2022-02-02 [1] RSPM
+#>  fundiversity      * 1.1.1.9000 2026-03-29 [1] local
+#>  future            * 1.69.0     2026-01-16 [1] RSPM (R 4.5.0)
+#>  future.apply        1.20.2     2026-02-20 [1] RSPM (R 4.5.0)
+#>  generics            0.1.4      2025-05-09 [1] RSPM (R 4.5.0)
+#>  geometry            0.5.2      2025-02-08 [1] RSPM
+#>  ggplot2           * 4.0.2      2026-02-03 [1] RSPM (R 4.5.0)
+#>  globals             0.19.0     2026-02-02 [1] RSPM (R 4.5.0)
+#>  glue                1.8.0      2024-09-30 [1] RSPM (R 4.5.0)
+#>  gower               1.0.2      2024-12-17 [1] RSPM
+#>  gridExtra           2.3        2017-09-09 [1] RSPM
+#>  gtable              0.3.6      2024-10-25 [1] RSPM
+#>  hardhat             1.4.2      2025-08-20 [1] RSPM
+#>  hillR               0.5.2      2023-08-19 [1] RSPM
+#>  hms                 1.1.4      2025-10-17 [1] RSPM (R 4.5.0)
+#>  htmltools           0.5.9      2025-12-04 [1] RSPM
+#>  htmlwidgets         1.6.4      2023-12-06 [1] RSPM (R 4.5.0)
+#>  httr                1.4.8      2026-02-13 [1] RSPM (R 4.5.0)
+#>  hypervolume         3.1.6      2025-06-15 [1] RSPM
+#>  igraph              2.2.2      2026-02-12 [1] RSPM (R 4.5.0)
+#>  interp              1.1-6      2024-01-26 [1] RSPM
+#>  ipred               0.9-15     2024-07-18 [1] RSPM
+#>  iterators           1.0.14     2022-02-05 [1] RSPM
+#>  itertools           0.1-3      2014-03-12 [1] RSPM
+#>  jpeg                0.1-11     2025-03-21 [1] RSPM (R 4.5.0)
+#>  jsonlite            2.0.0      2025-03-27 [1] CRAN (R 4.5.2)
+#>  KernSmooth          2.23-26    2025-01-01 [2] CRAN (R 4.5.3)
+#>  knitr               1.51       2025-12-20 [1] RSPM (R 4.5.0)
+#>  ks                  1.15.1     2025-05-04 [1] RSPM
+#>  lattice             0.22-9     2026-02-09 [2] CRAN (R 4.5.3)
+#>  latticeExtra        0.6-31     2025-09-10 [1] RSPM
+#>  lava                1.8.2      2025-10-30 [1] RSPM
+#>  lifecycle           1.0.5      2026-01-08 [1] RSPM (R 4.5.0)
+#>  listenv             0.10.0     2025-11-02 [1] RSPM (R 4.5.0)
+#>  lpSolve             5.6.23     2024-12-14 [1] RSPM
+#>  lubridate           1.9.5      2026-02-04 [1] RSPM (R 4.5.0)
+#>  magic               1.6-1      2022-11-16 [1] RSPM
+#>  magrittr            2.0.4      2025-09-12 [1] RSPM (R 4.5.0)
+#>  maps                3.4.3      2025-05-26 [1] RSPM (R 4.5.0)
+#>  MASS                7.3-65     2025-02-28 [2] CRAN (R 4.5.3)
+#>  Matrix              1.7-4      2025-08-28 [2] CRAN (R 4.5.3)
+#>  mclust              6.1.2      2025-10-31 [1] RSPM
+#>  memoise             2.0.1      2021-11-26 [1] RSPM (R 4.5.0)
+#>  mFD                 1.0.7      2024-02-26 [1] RSPM
+#>  mgcv                1.9-4      2025-11-07 [1] RSPM (R 4.5.0)
+#>  microbenchmark      1.5.0      2024-09-04 [1] RSPM
+#>  minpack.lm          1.2-4      2023-09-11 [1] RSPM
+#>  mnormt              2.1.2      2026-01-27 [1] RSPM
+#>  ModelMetrics        1.2.2.2    2020-03-17 [1] RSPM
+#>  mvtnorm             1.3-5      2026-03-11 [1] RSPM
+#>  nlme                3.1-168    2025-03-31 [2] CRAN (R 4.5.3)
+#>  nls2                0.3-4      2024-07-14 [1] RSPM
+#>  nnet                7.3-20     2025-01-01 [2] CRAN (R 4.5.3)
+#>  numDeriv            2016.8-1.1 2019-06-06 [1] RSPM
+#>  optimParallel       1.0-2      2021-02-11 [1] RSPM
+#>  otel                0.2.0      2025-08-29 [1] RSPM
+#>  palmerpenguins      0.1.1      2022-08-15 [1] RSPM
+#>  parallelly          1.46.1     2026-01-08 [1] RSPM (R 4.5.0)
+#>  patchwork           1.3.2      2025-08-25 [1] RSPM
+#>  pdist               1.2.1      2022-05-02 [1] RSPM
+#>  permute             0.9-10     2026-02-06 [1] RSPM (R 4.5.0)
+#>  phangorn            2.12.1     2024-09-17 [1] RSPM
+#>  phylobase           0.8.12     2024-01-30 [1] RSPM
+#>  phytools            2.5-2      2025-09-19 [1] RSPM
+#>  picante             1.8.2      2020-06-10 [1] RSPM
+#>  pillar              1.11.1     2025-09-17 [1] RSPM (R 4.5.0)
+#>  pkgconfig           2.0.3      2019-09-22 [1] CRAN (R 4.5.2)
+#>  PlotTools           0.4.0      2026-01-29 [1] RSPM
+#>  plyr                1.8.9      2023-10-02 [1] RSPM (R 4.5.0)
+#>  png                 0.1-8      2022-11-29 [1] RSPM (R 4.5.0)
+#>  pracma              2.4.6      2025-10-22 [1] RSPM
+#>  prettyunits         1.2.0      2023-09-24 [1] CRAN (R 4.5.2)
+#>  pROC                1.19.0.1   2025-07-31 [1] RSPM
+#>  prodlim             2026.03.11 2026-03-11 [1] RSPM
+#>  progress            1.2.3      2023-12-06 [1] CRAN (R 4.5.2)
+#>  proto               1.0.0      2016-10-29 [1] RSPM
+#>  proxy               0.4-29     2025-12-29 [1] RSPM
+#>  purrr               1.2.1      2026-01-09 [1] RSPM (R 4.5.0)
+#>  quadprog            1.5-8      2019-11-20 [1] RSPM
+#>  R6                  2.6.1      2025-02-15 [1] RSPM (R 4.5.0)
+#>  rbibutils           2.4.1      2026-01-21 [1] RSPM
+#>  rcdd                1.6-1      2026-01-12 [1] RSPM
+#>  RColorBrewer        1.1-3      2022-04-03 [1] CRAN (R 4.5.2)
+#>  Rcpp                1.1.1      2026-01-10 [1] RSPM (R 4.5.0)
+#>  Rdpack              2.6.6      2026-02-08 [1] RSPM
+#>  recipes             1.3.1      2025-05-21 [1] RSPM
+#>  reshape2            1.4.5      2025-11-12 [1] RSPM (R 4.5.0)
+#>  rgl                 1.3.36     2026-03-06 [1] RSPM
+#>  rlang               1.1.7      2026-01-09 [1] RSPM (R 4.5.0)
+#>  rncl                0.8.9      2026-01-21 [1] RSPM
+#>  RNeXML              2.4.11     2023-02-01 [1] RSPM
+#>  rpart               4.1.24     2025-01-07 [2] CRAN (R 4.5.3)
+#>  S7                  0.2.1      2025-11-14 [1] RSPM
+#>  scales              1.4.0      2025-04-24 [1] RSPM (R 4.5.0)
+#>  scatterplot3d       0.3-45     2026-02-23 [1] RSPM
+#>  sessioninfo         1.2.3      2025-02-05 [1] RSPM (R 4.5.0)
+#>  snow                0.4-4      2021-10-27 [1] RSPM (R 4.5.0)
+#>  sp                  2.2-1      2026-02-13 [1] RSPM (R 4.5.0)
+#>  stringi             1.8.7      2025-03-27 [1] RSPM (R 4.5.0)
+#>  stringr             1.6.0      2025-11-04 [1] RSPM
+#>  survival            3.8-6      2026-01-16 [2] CRAN (R 4.5.3)
+#>  terra               1.9-11     2026-03-26 [1] RSPM
+#>  tibble              3.3.1      2026-01-11 [1] RSPM (R 4.5.0)
+#>  tictoc              1.2.1      2024-03-18 [1] RSPM
+#>  tidyr               1.3.2      2025-12-19 [1] RSPM
+#>  tidyselect          1.2.1      2024-03-11 [1] CRAN (R 4.5.2)
+#>  timechange          0.4.0      2026-01-29 [1] RSPM (R 4.5.0)
+#>  timeDate            4052.112   2026-01-28 [1] RSPM
+#>  TreeTools           2.2.0      2026-03-20 [1] RSPM
+#>  uuid                1.2-2      2026-01-23 [1] RSPM
+#>  vctrs               0.7.1      2026-01-23 [1] RSPM (R 4.5.0)
+#>  vegan               2.7-2      2025-10-08 [1] RSPM
+#>  viridis             0.6.5      2024-01-29 [1] RSPM
+#>  viridisLite         0.4.3      2026-02-04 [1] RSPM (R 4.5.0)
+#>  withr               3.0.2      2024-10-28 [1] CRAN (R 4.5.2)
+#>  xfun                0.56       2026-01-18 [1] RSPM (R 4.5.0)
+#>  XML                 3.99-0.22  2026-02-10 [1] RSPM (R 4.5.0)
+#>  xml2                1.5.2      2026-01-17 [1] RSPM (R 4.5.0)
 #> 
-#>  [1] /home/ke76dimu/R-library/4.2
-#>  [2] /usr/local/lib/R/site-library
-#>  [3] /data/library/4.1
-#>  [4] /usr/lib/R/site-library
-#>  [5] /usr/lib/R/library
+#>  [1] /home/hgruson/.local/share/R/x86_64-pc-linux-gnu-library/4.5
+#>  [2] /opt/R/4.5.3/lib/R/library
+#>  * ── Packages attached to the search path.
 #> 
-#> ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+#> ───────────────────────────────────────────────────────────────────────────────────────
 ```
 
 </details>
 
 # References
 
-
+<script>
+(function() {
+  var codes = document.querySelectorAll('.collapsable-warnings');
+  var code, i, d, s, p;
+  for (i = 0; i < codes.length; i++) {
+    code = codes[i];
+    p = code.parentNode;
+    d = document.createElement('details');
+    s = document.createElement('summary');
+    s.innerText = 'Warnings';
+    // <details><summary>Details</summary></details>
+    d.appendChild(s);
+    // move the code into <details>
+    p.replaceChild(d, code);
+    d.appendChild(code);
+  }
+})();
+</script>
