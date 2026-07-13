@@ -8,7 +8,7 @@ provided to them.
 
 We want to contribute to change this trend and in this vignette, we show
 that indices computed by `fundiversity` behave as theoretically
-expected, and as presented in Villéger, Mason, and Mouillot
+expected, and as presented in Villéger et al.
 ([2008](#ref-Villeger_New_2008)). We also internally compared
 `fundiversity` results with ones obtained by other packages. You can see
 the equivalence between functions in the [benchmark
@@ -16,6 +16,7 @@ vignette](https://funecology.github.io/fundiversity/articles/fundiversity_2-perf
 that compares `fundiversity` and alternative packages.
 
 ``` r
+
 library(fundiversity)
 ```
 
@@ -28,6 +29,7 @@ We start by reproducing Figure 2 a, to check that the values computed by
 article:
 
 ``` r
+
 data_a <- matrix(byrow = TRUE, ncol = 2,
   c(
     0.0, 1.0,
@@ -56,6 +58,7 @@ print(data_a)
 ```
 
 ``` r
+
 plot(data_a, pch = 19, asp = 1, xlab = "Trait 1", ylab = "Trait 2")
 ```
 
@@ -64,6 +67,7 @@ plot(data_a, pch = 19, asp = 1, xlab = "Trait 1", ylab = "Trait 2")
 We then compute the functional diversity indices.
 
 ``` r
+
 fric_a <- fd_fric(data_a)[["FRic"]]
 feve_a <- fd_feve(data_a)[["FEve"]]
 fdiv_a <- fd_fdiv(data_a)[["FDiv"]]
@@ -85,6 +89,7 @@ vertices of the convex hull don’t influence FEve, but lead to a higher
 FDiv. These correspond to the data found in panel c of the Figure 2.
 
 ``` r
+
 l <- 2 # common species
 s <- 1 # rare species
 
@@ -96,6 +101,7 @@ rownames(wc) <- "site"
 We compute again the functional diversity indices:
 
 ``` r
+
 fric_c <- fd_fric(data_a)[["FRic"]]
 feve_c <- fd_feve(data_a, wc)[["FEve"]]
 fdiv_c <- fd_fdiv(data_a, wc)[["FDiv"]]
@@ -110,6 +116,7 @@ Conversely, changes of abundances on a single trait axis don’t impact
 FDiv but reduce FEve (this correspond to the panel b of Figure 2):
 
 ``` r
+
 l <- 1.5 # common species
 s <- 0.5 # rare species
 
@@ -121,6 +128,7 @@ rownames(wb) <- "site"
 We can compute weighted functional diversity indices:
 
 ``` r
+
 fric_b <- fd_fric(data_a)[["FRic"]]
 feve_b <- fd_feve(data_a, wb)[["FEve"]]
 fdiv_b <- fd_fdiv(data_a, wb)[["FDiv"]]
@@ -146,6 +154,7 @@ This would decrease FEve because species would be spaced less evenly in
 the space (it corresponds to panel d of Figure 2):
 
 ``` r
+
 shift <- 1/(2*sqrt(2))
 
 data_d <- matrix(c(
@@ -164,6 +173,7 @@ data_d <- matrix(c(
 ```
 
 ``` r
+
 fric_d <- fd_fric(data_d)[["FRic"]]
 feve_d <- fd_feve(data_d)[["FEve"]]
 fdiv_d <- fd_fdiv(data_d)[["FDiv"]]
@@ -180,6 +190,7 @@ while keeping their distance to other points equal. This corresponds to
 the panel e Figure 2 of the paper:
 
 ``` r
+
 data_e <- matrix(c(
   0.0, 1.0,
   0.5, 0.5,
@@ -198,6 +209,7 @@ data_e <- matrix(c(
 We can then compute functional diversity indices:
 
 ``` r
+
 fric_e <- fd_fric(data_e)[["FRic"]]
 feve_e <- fd_feve(data_e)[["FEve"]]
 fdiv_e <- fd_fdiv(data_e)[["FDiv"]]
@@ -210,5 +222,5 @@ As expected, we found an FRic value of 2 (should be 2), an FEve value of
 
 Villéger, Sébastien, Norman W. H. Mason, and David Mouillot. 2008. “New
 Multidimensional Functional Diversity Indices for a Multifaceted
-Framework in Functional Ecology.” *Ecology* 89 (8): 2290–2301.
+Framework in Functional Ecology.” *Ecology* 89 (8): 2290–301.
 <https://doi.org/10.1890/07-1206.1>.

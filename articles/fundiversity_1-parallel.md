@@ -11,14 +11,14 @@ explain how to toggle and use parallelization in `fundiversity`. The
 functions that currently support parallelization are summarized in the
 table below:
 
-| Function Name                                                                                     | Index Name     | Parallelizable[¹](#fn1) | Memoizable[²](#fn2) |
-|:--------------------------------------------------------------------------------------------------|:---------------|:-----------------------:|:-------------------:|
-| [`fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.md)                     | FRic           |           ✅            |         ✅          |
-| [`fd_fric_intersect()`](https://funecology.github.io/fundiversity/reference/fd_fric_intersect.md) | FRic_intersect |           ✅            |         ✅          |
-| [`fd_fdiv()`](https://funecology.github.io/fundiversity/reference/fd_fdiv.md)                     | FDiv           |           ✅            |         ✅          |
-| [`fd_feve()`](https://funecology.github.io/fundiversity/reference/fd_feve.md)                     | FEve           |           ✅            |         ❌          |
-| [`fd_fdis()`](https://funecology.github.io/fundiversity/reference/fd_fdis.md)                     | FDis           |           ❌            |         ❌          |
-| [`fd_raoq()`](https://funecology.github.io/fundiversity/reference/fd_raoq.md)                     | Rao’s Q        |           ❌            |         ❌          |
+| Function Name | Index Name | Parallelizable[^1] | Memoizable[^2] |
+|:---|:---|:--:|:--:|
+| [`fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.md) | FRic | ✅ | ✅ |
+| [`fd_fric_intersect()`](https://funecology.github.io/fundiversity/reference/fd_fric_intersect.md) | FRic_intersect | ✅ | ✅ |
+| [`fd_fdiv()`](https://funecology.github.io/fundiversity/reference/fd_fdiv.md) | FDiv | ✅ | ✅ |
+| [`fd_feve()`](https://funecology.github.io/fundiversity/reference/fd_feve.md) | FEve | ✅ | ❌ |
+| [`fd_fdis()`](https://funecology.github.io/fundiversity/reference/fd_fdis.md) | FDis | ❌ | ❌ |
+| [`fd_raoq()`](https://funecology.github.io/fundiversity/reference/fd_raoq.md) | Rao’s Q | ❌ | ❌ |
 
 Note that **memoization and parallelization cannot be used at the same
 time**. If the option `fundiversity.memoise` has been set to `TRUE` but
@@ -36,6 +36,7 @@ several computers. `fundiversity` can thus run on all these different
 backends following the user’s choice.
 
 ``` r
+
 library("fundiversity")
 
 data("traits_birds", package = "fundiversity")
@@ -52,6 +53,7 @@ object with a parallel backend such as
 to split the execution across multiple R sessions.
 
 ``` r
+
 # Sequential execution
 fric1 <- fd_fric(traits_birds)
 
@@ -72,6 +74,7 @@ in the
 call:
 
 ``` r
+
 future::plan(future::multisession, workers = 2)  # Only 2 cores are used
 fric3 <- fd_fric(traits_birds)
 
@@ -91,6 +94,7 @@ We can now compare the difference in performance to see the performance
 gain thanks to parallelization:
 
 ``` r
+
 future::plan(future::sequential)
 non_parallel_bench <- microbenchmark::microbenchmark(
   non_parallel = {
@@ -120,6 +124,7 @@ different sites. So parallelization should be used when you have many
 sites on which you want to compute similar indices.
 
 ``` r
+
 # Function to make a bigger site-sp dataset
 make_more_sites <- function(n) {
   site_sp <- do.call(rbind, replicate(n, site_sp_birds, simplify = FALSE))
@@ -132,6 +137,7 @@ make_more_sites <- function(n) {
 For example with a dataset 5000 times bigger:
 
 ``` r
+
 bigger_site <- make_more_sites(5000)
 
 microbenchmark::microbenchmark(
@@ -208,15 +214,13 @@ took to run
     #> 
     #> ───────────────────────────────────────────────────────────────────────────────────────
 
-------------------------------------------------------------------------
-
-1.  parallelization through the `future` backend please refer to the
+[^1]: parallelization through the `future` backend please refer to the
     [parallelization
     vignette](https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html)
     for details.
 
-2.  memoization means that the results of the functions calls are cached
-    and not recomputed when recalled, to toggle it off see the
+[^2]: memoization means that the results of the functions calls are
+    cached and not recomputed when recalled, to toggle it off see the
     [`fundiversity::fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.md)
     [Details
     section](https://funecology.github.io/fundiversity/reference/fd_fric.html#details).

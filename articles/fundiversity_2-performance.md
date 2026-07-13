@@ -15,13 +15,12 @@ package name is indicated before `::` followed by the function name.
 
 [TABLE]
 
-The other packages are thus: `adiv` (Pavoine 2020), `BAT` (Cardoso,
-Rigal, and Carvalho 2015), `betapart` (Baselga and Orme 2012), `FD`
-(Laliberté, Legendre, and Shipley 2014), `hillR` (Li 2018), and `mFD`
-(Magneville et al. 2022). For fairness of comparison, even if
-`FD::dbFD()` contains most indices we’re not considering it as it
-computes all indices together for each call, and would necessarily be
-slower.
+The other packages are thus: `adiv` (Pavoine 2020), `BAT` (Cardoso et
+al. 2015), `betapart` (Baselga and Orme 2012), `FD` (Laliberté et al.
+2014), `hillR` (Li 2018), and `mFD` (Magneville et al. 2022). For
+fairness of comparison, even if `FD::dbFD()` contains most indices we’re
+not considering it as it computes all indices together for each call,
+and would necessarily be slower.
 
 ### Benchmark between packages
 
@@ -32,6 +31,7 @@ small (~220 species, 8 sites, 4 traits) provided dataset in
 `fundiversity`.
 
 ``` r
+
 tictoc::tic()  # Time execution of vignette
 library(fundiversity)
 data("traits_birds", package = "fundiversity")
@@ -43,6 +43,7 @@ dist_traits_birds <- dist(traits_birds)
 #### Functional Dispersion (FDis)
 
 ``` r
+
 fdis_bench <- microbenchmark::microbenchmark(
   fundiversity = {
     fundiversity::fd_fdis(traits_birds, site_sp_birds)
@@ -70,6 +71,7 @@ plot of chunk bench-fdis
 #### Functional Divergence (FDiv)
 
 ``` r
+
 fdiv_bench <- microbenchmark::microbenchmark(
   fundiversity = fd_fdiv(traits_birds, site_sp_birds),
   mFD = mFD::alpha.fd.multidim(
@@ -90,6 +92,7 @@ plot of chunk bench-fdiv
 #### Functional Evenness (FEve)
 
 ``` r
+
 feve_bench <- microbenchmark::microbenchmark(
   fundiversity = fd_feve(traits_birds, site_sp_birds),
   mFD = mFD::alpha.fd.multidim(
@@ -110,6 +113,7 @@ plot of chunk bench-feve
 #### Functional Richness (FRic)
 
 ``` r
+
 fric_bench <- microbenchmark::microbenchmark(
   fundiversity = fd_fric(traits_birds, site_sp_birds),
   BAT_tree = BAT::alpha(
@@ -136,6 +140,7 @@ plot of chunk bench-fric
 #### Functional Richness Intersection (FRic_intersect)
 
 ``` r
+
 fric_bench <- microbenchmark::microbenchmark(
   fundiversity  = fd_fric_intersect(traits_birds, site_sp_birds) ,
   betapart = betapart::functional.beta.pair(
@@ -158,6 +163,7 @@ plot of chunk bench-fric-intersect
 #### Rao’s Quadratic Entropy (Q)
 
 ``` r
+
 raoq_bench <- fric_bench <- microbenchmark::microbenchmark(
   fundiversity = fd_raoq(traits_birds, site_sp_birds),
   adiv= adiv::QE(
@@ -192,6 +198,7 @@ We now proceed to the performance evaluation of functions within
 ### Increasing the number of species
 
 ``` r
+
 make_more_sp <- function(n) {
   traits <- do.call(rbind, replicate(n, traits_birds, simplify = FALSE))
   row.names(traits) <- paste0("sp", seq_len(nrow(traits)))
@@ -210,6 +217,7 @@ null_sp_100000 <- make_more_sp(500)
 #### Functional Richness
 
 ``` r
+
 bench_sp_fric <- microbenchmark::microbenchmark(
   species_200    = fd_fric(     traits_birds, site_sp_birds),
   species_1000   = fd_fric(  null_sp_1000$tr, null_sp_1000$si),
@@ -229,6 +237,7 @@ Performance comparison of
 with increasing number of species.
 
 ``` r
+
 bench_sp_fric
 #> Unit: milliseconds
 #>            expr       min        lq      mean    median        uq        max neval
@@ -241,6 +250,7 @@ bench_sp_fric
 #### Functional Divergence
 
 ``` r
+
 bench_sp_fdiv <- microbenchmark::microbenchmark(
   species_200    = fd_fdiv(     traits_birds, site_sp_birds),
   species_1000   = fd_fdiv(  null_sp_1000$tr, null_sp_1000$si),
@@ -260,6 +270,7 @@ Performance comparison of
 with increasing number of species.
 
 ``` r
+
 bench_sp_fdiv
 #> Unit: milliseconds
 #>            expr       min        lq      mean    median        uq       max neval
@@ -272,6 +283,7 @@ bench_sp_fdiv
 #### Rao’s Quadratic Entropy
 
 ``` r
+
 bench_sp_raoq <- microbenchmark::microbenchmark(
   species_200    = fd_raoq(     traits_birds, site_sp_birds),
   species_1000   = fd_raoq(  null_sp_1000$tr, null_sp_1000$si),
@@ -290,6 +302,7 @@ Performance comparison of
 with increasing number of species.
 
 ``` r
+
 bench_sp_raoq
 #> Unit: microseconds
 #>           expr         min          lq         mean      median          uq         max
@@ -305,6 +318,7 @@ bench_sp_raoq
 #### Functional Evenness
 
 ``` r
+
 bench_sp_feve <- microbenchmark::microbenchmark(
   species_200    = fd_feve(     traits_birds, site_sp_birds),
   species_1000   = fd_feve(  null_sp_1000$tr, null_sp_1000$si),
@@ -323,6 +337,7 @@ Performance comparison of
 with increasing number of species.
 
 ``` r
+
 bench_sp_feve
 #> Unit: milliseconds
 #>           expr        min         lq       mean     median         uq       max neval
@@ -334,6 +349,7 @@ bench_sp_feve
 #### Comparing between indices
 
 ``` r
+
 all_bench_sp <- list(fric = bench_sp_fric,
                      fdiv = bench_sp_fdiv,
                      raoq = bench_sp_raoq,
@@ -369,6 +385,7 @@ and standard error envelopes ares shown.
 ### Increasing the number of sites
 
 ``` r
+
 make_more_sites <- function(n) {
   site_sp <- do.call(rbind, replicate(n, site_sp_birds, simplify = FALSE))
   rownames(site_sp) <- paste0("s", seq_len(nrow(site_sp)))
@@ -384,6 +401,7 @@ site_sp_10000 <- make_more_sites(1200)
 #### Functional Richness
 
 ``` r
+
 bench_sites_fric <- microbenchmark::microbenchmark(
   sites_10    = fd_fric(traits_birds, site_sp_birds),
   sites_100   = fd_fric(traits_birds, site_sp_100),
@@ -403,6 +421,7 @@ Performance comparison of
 with increasing number of sites.
 
 ``` r
+
 bench_sites_fric
 #> Unit: milliseconds
 #>         expr        min         lq       mean     median         uq       max neval
@@ -415,6 +434,7 @@ bench_sites_fric
 #### Functional Divergence
 
 ``` r
+
 bench_sites_fdiv <- microbenchmark::microbenchmark(
   sites_10    = fd_fdiv(traits_birds, site_sp_birds),
   sites_100   = fd_fdiv(traits_birds, site_sp_100),
@@ -434,6 +454,7 @@ Performance comparison of
 with increasing number of sites.
 
 ``` r
+
 bench_sites_fdiv
 #> Unit: milliseconds
 #>         expr        min         lq       mean     median        uq       max neval
@@ -446,6 +467,7 @@ bench_sites_fdiv
 #### Rao’s Quadratic Entropy
 
 ``` r
+
 bench_sites_raoq = microbenchmark::microbenchmark(
   sites_10    = fd_raoq(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_raoq(traits = NULL, site_sp_100,   dist_traits_birds),
@@ -465,6 +487,7 @@ Performance comparison of
 with increasing number of sites.
 
 ``` r
+
 bench_sites_raoq
 #> Unit: microseconds
 #>         expr        min          lq        mean     median         uq        max neval
@@ -477,6 +500,7 @@ bench_sites_raoq
 #### Functional Evenness
 
 ``` r
+
 bench_sites_feve <- microbenchmark::microbenchmark(
   sites_10    = fd_feve(traits = NULL, site_sp_birds, dist_traits_birds),
   sites_100   = fd_feve(traits = NULL, site_sp_100,   dist_traits_birds),
@@ -496,6 +520,7 @@ Performance comparison of
 with increasing number of sites
 
 ``` r
+
 bench_sites_feve
 #> Unit: milliseconds
 #>         expr        min         lq       mean     median         uq       max neval
@@ -508,6 +533,7 @@ bench_sites_feve
 #### Comparing between indices
 
 ``` r
+
 all_bench_sites <- list(fric = bench_sites_fric,
                         fdiv = bench_sites_fdiv,
                         raoq = bench_sites_raoq,
@@ -746,11 +772,9 @@ Li, Daijiang. 2018. “hillR: Taxonomic, Functional, and Phylogenetic
 Diversity and Similarity Through Hill Numbers.” *Journal of Open Source
 Software* 3 (31): 1041. <https://doi.org/10.21105/joss.01041>.
 
-Magneville, Camille, Nicolas Loiseau, Camille Albouy, Nicolas Casajus,
-Thomas Claverie, Arthur Escalas, Fabien Leprieur, Eva Maire, David
-Mouillot, and Sébastien Villéger. 2022. “mFD: An R Package to Compute
-and Illustrate the Multiple Facets of Functional Diversity.” *Ecography*
-2022 (1). <https://doi.org/10.1111/ecog.05904>.
+Magneville, Camille, Nicolas Loiseau, Camille Albouy, et al. 2022. “mFD:
+An R Package to Compute and Illustrate the Multiple Facets of Functional
+Diversity.” *Ecography* 2022 (1). <https://doi.org/10.1111/ecog.05904>.
 
 Pavoine, Sandrine. 2020. “adiv: An r Package to Analyse Biodiversity in
 Ecology.” *Methods in Ecology and Evolution* 11 (9): 1106–12.
@@ -765,12 +789,12 @@ Rao’s Quadratic Entropy.” *Theoretical Population Biology* 76 (4):
 299–302. <https://doi.org/10.1016/j.tpb.2009.10.001>.
 
 Villéger, Sébastien, Gaël Grenouillet, and Sébastien Brosse. 2013.
-“Decomposing Functional $\beta$-Diversity Reveals That Low Functional
-$\beta$-Diversity Is Driven by Low Functional Turnover in European Fish
-Assemblages.” *Global Ecology and Biogeography* 22 (6): 671–81.
+“Decomposing Functional $`\beta`$-Diversity Reveals That Low Functional
+$`\beta`$-Diversity Is Driven by Low Functional Turnover in European
+Fish Assemblages.” *Global Ecology and Biogeography* 22 (6): 671–81.
 <https://doi.org/10.1111/geb.12021>.
 
 Villéger, Sébastien, Norman W. H. Mason, and David Mouillot. 2008. “New
 Multidimensional Functional Diversity Indices for a Multifaceted
-Framework in Functional Ecology.” *Ecology* 89 (8): 2290–2301.
+Framework in Functional Ecology.” *Ecology* 89 (8): 2290–301.
 <https://doi.org/10.1890/07-1206.1>.

@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="4. Check Numerical Correctness of Indices">
 </head>
@@ -80,7 +80,7 @@ never presented any arguments about why they should trust the code
 provided to them.</p>
 <p>We want to contribute to change this trend and in this vignette, we
 show that indices computed by <code>fundiversity</code> behave as
-theoretically expected, and as presented in <span class="citation">Villéger, Mason, and Mouillot (<a href="#ref-Villeger_New_2008">2008</a>)</span>. We also internally
+theoretically expected, and as presented in <span class="citation">Villéger et al. (<a href="#ref-Villeger_New_2008">2008</a>)</span>. We also internally
 compared <code>fundiversity</code> results with ones obtained by other
 packages. You can see the equivalence between functions in the <a href="https://funecology.github.io/fundiversity/articles/fundiversity_2-performance.html#main-functions">benchmark
 vignette</a> that compares <code>fundiversity</code> and alternative
@@ -241,12 +241,12 @@ the panel e Figure 2 of the paper:</p>
 <span><span class="va">raoq_e</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fd_raoq.html">fd_raoq</a></span><span class="op">(</span><span class="va">data_e</span><span class="op">)</span><span class="op">[[</span><span class="st">"Q"</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <p>As expected, we found an FRic value of 2 (should be 2), an FEve value
 of 1 (should be 1), and a FDiv value of 0.78 (should be 0.78).</p>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Villeger_New_2008" class="csl-entry">
 Villéger, Sébastien, Norman W. H. Mason, and David Mouillot. 2008.
 <span>“New <span>Multidimensional Functional Diversity Indices</span>
 for a <span>Multifaceted Framework</span> in <span>Functional
-Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–2301. <a href="https://doi.org/10.1890/07-1206.1" class="external-link">https://doi.org/10.1890/07-1206.1</a>.
+Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–301. <a href="https://doi.org/10.1890/07-1206.1" class="external-link">https://doi.org/10.1890/07-1206.1</a>.
 </div>
 </div>
 </div>
@@ -261,7 +261,7 @@ Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–2301. <a href="https:/
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

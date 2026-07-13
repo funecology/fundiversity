@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="1. Overview of how to use fundiversity">
 </head>
@@ -233,9 +233,9 @@ to the column names of the site species matrix:</p>
 <h2 id="functional-richness-fric---fd_fric">Functional Richness (FRic) - <code>fd_fric()</code><a class="anchor" aria-label="anchor" href="#functional-richness-fric---fd_fric"></a>
 </h2>
 <p>Functional Richness (FRic) represents the total amount of functional
-space filed by a community in a dataset <span class="citation">(<a href="#ref-Villeger_New_2008">Villéger, Mason, and Mouillot
-2008</a>)</span>. You can compute FRic in <code>fundiversity</code>
-using the <code><a href="../reference/fd_fric.html">fd_fric()</a></code> function.</p>
+space filed by a community in a dataset <span class="citation">(<a href="#ref-Villeger_New_2008">Villéger et al. 2008</a>)</span>. You can
+compute FRic in <code>fundiversity</code> using the
+<code><a href="../reference/fd_fric.html">fd_fric()</a></code> function.</p>
 <p>For a single trait range FRic is the range of trait observed in the
 dataset:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -253,8 +253,8 @@ computed FRic values. If no site-species matrix has been provided the
 site is named by default <code>s1</code>.</p>
 <p>For multiple traits, FRic can be thought as a multi-dimensional range
 which is computed as the convex hull volume of the considered species
-<span class="citation">(<a href="#ref-Villeger_New_2008">Villéger,
-Mason, and Mouillot 2008</a>)</span>:</p>
+<span class="citation">(<a href="#ref-Villeger_New_2008">Villéger et al.
+2008</a>)</span>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   site     FRic</span></span>
@@ -277,8 +277,7 @@ trait dataset and a site-species matrix to <code><a href="../reference/fd_fric.h
 <p>Because the convex hull volume depends on the number and the units of
 the traits used, it is difficult to compare across datasets, that is why
 it has been suggested to standardize its value by the total volume
-comprising all species in the dataset <span class="citation">(<a href="#ref-Villeger_New_2008">Villéger, Mason, and Mouillot
-2008</a>)</span>:</p>
+comprising all species in the dataset <span class="citation">(<a href="#ref-Villeger_New_2008">Villéger et al. 2008</a>)</span>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/fd_fric.html">fd_fric</a></span><span class="op">(</span><span class="va">traits_birds</span>, stand <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   site FRic</span></span>
@@ -387,9 +386,9 @@ unmemoised versions of the functions.</p>
 <h2 id="functional-divergence-fdiv---fd_fdiv">Functional Divergence (FDiv) - <code>fd_fdiv()</code><a class="anchor" aria-label="anchor" href="#functional-divergence-fdiv---fd_fdiv"></a>
 </h2>
 <p>Functional Divergence (FDiv) represents how abundance is spread along
-the different traits <span class="citation">(<a href="#ref-Villeger_New_2008">Villéger, Mason, and Mouillot
-2008</a>)</span>. When a species with extreme trait values has the
-highest abundance, then functional divergence is high.</p>
+the different traits <span class="citation">(<a href="#ref-Villeger_New_2008">Villéger et al. 2008</a>)</span>. When a
+species with extreme trait values has the highest abundance, then
+functional divergence is high.</p>
 <p>Use the <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> function to compute functional
 divergence:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -427,11 +426,11 @@ get more information about how to do so.</p>
 <h2 id="functional-evenness-feve---fd_feve">Functional Evenness (FEve) - <code>fd_feve()</code><a class="anchor" aria-label="anchor" href="#functional-evenness-feve---fd_feve"></a>
 </h2>
 <p>Functional Evenness (FEve) describes the regularity of the
-distribution of species (and their abundances) in trait space <span class="citation">(<a href="#ref-Villeger_New_2008">Villéger, Mason, and
-Mouillot 2008</a>)</span>. FEve is bounded between 0 and 1. FEve is
-close to 0 when most species (and abundances) are tightly packed in a
-portion of the trait space while it is close to 1 if species are
-regularly spread (with even abundances) along the trait space.</p>
+distribution of species (and their abundances) in trait space <span class="citation">(<a href="#ref-Villeger_New_2008">Villéger et al.
+2008</a>)</span>. FEve is bounded between 0 and 1. FEve is close to 0
+when most species (and abundances) are tightly packed in a portion of
+the trait space while it is close to 1 if species are regularly spread
+(with even abundances) along the trait space.</p>
 <p>Use the <code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code> function to compute functional
 divergence:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
@@ -755,7 +754,7 @@ section&lt;/a&gt;.&lt;/p&gt;'><sup>2</sup></a>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Gower_general_1971" class="csl-entry">
 Gower, John C. 1971. <span>“A General Coefficient of Similarity and Some
 of Its Properties.”</span> <em>Biometrics</em>, 857–71.
@@ -774,18 +773,18 @@ the Quality of Functional Spaces.”</span> <em>Global Ecology and
 Biogeography</em> 24 (6): 728–40. <a href="https://doi.org/10.1111/geb.12299" class="external-link">https://doi.org/10.1111/geb.12299</a>.
 </div>
 <div id="ref-Nowak_Data_2019" class="csl-entry">
-Nowak, Larissa, W. Daniel Kissling, Irene M. A. Bender, D. Matthias
-Dehling, Till Töpfer, Katrin Böhning-Gaese, and Matthias Schleuning.
-2019a. <span>“Data from: <span>Projecting</span> Consequences of Global
-Warming for the Functional Diversity of Fleshy-Fruited Plants and
-Frugivorous Birds Along a Tropical Elevational Gradient.”</span>
-<em>Data Dryad Digital Repository</em>. <a href="https://doi.org/10.5061/DRYAD.C0N737B" class="external-link">https://doi.org/10.5061/DRYAD.C0N737B</a>.
+Nowak, Larissa, W. Daniel Kissling, Irene M. A. Bender, et al. 2019a.
+<span>“Data from: <span>Projecting</span> Consequences of Global Warming
+for the Functional Diversity of Fleshy-Fruited Plants and Frugivorous
+Birds Along a Tropical Elevational Gradient.”</span> In <em>Data Dryad
+Digital Repository</em>. <a href="https://doi.org/10.5061/DRYAD.C0N737B" class="external-link">https://doi.org/10.5061/DRYAD.C0N737B</a>.
 </div>
 <div id="ref-Nowak_Projecting_2019" class="csl-entry">
-———. 2019b. <span>“Projecting Consequences of Global Warming for the
-Functional Diversity of Fleshy-Fruited Plants and Frugivorous Birds
-Along a Tropical Elevational Gradient.”</span> Edited by Kenneth Feeley.
-<em>Diversity and Distributions</em> 25 (9): 1362–74. <a href="https://doi.org/10.1111/ddi.12946" class="external-link">https://doi.org/10.1111/ddi.12946</a>.
+Nowak, Larissa, W. Daniel Kissling, Irene M. A. Bender, et al. 2019b.
+<span>“Projecting Consequences of Global Warming for the Functional
+Diversity of Fleshy-Fruited Plants and Frugivorous Birds Along a
+Tropical Elevational Gradient.”</span> <em>Diversity and
+Distributions</em> 25 (9): 1362–74. <a href="https://doi.org/10.1111/ddi.12946" class="external-link">https://doi.org/10.1111/ddi.12946</a>.
 </div>
 <div id="ref-Pavoine_challenge_2009" class="csl-entry">
 Pavoine, Sandrine, Jeanne Vallet, Anne-Béatrice Dufour, Sophie Gachet,
@@ -794,11 +793,10 @@ Types of Variables: Application for Improving the Measurement of
 Functional Diversity.”</span> <em>Oikos</em> 118 (3): 391–402. <a href="https://doi.org/10.1111/j.1600-0706.2008.16668.x" class="external-link">https://doi.org/10.1111/j.1600-0706.2008.16668.x</a>.
 </div>
 <div id="ref-Penone_Imputation_2014" class="csl-entry">
-Penone, Caterina, Ana D. Davidson, Kevin T. Shoemaker, Moreno Di Marco,
-Carlo Rondinini, Thomas M. Brooks, Bruce E. Young, Catherine H. Graham,
-and Gabriel C. Costa. 2014. <span>“Imputation of Missing Data in
-Life-History Trait Datasets: Which Approach Performs the Best?”</span>
-<em>Methods in Ecology and Evolution</em> 5 (9): 961–70. <a href="https://doi.org/10.1111/2041-210X.12232" class="external-link">https://doi.org/10.1111/2041-210X.12232</a>.
+Penone, Caterina, Ana D. Davidson, Kevin T. Shoemaker, et al. 2014.
+<span>“Imputation of Missing Data in Life-History Trait Datasets: Which
+Approach Performs the Best?”</span> <em>Methods in Ecology and
+Evolution</em> 5 (9): 961–70. <a href="https://doi.org/10.1111/2041-210X.12232" class="external-link">https://doi.org/10.1111/2041-210X.12232</a>.
 </div>
 <div id="ref-Podani_Extending_1999" class="csl-entry">
 Podani, János. 1999. <span>“Extending <span>Gower</span>’s General
@@ -814,7 +812,7 @@ Population Biology</em> 21 (1): 24–43. <a href="https://doi.org/10.1016/0040-5
 Villéger, Sébastien, Norman W. H. Mason, and David Mouillot. 2008.
 <span>“New <span>Multidimensional Functional Diversity Indices</span>
 for a <span>Multifaceted Framework</span> in <span>Functional
-Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–2301. <a href="https://doi.org/10.1890/07-1206.1" class="external-link">https://doi.org/10.1890/07-1206.1</a>.
+Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–301. <a href="https://doi.org/10.1890/07-1206.1" class="external-link">https://doi.org/10.1890/07-1206.1</a>.
 </div>
 </div>
 </div>
@@ -830,7 +828,7 @@ Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–2301. <a href="https:/
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

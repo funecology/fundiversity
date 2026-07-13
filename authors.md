@@ -15,7 +15,7 @@ Source:
 
 Grenié M, Gruson H (2026). *fundiversity: Easy Computation of Functional
 Diversity Indices*.
-[doi:10.5281/zenodo.4761754](https://doi.org/10.5281/zenodo.4761754), R
+[doi:10.5281/zenodo.4761754](https://doi.org/10.5281/zenodo.4761754). R
 package version 1.1.1.9000,
 <https://CRAN.R-project.org/package=fundiversity>.
 

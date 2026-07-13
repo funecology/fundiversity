@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="3. Performance Benchmark with other packages">
 </head>
@@ -124,7 +124,7 @@ user)<br><code>mFD::alpha.fd.multidim(..., ind_vect = "fdis")</code>
 <tr class="even">
 <td align="left">α-diversity</td>
 <td align="left">Functional Divergence (FDiv)</td>
-<td align="left"><span class="citation">Villéger, Mason, and Mouillot
+<td align="left"><span class="citation">Villéger et al.
 (2008)</span></td>
 <td align="left"><code><a href="../reference/fd_fdiv.html">fd_fdiv()</a></code></td>
 <td><code>mFD::alpha.fd.multidim(..., ind_vect = "fdiv")</code></td>
@@ -132,7 +132,7 @@ user)<br><code>mFD::alpha.fd.multidim(..., ind_vect = "fdis")</code>
 <tr class="odd">
 <td align="left">α-diversity</td>
 <td align="left">Functional Evenness (FEve)</td>
-<td align="left"><span class="citation">Villéger, Mason, and Mouillot
+<td align="left"><span class="citation">Villéger et al.
 (2008)</span></td>
 <td align="left"><code><a href="../reference/fd_feve.html">fd_feve()</a></code></td>
 <td><code>mFD::alpha.fd.multidim(..., ind_vect = "feve")</code></td>
@@ -140,7 +140,7 @@ user)<br><code>mFD::alpha.fd.multidim(..., ind_vect = "fdis")</code>
 <tr class="even">
 <td align="left">α-diversity</td>
 <td align="left">Functional Richness (FRic)</td>
-<td align="left"><span class="citation">Villéger, Mason, and Mouillot
+<td align="left"><span class="citation">Villéger et al.
 (2008)</span></td>
 <td align="left"><code><a href="../reference/fd_fric.html">fd_fric()</a></code></td>
 <td>
@@ -152,8 +152,8 @@ equal)<br><code>BAT::hull.alpha()</code>
 <tr class="odd">
 <td align="left">α-diversity</td>
 <td align="left">Rao’s Quadratic Entropy (Q)</td>
-<td align="left"><span class="citation">Villéger, Grenouillet, and
-Brosse (2013)</span></td>
+<td align="left"><span class="citation">Villéger et al.
+(2013)</span></td>
 <td align="left"><code><a href="../reference/fd_raoq.html">fd_raoq()</a></code></td>
 <td>
 <code>adiv::QE()</code><br><code>BAT::rao()</code><br><code>hillR::hill_func()</code>
@@ -172,13 +172,14 @@ warning)<br><code>mFD::alpha.fd.hill(..., q = 2, tau = "max")</code>
 </tr>
 </tbody>
 </table>
-<p>The other packages are thus: <code>adiv</code> <span class="citation">(Pavoine 2020)</span>, <code>BAT</code> <span class="citation">(Cardoso, Rigal, and Carvalho 2015)</span>,
-<code>betapart</code> <span class="citation">(Baselga and Orme
-2012)</span>, <code>FD</code> <span class="citation">(Laliberté,
-Legendre, and Shipley 2014)</span>, <code>hillR</code> <span class="citation">(Li 2018)</span>, and <code>mFD</code> <span class="citation">(Magneville et al. 2022)</span>. For fairness of
-comparison, even if <code>FD::dbFD()</code> contains most indices we’re
-not considering it as it computes all indices together for each call,
-and would necessarily be slower.</p>
+<p>The other packages are thus: <code>adiv</code> <span class="citation">(Pavoine 2020)</span>, <code>BAT</code> <span class="citation">(Cardoso et al. 2015)</span>, <code>betapart</code>
+<span class="citation">(Baselga and Orme 2012)</span>, <code>FD</code>
+<span class="citation">(Laliberté et al. 2014)</span>,
+<code>hillR</code> <span class="citation">(Li 2018)</span>, and
+<code>mFD</code> <span class="citation">(Magneville et al. 2022)</span>.
+For fairness of comparison, even if <code>FD::dbFD()</code> contains
+most indices we’re not considering it as it computes all indices
+together for each call, and would necessarily be slower.</p>
 </div>
 <div class="section level3">
 <h3 id="benchmark-between-packages">Benchmark between packages<a class="anchor" aria-label="anchor" href="#benchmark-between-packages"></a>
@@ -850,7 +851,7 @@ took to run
     d.appendChild(code);
   }
 })();
-</script><div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+</script><div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Baselga_betapart_2012" class="csl-entry">
 Baselga, Andrés, and C. David L. Orme. 2012. <span>“Betapart: An
 <span>R</span> Package for the Study of Beta Diversity.”</span>
@@ -880,11 +881,10 @@ Numbers</span>.”</span> <em>Journal of Open Source Software</em> 3 (31):
 1041. <a href="https://doi.org/10.21105/joss.01041" class="external-link">https://doi.org/10.21105/joss.01041</a>.
 </div>
 <div id="ref-Magneville_mFD_2022" class="csl-entry">
-Magneville, Camille, Nicolas Loiseau, Camille Albouy, Nicolas Casajus,
-Thomas Claverie, Arthur Escalas, Fabien Leprieur, Eva Maire, David
-Mouillot, and Sébastien Villéger. 2022. <span>“<span class="nocase">mFD</span>: An <span>R</span> Package to Compute and
-Illustrate the Multiple Facets of Functional Diversity.”</span>
-<em>Ecography</em> 2022 (1). <a href="https://doi.org/10.1111/ecog.05904" class="external-link">https://doi.org/10.1111/ecog.05904</a>.
+Magneville, Camille, Nicolas Loiseau, Camille Albouy, et al. 2022.
+<span>“<span class="nocase">mFD</span>: An <span>R</span> Package to
+Compute and Illustrate the Multiple Facets of Functional
+Diversity.”</span> <em>Ecography</em> 2022 (1). <a href="https://doi.org/10.1111/ecog.05904" class="external-link">https://doi.org/10.1111/ecog.05904</a>.
 </div>
 <div id="ref-Pavoine_adiv_2020" class="csl-entry">
 Pavoine, Sandrine. 2020. <span>“<span class="nocase">adiv</span>:
@@ -915,7 +915,7 @@ Assemblages.”</span> <em>Global Ecology and Biogeography</em> 22 (6):
 Villéger, Sébastien, Norman W. H. Mason, and David Mouillot. 2008.
 <span>“New <span>Multidimensional Functional Diversity Indices</span>
 for a <span>Multifaceted Framework</span> in <span>Functional
-Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–2301. <a href="https://doi.org/10.1890/07-1206.1" class="external-link">https://doi.org/10.1890/07-1206.1</a>.
+Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–301. <a href="https://doi.org/10.1890/07-1206.1" class="external-link">https://doi.org/10.1890/07-1206.1</a>.
 </div>
 </div>
 </div>
@@ -930,7 +930,7 @@ Ecology</span>.”</span> <em>Ecology</em> 89 (8): 2290–2301. <a href="https:/
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

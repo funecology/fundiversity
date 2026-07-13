@@ -17,6 +17,7 @@ indices are correct based on a test dataset as specified in the
 vignette](https://funecology.github.io/fundiversity/articles/fundiversity_3-correctness.md).
 
 ``` r
+
 library("fundiversity")
 ```
 
@@ -37,6 +38,7 @@ traits of birds and plants along a tropical gradient ([Nowak et al.
 function:
 
 ``` r
+
 data(package = "fundiversity")
 ```
 
@@ -44,6 +46,7 @@ To load them use their names into the
 [`data()`](https://rdrr.io/r/utils/data.html) function:
 
 ``` r
+
 data("traits_birds", package = "fundiversity")
 
 head(traits_birds)
@@ -89,6 +92,7 @@ above-mentioned trait dataset ([Nowak et al.
 2019a](#ref-Nowak_Data_2019)):
 
 ``` r
+
 # Site-species matrix for birds
 data("site_sp_birds", package = "fundiversity")
 
@@ -140,6 +144,7 @@ some of species names (row names) in the trait data need to be in to the
 column names of the site species matrix:
 
 ``` r
+
 # Fewer species in trait dataset than species in the site-species matrix
 fd_fric(traits_birds[2:217,], site_sp_birds)
 #> Differing number of species between trait dataset and site-species matrix
@@ -177,7 +182,7 @@ fd_fric(traits_birds[1:5,], site_sp_birds[, 6:10])
 ## Functional Richness (FRic) - `fd_fric()`
 
 Functional Richness (FRic) represents the total amount of functional
-space filed by a community in a dataset ([Villéger, Mason, and Mouillot
+space filed by a community in a dataset ([Villéger et al.
 2008](#ref-Villeger_New_2008)). You can compute FRic in `fundiversity`
 using the
 [`fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.md)
@@ -187,6 +192,7 @@ For a single trait range FRic is the range of trait observed in the
 dataset:
 
 ``` r
+
 # Range of bill width in the birds dataset
 diff(range(traits_birds[, "Bill.width..mm."]))
 #> [1] 33.64
@@ -204,9 +210,10 @@ no site-species matrix has been provided the site is named by default
 
 For multiple traits, FRic can be thought as a multi-dimensional range
 which is computed as the convex hull volume of the considered species
-([Villéger, Mason, and Mouillot 2008](#ref-Villeger_New_2008)):
+([Villéger et al. 2008](#ref-Villeger_New_2008)):
 
 ``` r
+
 fd_fric(traits_birds)
 #>   site     FRic
 #> 1   s1 230967.7
@@ -221,6 +228,7 @@ matrix to
 [`fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.md):
 
 ``` r
+
 fd_fric(traits_birds, site_sp_birds)
 #>        site       FRic
 #> 1  elev_250 171543.730
@@ -236,10 +244,11 @@ fd_fric(traits_birds, site_sp_birds)
 Because the convex hull volume depends on the number and the units of
 the traits used, it is difficult to compare across datasets, that is why
 it has been suggested to standardize its value by the total volume
-comprising all species in the dataset ([Villéger, Mason, and Mouillot
+comprising all species in the dataset ([Villéger et al.
 2008](#ref-Villeger_New_2008)):
 
 ``` r
+
 fd_fric(traits_birds, stand = TRUE)
 #>   site FRic
 #> 1   s1    1
@@ -249,6 +258,7 @@ The newly computed FRic values will then be comprised between 0 and 1.
 It is especially useful when comparing different sites:
 
 ``` r
+
 fd_fric(traits_birds, site_sp_birds, stand = TRUE)
 #>        site       FRic
 #> 1  elev_250 0.74271733
@@ -300,6 +310,7 @@ It follows the same interface as
 with similar named arguments:
 
 ``` r
+
 fd_fric_intersect(traits_birds)
 #>   first_site second_site FRic_intersect
 #> 1         s1          s1       230967.7
@@ -315,6 +326,7 @@ if no site-species data is provided,
 considers a site that contains all species from the trait dataset.
 
 ``` r
+
 fd_fric_intersect(traits_birds, site_sp_birds[1:2,])
 #>   first_site second_site FRic_intersect
 #> 1   elev_250    elev_500       171532.6
@@ -332,6 +344,7 @@ Similarly to
 the intersections volumes can be standardized:
 
 ``` r
+
 fd_fric_intersect(traits_birds, site_sp_birds[1:2,], stand = TRUE)
 #>   first_site second_site FRic_intersect
 #> 1   elev_250    elev_500      0.7426689
@@ -370,15 +383,16 @@ otherwise `fundiversity` will use unmemoised versions of the functions.
 ## Functional Divergence (FDiv) - `fd_fdiv()`
 
 Functional Divergence (FDiv) represents how abundance is spread along
-the different traits ([Villéger, Mason, and Mouillot
-2008](#ref-Villeger_New_2008)). When a species with extreme trait values
-has the highest abundance, then functional divergence is high.
+the different traits ([Villéger et al. 2008](#ref-Villeger_New_2008)).
+When a species with extreme trait values has the highest abundance, then
+functional divergence is high.
 
 Use the
 [`fd_fdiv()`](https://funecology.github.io/fundiversity/reference/fd_fdiv.md)
 function to compute functional divergence:
 
 ``` r
+
 # One-dimension FDiv
 fd_fdiv(traits_birds[, 1, drop = FALSE])
 #>   site      FDiv
@@ -395,6 +409,7 @@ considering all the species together. If you provide a site-species
 matrix, then FDiv is computed across all sites:
 
 ``` r
+
 fd_fdiv(traits_birds, site_sp_birds)
 #>        site      FDiv
 #> 1  elev_250 0.6847251
@@ -420,17 +435,18 @@ to get more information about how to do so.
 ## Functional Evenness (FEve) - `fd_feve()`
 
 Functional Evenness (FEve) describes the regularity of the distribution
-of species (and their abundances) in trait space ([Villéger, Mason, and
-Mouillot 2008](#ref-Villeger_New_2008)). FEve is bounded between 0
-and 1. FEve is close to 0 when most species (and abundances) are tightly
-packed in a portion of the trait space while it is close to 1 if species
-are regularly spread (with even abundances) along the trait space.
+of species (and their abundances) in trait space ([Villéger et al.
+2008](#ref-Villeger_New_2008)). FEve is bounded between 0 and 1. FEve is
+close to 0 when most species (and abundances) are tightly packed in a
+portion of the trait space while it is close to 1 if species are
+regularly spread (with even abundances) along the trait space.
 
 Use the
 [`fd_fdiv()`](https://funecology.github.io/fundiversity/reference/fd_fdiv.md)
 function to compute functional divergence:
 
 ``` r
+
 # One-dimension FEve
 fd_feve(traits_birds[, 1, drop = FALSE])
 #>   site      FEve
@@ -447,6 +463,7 @@ considering all the species together. If you provide a site-species
 matrix, then FEve is computed across all sites:
 
 ``` r
+
 fd_feve(traits_birds, site_sp_birds)
 #>        site      FEve
 #> 1  elev_250 0.3841202
@@ -498,6 +515,7 @@ You can compute Functional Dispersion (FDis) using the
 function by providing a trait dataset:
 
 ``` r
+
 fd_fdis(traits_birds)
 #>   site     FDis
 #> 1   s1 133.3902
@@ -510,6 +528,7 @@ abundances in the same site. You can also provide a site-species matrix
 to compute FDis at different sites:
 
 ``` r
+
 fd_fdis(traits_birds, site_sp_birds)
 #>        site      FDis
 #> 1  elev_250 151.38851
@@ -539,6 +558,7 @@ You can compute Rao’s Quadratic entropy (Q) using the
 function by providing a trait dataset:
 
 ``` r
+
 fd_raoq(traits_birds)
 #>   site        Q
 #> 1   s1 170.0519
@@ -551,6 +571,7 @@ abundances in the same site. You can also provide a site-species matrix
 to compute Q at different sites:
 
 ``` r
+
 fd_raoq(traits_birds, site_sp_birds)
 #>        site         Q
 #> 1  elev_250 194.78095
@@ -572,6 +593,7 @@ species. If you wish to directly provide species dissimilarities, you
 can do so through the `dist_matrix` argument:
 
 ``` r
+
 # Compute dissimilarity between species with the Manhattan distance
 trait_dissim <- dist(traits_birds, method = "manhattan")
 
@@ -607,6 +629,7 @@ Provide `Matrix` objects as inputs of the indices function
 computation.
 
 ``` r
+
 # Convert site-species matrix to sparse matrix
 sparse_site_sp <- Matrix::Matrix(site_sp_birds, sparse = TRUE)
 
@@ -638,6 +661,7 @@ continuous trait with a mean of zero and a standard deviation of one
 functional diversity indices:
 
 ``` r
+
 traits_birds_sc <- scale(traits_birds)
 summary(traits_birds_sc)
 #>  Bill.width..mm.   Bill.length..mm.    Kipp.s.index      Bodymass..g.     
@@ -663,6 +687,7 @@ Another solution to make trait comparable is to scale them between 0 and
 1 by scaling each trait by its maximum and minimum values:
 
 ``` r
+
 min_values <- as.numeric(lapply(as.data.frame(traits_birds), min))
 max_values <- as.numeric(lapply(as.data.frame(traits_birds), max))
 
@@ -731,14 +756,14 @@ review by Penone et al. ([2014](#ref-Penone_Imputation_2014)).
 
 ## Functions summary table
 
-| Function Name                                                                                     | Index Name     | Parallelizable[¹](#fn1) | Memoizable[²](#fn2) |
-|:--------------------------------------------------------------------------------------------------|:---------------|:-----------------------:|:-------------------:|
-| [`fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.md)                     | FRic           |           ✅            |         ✅          |
-| [`fd_fric_intersect()`](https://funecology.github.io/fundiversity/reference/fd_fric_intersect.md) | FRic_intersect |           ✅            |         ✅          |
-| [`fd_fdiv()`](https://funecology.github.io/fundiversity/reference/fd_fdiv.md)                     | FDiv           |           ✅            |         ✅          |
-| [`fd_feve()`](https://funecology.github.io/fundiversity/reference/fd_feve.md)                     | FEve           |           ✅            |         ❌          |
-| [`fd_fdis()`](https://funecology.github.io/fundiversity/reference/fd_fdis.md)                     | FDis           |           ❌            |         ❌          |
-| [`fd_raoq()`](https://funecology.github.io/fundiversity/reference/fd_raoq.md)                     | Rao’s Q        |           ❌            |         ❌          |
+| Function Name | Index Name | Parallelizable[^1] | Memoizable[^2] |
+|:---|:---|:--:|:--:|
+| [`fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.md) | FRic | ✅ | ✅ |
+| [`fd_fric_intersect()`](https://funecology.github.io/fundiversity/reference/fd_fric_intersect.md) | FRic_intersect | ✅ | ✅ |
+| [`fd_fdiv()`](https://funecology.github.io/fundiversity/reference/fd_fdiv.md) | FDiv | ✅ | ✅ |
+| [`fd_feve()`](https://funecology.github.io/fundiversity/reference/fd_feve.md) | FEve | ✅ | ❌ |
+| [`fd_fdis()`](https://funecology.github.io/fundiversity/reference/fd_fdis.md) | FDis | ❌ | ❌ |
+| [`fd_raoq()`](https://funecology.github.io/fundiversity/reference/fd_raoq.md) | Rao’s Q | ❌ | ❌ |
 
 ## References
 
@@ -756,17 +781,16 @@ Diversity? A Pragmatic Approach for Assessing the Quality of Functional
 Spaces.” *Global Ecology and Biogeography* 24 (6): 728–40.
 <https://doi.org/10.1111/geb.12299>.
 
-Nowak, Larissa, W. Daniel Kissling, Irene M. A. Bender, D. Matthias
-Dehling, Till Töpfer, Katrin Böhning-Gaese, and Matthias Schleuning.
-2019a. “Data from: Projecting Consequences of Global Warming for the
-Functional Diversity of Fleshy-Fruited Plants and Frugivorous Birds
-Along a Tropical Elevational Gradient.” *Data Dryad Digital Repository*.
+Nowak, Larissa, W. Daniel Kissling, Irene M. A. Bender, et al. 2019a.
+“Data from: Projecting Consequences of Global Warming for the Functional
+Diversity of Fleshy-Fruited Plants and Frugivorous Birds Along a
+Tropical Elevational Gradient.” In *Data Dryad Digital Repository*.
 <https://doi.org/10.5061/DRYAD.C0N737B>.
 
-———. 2019b. “Projecting Consequences of Global Warming for the
-Functional Diversity of Fleshy-Fruited Plants and Frugivorous Birds
-Along a Tropical Elevational Gradient.” Edited by Kenneth Feeley.
-*Diversity and Distributions* 25 (9): 1362–74.
+Nowak, Larissa, W. Daniel Kissling, Irene M. A. Bender, et al. 2019b.
+“Projecting Consequences of Global Warming for the Functional Diversity
+of Fleshy-Fruited Plants and Frugivorous Birds Along a Tropical
+Elevational Gradient.” *Diversity and Distributions* 25 (9): 1362–74.
 <https://doi.org/10.1111/ddi.12946>.
 
 Pavoine, Sandrine, Jeanne Vallet, Anne-Béatrice Dufour, Sophie Gachet,
@@ -775,11 +799,10 @@ Variables: Application for Improving the Measurement of Functional
 Diversity.” *Oikos* 118 (3): 391–402.
 <https://doi.org/10.1111/j.1600-0706.2008.16668.x>.
 
-Penone, Caterina, Ana D. Davidson, Kevin T. Shoemaker, Moreno Di Marco,
-Carlo Rondinini, Thomas M. Brooks, Bruce E. Young, Catherine H. Graham,
-and Gabriel C. Costa. 2014. “Imputation of Missing Data in Life-History
-Trait Datasets: Which Approach Performs the Best?” *Methods in Ecology
-and Evolution* 5 (9): 961–70. <https://doi.org/10.1111/2041-210X.12232>.
+Penone, Caterina, Ana D. Davidson, Kevin T. Shoemaker, et al. 2014.
+“Imputation of Missing Data in Life-History Trait Datasets: Which
+Approach Performs the Best?” *Methods in Ecology and Evolution* 5 (9):
+961–70. <https://doi.org/10.1111/2041-210X.12232>.
 
 Podani, János. 1999. “Extending Gower’s General Coefficient of
 Similarity to Ordinal Characters.” *Taxon*, 331–40.
@@ -790,18 +813,16 @@ Unified Approach.” *Theoretical Population Biology* 21 (1): 24–43.
 
 Villéger, Sébastien, Norman W. H. Mason, and David Mouillot. 2008. “New
 Multidimensional Functional Diversity Indices for a Multifaceted
-Framework in Functional Ecology.” *Ecology* 89 (8): 2290–2301.
+Framework in Functional Ecology.” *Ecology* 89 (8): 2290–301.
 <https://doi.org/10.1890/07-1206.1>.
 
-------------------------------------------------------------------------
-
-1.  parallelization through the `future` backend please refer to the
+[^1]: parallelization through the `future` backend please refer to the
     [parallelization
     vignette](https://funecology.github.io/fundiversity/articles/fundiversity_1-parallel.html)
     for details.
 
-2.  memoization means that the results of the functions calls are cached
-    and not recomputed when recalled, to toggle it off see the
+[^2]: memoization means that the results of the functions calls are
+    cached and not recomputed when recalled, to toggle it off see the
     [`fundiversity::fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.md)
     [Details
     section](https://funecology.github.io/fundiversity/reference/fd_fric.html#details).
