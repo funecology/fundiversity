@@ -92,7 +92,7 @@ fd_raoq(traits = NULL, dist_matrix = dist_traits_birds)
 | `fd_fric_intersect()` | FRic_intersect |         ✅         |       ✅       |
 | `fd_fdiv()`           | FDiv           |         ✅         |       ✅       |
 | `fd_feve()`           | FEve           |         ✅         |       ❌       |
-| `fd_fdis()`           | FDis           |         ✅         |       ❌       |
+| `fd_fdis()`           | FDis           |         ❌         |       ❌       |
 | `fd_raoq()`           | Rao’s Q        |         ❌         |       ❌       |
 
 ## Parallelization
@@ -127,10 +127,10 @@ vignette](https://funecology.github.io/fundiversity/articles/fundiversity_3-corr
 `fundiversity` provides function to compute indices that assess this
 three facets at the site scale:
 
-| Scale                              | Richness                                                                                                                                                                      | Divergence                                                                                                                                                                                                                                                                                  | Evenness                                                                                  |
-|------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
-| α-diversity<br />(= among sites)   | FRic with [`fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.html)                                                                                     | FDiv with [`fd_fdiv()`](https://funecology.github.io/fundiversity/reference/fd_fdiv.html)<br />Rao’s QE with [`fd_raoq()`](https://funecology.github.io/fundiversity/reference/fd_raoq.html)<br />FDis with [`fd_fdis()`](https://funecology.github.io/fundiversity/reference/fd_fdis.html) | FEve with [`fd_feve()`](https://funecology.github.io/fundiversity/reference/fd_feve.html) |
-| β-diversity<br />(= between sites) | FRic pairwise intersection with [`fd_fric_intersect()`](https://funecology.github.io/fundiversity/reference/fd_fric_intersect.html)<br />alternatives available in `betapart` | available in `entropart`, `betapart` or `hillR`                                                                                                                                                                                                                                             | available in `BAT`                                                                        |
+| Scale | Richness | Divergence | Evenness |
+|----|----|----|----|
+| α-diversity<br />(= among sites) | FRic with [`fd_fric()`](https://funecology.github.io/fundiversity/reference/fd_fric.html) | FDiv with [`fd_fdiv()`](https://funecology.github.io/fundiversity/reference/fd_fdiv.html)<br />Rao’s QE with [`fd_raoq()`](https://funecology.github.io/fundiversity/reference/fd_raoq.html)<br />FDis with [`fd_fdis()`](https://funecology.github.io/fundiversity/reference/fd_fdis.html) | FEve with [`fd_feve()`](https://funecology.github.io/fundiversity/reference/fd_feve.html) |
+| β-diversity<br />(= between sites) | FRic pairwise intersection with [`fd_fric_intersect()`](https://funecology.github.io/fundiversity/reference/fd_fric_intersect.html)<br />alternatives available in `betapart` | available in `entropart`, `betapart` or `hillR` | available in `BAT` |
 
 ## Related Packages
 
@@ -140,19 +140,19 @@ comparison](https://funecology.github.io/fundiversity/articles/fundiversity_2-pe
 between related packages. We here mention some of them (but do not
 mention the numerous wrappers around these packages):
 
-| Package Name                                           | Indices included                                                                                                    | Has vignettes | Has tests | On GitHub | On CRAN (last updated)                                     |
-|--------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|---------------|-----------|-----------|------------------------------------------------------------|
-| [`adiv`](https://github.com/cran/adiv)                 | Functional Entropy, Functional Redundancy                                                                           | ❌            | ❌        | ❌        | ![](https://www.r-pkg.org/badges/last-release/adiv)        |
-| [`BAT`](https://github.com/cardosopmb/BAT)             | β-diversity indices, Richness, divergence, and evenness with hypervolumes                                           | ❌            | ❌        | ✅        | ![](https://www.r-pkg.org/badges/last-release/BAT)         |
-| [`betapart`](https://github.com/cran/betapart)         | Functional β-diversity                                                                                              | ❌            | ❌        | ❌        | ![](https://www.r-pkg.org/badges/last-release/betapart)    |
-| [`entropart`](https://github.com/EricMarcon/entropart) | Functional Entropy                                                                                                  | ✅            | ✅        | ✅        | ![](https://www.r-pkg.org/badges/last-release/entropart)   |
-| [`FD`](https://github.com/cran/FD)                     | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness                                                         | ❌            | ❌        | ❌        | ![](https://www.r-pkg.org/badges/last-release/FD)          |
-| [`hilldiv`](https://github.com/anttonalberdi/hilldiv)  | Dendrogram-based Hill numbers for functional diversity                                                              | ❌            | ❌        | ✅        | ![](https://www.r-pkg.org/badges/last-release/hilldiv)     |
-| [`hillR`](https://github.com/daijiang/hillR)           | Functional Diversity Hill Numbers                                                                                   | ❌            | ✅        | ✅        | ![](https://www.r-pkg.org/badges/last-release/hillR)       |
-| [`hypervolume`](https://github.com/cran/hypervolume)   | Hypervolume measure of functional diversity (~FRic)                                                                 | ✅            | ❌        | ✅        | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
-| [`mFD`](https://github.com/CmlMagneville/mFD)          | Functional α- and β-diversity indices, including FRic, FDiv, FDis, FEve, FIde, FMPD, FNND, FOri, FSpe, Hill Numbers | ✅            | ❌        | ✅        | ![](https://www.r-pkg.org/badges/last-release/mFD)         |
-| [`TPD`](https://github.com/cran/TPD)                   | FRic, FDiv, FEve but for probability distributions                                                                  | ✅            | ❌        | ❌        | ![](https://www.r-pkg.org/badges/last-release/TPD)         |
-| [`vegan`](https://github.com/vegandevs/vegan)          | Only dendrogram-based FD (`treedive()`)                                                                             | ✅            | ✅        | ✅        | ![](https://www.r-pkg.org/badges/last-release/vegan)       |
+| Package Name | Indices included | Has vignettes | Has tests | On GitHub | On CRAN (last updated) |
+|----|----|----|----|----|----|
+| [`adiv`](https://github.com/cran/adiv) | Functional Entropy, Functional Redundancy | ❌ | ❌ | ❌ | ![](https://www.r-pkg.org/badges/last-release/adiv) |
+| [`BAT`](https://github.com/cardosopmb/BAT) | β-diversity indices, Richness, divergence, and evenness with hypervolumes | ❌ | ❌ | ✅ | ![](https://www.r-pkg.org/badges/last-release/BAT) |
+| [`betapart`](https://github.com/cran/betapart) | Functional β-diversity | ❌ | ❌ | ❌ | ![](https://www.r-pkg.org/badges/last-release/betapart) |
+| [`entropart`](https://github.com/EricMarcon/entropart) | Functional Entropy | ✅ | ✅ | ✅ | ![](https://www.r-pkg.org/badges/last-release/entropart) |
+| [`FD`](https://github.com/cran/FD) | FRic, FDiv, FDis, FEve, Rao’s QE, Functional Group Richness | ❌ | ❌ | ❌ | ![](https://www.r-pkg.org/badges/last-release/FD) |
+| [`hilldiv3`](https://github.com/anttonalberdi/hilldiv3) | Dendrogram-based Hill numbers for functional diversity | ✅ | ✅ | ✅ | ❌ |
+| [`hillR`](https://github.com/daijiang/hillR) | Functional Diversity Hill Numbers | ❌ | ✅ | ✅ | ![](https://www.r-pkg.org/badges/last-release/hillR) |
+| [`hypervolume`](https://github.com/cran/hypervolume) | Hypervolume measure of functional diversity (~FRic) | ✅ | ❌ | ✅ | ![](https://www.r-pkg.org/badges/last-release/hypervolume) |
+| [`mFD`](https://github.com/CmlMagneville/mFD) | Functional α- and β-diversity indices, including FRic, FDiv, FDis, FEve, FIde, FMPD, FNND, FOri, FSpe, Hill Numbers | ✅ | ❌ | ✅ | ![](https://www.r-pkg.org/badges/last-release/mFD) |
+| [`TPD`](https://github.com/cran/TPD) | FRic, FDiv, FEve but for probability distributions | ✅ | ❌ | ❌ | ![](https://www.r-pkg.org/badges/last-release/TPD) |
+| [`vegan`](https://github.com/vegandevs/vegan) | Only dendrogram-based FD (`treedive()`) | ✅ | ✅ | ✅ | ![](https://www.r-pkg.org/badges/last-release/vegan) |
 
 ------------------------------------------------------------------------
 
